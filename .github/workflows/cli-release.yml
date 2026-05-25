@@ -33,7 +33,7 @@ jobs:
           - target: aarch64-apple-darwin
             os: macos-14
           - target: x86_64-apple-darwin
-            os: macos-13
+            os: macos-14   # was macos-13 — GH-hosted macos-13 no longer allocates (deprecated early 2026). Apple Silicon cross-compiles to x86_64 via rustup target.
           - target: x86_64-unknown-linux-gnu
             os: ubuntu-latest
           - target: aarch64-unknown-linux-gnu
