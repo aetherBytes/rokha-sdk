@@ -1,6 +1,6 @@
-# NullBlock Public API Schema
+# Rokha Public API Schema
 
-> The wire contract between Erebus (server) and the NullBlock SDK (client).
+> The wire contract between Erebus (server) and the Rokha SDK (client).
 > Single source of truth. Versioned. Drift is detectable at runtime.
 
 ## Files
@@ -14,7 +14,7 @@
 
 Erebus is Rust. The SDK is TypeScript + Python. Skills are Markdown.
 Without a schema layer, all three drift independently — a field rename
-in `null_audit` would surface as a runtime error in the SDK days after
+in `rokha_audit` would surface as a runtime error in the SDK days after
 release. With this schema layer:
 
 - **One source of truth** that every implementation references.
@@ -42,7 +42,7 @@ Every PR that modifies `openapi.yaml`:
 1. Bumps `info.version` per the table above.
 2. Adds a line in [`CHANGELOG.md`](../CHANGELOG.md) (main repo) and in
    the SDK's `CHANGELOG.md` describing the change.
-3. Mirrors the file to the public SDK repo (`aetherBytes/nullblock-sdk/schemas/openapi.yaml`)
+3. Mirrors the file to the public SDK repo (`aetherBytes/rokha-sdk/schemas/openapi.yaml`)
    in the same release. This is also encoded in CLAUDE.md's "Public
    Surface Contract" rule.
 
@@ -74,7 +74,7 @@ This is the same model as `skills/` — authored in main, mirrored to
 SDK on each release. Both surfaces share the public-contract rule
 defined in CLAUDE.md.
 
-## Coverage today (v1.1.0)
+## Coverage today (v2.0.0)
 
 | Resource | Paths | Status |
 |----------|-------|--------|
@@ -82,8 +82,8 @@ defined in CLAUDE.md.
 | Skills | `/api/skills`, `/api/skills/{name}`, `/api/skills/{name}/SKILL.md`, `/api/skills/{name}/{path}` | ✅ |
 | Wallets | `/api/wallets`, `/api/wallets/detect`, `/api/wallets/challenge`, `/api/wallets/verify`, `/api/wallets/status` | ✅ |
 | Auth | `/api/auth/email/{register,login,verify,resend-verification}`, `/api/auth/google/{start,callback}`, `/api/auth/{token,refresh}` | ✅ |
-| Agents | `/api/agents/health`, `/api/agents/hecate/{chat,chat/public,chat/stream,chat/stream/public,status,tools,history,clear,model-info,available-models}` | ✅ |
-| Engrams | `/api/engrams/health`, `/api/engrams` (GET/POST), `/api/engrams/search`, `/api/engrams/{id}` (GET/PUT/DELETE), `/api/engrams/{id}/{fork,publish}`, `/api/engrams/wallet/{wallet}` (+`/{key}`) | ✅ |
+| Agents | `/api/agents/health`, `/api/agents/rokha-agent/{chat,chat/public,chat/stream,chat/stream/public,status,tools,history,clear,model-info,available-models}` | ✅ |
+| Harnesses | `/api/harnesses/health`, `/api/harnesses` (GET/POST), `/api/harnesses/search`, `/api/harnesses/{id}` (GET/PUT/DELETE), `/api/harnesses/{id}/{fork,publish}`, `/api/harnesses/wallet/{wallet}` (+`/{key}`) | ✅ |
 | MCP | `/mcp/health`, `/mcp/tools`, `/mcp/jsonrpc` | ✅ |
 | Marketplace | `/api/marketplace/{listings,listings/:id,search,featured,stats,registry,registry/:provider/:id,registry/stats,skills.md}` | ✅ |
 | Discovery | `/api/discovery/{tools,agents,protocols,all,hot}` | ✅ |
@@ -92,7 +92,7 @@ defined in CLAUDE.md.
 
 | Resource | In schema? | SDK client? | Priority |
 |----------|------------|-------------|----------|
-| Meta + Skills + Wallets + Auth + Agents + Engrams + MCP + Marketplace + Discovery | ✅ (v1.1.0) | ✅ existing | done |
+| Meta + Skills + Wallets + Auth + Agents + Harnesses + MCP + Marketplace + Discovery | ✅ (v2.0.0) | ✅ existing | done |
 | Sessions (`/api/agents/:name/sessions/*`) | ⏳ | partial | next minor |
 | Streaming chat per-event schema (currently shape is doc-only) | ⏳ | partial | next minor |
 | Content (`/api/content/*`) | ⏳ | ⏳ | when content surface stabilizes |
@@ -132,7 +132,7 @@ For Python:
 pipx run datamodel-code-generator \
   --input schemas/openapi.yaml \
   --input-file-type openapi \
-  --output sdk/python/src/nullblock/types_generated.py
+  --output sdk/python/src/rokha/types_generated.py
 ```
 
 These are aspirational for now — the SDK has hand-authored types in

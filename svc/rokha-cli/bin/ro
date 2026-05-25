@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+// npm-distributed shim for `ro`. The real binary is downloaded into
+// `vendor/ro` by `npm/install.js` (postinstall). This shim execs it.
+
+'use strict';
+
+const { spawn } = require('child_process');
+const path = require('path');
+const fs = require('fs');
+
+const bin = path.join(__dirname, '..', 'vendor', process.platform === 'win32' ? 'ro.exe' : 'ro');
+
+if (!fs.existsSync(bin)) {
+  console.error(`@rokha/cli: binary not found at ${bin}`);
+  console.error('Reinstall: npm install -g @rokha/cli');
+  console.error('Or install via Homebrew / cargo / the curl installer (see https://github.com/aetherBytes/rokha-sdk).');
+  process.exit(127);
+}
+
+const child = spawn(bin, process.argv.slice(2), { stdio: 'inherit' });
+child.on('exit', (code, signal) => {
+  if (signal) {
+    process.kill(process.pid, signal);
+  } else {
+    process.exit(code ?? 1);
+  }
+});
+child.on('error', (err) => {
+  console.error(`@rokha/cli: failed to exec ${bin}: ${err.message}`);
+  process.exit(1);
+});

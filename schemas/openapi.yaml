@@ -1,9 +1,9 @@
 openapi: 3.1.0
 info:
-  title: NullBlock Public API
+  title: Rokha Public API
   description: |
-    The public, agent-friendly surface of NullBlock. Single source of truth
-    for the contract between [nullblock-sdk](https://github.com/aetherBytes/nullblock-sdk)
+    The public, agent-friendly surface of Rokha. Single source of truth
+    for the contract between [rokha-sdk](https://github.com/aetherBytes/rokha-sdk)
     and the Erebus router.
 
     **Versioning rule (non-negotiable)**: every change to this file MUST bump
@@ -17,18 +17,18 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 1.1.0
+  version: 3.2.0
   license:
     name: MIT
-    url: https://github.com/aetherBytes/nullblock-sdk/blob/main/LICENSE
+    url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
   contact:
-    name: NullBlock
-    url: https://nullblock.io
+    name: Rokha
+    url: https://rokha.ai
 
 servers:
   - url: http://localhost:3000
     description: Local development (default Erebus port)
-  - url: https://erebus.nullblock.io
+  - url: https://erebus.rokha.ai
     description: Production (hosted Erebus)
 
 tags:
@@ -41,15 +41,17 @@ tags:
   - name: auth
     description: Email + Google OAuth + JWT issue/refresh
   - name: agents
-    description: Hex chat, models, tools, history (public + signed variants)
-  - name: engrams
+    description: Rokha chat, models, tools, history (public + signed variants)
+  - name: harnesses
     description: Wallet-scoped memory/context CRUD with search (JWT + wallet sig)
   - name: mcp
     description: Model Context Protocol — tool discovery and invocation
   - name: marketplace
-    description: Crossroads listings + third-party tool registry (ClawHub, Smithery)
+    description: Rokha Registry listings + third-party tool registry (ClawHub, Smithery)
   - name: discovery
     description: Live discovery of running tools, agents, protocols
+  - name: llm
+    description: Federated LLM proxy — caller-keyed Anthropic forwarding
 
 security: []  # default: no auth. Routes that need it set their own.
 
@@ -135,7 +137,7 @@ paths:
   /api/skills:
     get:
       tags: [skills]
-      summary: List first-party NullBlock skills
+      summary: List first-party Rokha skills
       operationId: listSkills
       responses:
         '200':
@@ -478,7 +480,191 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 
   # ============================================================
-  # Agents — Hex chat + models + tools
+  # CLI device authorization (RFC 8628 adapted) — `ro login`.
+  # See docs-internal/src/operations/cli-device-flow.md.
+  # ============================================================
+
+  /api/auth/cli/start:
+    post:
+      tags: [auth]
+      summary: Start a CLI device-flow authorization
+      description: |
+        Anonymous. The CLI calls this to obtain a `device_code` (opaque,
+        kept private) + `user_code` (short, shown to the user). The user
+        completes the flow at `verification_uri` in a browser.
+      operationId: cliAuthStart
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scope:
+                  type: string
+                  default: cli
+                client:
+                  type: string
+                  description: Self-reported client identifier (e.g. `ro/0.2.0`).
+      responses:
+        '200':
+          description: Device flow initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CliDeviceStartResponse'
+
+  /api/auth/cli/poll:
+    post:
+      tags: [auth]
+      summary: Poll for device-flow authorization
+      description: |
+        Anonymous. The CLI polls every `interval` seconds with its
+        `device_code`. Returns `pending`, `slow_down`, `authorized`
+        (with JWT), `expired`, or `denied`.
+      operationId: cliAuthPoll
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [device_code]
+              properties:
+                device_code:
+                  type: string
+      responses:
+        '200':
+          description: Poll outcome
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CliDevicePollResponse'
+        '404':
+          description: Unknown device_code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/auth/cli/authorize:
+    post:
+      tags: [auth]
+      summary: Authorize a CLI device by user_code
+      description: |
+        JWT-required. Called from the rokha.ai `/cli` page after the
+        user has logged in. Binds the `user_code` to the caller's
+        identity, mints a CLI-scoped 30-day JWT, and stores it for the
+        CLI's next poll.
+      operationId: cliAuthAuthorize
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_code]
+              properties:
+                user_code:
+                  type: string
+                  example: ABCD-1234
+      responses:
+        '200':
+          description: Code bound to identity; CLI poll will now return JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CliDeviceAuthorizeResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Unknown user_code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Code already authorized or denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '410':
+          description: Code expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ============================================================
+  # LLM proxy — federated Anthropic forwarding via the user's
+  # Rokha account (BYO key wins; tenant key + rate-limit fallback).
+  # ============================================================
+
+  /api/v1/llm/proxy:
+    post:
+      tags: [llm]
+      summary: Forward an Anthropic /v1/messages request through Rokha
+      description: |
+        JWT-required. Forwards an Anthropic-shaped messages request to
+        Anthropic using the caller's BYO key (if present in
+        `agent_api_keys`) or the Rokha tenant key as a rate-limited
+        fallback. Only `claude-*` models are accepted; default is
+        `claude-haiku-4-5-20251001`. Streaming is rejected in this
+        slice (v0.3.2 will add it).
+
+        Body and response mirror Anthropic's `/v1/messages` shape
+        verbatim, so existing Anthropic SDKs can be pointed at this
+        URL with no other changes (set the base to
+        `https://erebus.rokha.ai/api/v1/llm` and send a Rokha JWT
+        instead of `x-api-key`).
+      operationId: llmProxy
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnthropicMessagesRequest'
+      responses:
+        '200':
+          description: Forwarded response from Anthropic
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnthropicMessagesResponse'
+        '400':
+          description: Bad request (e.g. unsupported model or stream=true)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          description: Tenant-key rate limit exceeded (free tier)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: Upstream Anthropic error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: No tenant key configured AND caller has no BYO key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ============================================================
+  # Agents — Rokha chat + models + tools
   # ============================================================
 
   /api/agents/health:
@@ -494,10 +680,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/HealthResponse'
 
-  /api/agents/hecate/chat:
+  /api/agents/rokha-agent/chat:
     post:
       tags: [agents]
-      summary: Chat with Hex (authenticated)
+      summary: Chat with Rokha (authenticated)
       description: |
         Standard non-streaming chat. JWT is required for paid-tier features;
         without it, the request is treated as pre-login free-tier.
@@ -519,10 +705,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/AgentChatResponse'
 
-  /api/agents/hecate/chat/public:
+  /api/agents/rokha-agent/chat/public:
     post:
       tags: [agents]
-      summary: Chat with Hex (no auth — pre-login)
+      summary: Chat with Rokha (no auth — pre-login)
       operationId: agentChatPublic
       requestBody:
         required: true
@@ -538,10 +724,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/AgentChatResponse'
 
-  /api/agents/hecate/chat/stream:
+  /api/agents/rokha-agent/chat/stream:
     post:
       tags: [agents]
-      summary: Streaming chat with Hex (SSE)
+      summary: Streaming chat with Rokha (SSE)
       description: |
         Server-sent events. Event types: `content`, `thinking`, `tool_start`,
         `tool_result`, `done`. Current MVP buffers the full response and
@@ -568,7 +754,7 @@ paths:
                   Lines alternate `event: <type>` and `data: <json>`,
                   with blank lines as event separators.
 
-  /api/agents/hecate/chat/stream/public:
+  /api/agents/rokha-agent/chat/stream/public:
     post:
       tags: [agents]
       summary: Streaming chat (no auth)
@@ -586,10 +772,10 @@ paths:
             text/event-stream:
               schema: { type: string }
 
-  /api/agents/hecate/status:
+  /api/agents/rokha-agent/status:
     get:
       tags: [agents]
-      summary: Hex agent status
+      summary: Rokha agent status
       operationId: agentStatus
       responses:
         '200':
@@ -599,10 +785,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/AgentStatus'
 
-  /api/agents/hecate/tools:
+  /api/agents/rokha-agent/tools:
     get:
       tags: [agents]
-      summary: Tools currently bound to Hex
+      summary: Tools currently bound to Rokha
       operationId: agentTools
       responses:
         '200':
@@ -614,10 +800,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/MCPTool'
 
-  /api/agents/hecate/history:
+  /api/agents/rokha-agent/history:
     get:
       tags: [agents]
-      summary: Recent conversation history for Hex
+      summary: Recent conversation history for Rokha
       operationId: agentHistory
       security:
         - bearerAuth: []
@@ -632,10 +818,10 @@ paths:
                   type: object
                   additionalProperties: true
 
-  /api/agents/hecate/clear:
+  /api/agents/rokha-agent/clear:
     post:
       tags: [agents]
-      summary: Clear Hex's conversation history for the caller
+      summary: Clear Rokha's conversation history for the caller
       operationId: agentClearHistory
       security:
         - bearerAuth: []
@@ -643,10 +829,10 @@ paths:
         '200':
           description: Cleared
 
-  /api/agents/hecate/model-info:
+  /api/agents/rokha-agent/model-info:
     get:
       tags: [agents]
-      summary: Hex's current model
+      summary: Rokha's current model
       operationId: agentModelInfo
       responses:
         '200':
@@ -656,10 +842,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ModelInfo'
 
-  /api/agents/hecate/available-models:
+  /api/agents/rokha-agent/available-models:
     get:
       tags: [agents]
-      summary: Models available to Hex
+      summary: Models available to Rokha
       operationId: agentAvailableModels
       responses:
         '200':
@@ -672,14 +858,14 @@ paths:
                   $ref: '#/components/schemas/ModelInfo'
 
   # ============================================================
-  # Engrams — wallet-scoped memory layer
+  # Harnesses — wallet-scoped memory layer
   # ============================================================
 
-  /api/engrams/health:
+  /api/harnesses/health:
     get:
-      tags: [engrams]
-      summary: Engrams service health
-      operationId: engramsHealth
+      tags: [harnesses]
+      summary: Harnesses service health
+      operationId: harnessesHealth
       responses:
         '200':
           description: Healthy
@@ -688,32 +874,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/HealthResponse'
 
-  /api/engrams:
+  /api/harnesses:
     get:
-      tags: [engrams]
-      summary: List engrams (with optional filters via query string)
-      operationId: listEngrams
+      tags: [harnesses]
+      summary: List harnesses (with optional filters via query string)
+      operationId: listHarnesses
       security:
         - bearerAuth: []
       parameters:
         - { name: wallet_address, in: query, schema: { type: string } }
-        - { name: engram_type, in: query, schema: { $ref: '#/components/schemas/EngramType' } }
+        - { name: harness_type, in: query, schema: { $ref: '#/components/schemas/HarnessType' } }
         - { name: tags, in: query, schema: { type: string }, description: 'Comma-separated' }
         - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 500 } }
       responses:
         '200':
-          description: Engram list (wrapped in `{data, ...}` envelope)
+          description: Harness list (wrapped in `{data, ...}` envelope)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EngramsListResponse'
+                $ref: '#/components/schemas/HarnessesListResponse'
         '401':
           $ref: '#/components/responses/Unauthorized'
 
     post:
-      tags: [engrams]
-      summary: Create an engram
-      operationId: createEngram
+      tags: [harnesses]
+      summary: Create an harness
+      operationId: createHarness
       security:
         - bearerAuth: []
       requestBody:
@@ -721,20 +907,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EngramCreateRequest'
+              $ref: '#/components/schemas/HarnessCreateRequest'
       responses:
         '200':
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EngramEnvelope'
+                $ref: '#/components/schemas/HarnessEnvelope'
 
-  /api/engrams/search:
+  /api/harnesses/search:
     post:
-      tags: [engrams]
-      summary: Search engrams (keyword, fuzzy, or semantic)
-      operationId: searchEngrams
+      tags: [harnesses]
+      summary: Search harnesses (keyword, fuzzy, or semantic)
+      operationId: searchHarnesses
       security:
         - bearerAuth: []
       requestBody:
@@ -742,61 +928,61 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EngramSearchRequest'
+              $ref: '#/components/schemas/HarnessSearchRequest'
       responses:
         '200':
           description: Results
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EngramsListResponse'
+                $ref: '#/components/schemas/HarnessesListResponse'
 
-  /api/engrams/{id}:
+  /api/harnesses/{id}:
     parameters:
       - { name: id, in: path, required: true, schema: { type: string, format: uuid } }
     get:
-      tags: [engrams]
-      summary: Get one engram by ID
-      operationId: getEngram
+      tags: [harnesses]
+      summary: Get one harness by ID
+      operationId: getHarness
       security: [{ bearerAuth: [] }]
       responses:
         '200':
-          description: Engram
+          description: Harness
           content:
             application/json:
-              schema: { $ref: '#/components/schemas/EngramEnvelope' }
+              schema: { $ref: '#/components/schemas/HarnessEnvelope' }
         '404':
           $ref: '#/components/responses/NotFound'
     put:
-      tags: [engrams]
-      summary: Update an engram
-      operationId: updateEngram
+      tags: [harnesses]
+      summary: Update an harness
+      operationId: updateHarness
       security: [{ bearerAuth: [] }]
       requestBody:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/EngramUpdateRequest' }
+            schema: { $ref: '#/components/schemas/HarnessUpdateRequest' }
       responses:
         '200':
           description: Updated
           content:
             application/json:
-              schema: { $ref: '#/components/schemas/EngramEnvelope' }
+              schema: { $ref: '#/components/schemas/HarnessEnvelope' }
     delete:
-      tags: [engrams]
-      summary: Delete an engram
-      operationId: deleteEngram
+      tags: [harnesses]
+      summary: Delete an harness
+      operationId: deleteHarness
       security: [{ bearerAuth: [] }]
       responses:
         '204':
           description: Deleted
 
-  /api/engrams/{id}/fork:
+  /api/harnesses/{id}/fork:
     post:
-      tags: [engrams]
-      summary: Fork an engram for the calling user
-      operationId: forkEngram
+      tags: [harnesses]
+      summary: Fork an harness for the calling user
+      operationId: forkHarness
       security: [{ bearerAuth: [] }]
       parameters:
         - { name: id, in: path, required: true, schema: { type: string, format: uuid } }
@@ -805,13 +991,13 @@ paths:
           description: Forked
           content:
             application/json:
-              schema: { $ref: '#/components/schemas/EngramEnvelope' }
+              schema: { $ref: '#/components/schemas/HarnessEnvelope' }
 
-  /api/engrams/{id}/publish:
+  /api/harnesses/{id}/publish:
     post:
-      tags: [engrams]
-      summary: Publish an engram (make it discoverable in Crossroads)
-      operationId: publishEngram
+      tags: [harnesses]
+      summary: Publish an harness (make it discoverable in Rokha Registry)
+      operationId: publishHarness
       security: [{ bearerAuth: [] }]
       parameters:
         - { name: id, in: path, required: true, schema: { type: string, format: uuid } }
@@ -819,11 +1005,11 @@ paths:
         '200':
           description: Published
 
-  /api/engrams/wallet/{wallet}:
+  /api/harnesses/wallet/{wallet}:
     get:
-      tags: [engrams]
-      summary: All engrams owned by a wallet
-      operationId: getEngramsByWallet
+      tags: [harnesses]
+      summary: All harnesses owned by a wallet
+      operationId: getHarnessesByWallet
       security: [{ bearerAuth: [] }]
       parameters:
         - { name: wallet, in: path, required: true, schema: { type: string } }
@@ -832,23 +1018,23 @@ paths:
           description: List
           content:
             application/json:
-              schema: { $ref: '#/components/schemas/EngramsListResponse' }
+              schema: { $ref: '#/components/schemas/HarnessesListResponse' }
 
-  /api/engrams/wallet/{wallet}/{key}:
+  /api/harnesses/wallet/{wallet}/{key}:
     get:
-      tags: [engrams]
-      summary: Get a specific engram by wallet+key
-      operationId: getEngramByKey
+      tags: [harnesses]
+      summary: Get a specific harness by wallet+key
+      operationId: getHarnessByKey
       security: [{ bearerAuth: [] }]
       parameters:
         - { name: wallet, in: path, required: true, schema: { type: string } }
         - { name: key, in: path, required: true, schema: { type: string } }
       responses:
         '200':
-          description: Engram
+          description: Harness
           content:
             application/json:
-              schema: { $ref: '#/components/schemas/EngramEnvelope' }
+              schema: { $ref: '#/components/schemas/HarnessEnvelope' }
         '404':
           $ref: '#/components/responses/NotFound'
 
@@ -911,13 +1097,13 @@ paths:
               schema: { $ref: '#/components/schemas/MCPJsonRpcResponse' }
 
   # ============================================================
-  # Marketplace — Crossroads listings + Registry
+  # Marketplace — Rokha Registry listings + Registry
   # ============================================================
 
   /api/marketplace/listings:
     get:
       tags: [marketplace]
-      summary: Native Crossroads listings
+      summary: Native Rokha Registry listings
       operationId: listMarketplaceListings
       responses:
         '200':
@@ -1318,6 +1504,147 @@ components:
         verification_token: { type: string, description: "Returned on register; in dev, POST to /api/auth/email/verify" }
       required: [success, token]
 
+    CliDeviceStartResponse:
+      type: object
+      properties:
+        device_code:
+          type: string
+          description: 64-char hex. Never shown to the user. CLI uses this to poll.
+        user_code:
+          type: string
+          description: 8 alphanumeric chars formatted `XXXX-XXXX` from a no-ambiguity alphabet.
+          example: ABCD-1234
+        verification_uri:
+          type: string
+          format: uri
+          example: https://rokha.ai/cli
+        verification_uri_complete:
+          type: string
+          format: uri
+          description: Same as `verification_uri` but with `?code=user_code` so the user can skip the typing step.
+          example: https://rokha.ai/cli?code=ABCD-1234
+        expires_in:
+          type: integer
+          description: Seconds until the device_code expires.
+          example: 600
+        interval:
+          type: integer
+          description: Minimum seconds the CLI should wait between polls.
+          example: 3
+      required: [device_code, user_code, verification_uri, verification_uri_complete, expires_in, interval]
+
+    CliDevicePollResponse:
+      oneOf:
+        - type: object
+          properties:
+            status: { type: string, enum: [pending] }
+          required: [status]
+        - type: object
+          properties:
+            status: { type: string, enum: [slow_down] }
+            interval: { type: integer }
+          required: [status, interval]
+        - type: object
+          properties:
+            status: { type: string, enum: [authorized] }
+            jwt: { type: string, description: 30-day CLI-scoped JWT }
+            identity:
+              type: object
+              properties:
+                user_id: { type: string }
+                identity: { type: string }
+                auth_method: { type: string }
+                tier: { type: string, enum: [free, casual, pro] }
+              required: [user_id, identity, auth_method, tier]
+          required: [status, jwt, identity]
+        - type: object
+          properties:
+            status: { type: string, enum: [expired] }
+          required: [status]
+        - type: object
+          properties:
+            status: { type: string, enum: [denied] }
+          required: [status]
+      discriminator:
+        propertyName: status
+
+    CliDeviceAuthorizeResponse:
+      type: object
+      properties:
+        status: { type: string, enum: [ok] }
+        device_summary:
+          type: object
+          properties:
+            client: { type: string, nullable: true }
+            created_at: { type: string, format: date-time }
+          required: [created_at]
+      required: [status, device_summary]
+
+    # --- LLM proxy ---
+
+    AnthropicMessagesRequest:
+      type: object
+      description: |
+        Anthropic `/v1/messages` request, forwarded verbatim except
+        `model` which is validated (must start with `claude-`) and
+        defaulted to `claude-haiku-4-5-20251001`. `stream` is rejected
+        in this slice (v0.3.2 adds it). Other fields are passed through
+        unchanged.
+      additionalProperties: true
+      properties:
+        model:
+          type: string
+          example: claude-haiku-4-5-20251001
+        max_tokens:
+          type: integer
+          example: 1024
+        system:
+          oneOf:
+            - { type: string }
+            - { type: array, items: { type: object, additionalProperties: true } }
+        messages:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+            properties:
+              role: { type: string, enum: [user, assistant] }
+              content:
+                oneOf:
+                  - { type: string }
+                  - { type: array, items: { type: object, additionalProperties: true } }
+            required: [role, content]
+        temperature:
+          type: number
+        tools:
+          type: array
+          items: { type: object, additionalProperties: true }
+        stream:
+          type: boolean
+          default: false
+          description: Must be false in v0.3.1. Streaming arrives in v0.3.2.
+      required: [messages]
+
+    AnthropicMessagesResponse:
+      type: object
+      description: Anthropic `/v1/messages` response shape, forwarded verbatim.
+      additionalProperties: true
+      properties:
+        id: { type: string }
+        type: { type: string, example: message }
+        role: { type: string, example: assistant }
+        model: { type: string }
+        content:
+          type: array
+          items: { type: object, additionalProperties: true }
+        stop_reason: { type: string, nullable: true }
+        usage:
+          type: object
+          additionalProperties: true
+          properties:
+            input_tokens: { type: integer }
+            output_tokens: { type: integer }
+
     # --- Agents ---
 
     AgentChatRequest:
@@ -1364,9 +1691,9 @@ components:
         cost_per_input_token: { type: number }
         cost_per_output_token: { type: number }
 
-    # --- Engrams ---
+    # --- Harnesses ---
 
-    EngramType:
+    HarnessType:
       type: string
       enum: [persona, preference, strategy, knowledge, compliance]
 
@@ -1374,12 +1701,12 @@ components:
       type: string
       enum: [keyword, fuzzy, semantic]
 
-    Engram:
+    Harness:
       type: object
       properties:
         id: { type: string, format: uuid }
         wallet_address: { type: string }
-        engram_type: { $ref: '#/components/schemas/EngramType' }
+        harness_type: { $ref: '#/components/schemas/HarnessType' }
         key: { type: string }
         content: { type: string, description: "Often a JSON-encoded string" }
         tags:
@@ -1393,14 +1720,14 @@ components:
         version: { type: integer }
         created_at: { type: string, format: date-time }
         updated_at: { type: string, format: date-time }
-      required: [id, wallet_address, engram_type, key, content]
+      required: [id, wallet_address, harness_type, key, content]
 
-    EngramCreateRequest:
+    HarnessCreateRequest:
       type: object
       properties:
         wallet_address: { type: string, description: "Erebus overrides with caller's identity" }
-        engram_type: { $ref: '#/components/schemas/EngramType' }
-        key: { type: string, description: "Unique within (wallet, engram_type)" }
+        harness_type: { $ref: '#/components/schemas/HarnessType' }
+        key: { type: string, description: "Unique within (wallet, harness_type)" }
         content: { type: string }
         tags:
           type: array
@@ -1409,9 +1736,9 @@ components:
           type: object
           additionalProperties: true
         is_public: { type: boolean, default: false }
-      required: [engram_type, key, content]
+      required: [harness_type, key, content]
 
-    EngramUpdateRequest:
+    HarnessUpdateRequest:
       type: object
       properties:
         content: { type: string }
@@ -1423,11 +1750,11 @@ components:
           additionalProperties: true
         is_public: { type: boolean }
 
-    EngramSearchRequest:
+    HarnessSearchRequest:
       type: object
       properties:
         wallet_address: { type: string }
-        engram_type: { $ref: '#/components/schemas/EngramType' }
+        harness_type: { $ref: '#/components/schemas/HarnessType' }
         query: { type: string, description: "Required for fuzzy/semantic; optional for tag/type filter" }
         search_mode: { $ref: '#/components/schemas/SearchMode' }
         tags:
@@ -1436,20 +1763,20 @@ components:
         limit: { type: integer, minimum: 1, maximum: 500, default: 50 }
         offset: { type: integer, minimum: 0, default: 0 }
 
-    EngramEnvelope:
+    HarnessEnvelope:
       type: object
-      description: Wrapper that Erebus puts around a single engram response
+      description: Wrapper that Erebus puts around a single harness response
       properties:
-        data: { $ref: '#/components/schemas/Engram' }
+        data: { $ref: '#/components/schemas/Harness' }
         success: { type: boolean }
 
-    EngramsListResponse:
+    HarnessesListResponse:
       type: object
       description: Wrapper used for list + search responses
       properties:
         data:
           type: array
-          items: { $ref: '#/components/schemas/Engram' }
+          items: { $ref: '#/components/schemas/Harness' }
         success: { type: boolean }
         total: { type: integer }
         limit: { type: integer }

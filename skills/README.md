@@ -8,7 +8,7 @@ just works.
 
 | Skill | What it does | Stage |
 |-------|--------------|-------|
-| [`null-audit/`](./null-audit/SKILL.md) | Security & compliance audit for MCP tools, agents, and skills. Three-stage flow (heuristic scan → optional sandboxed probe → engram persistence). | MVP shipped |
+| [`rokha-audit/`](./rokha-audit/SKILL.md) | Security & compliance audit for MCP tools, agents, and skills. Three-stage flow (heuristic scan → optional sandboxed probe → harness persistence). | MVP shipped |
 
 More on the way. Open an issue or PR if you have a workflow you want to
 package and share.
@@ -24,14 +24,14 @@ Every skill here is a self-contained folder. Three ways to install it:
 curl -s http://localhost:3000/api/skills | jq
 
 # Get one skill's manifest (frontmatter + file list + install hints)
-curl -s http://localhost:3000/api/skills/null-audit | jq
+curl -s http://localhost:3000/api/skills/rokha-audit | jq
 
 # Fetch the SKILL.md and bundled files
-mkdir -p ~/.claude/skills/null-audit
-curl -fsSL http://localhost:3000/api/skills/null-audit/SKILL.md \
-  -o ~/.claude/skills/null-audit/SKILL.md
-curl -fsSL http://localhost:3000/api/skills/null-audit/references/audit-engram-schema.md \
-  --create-dirs -o ~/.claude/skills/null-audit/references/audit-engram-schema.md
+mkdir -p ~/.claude/skills/rokha-audit
+curl -fsSL http://localhost:3000/api/skills/rokha-audit/SKILL.md \
+  -o ~/.claude/skills/rokha-audit/SKILL.md
+curl -fsSL http://localhost:3000/api/skills/rokha-audit/references/audit-harness-schema.md \
+  --create-dirs -o ~/.claude/skills/rokha-audit/references/audit-harness-schema.md
 ```
 
 Replace `http://localhost:3000` with NullBlock's hosted Erebus URL in prod.
@@ -41,24 +41,24 @@ CORS-open, no auth.
 
 ```bash
 # Single SKILL.md
-curl -fsSL https://raw.githubusercontent.com/aetherBytes/nullblock-sdk/main/skills/null-audit/SKILL.md \
-  -o ~/.claude/skills/null-audit/SKILL.md
+curl -fsSL https://raw.githubusercontent.com/aetherBytes/rokha-sdk/main/skills/rokha-audit/SKILL.md \
+  -o ~/.claude/skills/rokha-audit/SKILL.md
 
 # Whole folder with bundled refs/scripts/assets — sparse-checkout
 git clone --filter=blob:none --no-checkout \
-  https://github.com/aetherBytes/nullblock-sdk.git /tmp/nb-sdk
+  https://github.com/aetherBytes/rokha-sdk.git /tmp/nb-sdk
 cd /tmp/nb-sdk
 git sparse-checkout init --cone
-git sparse-checkout set skills/null-audit
+git sparse-checkout set skills/rokha-audit
 git checkout main
-cp -r skills/null-audit ~/.claude/skills/
+cp -r skills/rokha-audit ~/.claude/skills/
 ```
 
 ### 3. Clone the whole NullBlock repo (for contributors)
 
 ```bash
-git clone https://github.com/aetherBytes/nullblock.git
-ln -s "$PWD/nullblock/skills/null-audit" ~/.claude/skills/null-audit
+git clone https://github.com/aetherBytes/rokha.git
+ln -s "$PWD/nullblock/skills/rokha-audit" ~/.claude/skills/rokha-audit
 ```
 
 ## Compatibility matrix
@@ -126,8 +126,8 @@ CORS is open on all skills endpoints. Auth is never required.
 | Layer | What | NullBlock surface | Spec |
 |-------|------|-------------------|------|
 | Distribution | Portable SKILL.md folders | `skills/` in this repo + `/api/skills/*` | [agentskills.io](https://agentskills.io) |
-| Capability | Callable MCP tools | `nullblock-protocols` (port 8001), e.g. `null_audit`, `create_engram` | [MCP 2025-11-25](https://spec.modelcontextprotocol.io) |
-| Consumer | The thing running the skill | Hex (browser), `nb` (terminal/WebContainer), Claude Code, Cursor, Goose, … | n/a — any agent |
+| Capability | Callable MCP tools | `nullblock-protocols` (port 8001), e.g. `rokha_audit`, `create_harness` | [MCP 2025-11-25](https://spec.modelcontextprotocol.io) |
+| Consumer | The thing running the skill | Rokha (browser), `nb` (terminal/WebContainer), Claude Code, Cursor, Goose, … | n/a — any agent |
 
 The skill **teaches** the agent how to do something. The MCP tools are
 **what** the skill calls. The consumer **runs** the workflow. Don't conflate.

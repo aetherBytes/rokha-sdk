@@ -1,9 +1,73 @@
-typescript/node_modules/
-typescript/dist/
-python/__pycache__/
-python/src/nullblock/__pycache__/
-python/.venv/
-python/build/
-python/dist/
-*.egg-info/
+# env files 
+*.env
+*.env.*
+.env
+.env.local
+.env.dev
+.env.development
+.env.test
+.env.production
+
+# Logs
+*.log
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Log directories
+logs/
+svc/*/logs/
+
+.amplify-hosting
+node_modules
+*.local
+
 .DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vercel
+
+# Build targets
+**/target/
+
+# Generated docs
+docs-internal/book/
+
+# Build output
+dist/
+build/
+
+# IDE
+.cursor/
+.vscode/
+.idea/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+
+# Secrets / credentials
+*.pem
+*.key
+*.p12
+*.keystore
+
+# Wallet keys
+*.keypair
+*.keypair.json
+id.json
+
+# Terraform secrets
+*.tfvars
+*secret*
+
+# Python
+__pycache__/
+*.pyc

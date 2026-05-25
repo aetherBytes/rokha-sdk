@@ -1,125 +1,163 @@
 # Changelog
 
-All notable changes to the NullBlock SDK are tracked here.
+All notable changes to the Rokha SDK are documented here. The SDK is
+the public face of Rokha; the wire contract it depends on is
+`schemas/openapi.yaml`, served live by Erebus at `/api/schema`.
 
-The SDK and the NullBlock wire contract (`schemas/openapi.yaml`) are
-versioned independently. SDK version tracks client-code changes;
-schema version tracks the wire contract. See `schemas/README.md`.
+## 0.5.0 — Federated LLM proxy (slice 1 of LLM routing)
 
-## 0.2.2 — 2026-05-13
+**Additive. Schema bumped 3.1.0 → 3.2.0 (minor — 1 new endpoint). SDK 0.4.0 → 0.5.0.**
 
-Schema **v1.1.0** — basic NullBlock functionality is now in the wire
-contract. Existing SDK clients are unchanged; what's new is the
-explicit, versioned shape they're claiming to call.
-
-### Schema additions (1.0.0 → 1.1.0, minor — additive)
-
-- **Wallets** — `/api/wallets`, `/api/wallets/detect`, `/api/wallets/challenge`, `/api/wallets/verify`, `/api/wallets/status`. Components: `WalletChallengeRequest/Response`, `WalletVerifyRequest/Response`, `WalletListResponse`.
-- **Auth** — `/api/auth/email/{register,login,verify,resend-verification}`, `/api/auth/google/{start,callback}`, `/api/auth/{token,refresh}`. Components: `EmailRegisterRequest`, `EmailLoginRequest`, `EmailVerifyRequest`, `AuthSuccessResponse`.
-- **Agents** — chat (non-stream + stream, public + signed), status, tools, history, clear, model-info, available-models. Components: `AgentChatRequest`, `AgentChatResponse`, `AgentStatus`, `ModelInfo`.
-- **Engrams** — full CRUD + search + fork + publish + wallet-scoped lookups. Components: `Engram`, `EngramCreateRequest`, `EngramUpdateRequest`, `EngramSearchRequest`, `EngramEnvelope`, `EngramsListResponse`, `EngramType` enum, `SearchMode` enum.
-- **MCP** — `/mcp/health`, `/mcp/tools`, `/mcp/jsonrpc`. Components: `MCPTool`, `MCPJsonRpcRequest`, `MCPJsonRpcResponse`.
-- **Marketplace** — listings, search, featured, stats, registry (paged + per-listing detail + stats), markdown skills catalog. Components: `MarketplaceListing`, `MarketplaceSearchRequest`, `RegistryListing`, `RegistryListResponse`.
-- **Discovery** — `/api/discovery/{tools,agents,protocols,all,hot}`.
-- **Security scheme** — `bearerAuth` (JWT) wired into endpoints that require it.
-
-### Changed
-- `NullblockClient.SCHEMA_VERSION` (TS + Python) bumped to `"1.1.0"`.
-- Coverage matrix in `schemas/README.md` updated.
-
-### Same wire shape, more contract
-- No SDK client methods were added or changed in this release. The
-  existing `nb.agents.*`, `nb.engrams.*`, `nb.wallets.*`, `nb.mcp.*`,
-  `nb.marketplace.*` methods now have schema-anchored docs.
-
-## 0.2.1 — 2026-05-13
-
-Wire contract is now an explicit, versioned schema layer.
+Adds typed bindings for the new federated LLM proxy. The proxy lets
+any authenticated Rokha caller (CLI, SDK, third-party agent) forward
+Anthropic-shaped `/v1/messages` requests through Rokha — using their
+own BYO Anthropic key (if stored in their account) or the Rokha
+tenant key with the free-tier daily rate limit.
 
 ### Added
 
-- **`schemas/openapi.yaml`** — OpenAPI 3.1 spec covering every public
-  Erebus endpoint. Started at **schema v1.0.0**. Mirrors the canonical
-  copy in the (private) main repo.
-- **`schemas/README.md`** — versioning rules, sync model, coverage matrix.
-- **`NullblockClient.schemaVersion`** (TS) / `client.schema_version`
-  (Python) — wire-contract version this SDK was built against.
-- **`nb.serverSchemaVersion()`** / `nb.server_schema_version()` — fetches
-  what Erebus is serving from `GET /api/schema/version`.
-- **`nb.checkSchemaCompat()`** / `nb.check_schema_compat()` —
-  returns `'match' | 'server-newer' | 'sdk-newer' | 'major-mismatch'`
-  so SDK consumers can refuse incompatible servers.
+- **`RokhaClient.llm`** (TS) / **`llm_proxy()` method** (Py):
+  - `llm.proxy(body)` → forwards to `POST /api/v1/llm/proxy`. Body
+    is the Anthropic messages request; response is Anthropic's
+    response shape verbatim.
+- TS exports `LlmClient` + `AnthropicMessagesRequest` +
+  `AnthropicMessagesResponse` from index.
+- `SCHEMA_VERSION` bumped to `3.2.0` in both SDKs.
 
-### Changed
+### Wire contract (schema 3.2.0)
 
-- README references `schemas/` and the contract rule.
+- New tag `llm`.
+- New path `POST /api/v1/llm/proxy` with `bearerAuth` security.
+- New components: `AnthropicMessagesRequest` + `AnthropicMessagesResponse`
+  (intentionally permissive — `additionalProperties: true` — so the
+  proxy stays a pass-through as Anthropic's API evolves).
 
-## 0.2.0 — 2026-05-13
+### Server policy (Erebus)
 
-The first big face-lift. The SDK now reflects NullBlock's actual
-service surface and joins the agentskills.io open standard.
+- Caller's user-scoped BYO Anthropic key (via `agent_api_keys`) wins
+  when present and bypasses the rate limit.
+- Otherwise the tenant fallback is `ANTHROPIC_KEY_ROKHA_AGENT` env
+  (then `ANTHROPIC_API_KEY`), and the existing free-tier daily limit
+  (`LLM_DAILY_RATE_LIMIT`, default 100) applies — same shape as the
+  agent chat routes.
+- Only `claude-*` models. Default `claude-haiku-4-5-20251001`.
+- `stream=true` is rejected (slice 2 / v0.3.2 adds streaming).
+
+### What this unlocks
+
+- Third-party SDK callers can chat with Anthropic via Rokha (the
+  user's account fronts the compute). They never see the key.
+- Slice 2 — `rokha-agents` repoint to call the proxy instead of
+  Anthropic directly — lands next session. After that, `ro up`
+  works end-to-end without `ANTHROPIC_KEY_ROKHA_AGENT` on the
+  local machine.
+
+## 0.4.0 — CLI device flow (`ro login`)
+
+**Additive. Schema bumped 3.0.0 → 3.1.0 (minor — 3 new endpoints). SDK 0.3.0 → 0.4.0.**
+
+Adds typed bindings for the CLI device authorization grant (RFC 8628
+adapted) that powers `ro login`. Full design:
+[docs-internal/src/operations/cli-device-flow.md](../docs-internal/src/operations/cli-device-flow.md).
 
 ### Added
 
-- **`skills/`** at the repo root — portable
-  [agentskills.io](https://agentskills.io)-compliant skills, drop-in
-  for any compatible agent (Claude Code, OpenClaw, Cursor, Goose,
-  OpenHands, Codex, …). No NullBlock harness needed.
-  - First shipped skill: [`null-audit`](./skills/null-audit) — three-stage
-    security & compliance audit for MCP tools.
-- **`SkillsClient`** in both TypeScript and Python — talks to Erebus's
-  new `/api/skills/*` endpoints:
-  - `nb.skills.list()` — JSON index with parsed frontmatter
-  - `nb.skills.get(name)` — full manifest (frontmatter + files + body size)
-  - `nb.skills.getSkillMd(name)` — raw SKILL.md
-  - `nb.skills.getFile(name, path)` — bundled refs/scripts/assets
-  - `nb.skills.fetchBundle(name)` — convenience: full skill in one call
-- **New types**: `SkillSummary`, `SkillManifest`, `SkillsListResponse`.
-- **`docs/index.html`** — landing page now reflects the layering story
-  (distribution / capability / consumer) and links to GitHub, TS+Python
-  packages, the skills index, and CHANGELOG.
-- **`CHANGELOG.md`** (this file).
-- **Multi-auth quick-start examples** — wallet, email, and Google OAuth
-  flows are all surfaced in the README.
+- **`RokhaClient.cliAuth`** (TS) / **`cli_auth_*` methods** (Py) — typed
+  wrappers around the new endpoints:
+  - `cliAuth.start({ scope?, client? })` → `CliDeviceStartResponse`
+  - `cliAuth.poll(device_code)` → discriminated `CliDevicePollResponse`
+    (`pending` / `slow_down` / `authorized` + jwt + identity / `expired` / `denied`)
+  - `cliAuth.authorize(user_code)` — requires bearer JWT; binds the
+    code to the caller's identity, mints a 30-day CLI-scoped JWT.
+- **`RokhaClient.setAuthToken(jwt)`** (TS) / **`set_auth_token(jwt)`**
+  (Py) — sets the Bearer token used on protected routes.
+- TS exports `CliAuthClient` + the four response interfaces from index.
 
-### Changed
+### Wire contract
 
-- README is now the comprehensive face-of-the-SDK doc with the three-layer
-  model up top, full API surface table, current-version install snippets,
-  and the skills section.
-- TypeScript package marked `"type": "module"` to match the ESM `.js`
-  imports already used in source.
-- Both packages now declare `repository`, `homepage`, `bugs` metadata
-  for npm and PyPI listings.
+- Schema 3.1.0 adds `/api/auth/cli/{start,poll,authorize}` and four
+  components: `CliDeviceStartResponse`, `CliDevicePollResponse`
+  (oneOf with `discriminator: status`), `CliDeviceAuthorizeResponse`.
+- `SCHEMA_VERSION` bumped to `3.1.0` in both SDKs.
 
-### Surface coverage
+### Notes
 
-| Layer | Method on TS client | Method on Python client |
-|-------|--------------------|--------------------------|
-| Agents (chat, models, tools) | `nb.agents.*` | `nb.agent_*` |
-| Engrams (memory CRUD) | `nb.engrams.*` | `nb.list_engrams / create_engram / …` |
-| MCP (tool list/call) | `nb.mcp.*` | `nb.mcp_*` |
-| Marketplace (Crossroads) | `nb.marketplace.*` | `nb.list_listings / search_listings` |
-| **Skills** (new) | `nb.skills.*` | `nb.list_skills / get_skill / fetch_skill_bundle` |
-| Wallets (auth) | `nb.wallets.*` | (via headers) |
+- The CLI `ro login` ships in `rokha-cli` 0.3.0 (separate package).
+- The Hecate `/cli` browser page is not yet shipped — until it is,
+  the user must complete the `authorize` step by `curl`ing the
+  endpoint with their existing session JWT. See the design doc.
 
-### Known gaps (in active development)
+## 0.3.0 — Schema drift detection wired
 
-- Email + Google OAuth helper methods (the endpoints exist on Erebus;
-  the SDK lets you call them via `nb.post` directly but typed wrappers
-  are pending).
-- Sessions API (`/api/agents/:name/sessions/*`).
-- Streaming chat helper (`chat/stream` SSE consumption).
-- Content service (`/api/content/*`).
-- Stage 2 npm probe recipe in `null-audit` (`references/probe-stdio-mcp.md`
-  describes it; the orchestration is implemented in NullBlock's
-  WebContainer-backed `nb` CLI, not yet in the SDK).
+**Additive. Schema stays at 3.0.0. SDK 0.2.0 → 0.3.0.**
 
-## 0.1.0 — 2026-04
+Closes the gap noted in the 0.2.0 release notes: SDK clients can now
+verify they're talking to a compatible Erebus before sending requests.
 
-Initial skeletons:
+### Added
 
-- TypeScript: `NullblockClient` with `agents`, `engrams`, `mcp`,
-  `marketplace`, `wallets` sub-clients.
-- Python: `NullblockClient` with the equivalent methods.
-- GitHub Pages landing with the manifesto.
+- **`RokhaClient.SCHEMA_VERSION`** (TS class static / Py class attr) —
+  the schema version this SDK build was compiled against (`3.0.0`).
+- **`RokhaClient.checkSchemaCompat()`** / **`check_schema_compat()`** —
+  fetches `/api/schema/version` and returns a `SchemaCompatReport`:
+  - `match` — server and SDK agree
+  - `minor-drift` — same major, server has a newer minor (forward-compatible)
+  - `major-drift` — incompatible (SDK should refuse)
+  - `unreachable` — schema endpoint did not respond
+- TS: `SchemaCompatLevel` and `SchemaCompatReport` exported from index.
+- Py: `SchemaCompatReport` dataclass exported from `rokha`.
+
+The SDK does not throw on drift — callers decide whether to warn,
+refuse, or proceed.
+
+### Companion: rokha-cli 0.2.0
+
+Same schema-version constant lives in the `ro` CLI (binary renamed
+from `rokha` → `ro`). `ro status` runs the same drift check against
+the configured Erebus.
+
+## 0.2.0 — Agent rebrand: Hecate/Hex → Rokha Agent
+
+**BREAKING. Schema bumped 2.0.0 → 3.0.0 (major). SDK 0.1.0 → 0.2.0.**
+
+The resident agent is no longer "Hecate"/"Hex" — it is **Rokha**, the
+breath that animates the flow. The agent and the framework now share
+the name by design.
+
+### Breaking changes
+
+- **Agent routes renamed.** Every `/api/agents/hecate/*` endpoint is
+  now `/api/agents/rokha-agent/*` (chat, chat/public, chat/stream,
+  chat/stream/public, status, tools, history, clear, model-info,
+  available-models). The old `/api/agents/hecate/*` paths are **gone**
+  — there are no compatibility aliases. Callers must update.
+- **Agent identifier.** The agent's id/dispatch token is now
+  `rokha-agent` (was `hecate`). Any code passing `'hecate'` as the
+  agent argument must pass `'rokha-agent'`.
+- **MCP tool names.** Agent-owned MCP tools exposed at `/mcp/jsonrpc`
+  are renamed `hecate_*` → `rokha_agent_*` (e.g. `hecate_remember` →
+  `rokha_agent_remember`, `hecate_new_session` →
+  `rokha_agent_new_session`). Any MCP client invoking these by name
+  must update.
+- **Discovery insight field.** `seed_hex` → `seed_rokha_agent` in the
+  discovery insight payload.
+- **TypeScript:** `AgentsClient.hecateChat()` → `rokhaAgentChat()`;
+  all `agent` defaults are now `'rokha-agent'`.
+- **Python:** `RokhaClient.agent_status()` / `agent_tools()` (and
+  peers) now default `agent="rokha-agent"`.
+
+### Migration
+
+- Replace `/api/agents/hecate/` → `/api/agents/rokha-agent/` and the
+  agent token `'hecate'` → `'rokha-agent'`.
+- Replace MCP tool names `hecate_*` → `rokha_agent_*`.
+- Server-side deployments: run the included DB migrations
+  (erebus `011`, harnesses `008`, agents `003`) so seeded keys, rate
+  limits, SYSTEM personality, and per-user model choice carry over.
+
+### Notes
+
+- `RokhaClient.SCHEMA_VERSION` / `nb.checkSchemaCompat()` are not yet
+  implemented in this SDK (pre-existing gap, unrelated to this
+  release); the canonical schema version is `info.version: 3.0.0` in
+  `schemas/openapi.yaml`, served at `/api/schema/version`.

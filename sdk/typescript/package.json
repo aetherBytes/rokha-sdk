@@ -1,0 +1,16 @@
+{
+  "name": "@rokha/sdk",
+  "version": "0.5.0",
+  "description": "TypeScript SDK for Rokha — agents, harnesses, MCP tools, and Rokha Registry",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "keywords": ["rokha", "agents", "mcp", "harnesses", "crossroads", "solana"],
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
+}

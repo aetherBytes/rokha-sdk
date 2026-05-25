@@ -1,0 +1,192 @@
+# Rokha local stack — embedded in the `ro` binary.
+#
+# Brings up the v0.3 core 4 services (no frontend):
+#   erebus, rokha-agents, rokha-harnesses, rokha-protocols
+# plus their dependencies (postgres-erebus, postgres-agents, redis).
+#
+# Images are pulled from GHCR. Pin via `ROKHA_IMAGE_TAG` (default "latest").
+#
+# Secrets are sourced from ${HOME}/.rokha/env when present (created by
+# `ro up` on first run if absent). For a fully air-gapped local run,
+# everything else has a sane dev default.
+
+name: rokha
+
+networks:
+  rokha-network:
+    driver: bridge
+    name: rokha-network
+
+volumes:
+  rokha-postgres-erebus-data:
+    name: rokha-postgres-erebus-data
+  rokha-postgres-agents-data:
+    name: rokha-postgres-agents-data
+  rokha-redis-data:
+    name: rokha-redis-data
+
+x-shared-env: &shared-env
+  RUST_LOG: ${RUST_LOG:-info}
+  INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rokha_dev}
+
+services:
+  postgres-erebus:
+    image: postgres:15-alpine
+    container_name: rokha-postgres-erebus
+    command: >
+      postgres
+      -c wal_level=logical
+      -c max_replication_slots=4
+      -c max_wal_senders=4
+      -c max_logical_replication_workers=4
+    environment:
+      POSTGRES_DB: erebus
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rokha_dev}
+    volumes:
+      - rokha-postgres-erebus-data:/var/lib/postgresql/data
+    ports:
+      - "5440:5432"
+    networks: [rokha-network]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  postgres-agents:
+    image: postgres:15-alpine
+    container_name: rokha-postgres-agents
+    command: >
+      postgres
+      -c wal_level=logical
+      -c max_replication_slots=4
+      -c max_wal_senders=4
+      -c max_logical_replication_workers=4
+    environment:
+      POSTGRES_DB: agents
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rokha_dev}
+    volumes:
+      - rokha-postgres-agents-data:/var/lib/postgresql/data
+    ports:
+      - "5441:5432"
+    networks: [rokha-network]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: rokha-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - rokha-redis-data:/data
+    ports:
+      - "6379:6379"
+    networks: [rokha-network]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  erebus:
+    image: ghcr.io/aetherbytes/rokha-erebus:${ROKHA_IMAGE_TAG:-latest}
+    container_name: rokha-erebus
+    pull_policy: ${ROKHA_PULL_POLICY:-missing}
+    environment:
+      <<: *shared-env
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-rokha_dev}@postgres-erebus:5432/erebus
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET:-dev-only-jwt-secret-please-override}
+      ENCRYPTION_MASTER_KEY: ${ENCRYPTION_MASTER_KEY:-dev-only-encryption-key-32-bytes!}
+      PORT: "3000"
+      EREBUS_BASE_URL: ${EREBUS_BASE_URL:-http://erebus:3000}
+      ANTHROPIC_KEY_ROKHA_AGENT: ${ANTHROPIC_KEY_ROKHA_AGENT:-}
+    ports:
+      - "3000:3000"
+    networks: [rokha-network]
+    depends_on:
+      postgres-erebus: { condition: service_healthy }
+      redis:           { condition: service_started }
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  rokha-agents:
+    image: ghcr.io/aetherbytes/rokha-agents:${ROKHA_IMAGE_TAG:-latest}
+    container_name: rokha-agents
+    pull_policy: ${ROKHA_PULL_POLICY:-missing}
+    environment:
+      <<: *shared-env
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-rokha_dev}@postgres-agents:5432/agents
+      REDIS_URL: redis://redis:6379
+      AGENTS_PORT: "9003"
+      EREBUS_BASE_URL: http://erebus:3000
+      HARNESSES_URL: http://rokha-harnesses:9004
+      # Transitional: a local Anthropic key bypasses LLM proxy mode.
+      # Slice 2 (rokha-agents repoint) makes ROKHA_LLM_* the primary path.
+      ANTHROPIC_KEY_ROKHA_AGENT: ${ANTHROPIC_KEY_ROKHA_AGENT:-}
+      # Federated LLM routing — populated by `ro up` from ~/.rokha/credentials.
+      # When both are set + rokha-agents understands them (slice 2), the
+      # container chats end-to-end without a local Anthropic key.
+      ROKHA_LLM_PROXY_URL: ${ROKHA_LLM_PROXY_URL:-}
+      ROKHA_LLM_JWT: ${ROKHA_LLM_JWT:-}
+    ports:
+      - "9003:9003"
+    networks: [rokha-network]
+    depends_on:
+      postgres-agents: { condition: service_healthy }
+      erebus:          { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:9003/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  rokha-harnesses:
+    image: ghcr.io/aetherbytes/rokha-harnesses:${ROKHA_IMAGE_TAG:-latest}
+    container_name: rokha-harnesses
+    pull_policy: ${ROKHA_PULL_POLICY:-missing}
+    environment:
+      <<: *shared-env
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-rokha_dev}@postgres-agents:5432/agents
+      HARNESSES_PORT: "9004"
+    ports:
+      - "9004:9004"
+    networks: [rokha-network]
+    depends_on:
+      postgres-agents: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:9004/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  rokha-protocols:
+    image: ghcr.io/aetherbytes/rokha-protocols:${ROKHA_IMAGE_TAG:-latest}
+    container_name: rokha-protocols
+    pull_policy: ${ROKHA_PULL_POLICY:-missing}
+    environment:
+      <<: *shared-env
+      EREBUS_BASE_URL: http://erebus:3000
+    ports:
+      - "8001:8001"
+    networks: [rokha-network]
+    depends_on:
+      erebus: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8001/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s

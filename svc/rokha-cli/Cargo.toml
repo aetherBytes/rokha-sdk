@@ -1,0 +1,24 @@
+[package]
+name = "rokha-cli"
+version = "0.3.0"
+edition = "2021"
+description = "Rokha CLI — all-in-one tool for the agentic economy"
+license = "MIT"
+repository = "https://github.com/aetherBytes/rokha-sdk"
+
+[[bin]]
+name = "ro"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.12", features = ["json"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+ratatui = "0.28"
+crossterm = "0.28"
+toml = "0.8"
+dirs = "5"
+which = "6"
+base64 = "0.22"
