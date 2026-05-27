@@ -13,8 +13,8 @@ your machine. Don't do that on the user's real OS. Run it where:
 - A leaked credential exfiltration request goes nowhere outbound that matters
 - The whole environment is reset on the next session
 
-In NullBlock today that means a Rokha WebContainer iframe. Outside
-NullBlock, that means a fresh Docker container, a microVM, or an isolated
+In Rokha today that means a Rokha WebContainer iframe. Outside
+Rokha, that means a fresh Docker container, a microVM, or an isolated
 WSL session — the skill works in any of them.
 
 ## Recipe

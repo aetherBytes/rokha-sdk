@@ -2,9 +2,9 @@
 name: rokha-audit
 description: Security and compliance audit for MCP tools, agents, and skills found in the wild. Run before installing or invoking any unfamiliar tool. Produces a clear "safe to use / here's how" or "found these vulnerabilities" verdict with the schema, endpoint, install command, and trust signals the agent or user needs to make a decision. Use when the user mentions auditing, vetting, security-checking, or "is this safe" about an MCP tool, ClawHub skill, or Smithery server.
 license: MIT
-compatibility: Requires NullBlock's `rokha_audit` MCP tool (served by nullblock-protocols on port 8001 in dev, or NullBlock's public MCP endpoint in prod). Stage 2 probe is optional and benefits from a sandboxed Node environment (Rokha WebContainer, Claude Code's bash, or any local Node).
+compatibility: Requires Rokha's `rokha_audit` MCP tool (served by rokha-protocols on port 8001 in dev, or Rokha's public MCP endpoint in prod). Stage 2 probe is optional and benefits from a sandboxed Node environment (Rokha WebContainer, Claude Code's bash, or any local Node).
 metadata:
-  author: nullblock
+  author: rokha
   version: "0.1.0"
   homepage: https://rokha.ai
   source_repo: https://github.com/aetherBytes/rokha-sdk
@@ -37,7 +37,7 @@ wrong call — invoke the tool directly.
 
 ## Stage 1 — Heuristic scan (always runs)
 
-Call NullBlock's `rokha_audit` MCP tool with `{tool_name}`. The server-side
+Call Rokha's `rokha_audit` MCP tool with `{tool_name}`. The server-side
 implementation looks the tool up in the marketplace registry, then runs six
 checks on the metadata:
 
@@ -63,7 +63,7 @@ Only run this stage if:
 
 What to do:
 
-- **HTTPS endpoint** (registry declares `endpoint: https://…`): POST `tools/list` via NullBlock's `/api/marketplace/mcp-proxy` endpoint. No local install needed.
+- **HTTPS endpoint** (registry declares `endpoint: https://…`): POST `tools/list` via Rokha's `/api/marketplace/mcp-proxy` endpoint. No local install needed.
 - **npm-installable** (registry declares `metadata.install` or `metadata.npm_package`, OR user passes `--npm <pkg>` to override): inside the sandbox, `npm install --no-save <pkg>` then spawn it via `npx -y <pkg>`, send JSON-RPC `initialize` + `tools/list` over stdio, capture the response, kill the process. See `references/probe-stdio-mcp.md` for the exact recipe.
 - **Otherwise**: skip Stage 2 with note "probe skipped — no endpoint or npm install method." Registry items frequently lack explicit install metadata; the `--npm` override lets the user opt in when they know the package name.
 
@@ -127,7 +127,7 @@ Saved to harness: <key>
 
 ## Edge cases
 
-- **Tool not in registry**: return "no such tool found in NullBlock,
+- **Tool not in registry**: return "no such tool found in Rokha,
   ClawHub, or Smithery. Use exact name from the registry homepage." Do
   not guess.
 - **Multiple matches**: prefer exact case-insensitive name match. If none,
@@ -141,10 +141,10 @@ Saved to harness: <key>
 
 ## Related
 
-- Heuristic scan source of truth: NullBlock MCP server (`rokha_audit` tool)
-- Stage 2 sandbox: Rokha WebContainer (in-browser, on NullBlock.io) or
+- Heuristic scan source of truth: Rokha MCP server (`rokha_audit` tool)
+- Stage 2 sandbox: Rokha WebContainer (in-browser, on rokha.ai) or
   any local Node + sandbox env
-- Findings persistence: NullBlock harnesses (wallet-scoped, private)
+- Findings persistence: Rokha harnesses (wallet-scoped, private)
 - Cross-agent portability: this skill ships as a standalone SKILL.md
   folder; drop it in `~/.claude/skills/`, `~/.openclaw/workspace/skills/`,
   or any agentskills.io-compatible client

@@ -1,7 +1,7 @@
-# NullBlock Skills
+# Rokha Skills
 
 First-party, [agentskills.io](https://agentskills.io)-compliant skills
-authored by NullBlock. Drop the folder into any compatible agent and it
+authored by Rokha. Drop the folder into any compatible agent and it
 just works.
 
 ## What's in here
@@ -34,10 +34,10 @@ curl -fsSL http://localhost:3000/api/skills/rokha-audit/references/audit-harness
   --create-dirs -o ~/.claude/skills/rokha-audit/references/audit-harness-schema.md
 ```
 
-Replace `http://localhost:3000` with NullBlock's hosted Erebus URL in prod.
+Replace `http://localhost:3000` with Rokha's hosted Erebus URL in prod.
 CORS-open, no auth.
 
-### 2. From the public GitHub mirror (works without any NullBlock service)
+### 2. From the public GitHub mirror (works without any Rokha service)
 
 ```bash
 # Single SKILL.md
@@ -46,19 +46,19 @@ curl -fsSL https://raw.githubusercontent.com/aetherBytes/rokha-sdk/main/skills/r
 
 # Whole folder with bundled refs/scripts/assets — sparse-checkout
 git clone --filter=blob:none --no-checkout \
-  https://github.com/aetherBytes/rokha-sdk.git /tmp/nb-sdk
-cd /tmp/nb-sdk
+  https://github.com/aetherBytes/rokha-sdk.git /tmp/rokha-sdk
+cd /tmp/rokha-sdk
 git sparse-checkout init --cone
 git sparse-checkout set skills/rokha-audit
 git checkout main
 cp -r skills/rokha-audit ~/.claude/skills/
 ```
 
-### 3. Clone the whole NullBlock repo (for contributors)
+### 3. Clone the whole Rokha SDK repo (for contributors)
 
 ```bash
-git clone https://github.com/aetherBytes/rokha.git
-ln -s "$PWD/nullblock/skills/rokha-audit" ~/.claude/skills/rokha-audit
+git clone https://github.com/aetherBytes/rokha-sdk.git
+ln -s "$PWD/rokha-sdk/skills/rokha-audit" ~/.claude/skills/rokha-audit
 ```
 
 ## Compatibility matrix
@@ -123,11 +123,11 @@ CORS is open on all skills endpoints. Auth is never required.
 
 ## Layers (so the model is clear)
 
-| Layer | What | NullBlock surface | Spec |
-|-------|------|-------------------|------|
+| Layer | What | Rokha surface | Spec |
+|-------|------|---------------|------|
 | Distribution | Portable SKILL.md folders | `skills/` in this repo + `/api/skills/*` | [agentskills.io](https://agentskills.io) |
-| Capability | Callable MCP tools | `nullblock-protocols` (port 8001), e.g. `rokha_audit`, `create_harness` | [MCP 2025-11-25](https://spec.modelcontextprotocol.io) |
-| Consumer | The thing running the skill | Rokha (browser), `nb` (terminal/WebContainer), Claude Code, Cursor, Goose, … | n/a — any agent |
+| Capability | Callable MCP tools | `rokha-protocols` (port 8001), e.g. `rokha_audit`, `create_harness` | [MCP 2025-11-25](https://spec.modelcontextprotocol.io) |
+| Consumer | The thing running the skill | Rokha (browser), `ro` (terminal/WebContainer), Claude Code, Cursor, Goose, … | n/a — any agent |
 
 The skill **teaches** the agent how to do something. The MCP tools are
 **what** the skill calls. The consumer **runs** the workflow. Don't conflate.
