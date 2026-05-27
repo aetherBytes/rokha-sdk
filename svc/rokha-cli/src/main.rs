@@ -12,7 +12,7 @@ use clap::{Parser, Subcommand};
     name = "ro",
     bin_name = "ro",
     version,
-    about = "Rokha CLI — picks and shovels for the agentic economy"
+    about = "Rokha CLI — thin client for rokha.ai"
 )]
 struct Cli {
     #[command(subcommand)]
@@ -23,16 +23,21 @@ struct Cli {
 enum Commands {
     /// Print CLI + schema version
     Version,
-    /// Show Rokha service status (erebus health + schema drift)
+    /// Show login state, remote reachability, and schema match
     Status,
     /// Alias for `status` — kept for muscle memory
     Health,
-    /// Bring up the local Rokha infra stack (docker)
-    Up,
-    /// Tear down the local Rokha infra stack
-    Down,
-    /// Tail logs from the local Rokha infra stack
-    Logs { service: Option<String> },
+    /// Log in to your Rokha account via browser (RFC 8628 device flow)
+    Login,
+    /// Show the current logged-in identity
+    Whoami,
+    /// Remove local credentials
+    Logout,
+    /// Show or modify CLI config (base URL, etc.)
+    Config {
+        #[command(subcommand)]
+        action: ConfigAction,
+    },
     /// Browse the Rokha Registry
     Tools {
         #[command(subcommand)]
@@ -40,12 +45,6 @@ enum Commands {
     },
     /// Send a one-shot message to the Rokha agent
     Chat { message: String },
-    /// Log in to your Rokha account via browser (RFC 8628 device flow)
-    Login,
-    /// Show the current logged-in identity
-    Whoami,
-    /// Remove local credentials
-    Logout,
     /// Launch the TUI dashboard
     Tui,
     /// MCP server (JSON-RPC over stdio)
@@ -66,6 +65,14 @@ enum McpAction {
     Serve,
 }
 
+#[derive(Subcommand)]
+enum ConfigAction {
+    /// Print current config
+    Show,
+    /// Set the remote Rokha base URL (default: https://api.rokha.ai)
+    SetBaseUrl { url: String },
+}
+
 #[tokio::main]
 async fn main() {
     let cli = Cli::parse();
@@ -81,9 +88,6 @@ async fn main() {
             cli::status::run(&client).await;
             0
         }
-        Commands::Up => cli::stack::up().await,
-        Commands::Down => cli::stack::down().await,
-        Commands::Logs { service } => cli::stack::logs(service.as_deref()).await,
         Commands::Tools { action } => {
             match action {
                 ToolsAction::List => cli::tools::list(&client).await,
@@ -91,13 +95,14 @@ async fn main() {
             }
             0
         }
-        Commands::Chat { message } => {
-            cli::agents::chat(&client, &message).await;
-            0
-        }
+        Commands::Chat { message } => cli::agents::chat(&client, &message).await,
         Commands::Login => cli::auth::login(client.base_url()).await,
         Commands::Whoami => cli::auth::whoami().await,
         Commands::Logout => cli::auth::logout().await,
+        Commands::Config { action } => match action {
+            ConfigAction::Show => cli::config_cmd::show(&cfg),
+            ConfigAction::SetBaseUrl { url } => cli::config_cmd::set_base_url(&url),
+        },
         Commands::Tui => {
             tui::dashboard::run(&client).await;
             0

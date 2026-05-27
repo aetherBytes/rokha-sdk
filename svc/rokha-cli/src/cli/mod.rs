@@ -1,5 +1,5 @@
 pub mod agents;
 pub mod auth;
-pub mod stack;
+pub mod config_cmd;
 pub mod status;
 pub mod tools;

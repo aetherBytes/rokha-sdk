@@ -31,15 +31,6 @@ impl RokhaClient {
         &self.base_url
     }
 
-    pub async fn health(&self) -> Result<serde_json::Value, reqwest::Error> {
-        self.http
-            .get(format!("{}/health", self.base_url))
-            .send()
-            .await?
-            .json()
-            .await
-    }
-
     pub async fn schema_version(&self) -> Result<SchemaVersion, reqwest::Error> {
         self.http
             .get(format!("{}/api/schema/version", self.base_url))
@@ -65,22 +56,5 @@ impl RokhaClient {
             .await?
             .json()
             .await
-    }
-
-    pub async fn chat(&self, message: &str) -> Result<String, reqwest::Error> {
-        let body = serde_json::json!({ "message": message });
-        let resp: serde_json::Value = self
-            .http
-            .post(format!("{}/api/agents/rokha-agent/chat/public", self.base_url))
-            .json(&body)
-            .send()
-            .await?
-            .json()
-            .await?;
-        Ok(resp["response"]
-            .as_str()
-            .or_else(|| resp["message"].as_str())
-            .unwrap_or("")
-            .to_string())
     }
 }

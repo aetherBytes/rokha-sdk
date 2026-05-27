@@ -1,8 +1,8 @@
 [package]
 name = "rokha-cli"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
-description = "Rokha CLI — all-in-one tool for the agentic economy"
+description = "Rokha CLI — thin client for rokha.ai"
 license = "MIT"
 repository = "https://github.com/aetherBytes/rokha-sdk"
 
@@ -20,5 +20,4 @@ ratatui = "0.28"
 crossterm = "0.28"
 toml = "0.8"
 dirs = "5"
-which = "6"
 base64 = "0.22"
