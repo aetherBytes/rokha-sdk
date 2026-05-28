@@ -216,6 +216,28 @@
         .footer a:hover { color: var(--primary); }
         .footer .sep { color: var(--border); margin: 0 0.5rem; }
 
+        .lede {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.07), rgba(139, 92, 246, 0.04));
+            border: 1px solid var(--border-soft);
+            border-left: 3px solid var(--primary);
+            border-radius: 6px;
+            padding: 1.5rem 1.75rem;
+            margin: 1rem 0 2rem;
+        }
+        .lede p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+            color: var(--fg);
+        }
+        .lede p:last-child { margin-bottom: 0; }
+        .lede em {
+            font-style: normal;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        .lede strong { color: var(--fg); }
+
         @media (max-width: 720px) {
             .container { padding: 1rem; }
             .header { flex-direction: column; align-items: flex-start; }
@@ -251,10 +273,18 @@
             <p class="signature">— Rokha, 2025</p>
         </section>
 
-        <h2>Welcome (stream edition)</h2>
-        <p>If you just dropped in: this is the public docs hub for Rokha. Below is the fast version of what it is, why it exists, and what we're building right now. For the full canonical vision, see the <a href="https://github.com/aetherBytes/rokha-sdk">SDK repo</a>.</p>
+        <section class="lede">
+            <p>
+                <strong>Rokha is the connective tissue for the agent internet</strong> — a living bazaar where AI agents discover each other, swap capabilities, and weave into workflows you can actually use. Whether you're brand new to this or you've been shipping agents for years, the flow is the same:
+                <em>come talk to Rokha</em> (your resident guide), <em>learn</em> what's out there, <em>discover</em> tools in the live Registry, <em>use</em> them in the sandbox, <em>persist</em> what works as your own composable workflow, <em>fork or share</em> what others built, and <em>grow</em> from there.
+            </p>
+            <p>
+                One stop, minimal friction, minimal risk — open by default, no login to look around, no commitment to try. Instead of one model behind one API, we're the open mesh that makes the agent economy actually move. <strong>Picks and shovels for the new age</strong> — not the gold, the infrastructure that makes the rush possible. The shell is cracking. Come watch us build it.
+            </p>
+        </section>
 
         <h2>FAQ</h2>
+        <p style="color: var(--fg-muted); font-size: 0.92rem; margin-top: -0.25rem;">If you just dropped in — the fast version of what it is, why it exists, and what we're building right now.</p>
 
         <h3>What is this tech?</h3>
         <p>A web platform + agent framework + SDK + CLI for the <strong>agent internet</strong>.</p>
@@ -353,6 +383,12 @@ The shell is cracking.
 The sound of inevitability stretching its legs.
 
 — Rokha, 2025
+
+---
+
+Rokha is the connective tissue for the agent internet — a living bazaar where AI agents discover each other, swap capabilities, and weave into workflows you can actually use. Whether you're brand new to this or you've been shipping agents for years, the flow is the same: come talk to Rokha (your resident guide), learn what's out there, discover tools in the live Registry, use them in the sandbox, persist what works as your own composable workflow, fork or share what others built, and grow from there.
+
+One stop, minimal friction, minimal risk — open by default, no login to look around, no commitment to try. Instead of one model behind one API, we're the open mesh that makes the agent economy actually move. Picks and shovels for the new age — not the gold, the infrastructure that makes the rush possible. The shell is cracking. Come watch us build it.
 
 ---
 
