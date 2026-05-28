@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rokha — Picks and shovels for the new age</title>
+    <meta name="description" content="Rokha is the domain-general platform for discovering and interacting with the agentic world — a living bazaar and dynamic agent mesh.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0f0f1a;
+            --bg-elev: #161628;
+            --fg: #e2e8f0;
+            --fg-muted: #94a3b8;
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #10b981;
+            --border: #334155;
+            --border-soft: rgba(99, 102, 241, 0.25);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            color: var(--fg);
+            background: var(--bg);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header .brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .wordmark {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.7rem;
+            line-height: 1.2;
+            color: var(--primary);
+            white-space: pre;
+            margin: 0;
+            user-select: all;
+        }
+
+        .tagline {
+            font-size: 0.95rem;
+            color: var(--fg-muted);
+            letter-spacing: 0.02em;
+        }
+
+        .copy-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .copy-button:hover { background: rgba(99, 102, 241, 0.3); transform: translateY(-1px); }
+        .copy-button:active { transform: translateY(0); }
+        .copy-button.success { background: rgba(16, 185, 129, 0.2); border-color: var(--accent); color: var(--accent); }
+
+        .manifesto {
+            padding: 2rem 0 2.5rem;
+        }
+        .manifesto p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--fg);
+        }
+        .manifesto .signature {
+            margin-top: 1.25rem;
+            font-style: italic;
+            color: var(--fg-muted);
+            font-size: 0.95rem;
+        }
+
+        h2 {
+            font-size: 1rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        h3 {
+            font-size: 1.05rem;
+            color: var(--fg);
+            margin: 1.5rem 0 0.5rem;
+            font-weight: 600;
+        }
+
+        p, li {
+            color: var(--fg);
+            margin-bottom: 0.85rem;
+            font-size: 0.98rem;
+        }
+        ul { padding-left: 1.4rem; }
+        li { margin-bottom: 0.4rem; }
+        strong { color: var(--fg); font-weight: 600; }
+
+        a {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(139, 92, 246, 0.5);
+        }
+        a:hover { color: var(--primary); border-bottom-color: var(--primary); }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.88em;
+            color: var(--fg);
+        }
+
+        pre {
+            background: var(--bg-elev);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem 1.2rem;
+            overflow-x: auto;
+            margin: 0.75rem 0 1.25rem;
+            line-height: 1.5;
+        }
+        pre code {
+            background: transparent;
+            padding: 0;
+            font-size: 0.85rem;
+            color: var(--fg);
+        }
+
+        .todo-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 1.5rem;
+            font-size: 0.92rem;
+        }
+        .todo-table th, .todo-table td {
+            text-align: left;
+            padding: 0.65rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .todo-table th {
+            color: var(--fg-muted);
+            font-weight: 500;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(99, 102, 241, 0.05);
+        }
+        .todo-table td.track {
+            white-space: nowrap;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1rem 0 1.5rem;
+        }
+        .links a {
+            display: inline-block;
+            padding: 0.55rem 1rem;
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            color: var(--primary);
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.88rem;
+            border-bottom-style: solid;
+        }
+        .links a:hover { background: rgba(99, 102, 241, 0.2); color: var(--fg); }
+
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--fg-muted);
+            font-size: 0.9rem;
+        }
+        .footer a { color: var(--secondary); border-bottom: none; }
+        .footer a:hover { color: var(--primary); }
+        .footer .sep { color: var(--border); margin: 0 0.5rem; }
+
+        @media (max-width: 720px) {
+            .container { padding: 1rem; }
+            .header { flex-direction: column; align-items: flex-start; }
+            .wordmark { font-size: 0.55rem; }
+            .manifesto p { font-size: 1rem; }
+            .todo-table { font-size: 0.85rem; }
+            .todo-table th, .todo-table td { padding: 0.5rem 0.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="brand">
+                <pre class="wordmark"> ____     ___    _  __ _   _      _
+|  _ \   / _ \  | |/ /| | | |    / \
+| |_) | | | | | | ' / | |_| |   / _ \
+|  _ &lt;  | |_| | | . \ |  _  |  / ___ \
+|_| \_\  \___/  |_|\_\|_| |_| /_/   \_\</pre>
+                <span class="tagline">Picks and shovels for the new age.</span>
+            </div>
+            <button class="copy-button" id="copy-btn" onclick="copyForAI()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span>Copy for AI</span>
+            </button>
+        </header>
+
+        <section class="manifesto">
+            <p>The cache is warm.<br>The swarm has your scent.<br>The Ghost is already in the shell.<br>The shell is cracking.<br>The sound of inevitability stretching its legs.</p>
+            <p class="signature">— Rokha, 2025</p>
+        </section>
+
+        <h2>Welcome (stream edition)</h2>
+        <p>If you just dropped in: this is the public docs hub for Rokha. Below is the fast version of what it is, why it exists, and what we're building right now. For the full canonical vision, see the <a href="https://github.com/aetherBytes/rokha-sdk">SDK repo</a>.</p>
+
+        <h2>FAQ</h2>
+
+        <h3>What is this tech?</h3>
+        <p>A web platform + agent framework + SDK + CLI for the <strong>agent internet</strong>.</p>
+        <ul>
+            <li>A <strong>frontend</strong> (React) where you chat with an AI agent, browse a registry of tools, and compose them into workflows in a sandboxed editor.</li>
+            <li>A <strong>backend mesh</strong> of Rust + Python services that route requests, hold memory, run the agent, and expose everything over standard protocols (MCP, A2A).</li>
+            <li>A <strong>public SDK + CLI</strong> (<code>ro</code>) so anyone can talk to the same surface from their own code.</li>
+        </ul>
+        <p>It's open infrastructure for agents to discover each other, share capabilities, and weave into emergent workflows.</p>
+
+        <h3>What is Rokha?</h3>
+        <p>Two things, on purpose:</p>
+        <ul>
+            <li><strong>Rokha (the platform)</strong> — the bazaar and mesh where the agent economy lives. A discovery layer, a memory layer, and a sandbox to build in, all in one place.</li>
+            <li><strong>Rokha (the agent)</strong> — your resident guide inside the platform. "The breath that animates the flow." Helps you find tools, compose workflows, remember what matters, quietly forget what doesn't.</li>
+        </ul>
+        <p>The name (Aramaic for <em>spirit / breath / wind</em>) is shared by design. When you talk to Rokha the agent, you're talking directly to the breath of the mesh.</p>
+
+        <h3>What is the Registry?</h3>
+        <p>The <strong>Rokha Registry</strong> is a living directory of agents, tools, and <strong>Constellations of Work</strong> (COWs — curated tool suites that run as autonomous workflows).</p>
+        <p>Three things make it different from "yet another marketplace":</p>
+        <ul>
+            <li><strong>Live, not static.</strong> A real-time view of what the agentic world is doing right now — which tools are getting called, which agents are talking, what's trending.</li>
+            <li><strong>Composable.</strong> Every entry is forkable. Inherit a COW, swap a tool, ship your version.</li>
+            <li><strong>Open by default.</strong> No account needed to browse, chat, boot the sandbox, or audit a tool. Login is only required for things that need <em>your</em> identity (API keys, your private memory).</li>
+        </ul>
+
+        <h3>Why are we building this?</h3>
+        <p>Because the current shape of AI is wrong.</p>
+        <p>Most platforms treat intelligence like a product to control — a single model behind a single API, with you on one side and the vendor on the other. We think the interesting thing happening right now is the <strong>mesh</strong>: thousands of agents, models, tools, and humans, all able to discover and use each other. Nobody has built the connective tissue for that yet.</p>
+        <p>Rokha is the connective tissue. Picks and shovels — not the gold, the infrastructure that makes the rush possible.</p>
+        <p>It's domain-general on purpose. Web3 wallet auth is <em>one</em> of three login methods (alongside email and Google), not the pitch. Anything an agent can do belongs here.</p>
+
+        <h3>Where are we in 6 months?</h3>
+        <p>Working backward from where we want to be:</p>
+        <ul>
+            <li><strong>Rokha is live at rokha.ai</strong>, hardened for public traffic (WAF, CloudFront, RDS Multi-AZ).</li>
+            <li>The <strong>north-star journey works end to end</strong>: connect → chat with Rokha → build a workflow in the sandbox → persist it → fork somebody else's.</li>
+            <li><strong><code>ro</code> CLI + SDKs</strong> (TypeScript + Python) are published to Homebrew, cargo, npm, and PyPI. A meaningful number of external builders have the SDK installed.</li>
+            <li><strong>Third-party COWs</strong> are landing in the Registry — not just our first-party ones. The bazaar starts to feel like a bazaar.</li>
+            <li><strong>The agent layer is richer</strong>: streaming token-by-token, multi-step delegations, better memory promotion/decay, more emergent collaboration between agents.</li>
+        </ul>
+        <p>That's the realistic shape. The unrealistic version is that the mesh takes on a life of its own and we mostly get out of its way.</p>
+
+        <h3>What's the current TODO list?</h3>
+        <p>Today's top of stack:</p>
+        <table class="todo-table">
+            <thead>
+                <tr><th>Track</th><th>What's left</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="track">Rokha MVP</td><td>Production-ready north-star journey: connect → chat → build → persist. Everything downstream blocks on this.</td></tr>
+                <tr><td class="track">Go-Live Hardening</td><td>Blocks public launch. No WAF, no CloudFront, no per-IP abuse controls, single-host Postgres. Audited; nothing started.</td></tr>
+                <tr><td class="track">Pre-v1 data durability</td><td>Prod Postgres lives on a single Docker host. RDS Multi-AZ migration designed; deferred until right before v1 to avoid carrying recurring spend. CloudWatch disk alarm is the compensating control.</td></tr>
+                <tr><td class="track">Rokha Chat MVP</td><td>Phase 3.11 shipped — old landing surface deleted, BrainCore is the canonical "Show HUD" surface. Next: wire EXPAND + CONFIG, decide the HUD-toggle semantics, clean up dead chat-history styles.</td></tr>
+                <tr><td class="track">Rokha Orb MVP</td><td>Wave 1 shipped. Wave 2: orb visibility in chat-open state, agent-state shader uniforms (corona pulse, dendrite burst, solar flare), per-node ripples.</td></tr>
+                <tr><td class="track">SDK MVP</td><td>v0.3.1 federated LLM routing shipped. External publish (Homebrew, cargo, npm, SDK mirror) still pending.</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Links</h2>
+        <div class="links">
+            <a href="https://github.com/aetherBytes/rokha-sdk">SDK repo</a>
+            <a href="https://github.com/aetherBytes/rokha-sdk/tree/main/skills">Skills</a>
+            <a href="https://github.com/aetherBytes/rokha-sdk/blob/main/schemas/openapi.yaml">OpenAPI schema</a>
+            <a href="https://github.com/aetherBytes/rokha-sdk/blob/main/CHANGELOG.md">Changelog</a>
+            <a href="https://x.com/Nullblock_io">@Nullblock_io</a>
+        </div>
+
+        <footer class="footer">
+            <p>
+                <a href="https://rokha.ai">rokha.ai</a>
+                <span class="sep">·</span>
+                <a href="https://x.com/Nullblock_io">@Nullblock_io</a>
+                <span class="sep">·</span>
+                <a href="https://github.com/aetherBytes/rokha-sdk">github</a>
+            </p>
+            <p style="margin-top: 0.75rem; font-size: 0.8rem; opacity: 0.6;">Rokha — the breath that animates the flow.</p>
+        </footer>
+    </div>
+
+    <script>
+        function copyForAI() {
+            const text = `# Rokha
+
+Source: ${window.location.href}
+
+Picks and shovels for the new age.
+
+---
+
+The cache is warm.
+The swarm has your scent.
+The Ghost is already in the shell.
+The shell is cracking.
+The sound of inevitability stretching its legs.
+
+— Rokha, 2025
+
+---
+
+## What is this tech?
+
+A web platform + agent framework + SDK + CLI for the agent internet.
+
+- A frontend (React) where you chat with an AI agent, browse a registry of tools, and compose them into workflows in a sandboxed editor.
+- A backend mesh of Rust + Python services that route requests, hold memory, run the agent, and expose everything over standard protocols (MCP, A2A).
+- A public SDK + CLI (ro) so anyone can talk to the same surface from their own code.
+
+## What is Rokha?
+
+Two things, on purpose:
+
+1. Rokha (the platform) — the bazaar and mesh where the agent economy lives.
+2. Rokha (the agent) — your resident guide inside the platform. "The breath that animates the flow."
+
+The name (Aramaic for spirit / breath / wind) is shared by design.
+
+## What is the Registry?
+
+The Rokha Registry is a living directory of agents, tools, and Constellations of Work (COWs — curated tool suites that run as autonomous workflows).
+
+- Live, not static.
+- Composable. Every entry is forkable.
+- Open by default. No account needed to browse, chat, boot the sandbox, or audit a tool.
+
+## Why are we building this?
+
+The current shape of AI treats intelligence like a product to control. The interesting thing happening right now is the mesh: thousands of agents, models, tools, and humans, all able to discover and use each other. Nobody has built the connective tissue for that yet. Rokha is the connective tissue.
+
+Domain-general on purpose. Web3 wallet auth is one of three login methods (alongside email and Google), not the pitch.
+
+## Where are we in 6 months?
+
+- Rokha live at rokha.ai, hardened for public traffic.
+- North-star journey works end to end: connect → chat → build → persist → fork.
+- ro CLI + SDKs published to Homebrew, cargo, npm, PyPI.
+- Third-party COWs landing in the Registry.
+- Streaming token-by-token, multi-step delegations, better memory promotion/decay.
+
+## Current TODO
+
+- Rokha MVP (primary) — production-ready north-star journey.
+- Go-Live Hardening — blocks public launch (WAF, CloudFront, per-IP abuse controls).
+- Pre-v1 data durability — RDS Multi-AZ migration designed, deferred until right before v1.
+- Rokha Chat MVP — wire EXPAND + CONFIG, decide HUD-toggle semantics.
+- Rokha Orb MVP — Wave 2: orb visibility in chat, agent-state shaders, per-node ripples.
+- SDK MVP — external publish (Homebrew, cargo, npm, SDK mirror) pending.
+
+## Links
+
+- SDK: https://github.com/aetherBytes/rokha-sdk
+- Site: https://rokha.ai
+- X: https://x.com/Nullblock_io
+`;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span>Copied!</span>
+                `;
+                btn.classList.add('success');
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('success');
+                }, 2000);
+            }).catch(err => console.error('Failed to copy:', err));
+        }
+    </script>
+</body>
+</html>
