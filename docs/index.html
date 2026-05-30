@@ -349,7 +349,7 @@
                 <tr><td class="track">Rokha MVP</td><td>Production-ready north-star journey: connect → chat → build → persist. Everything downstream blocks on this.</td></tr>
                 <tr><td class="track">Go-Live Hardening</td><td>Blocks public launch. No WAF, no CloudFront, no per-IP abuse controls, single-host Postgres. Audited; nothing started.</td></tr>
                 <tr><td class="track">Pre-v1 data durability</td><td>Prod Postgres lives on a single Docker host. RDS Multi-AZ migration designed; deferred until right before v1 to avoid carrying recurring spend. CloudWatch disk alarm is the compensating control.</td></tr>
-                <tr><td class="track">Rokha Chat MVP</td><td>Phase 3.11 shipped — old landing surface deleted, BrainCore is the canonical "Show HUD" surface. Next: wire EXPAND + CONFIG, decide the HUD-toggle semantics, clean up dead chat-history styles.</td></tr>
+                <tr><td class="track">Rokha Chat MVP</td><td>Chat with Rokha and the live dashboard now share one clean, readable look — plus a show/hide chat toggle, a tap-a-tool-to-ask shortcut from the Registry, and a simpler stacked layout that holds up on laptops and tablets. Next: wire up the remaining dashboard controls and richer live agent activity.</td></tr>
                 <tr><td class="track">Rokha Orb MVP</td><td>Wave 1 shipped. Wave 2: orb visibility in chat-open state, agent-state shader uniforms (corona pulse, dendrite burst, solar flare), per-node ripples.</td></tr>
                 <tr><td class="track">SDK MVP</td><td>v0.3.1 federated LLM routing shipped. External publish (Homebrew, cargo, npm, SDK mirror) still pending.</td></tr>
             </tbody>
@@ -462,7 +462,7 @@ Domain-general on purpose. Web3 wallet auth is one of three login methods (along
 - Rokha MVP (primary) — production-ready north-star journey.
 - Go-Live Hardening — blocks public launch (WAF, CloudFront, per-IP abuse controls).
 - Pre-v1 data durability — RDS Multi-AZ migration designed, deferred until right before v1.
-- Rokha Chat MVP — wire EXPAND + CONFIG, decide HUD-toggle semantics.
+- Rokha Chat MVP — chat + live dashboard now share one clean look, with a show/hide chat toggle, tap-a-tool-to-ask from the Registry, and a stacked layout for smaller screens. Next: remaining dashboard controls + richer live activity.
 - Rokha Orb MVP — Wave 2: orb visibility in chat, agent-state shaders, per-node ripples.
 - SDK MVP — external publish (Homebrew, cargo, npm, SDK mirror) pending.
 

@@ -1,8 +1,47 @@
 # Changelog
 
-All notable changes to the Rokha SDK are documented here. The SDK is
-the public face of Rokha; the wire contract it depends on is
-`schemas/openapi.yaml`, served live by Erebus at `/api/schema`.
+All notable changes to the Rokha SDK — and notable updates to the
+Rokha product it talks to — are documented here. The SDK is the public
+face of Rokha; the wire contract it depends on is
+`schemas/openapi.yaml`, served live at `/api/schema`.
+
+## App — Rokha chat, dashboard & registry polish (2026-05-30)
+
+_A frontend/app update to the pre-release Rokha web experience. No SDK
+or wire-contract (`schemas/openapi.yaml`) change — nothing here moves
+the SDK version._
+
+A round of UX work on the two halves of the experience: talking to
+Rokha, and the live dashboard beside it.
+
+- **Get back to your conversation in one tap.** A show/hide toggle for
+  the chat lets you wander off into the registry or another panel and
+  then flip straight back to your conversation with Rokha, instead of
+  losing your place.
+- **A calmer, easier-to-read chat.** The conversation now wears the
+  same clean "glass" look as the rest of the dashboard, with clearer
+  labels for who's speaking — Rokha or you.
+- **Looks right on smaller screens.** On laptops and tablets the
+  dashboard now drops the cramped desktop split for a simpler stacked
+  layout — while keeping every panel and view you'd get on a big
+  monitor. Nothing is removed on smaller screens; it just rearranges.
+- **No more spill-over.** Fixed a visual glitch where cards inside the
+  dashboard panels could bleed past the panel edge while scrolling.
+- **Ask about anything in the registry, instantly.** Tapping a tool or
+  skill in the Registry now drops a question about it straight into
+  your chat with Rokha — no copy-paste, no losing your place.
+- **Smoother, and easier on the eyes.** The animated background is
+  lighter on your device, and the dashboard panels rest on a soft
+  frosted layer so text stays crisp over the moving starfield behind it.
+
+**Where this gets us:** chatting with Rokha and watching the live
+dashboard now read as one coherent surface that holds up from a laptop
+to a wide monitor — a real step toward the north-star journey (chat →
+build → keep) feeling genuinely good to use, not just functional.
+
+**What's next:** wiring up the remaining dashboard controls, making the
+central orb react in real time to what Rokha is doing, and the
+production hardening + public CLI/SDK release that gate a public launch.
 
 ## 0.5.0 — Federated LLM proxy (slice 1 of LLM routing)
 
