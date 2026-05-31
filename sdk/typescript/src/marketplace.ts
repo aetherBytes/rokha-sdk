@@ -5,7 +5,7 @@ export class MarketplaceClient {
   constructor(private client: RokhaClient) {}
 
   async health(): Promise<{ status: string }> {
-    return this.client.get('/api/crossroads/health');
+    return this.client.get('/api/registry/health');
   }
 
   async list(): Promise<MarketplaceListing[]> {
