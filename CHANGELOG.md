@@ -5,6 +5,38 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## App — one cohesive look + expandable skill cards (2026-05-30)
+
+_A frontend/app design pass on the pre-release Rokha web experience.
+No SDK or wire-contract (`schemas/openapi.yaml`) change — nothing here
+moves the SDK version._
+
+The whole experience now feels like one product instead of a few
+screens stitched together.
+
+- **One calm, consistent look.** Chat, the live dashboard, and the
+  Registry now share a single "steel & ice-blue" palette, with small,
+  deliberate pops of color (cyan, green, violet) so it has life
+  without feeling busy.
+- **Skill cards work the same everywhere.** A tool or skill looks and
+  behaves identically wherever you meet it — and opening one now
+  **expands it in place**: in the Registry the card grows right in the
+  grid and nudges its neighbors aside, instead of a small pop-up
+  taking over the screen.
+- **Easier to follow what Rokha is doing.** When Rokha works through a
+  request, her steps read as a clean, scannable flow, and any tools or
+  results she pulls back show up as tidy cards — not raw data dumps.
+- **Bigger, clearer text** on large screens, and a tidier footer with
+  evenly-sized controls.
+
+**Where this gets us:** the experience of discovering tools, talking
+to Rokha about them, and watching what she does now reads as one
+coherent surface — another step toward the north-star journey
+(discover → chat → build → keep it) feeling genuinely good to use.
+
+**What's next:** turning the "build" step on — letting Rokha take a
+tool you found and actually start composing something useful with it.
+
 ## App — Rokha chat, dashboard & registry polish (2026-05-30)
 
 _A frontend/app update to the pre-release Rokha web experience. No SDK
