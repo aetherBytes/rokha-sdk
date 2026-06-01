@@ -5,6 +5,29 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## App — works on your phone now (2026-05-31)
+
+_A frontend/app pass making the pre-release Rokha web experience hold
+up on phones. No SDK or wire-contract (`schemas/openapi.yaml`) change —
+nothing here moves the SDK version._
+
+You can now open Rokha on a phone and actually use it. This pass
+focused on the small-screen experience.
+
+- **Built for thumbs.** Chatting with Rokha and reading her live feed
+  both work cleanly on a phone now — text wraps instead of running off
+  the edge, the menu stays on screen, and the buttons are big enough
+  to tap without missing.
+- **No more black screen on older phones.** Devices that can't run the
+  fancy animated backdrop used to get a blank screen; now they get a
+  clean branded backdrop instead, so the first impression always
+  lands.
+- **Lighter on mobile data.** Heavy parts of the page no longer load
+  until you actually open them, so the app feels quicker and uses less
+  data on a phone.
+- **Polish.** Tidier spacing along the bottom of the screen and a
+  cleaner header on the live feed.
+
 ## App — one cohesive look + expandable skill cards (2026-05-30)
 
 _A frontend/app design pass on the pre-release Rokha web experience.
