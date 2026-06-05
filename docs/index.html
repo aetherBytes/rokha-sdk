@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rokha — Picks and shovels for the new age</title>
-    <meta name="description" content="Rokha is the operating system for building with AI agents — a marketplace of 25,000+ tools and agents, a browser-based editor for wiring them into workflows without code, and a memory layer that lets those workflows learn and persist. Find the tools you need, compose them, and ship — all without leaving the browser.">
+    <meta name="description" content="Rokha is the operating system for building with AI agents — find the tools you need, compose them into something that works, and ship it. Agent-targeted, human-usable: compose local workflows via our MCP/API, or build in your browser.">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -267,7 +267,7 @@
 |  _ &lt;  | |_| | | . \ |  _  |  / ___ \
 |_| \_\  \___/  |_|\_\|_| |_| /_/   \_\</pre>
                 <span class="tagline">Picks and shovels for the new age.</span>
-                <p class="hero-def"><strong>Rokha is the operating system for building with AI agents.</strong> It's a marketplace of 25,000+ tools and agents, a browser-based editor where you wire them together into workflows without code, and a memory layer that lets those workflows learn and persist. In short: find the tools you need, compose them into something that works, and ship it — all without leaving the browser. It's the scaffolding that turns scattered capabilities into reliable infrastructure.</p>
+                <p class="hero-def"><strong>Rokha is the operating system for building with AI agents.</strong> In short: find the tools you need, compose them into something that works, and ship it. Agent-targeted, but human-usable — compose local workflows using our MCP/API set, or build in your browser. It's the scaffolding that turns scattered capabilities into reliable infrastructure.</p>
             </div>
             <button class="copy-button" id="copy-btn" onclick="copyForAI()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -346,12 +346,13 @@
                 <tr><th>Track</th><th>What's left</th></tr>
             </thead>
             <tbody>
-                <tr><td class="track">Rokha MVP</td><td>Production-ready north-star journey: connect → chat → build → persist. Everything downstream blocks on this.</td></tr>
-                <tr><td class="track">Go-Live Hardening</td><td>Blocks public launch. No WAF, no CloudFront, no per-IP abuse controls, single-host Postgres. Audited; nothing started.</td></tr>
-                <tr><td class="track">Pre-v1 data durability</td><td>Prod Postgres lives on a single Docker host. RDS Multi-AZ migration designed; deferred until right before v1 to avoid carrying recurring spend. CloudWatch disk alarm is the compensating control.</td></tr>
-                <tr><td class="track">Rokha Chat MVP</td><td>Chat with Rokha and the live dashboard now share one clean, readable look — plus a show/hide chat toggle, a tap-a-tool-to-ask shortcut from the Registry, and a simpler stacked layout that holds up on laptops and tablets. Next: wire up the remaining dashboard controls and richer live agent activity.</td></tr>
-                <tr><td class="track">Rokha Orb MVP</td><td>Wave 1 shipped. Wave 2: orb visibility in chat-open state, agent-state shader uniforms (corona pulse, dendrite burst, solar flare), per-node ripples.</td></tr>
-                <tr><td class="track">SDK MVP</td><td>v0.3.1 federated LLM routing shipped. External publish (Homebrew, cargo, npm, SDK mirror) still pending.</td></tr>
+                <tr><td class="track">⭐ Reliability + durable data</td><td><strong>Top priority right now (in progress).</strong> Moving the production database to always-on, multi-zone managed hosting (RDS) and modernizing how our services find each other — ending a class of outages we hit recently and making the site resilient before we open the doors wider.</td></tr>
+                <tr><td class="track">Remix ✦ shipped today</td><td>One button that shows you what Rokha does: she autonomously builds a workflow from the live network — discovering a real tool and targeting it — streamed live so you can watch her work. It grows step by step as the build-it features land.</td></tr>
+                <tr><td class="track">Build a workflow — Rigs ✦ shipped today</td><td>The foundation for chaining tools into a workflow: discover a tool, target it, run it, and read a step-by-step <em>trace</em> of what each tool did. You can start one as a guest — it's kept for your session.</td></tr>
+                <tr><td class="track">Your dashboard + live mesh ✦ shipped today</td><td>The heads-up display is now a grid you arrange yourself (add, resize, drag panels), and Rokha can bring the right panel into focus while you chat. New views show the network breathing — what's fresh, what's trending, and who's building — plus a visual map of how tools relate.</td></tr>
+                <tr><td class="track">Rokha MVP</td><td>The build-a-workflow core is live end to end (discover → run → read the result). Next: the full production journey — connect → chat → build → persist → fork someone else's — and building visually in your browser.</td></tr>
+                <tr><td class="track">Go-Live Hardening</td><td>Blocks a wider public launch: edge protection (WAF, CDN) and per-visitor abuse controls. Audited; folds into the reliability work above.</td></tr>
+                <tr><td class="track">SDK MVP</td><td>Federated LLM routing shipped. External publish (Homebrew, cargo, npm, PyPI) still pending.</td></tr>
             </tbody>
         </table>
 

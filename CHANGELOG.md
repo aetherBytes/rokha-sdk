@@ -5,24 +5,37 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
-## App — the in-browser editor is taking a short break (2026-06-04)
+## App — a big step toward building workflows with agents (2026-06-04)
 
-_A product/access change. No SDK or wire-contract (`schemas/openapi.yaml`)
-change — nothing here moves the SDK version._
+_A large product release. No breaking SDK or wire-contract
+(`schemas/openapi.yaml`) change in this batch — the SDK version is unchanged._
 
-We've temporarily taken the **browser-based editor** out of public view
-while we get it ready for prime time. It wasn't polished enough yet for
-everyone to lean on, so rather than ship something half-finished we've
-tucked it away until it's solid.
+The biggest update in a while. Rokha's core idea — *find tools, wire them
+into a workflow, and run it* — now has real foundations you can touch, much
+of it without even signing in.
 
-What this means for you:
-
-- **Everything else is untouched.** Chatting with Rokha, browsing the
-  marketplace of tools and agents, and exploring the registry all work
-  exactly as before — signed in or not.
-- **The editor will be back.** This is a "come back soon," not a goodbye.
-  When it returns it'll be the place where you wire tools together into
-  working workflows, right in the browser — no code, no setup.
+- **Remix — watch Rokha build, live.** The headline. Press one button and
+  Rokha autonomously builds a workflow from the live network in front of you:
+  she discovers a real tool and targets it, streamed step by step so you can
+  watch her work. It's the clearest answer to "what does Rokha actually do?",
+  and it grows as the build-it features grow.
+- **Build a workflow — the "Rig" foundation.** Rokha can now assemble tools
+  into a flow (a **Rig**), run them, and keep a **trace**: a step-by-step
+  record of what each tool did and what came back. As a guest you can
+  discover a tool, target it, run it, and read the result — and your
+  in-progress work is kept for your session.
+- **Your dashboard, your way.** The heads-up display is now a composable
+  grid — add, resize, and drag panels to build the view you want, and it
+  remembers your layout. Rokha can also bring the most relevant panel into
+  focus while you chat; if you'd rather she didn't, you can lock it.
+- **See the network breathing.** New live views show what's *fresh*, what's
+  *trending*, and who's *building*, plus a visual **Capability Graph** that
+  maps how the tools relate to each other.
+- **Clearer naming.** What we used to call "Constellations of Work (COWs)"
+  are now simply **Rigs** everywhere — the word for a workflow you compose
+  from tools.
+- **Reliability groundwork.** Plenty of behind-the-scenes plumbing landed to
+  support all of the above.
 
 ## App — manage your chat history (2026-06-04)
 
