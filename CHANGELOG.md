@@ -5,6 +5,71 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## App — the in-browser editor is taking a short break (2026-06-04)
+
+_A product/access change. No SDK or wire-contract (`schemas/openapi.yaml`)
+change — nothing here moves the SDK version._
+
+We've temporarily taken the **browser-based editor** out of public view
+while we get it ready for prime time. It wasn't polished enough yet for
+everyone to lean on, so rather than ship something half-finished we've
+tucked it away until it's solid.
+
+What this means for you:
+
+- **Everything else is untouched.** Chatting with Rokha, browsing the
+  marketplace of tools and agents, and exploring the registry all work
+  exactly as before — signed in or not.
+- **The editor will be back.** This is a "come back soon," not a goodbye.
+  When it returns it'll be the place where you wire tools together into
+  working workflows, right in the browser — no code, no setup.
+
+## App — manage your chat history (2026-06-04)
+
+_A frontend/app pass. No SDK or wire-contract (`schemas/openapi.yaml`)
+change — nothing here moves the SDK version._
+
+Your conversations with Rokha are yours to manage now. You can **see,
+rename, pin, and delete** your past chats — and clear out the ones you
+don't need in a single click.
+
+What this means for you:
+
+- **It scales with your plan.** Higher tiers keep more saved
+  conversations. When you reach your limit, the oldest **unpinned**
+  conversation steps aside automatically — pinned ones are always kept —
+  so you never have to babysit the list.
+- **Pin what matters.** A pinned conversation won't be auto-retired and
+  can't be deleted by accident (unpin it first).
+- **Exploring without signing in works better, too.** Your in-progress
+  work now sticks with you through the session instead of resetting at
+  every step, and starting fresh truly wipes the slate. Abandoned guest
+  work is cleaned up automatically after a day.
+
+## Breaking — "COWs" are now "Rigs" (2026-06-01)
+
+_A naming change to the wire contract (`schemas/openapi.yaml`). This is
+a **breaking** change, so the schema goes to **4.0.0** and both SDKs to
+**0.6.0**. Update your client if you filter or read listing types._
+
+We renamed our composed-workflow concept. What we used to call a **COW**
+("Constellation of Work") is now simply a **Rig** — a set of tools and
+skills harnessed together into one autonomous workflow. Same idea, a
+name that actually fits the rest of the vocabulary (harnesses, rigs).
+
+What this means for you:
+
+- **Listing type renamed.** The `listing_type` value `"cow"` is now
+  `"rig"` everywhere it appears — in the Registry, in search filters,
+  and in the schema's `listing_type` enum. Code that sends
+  `listing_type: "cow"` or branches on it must switch to `"rig"`.
+- **SDKs updated in lockstep.** `@rokha/sdk` and `rokha-sdk` (Python)
+  both ship `0.6.0` with the new type and a bumped `SCHEMA_VERSION`
+  (`4.0.0`). `ro status` and the SDK drift check expect the server to
+  serve `4.0.0`.
+- **No other shapes changed.** Only the name moved — fields, endpoints,
+  and auth are untouched.
+
 ## App — works on your phone now (2026-05-31)
 
 _A frontend/app pass making the pre-release Rokha web experience hold
