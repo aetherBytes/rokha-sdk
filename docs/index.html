@@ -460,12 +460,13 @@ Domain-general on purpose. Web3 wallet auth is one of three login methods (along
 
 ## Current TODO
 
-- Rokha MVP (primary) — production-ready north-star journey.
-- Go-Live Hardening — blocks public launch (WAF, CloudFront, per-IP abuse controls).
-- Pre-v1 data durability — RDS Multi-AZ migration designed, deferred until right before v1.
-- Rokha Chat MVP — chat + live dashboard now share one clean look, with a show/hide chat toggle, tap-a-tool-to-ask from the Registry, and a stacked layout for smaller screens. Next: remaining dashboard controls + richer live activity.
-- Rokha Orb MVP — Wave 2: orb visibility in chat, agent-state shaders, per-node ripples.
-- SDK MVP — external publish (Homebrew, cargo, npm, SDK mirror) pending.
+- ⭐ Reliability + durable data (TOP PRIORITY, in progress) — moving prod's database to always-on, multi-zone managed hosting (RDS) and modernizing how services find each other; ends a class of outages we hit recently and makes the site resilient before opening the doors wider.
+- Remix (shipped today) — one button: Rokha autonomously builds a workflow from the live network, discovering a real tool and targeting it, streamed live so you can watch. Grows as the build-it features land.
+- Build a workflow / Rigs (shipped today) — chain tools into a flow: discover → target → run → read a step-by-step trace of what each tool did. Works as a guest; kept for your session.
+- Your dashboard + live mesh (shipped today) — the heads-up display is now a grid you arrange yourself; new views show what's fresh, trending, and who's building, plus a visual Capability Graph of how tools relate.
+- Rokha MVP (primary) — the build-a-workflow core is live end to end; next, the full connect → chat → build → persist → fork journey and visual in-browser building.
+- Go-Live Hardening — blocks a wider public launch (edge protection, per-visitor abuse controls); folds into the reliability work above.
+- SDK MVP — external publish (Homebrew, cargo, npm, PyPI) pending.
 
 ## Introverted Development
 
