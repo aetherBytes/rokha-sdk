@@ -5,6 +5,27 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## App — Rokha points right at what she means (2026-06-06)
+
+_A frontend/app pass. No SDK or wire-contract (`schemas/openapi.yaml`)
+change — nothing here moves the SDK version._
+
+When Rokha talks about a skill, she now highlights it right where you're
+reading — in her live thinking view — instead of flashing an unrelated
+list. A few touches make her guidance easier to follow:
+
+- **One clear highlight that waits for you.** Her "look here" cue uses a
+  single, consistent accent color and **stays put until you engage** —
+  hover it, click it, or just move on — rather than blinking away before
+  you've found it.
+- **Chat about any skill in one click.** Skill cards now carry a quick
+  **"ask Rokha"** button, so you can dig into a skill without opening it
+  up first.
+- **Remix spotlights its pick.** When Rokha builds a Rig for you, she
+  highlights the exact tool she chose (and only the latest one), so it's
+  obvious what landed in your workflow.
+- **A tidier dashboard default** plus small polish across the panels.
+
 ## App — a big step toward building workflows with agents (2026-06-04)
 
 _A large product release. No breaking SDK or wire-contract
