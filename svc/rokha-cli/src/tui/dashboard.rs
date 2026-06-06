@@ -64,7 +64,7 @@ fn run_tui() -> io::Result<()> {
                 Tab::Chat => Paragraph::new("Rokha Agent Chat\n\nType a message to begin.")
                     .block(Block::default().borders(Borders::ALL).title(" Chat ")),
                 Tab::Crossroads => {
-                    Paragraph::new("Rokha Registry\n\nBrowse tools and COWs.")
+                    Paragraph::new("Rokha Registry\n\nBrowse tools and Rigs.")
                         .block(Block::default().borders(Borders::ALL).title(" Rokha Registry "))
                 }
                 Tab::Rokha => {

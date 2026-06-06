@@ -1,7 +1,7 @@
 {
   "name": "@rokha/sdk",
-  "version": "0.5.0",
-  "description": "TypeScript SDK for Rokha — agents, harnesses, MCP tools, and Rokha Registry",
+  "version": "0.6.0",
+  "description": "TypeScript SDK for Rokha — the operating system for building with AI agents (marketplace, no-code workflow editor, memory layer): agents, harnesses, MCP tools, and Rokha Registry",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

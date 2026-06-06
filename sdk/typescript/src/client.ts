@@ -20,7 +20,7 @@ export interface SchemaCompatReport {
 }
 
 export class RokhaClient {
-  static readonly SCHEMA_VERSION = '3.2.0';
+  static readonly SCHEMA_VERSION = '4.0.0';
 
   readonly baseUrl: string;
   readonly timeout: number;

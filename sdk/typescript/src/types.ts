@@ -113,7 +113,7 @@ export interface MarketplaceListing {
   id: string;
   name: string;
   description: string;
-  listing_type: 'tool' | 'cow' | 'agent' | 'workflow';
+  listing_type: 'tool' | 'rig' | 'agent' | 'workflow' | 'skill' | 'server';
   creator_wallet: string;
   status: 'pending' | 'approved' | 'rejected' | 'featured';
   metadata: Record<string, unknown>;

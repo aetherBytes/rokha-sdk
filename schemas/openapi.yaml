@@ -17,7 +17,7 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 3.2.0
+  version: 4.0.0
   license:
     name: MIT
     url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
@@ -1846,7 +1846,7 @@ components:
         id: { type: string }
         name: { type: string }
         description: { type: string }
-        listing_type: { type: string, enum: [tool, cow, agent, workflow, skill, server] }
+        listing_type: { type: string, enum: [tool, rig, agent, workflow, skill, server] }
         creator_wallet: { type: string }
         status: { type: string, enum: [pending, approved, rejected, featured] }
         metadata:
