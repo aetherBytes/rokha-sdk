@@ -5,6 +5,25 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## App — a faster, cleaner first look (2026-06-06)
+
+_A frontend/app pass. No SDK or wire-contract (`schemas/openapi.yaml`)
+change — nothing here moves the SDK version._
+
+The landing page gets out of your way sooner:
+
+- **Usable before the 3D scene finishes loading.** The navigation, chat
+  box, and footer now appear right away instead of waiting on the
+  animated background. That's a real difference on older or
+  lower-powered devices, where the page used to look near-blank for a
+  beat before everything snapped in.
+- **Less clutter on arrival.** Dropped a duplicate "ROKHA" title near
+  the orb and a redundant line of footer text, so the first thing you
+  see is calmer and easier to read.
+
+Next: more landing polish — clearer first-time guidance and better
+light-mode contrast.
+
 ## App — Rokha points right at what she means (2026-06-06)
 
 _A frontend/app pass. No SDK or wire-contract (`schemas/openapi.yaml`)
