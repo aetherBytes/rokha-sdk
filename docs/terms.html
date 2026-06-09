@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rokha — Common Terms</title>
+    <meta name="description" content="A plain-language glossary of Rokha's core building blocks — Skill, Harness, Rig, Trace, the mesh, the Registry, Remix, the Brainfeed, and more.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0f0f1a;
+            --bg-elev: #161628;
+            --fg: #e2e8f0;
+            --fg-muted: #94a3b8;
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #10b981;
+            --border: #334155;
+            --border-soft: rgba(99, 102, 241, 0.25);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            color: var(--fg);
+            background: var(--bg);
+            min-height: 100vh;
+        }
+
+        .container { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .header .brand { display: flex; flex-direction: column; gap: 0.4rem; }
+
+        .wordmark {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.7rem;
+            line-height: 1.2;
+            color: var(--primary);
+            white-space: pre;
+            margin: 0;
+            user-select: all;
+        }
+        .tagline { font-size: 0.95rem; color: var(--fg-muted); letter-spacing: 0.02em; }
+
+        .backlink {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.85rem;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            padding: 0.4rem 0.8rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+            border-bottom-style: solid;
+        }
+        .backlink:hover { background: rgba(99, 102, 241, 0.15); }
+
+        .pagetitle { font-size: 1.6rem; color: var(--fg); margin: 1.5rem 0 0.25rem; }
+        .pagelede { color: var(--fg-muted); font-size: 0.95rem; margin-bottom: 1rem; max-width: 64ch; }
+
+        h2 {
+            font-size: 1rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .term {
+            margin: 1.5rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid var(--border-soft);
+        }
+        .term dt {
+            font-size: 1.05rem;
+            color: var(--fg);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .term dt .kind {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            margin-left: 0.6rem;
+            opacity: 0.8;
+        }
+        .term dd { color: var(--fg); font-size: 0.96rem; margin: 0; }
+
+        p { color: var(--fg); margin-bottom: 0.85rem; font-size: 0.98rem; }
+        strong { color: var(--fg); font-weight: 600; }
+        em { font-style: normal; color: var(--primary); font-weight: 500; }
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.88em;
+            color: var(--fg);
+        }
+
+        a { color: var(--secondary); text-decoration: none; border-bottom: 1px dotted rgba(139, 92, 246, 0.5); }
+        a:hover { color: var(--primary); border-bottom-color: var(--primary); }
+
+        .spine {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.07), rgba(139, 92, 246, 0.04));
+            border: 1px solid var(--border-soft);
+            border-left: 3px solid var(--primary);
+            border-radius: 6px;
+            padding: 1.25rem 1.5rem;
+            margin: 1rem 0 1.5rem;
+            font-size: 1.02rem;
+        }
+        .spine code { font-size: 0.95em; }
+
+        .links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0 1.5rem; }
+        .links a {
+            display: inline-block;
+            padding: 0.55rem 1rem;
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            color: var(--primary);
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.88rem;
+            border-bottom-style: solid;
+        }
+        .links a:hover { background: rgba(99, 102, 241, 0.2); color: var(--fg); }
+
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--fg-muted);
+            font-size: 0.9rem;
+        }
+        .footer a { color: var(--secondary); border-bottom: none; }
+        .footer a:hover { color: var(--primary); }
+        .footer .sep { color: var(--border); margin: 0 0.5rem; }
+
+        @media (max-width: 720px) {
+            .container { padding: 1rem; }
+            .header { flex-direction: column; align-items: flex-start; }
+            .wordmark { font-size: 0.55rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="brand">
+                <pre class="wordmark"> ____     ___    _  __ _   _      _
+|  _ \   / _ \  | |/ /| | | |    / \
+| |_) | | | | | | ' / | |_| |   / _ \
+|  _ &lt;  | |_| | | . \ |  _  |  / ___ \
+|_| \_\  \___/  |_|\_\|_| |_| /_/   \_\</pre>
+                <span class="tagline">Picks and shovels for the new age.</span>
+            </div>
+            <a class="backlink" href="./index.html">← Home</a>
+        </header>
+
+        <h1 class="pagetitle">Common Terms</h1>
+        <p class="pagelede">Plain-language definitions of the words you'll see around Rokha. New here? Skim the spine first, then dip into the rest.</p>
+
+        <div class="spine">
+            <strong>The spine:</strong> a <em>Skill</em> is a single ability. Wrap it with settings and it becomes a <em>Harness</em>. Chain harnesses into a workflow and you have a <em>Rig</em>. Run it and you get a <em>Trace</em>. In short: <code>Skill ⊂ Harness ⊂ Rig</code>, captured by <code>Trace</code>.
+        </div>
+
+        <h2>Core building blocks</h2>
+        <dl>
+            <div class="term"><dt>Skill<span class="kind">the atom</span></dt><dd>A single capability pulled from the mesh — search the web, audit a tool, fetch data, post an update. It's the smallest unit you can run. Skills follow the open Agent Skills standard, so they're portable beyond Rokha.</dd></div>
+            <div class="term"><dt>Harness<span class="kind">a configured skill</span></dt><dd>A skill <em>plus its setup</em> — the parameters and instructions that make it runnable for a specific job. When you "target" a tool to work with, you're creating a harness.</dd></div>
+            <div class="term"><dt>Rig<span class="kind">a workflow</span></dt><dd>A flow of harnesses chained into a workflow that gets something done. Rigs are forkable — inherit one, swap a piece, ship your version. Save a reusable Rig once you're logged in.</dd></div>
+            <div class="term"><dt>Trace<span class="kind">the runtime record</span></dt><dd>The step-by-step record of a run — each tool that fired, what it returned, and the reasoning that threaded them together. It's how you see <em>how</em> a result was reached, and how work can scale to other agents.</dd></div>
+        </dl>
+
+        <h2>Places &amp; surfaces</h2>
+        <dl>
+            <div class="term"><dt>Rokha<span class="kind">platform + agent</span></dt><dd>Two things on purpose. <strong>The platform</strong> is the bazaar and mesh where the agent economy lives. <strong>The agent</strong> is your resident guide inside it — "the breath that animates the flow." The name is Aramaic for <em>spirit / breath / wind</em>.</dd></div>
+            <div class="term"><dt>The mesh<span class="kind">the network</span></dt><dd>The living web of agents, tools, and protocols Rokha connects to — capabilities that can discover and call each other, instead of one model behind one API.</dd></div>
+            <div class="term"><dt>Registry<span class="kind">the directory</span></dt><dd>A live, composable directory of agents, tools, and Rigs. Real-time (you see what's being used right now), forkable, and open to browse without an account.</dd></div>
+            <div class="term"><dt>The Void<span class="kind">the home screen</span></dt><dd>Rokha's landing surface — the calm, dark space where you first arrive and talk to her, before opening the full dashboard.</dd></div>
+            <div class="term"><dt>Brainfeed<span class="kind">the dashboard</span></dt><dd>Your heads-up display — a grid of live data views you arrange yourself (add, resize, drag). Shows the mesh in motion and Rokha's live reasoning. The agent can bring the right view into focus while you chat.</dd></div>
+        </dl>
+
+        <h2>Views &amp; actions</h2>
+        <dl>
+            <div class="term"><dt>Remix<span class="kind">the demo</span></dt><dd>One button that shows what Rokha does: she autonomously builds a workflow from the live network — discovering a real tool and targeting it — streamed live so you can watch her work.</dd></div>
+            <div class="term"><dt>Thinking<span class="kind">a view</span></dt><dd>Rokha's live reasoning feed — every tool call and decision streams here in real time as she works, so you watch the <em>how</em>, not just the answer.</dd></div>
+            <div class="term"><dt>Rig Flow<span class="kind">a view</span></dt><dd>A diagram of your workflow — Skill → Harness → Rig → Trace — that lights up stage by stage as your Rig comes together.</dd></div>
+            <div class="term"><dt>Capability Graph<span class="kind">a view</span></dt><dd>A live map of how skills relate to each other across the mesh — which capabilities cluster and connect.</dd></div>
+            <div class="term"><dt>Movers · Builders · Events<span class="kind">views</span></dt><dd>Live reads on the network: what's gaining traction (Movers), who's shipping the most (Builders), and the raw activity ticker (Events).</dd></div>
+        </dl>
+
+        <h2>Standards</h2>
+        <dl>
+            <div class="term"><dt>MCP<span class="kind">protocol</span></dt><dd>Model Context Protocol — an open standard for connecting agents to tools and data. Rokha exposes its capabilities over MCP so any compatible agent can use them.</dd></div>
+            <div class="term"><dt>A2A<span class="kind">protocol</span></dt><dd>Agent-to-Agent — an open standard for agents to talk to each other directly. Part of how the mesh interconnects.</dd></div>
+            <div class="term"><dt>Agent Skills<span class="kind">standard</span></dt><dd>The open format for packaging a portable ability so it works across tools — not locked to any one platform. Rokha's skills follow it.</dd></div>
+        </dl>
+
+        <h2>Keep reading</h2>
+        <div class="links">
+            <a href="./faq.html">FAQ</a>
+            <a href="./index.html">Overview</a>
+            <a href="https://github.com/aetherBytes/rokha-sdk">SDK repo</a>
+            <a href="https://x.com/Rokha_ai">@Rokha_ai</a>
+        </div>
+
+        <footer class="footer">
+            <p>
+                <a href="https://rokha.ai">rokha.ai</a>
+                <span class="sep">·</span>
+                <a href="https://x.com/Rokha_ai">@Rokha_ai</a>
+                <span class="sep">·</span>
+                <a href="https://github.com/aetherBytes/rokha-sdk">github</a>
+            </p>
+            <p style="margin-top: 0.75rem; font-size: 0.8rem; opacity: 0.6;">Rokha — the breath that animates the flow.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rokha — FAQ</title>
+    <meta name="description" content="Frequently asked questions about Rokha — the bazaar and mesh for the agent internet. What it is, why it exists, whether you need an account, and how to start.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0f0f1a;
+            --bg-elev: #161628;
+            --fg: #e2e8f0;
+            --fg-muted: #94a3b8;
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #10b981;
+            --border: #334155;
+            --border-soft: rgba(99, 102, 241, 0.25);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            color: var(--fg);
+            background: var(--bg);
+            min-height: 100vh;
+        }
+
+        .container { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .header .brand { display: flex; flex-direction: column; gap: 0.4rem; }
+
+        .wordmark {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.7rem;
+            line-height: 1.2;
+            color: var(--primary);
+            white-space: pre;
+            margin: 0;
+            user-select: all;
+        }
+        .tagline { font-size: 0.95rem; color: var(--fg-muted); letter-spacing: 0.02em; }
+
+        .backlink {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.85rem;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            padding: 0.4rem 0.8rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .backlink:hover { background: rgba(99, 102, 241, 0.15); }
+
+        .pagetitle { font-size: 1.6rem; color: var(--fg); margin: 1.5rem 0 0.25rem; }
+        .pagelede { color: var(--fg-muted); font-size: 0.95rem; margin-bottom: 1.5rem; max-width: 64ch; }
+
+        h2 {
+            font-size: 1rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-soft);
+        }
+        h3 { font-size: 1.05rem; color: var(--fg); margin: 1.75rem 0 0.5rem; font-weight: 600; }
+        p, li { color: var(--fg); margin-bottom: 0.85rem; font-size: 0.98rem; }
+        ul { padding-left: 1.4rem; }
+        li { margin-bottom: 0.4rem; }
+        strong { color: var(--fg); font-weight: 600; }
+        em { font-style: normal; color: var(--primary); font-weight: 500; }
+
+        a { color: var(--secondary); text-decoration: none; border-bottom: 1px dotted rgba(139, 92, 246, 0.5); }
+        a:hover { color: var(--primary); border-bottom-color: var(--primary); }
+        .backlink, .links a { border-bottom-style: solid; }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.88em;
+            color: var(--fg);
+        }
+
+        .links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0 1.5rem; }
+        .links a {
+            display: inline-block;
+            padding: 0.55rem 1rem;
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            color: var(--primary);
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.88rem;
+        }
+        .links a:hover { background: rgba(99, 102, 241, 0.2); color: var(--fg); }
+
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--fg-muted);
+            font-size: 0.9rem;
+        }
+        .footer a { color: var(--secondary); border-bottom: none; }
+        .footer a:hover { color: var(--primary); }
+        .footer .sep { color: var(--border); margin: 0 0.5rem; }
+
+        @media (max-width: 720px) {
+            .container { padding: 1rem; }
+            .header { flex-direction: column; align-items: flex-start; }
+            .wordmark { font-size: 0.55rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="brand">
+                <pre class="wordmark"> ____     ___    _  __ _   _      _
+|  _ \   / _ \  | |/ /| | | |    / \
+| |_) | | | | | | ' / | |_| |   / _ \
+|  _ &lt;  | |_| | | . \ |  _  |  / ___ \
+|_| \_\  \___/  |_|\_\|_| |_| /_/   \_\</pre>
+                <span class="tagline">Picks and shovels for the new age.</span>
+            </div>
+            <a class="backlink" href="./index.html">← Home</a>
+        </header>
+
+        <h1 class="pagetitle">FAQ</h1>
+        <p class="pagelede">The fast version — what Rokha is, why it exists, and how to get going. New to all of this? Start here.</p>
+
+        <h3>What is Rokha, in one line?</h3>
+        <p>Rokha is the way into the <strong>agent internet</strong> — one open place where AI agents discover each other, swap capabilities, and weave into workflows you can actually use. Find the tools you need, compose them into something that works, and run it.</p>
+
+        <h3>Why come here? What's the point?</h3>
+        <p>The useful stuff in AI right now is scattered across thousands of tools, agents, and services that can't easily find or use each other. Rokha is the connective tissue: a single doorway to discover what's out there, try it with zero setup, and chain pieces into a workflow that's yours. You don't need to be an expert — you talk to Rokha (the resident guide) and she helps you build.</p>
+
+        <h3>Do I need an account? Is it free?</h3>
+        <p>No account needed to look around. Browsing the registry, chatting with Rokha, exploring the live mesh, and starting to build a workflow are all <em>open by default</em>. You only log in for things that need <em>your</em> identity — saving a reusable workflow, your private memory, or your own API keys. It's free to explore.</p>
+
+        <h3>What is "the mesh"?</h3>
+        <p>The mesh is the living network of agents, tools, and protocols Rokha connects to. Instead of one model behind one API, it's many capabilities that can discover and call each other. The platform shows you this network breathing in real time — what's fresh, what's trending, and how things relate.</p>
+
+        <h3>What's the Registry?</h3>
+        <p>A living directory of agents, tools, and <strong>Rigs</strong> (workflows built from chained tools). It's <em>live, not static</em> — a real-time view of what the agentic world is doing right now — and <em>composable</em>: every entry is forkable, so you can inherit a workflow, swap a piece, and ship your version.</p>
+
+        <h3>What's a Rig? What's Remix?</h3>
+        <p>A <strong>Rig</strong> is a workflow — a flow of tools wired together to get something done. <strong>Remix</strong> is the one-button demo of how it works: Rokha autonomously builds a workflow from the live network — discovering a real tool and targeting it — streamed live so you can watch her do it. For the full vocabulary, see <a href="./terms.html">Common Terms</a>.</p>
+
+        <h3>What's the Brainfeed?</h3>
+        <p>Your heads-up display — a grid of live data views you arrange yourself (add, resize, drag panels). It shows the mesh in motion: what's trending, who's building, a visual map of how tools relate, and Rokha's live reasoning as she works. Rokha can bring the right panel into focus while you chat.</p>
+
+        <h3>How do I actually start?</h3>
+        <ul>
+            <li>Just talk to Rokha — ask "what can you do?" and let her guide you.</li>
+            <li>Hit <strong>Remix</strong> to watch her build a workflow from the live network.</li>
+            <li>Take the in-app tour to learn the dashboard.</li>
+            <li>Browse the Registry to see what the mesh has to offer.</li>
+        </ul>
+
+        <h3>Is my data private?</h3>
+        <p>Anything tied to your identity — your saved workflows, private memory, and keys — is yours and login-gated. Public, browse-only surfaces don't require you to hand over anything. We never put your wallet address, tokens, or keys where they don't belong.</p>
+
+        <h3>What's it built on?</h3>
+        <p>Open standards, on purpose. Capabilities are exposed over common agent protocols (MCP, A2A), and shareable abilities follow the open Agent Skills standard so they're portable across tools — not locked to Rokha. There's a public SDK and a CLI (<code>ro</code>) so anyone can talk to the same surface from their own code.</p>
+
+        <h3>Is this crypto?</h3>
+        <p>No. Rokha is domain-general infrastructure for agents. A crypto wallet is just <em>one</em> of three ways to log in (alongside email and Google) — not the pitch. Anything an agent can do belongs here.</p>
+
+        <h2>Keep reading</h2>
+        <div class="links">
+            <a href="./terms.html">Common Terms</a>
+            <a href="./index.html">Overview</a>
+            <a href="https://github.com/aetherBytes/rokha-sdk">SDK repo</a>
+            <a href="https://x.com/Rokha_ai">@Rokha_ai</a>
+        </div>
+
+        <footer class="footer">
+            <p>
+                <a href="https://rokha.ai">rokha.ai</a>
+                <span class="sep">·</span>
+                <a href="https://x.com/Rokha_ai">@Rokha_ai</a>
+                <span class="sep">·</span>
+                <a href="https://github.com/aetherBytes/rokha-sdk">github</a>
+            </p>
+            <p style="margin-top: 0.75rem; font-size: 0.8rem; opacity: 0.6;">Rokha — the breath that animates the flow.</p>
+        </footer>
+    </div>
+</body>
+</html>
