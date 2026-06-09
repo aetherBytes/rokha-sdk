@@ -5,6 +5,18 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Docs — FAQ + Common Terms reference pages (2026-06-09)
+
+_A docs pass. No SDK or wire-contract (`schemas/openapi.yaml`) change._
+
+Two new plain-language reference pages, linked from the homepage:
+
+- **FAQ** — what Rokha is, why come here, whether you need an account
+  (you don't, to look around), and how to start.
+- **Common Terms** — a glossary of the core building blocks (Skill,
+  Harness, Rig, Trace) plus the words you'll see around the platform
+  (the mesh, the Registry, Remix, the dashboard, and more).
+
 ## App — Rokha points right at what she means (2026-06-06)
 
 _A frontend/app pass. No SDK or wire-contract (`schemas/openapi.yaml`)
