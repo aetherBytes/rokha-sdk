@@ -5,6 +5,33 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## App — A refreshed landing + a guided "Agent Skills" walkthrough (2026-06-09)
+
+_A frontend/app pass. No SDK or wire-contract (`schemas/openapi.yaml`)
+change — nothing here moves the SDK version._
+
+The homepage got a ground-up refresh, and Rokha can now walk you through
+the basics herself:
+
+- **A cleaner first screen.** When you arrive in the void, a single
+  floating **"What is Rokha?"** card explains the idea, with quick buttons
+  to see what's trending, take a tour, or watch Rokha build something live
+  (Remix). One tap on "What is Rokha?" gets you a plain-English, no-jargon
+  explainer.
+- **Built for phones.** The whole landing was reworked for mobile — the
+  quick-start buttons lay out cleanly around the screen, tuck extras into
+  tidy dropdowns to save space, and the footer keeps Docs / X / Contact as
+  compact icons. Nothing important gets lost on a small screen.
+- **New guided tutorial — Agent Skills.** A short, narrated walkthrough of
+  the thing everything here is built from: what a *skill* is, the open
+  `SKILL.md` standard that lets **any** agent use it, and how you compose
+  your own workflow from skills with **no code and no API keys**. It even
+  pulls up a real trending skill so you can see one live.
+- **Polish throughout** — a deeper, more tactile look for the floating
+  void elements, highlights that stay locked onto whatever Rokha is
+  pointing at (even while you scroll on a phone), and a calmer default
+  view.
+
 ## Docs — FAQ + Common Terms reference pages (2026-06-09)
 
 _A docs pass. No SDK or wire-contract (`schemas/openapi.yaml`) change._
