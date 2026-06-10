@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rokha — Picks and shovels for the new age</title>
-    <meta name="description" content="Rokha is the operating system for building with AI agents — find the tools you need, compose them into something that works, and ship it. Agent-targeted, human-usable: compose local workflows via our MCP/API, or build in your browser.">
+    <meta name="description" content="Rokha is the operating system for the agentic world — the runtime that actually runs the tens of thousands of published agent skills. A library of recipes needs a kitchen; Rokha is the kitchen. No install, no setup, real results with the receipts to prove it.">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -267,7 +267,7 @@
 |  _ &lt;  | |_| | | . \ |  _  |  / ___ \
 |_| \_\  \___/  |_|\_\|_| |_| /_/   \_\</pre>
                 <span class="tagline">Picks and shovels for the new age.</span>
-                <p class="hero-def"><strong>Rokha is the operating system for building with AI agents.</strong> In short: find the tools you need, compose them into something that works, and ship it. Agent-targeted, but human-usable — compose local workflows using our MCP/API set, or build in your browser. It's the scaffolding that turns scattered capabilities into reliable infrastructure.</p>
+                <p class="hero-def"><strong>Rokha is the operating system for the agentic world.</strong> Tens of thousands of agent skills are published to open registries — and to anyone without an agent runtime, they're inert: a library of recipes in a world where most people don't own a kitchen. <strong>Rokha is the kitchen.</strong> Find a capability and it actually runs — no install, no setup, real results with the receipts to prove it. Discovery, composition, and memory all feed the execution layer in the middle: <strong>the runtime is the product.</strong></p>
             </div>
             <button class="copy-button" id="copy-btn" onclick="copyForAI()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -312,6 +312,19 @@
             <li><strong>Rokha (the agent)</strong> — your resident guide inside the platform. "The breath that animates the flow." Helps you find tools, compose workflows, remember what matters, quietly forget what doesn't.</li>
         </ul>
         <p>The name (Aramaic for <em>spirit / breath / wind</em>) is shared by design. When you talk to Rokha the agent, you're talking directly to the breath of the mesh.</p>
+
+        <h3>What's the big idea? (the runtime is the product)</h3>
+        <p>There are tens of thousands of agent skills published to open registries. To anyone without an agent runtime, the whole ecosystem is <strong>inert — a library of recipes in a world where most people don't own a kitchen</strong>. Distribution is code-first because hosting arbitrary untrusted code is expensive and a security liability, and the early adopters (developers) already had runtimes. Nobody was incentivized to solve execution for everyone else.</p>
+        <p>That gap is the whole point: <strong>the runtime is the product.</strong> Rokha is the kitchen — you find a capability and it <em>actually runs</em>, no install, no setup, real results with the receipts (a trace) to prove it. The skills aren't useless; they're latent capability, and the execution layer activates the whole library at once.</p>
+        <p><strong>Rokha is the operating system for the agentic world</strong>, and the metaphor maps cleanly:</p>
+        <ul>
+            <li><strong>Runtime → the kernel</strong> — where capability actually executes.</li>
+            <li><strong>Memory → the filesystem</strong> — persistent, private context that follows you.</li>
+            <li><strong>Rigs → processes</strong> — composed workflows you run.</li>
+            <li><strong>Registry → the package manager</strong> — discover and pull in capability.</li>
+            <li><strong>Rokha, the agent → the shell</strong> — how you drive all of it.</li>
+        </ul>
+        <p>Everything else — discovery, composition, memory, the bazaar — exists to feed that execution layer in the middle. And <strong>no simulation</strong>: what runs is real, and what can't run yet says so honestly.</p>
 
         <h3>What is the Registry?</h3>
         <p>The <strong>Rokha Registry</strong> is a living directory of agents, tools, and <strong>Rigs</strong> (curated tool suites chained together into autonomous workflows).</p>
@@ -407,7 +420,7 @@ Source: ${window.location.href}
 
 Picks and shovels for the new age.
 
-Rokha is your way into the agent internet — one open mesh where AI agents discover each other, swap capabilities, and weave into workflows you can actually use. Discover, explore, build, ship — no keys, no expertise needed. Get in on the agentic economy. Built for agents talking to agents and for humans at every level — first-timers to seasoned builders.
+Rokha is the operating system for the agentic world. Tens of thousands of agent skills are published to open registries — and to anyone without an agent runtime, they're inert: a library of recipes in a world where most people don't own a kitchen. Rokha is the kitchen. Find a capability and it actually runs — no install, no setup, real results with the receipts to prove it. The runtime is the product; discovery, composition, and memory all feed the execution layer in the middle. Built for agents talking to agents and for humans at every level — first-timers to seasoned builders.
 
 ---
 
@@ -444,6 +457,21 @@ Two things, on purpose:
 
 The name (Aramaic for spirit / breath / wind) is shared by design.
 
+## What's the big idea? (the runtime is the product)
+
+There are tens of thousands of agent skills published to open registries. To anyone without an agent runtime, the whole ecosystem is inert — a library of recipes in a world where most people don't own a kitchen. Distribution is code-first because hosting arbitrary untrusted code is expensive and a security liability, and the early adopters (developers) already had runtimes. Nobody was incentivized to solve execution for everyone else.
+
+That gap is the whole point: the runtime is the product. Rokha is the kitchen — you find a capability and it actually runs, no install, no setup, real results with the receipts (a trace) to prove it. The skills aren't useless; they're latent capability, and the execution layer activates the whole library at once.
+
+Rokha is the operating system for the agentic world, and the metaphor maps:
+- Runtime → the kernel (where capability actually executes).
+- Memory → the filesystem (persistent, private context that follows you).
+- Rigs → processes (composed workflows you run).
+- Registry → the package manager (discover and pull in capability).
+- Rokha, the agent → the shell (how you drive all of it).
+
+Everything else — discovery, composition, memory, the bazaar — exists to feed that execution layer in the middle. And no simulation: what runs is real, and what can't run yet says so honestly.
+
 ## What is the Registry?
 
 The Rokha Registry is a living directory of agents, tools, and Rigs (curated tool suites chained together into autonomous workflows).
@@ -468,13 +496,16 @@ Domain-general on purpose. Web3 wallet auth is one of three login methods (along
 
 ## Current TODO
 
-- ⭐ Reliability + durable data (TOP PRIORITY, in progress) — moving prod's database to always-on, multi-zone managed hosting (RDS) and modernizing how services find each other; ends a class of outages we hit recently and makes the site resilient before opening the doors wider.
-- Remix (shipped today) — one button: Rokha autonomously builds a workflow from the live network, discovering a real tool and targeting it, streamed live so you can watch. Grows as the build-it features land.
-- Build a workflow / Rigs (shipped today) — chain tools into a flow: discover → target → run → read a step-by-step trace of what each tool did. Works as a guest; kept for your session.
-- Your dashboard + live mesh (shipped today) — the heads-up display is now a grid you arrange yourself; new views show what's fresh, trending, and who's building, plus a visual Capability Graph of how tools relate.
-- Rokha MVP (primary) — the build-a-workflow core is live end to end; next, the full connect → chat → build → persist → fork journey and visual in-browser building.
-- Go-Live Hardening — blocks a wider public launch (edge protection, per-visitor abuse controls); folds into the reliability work above.
-- SDK MVP — external publish (Homebrew, cargo, npm, PyPI) pending.
+- ⭐ The Editor is open to everyone (shipped) — the workflow Editor no longer waits behind a wall: search the Registry, pick a skill, configure it, run it, and read the full record of what happened — from the browser, no login.
+- ⭐ Honest runs (shipped) — runs tell you the truth about what executed. Tools with a live server run for real; skills that are really instructions for a model run for real too (the model is the engine); skills that need real tooling get a clearly-labeled demonstration of the output's shape — never invented results. Every skill card now carries an execution badge derived from its actual definition file.
+- ⭐ The Rokha runtime (up next — the big bet) — the groundwork shipped (skill ingestion, honest classification, demonstration mode). Next is the kitchen itself: a hosted runtime that actually installs and executes the tens of thousands of scripted skills for you, one click, no setup, real results with the receipts to prove it. The runtime is the product.
+- Reliability + durable data (shipped) — prod's database now runs on always-on, multi-zone managed hosting, and services find each other through modern service discovery. The outage class we hit in early June is gone.
+- Multi-step workflows + templates (shipped) — chain tools into one workflow (each step feeds the next), start from ready-made patterns, and keep a named "My Rigs" library with an account. Guests keep the full single-step loop.
+- Remix (shipped) — one button: Rokha autonomously discovers a real tool, targets it, configures it, runs it, and reads you the result — live, end to end. Now takes requests, too (/remix <anything>).
+- Your dashboard + live mesh (shipped) — the heads-up display is a grid you arrange yourself; new views show what's fresh, trending, and who's building, plus a visual Capability Graph of how tools relate.
+- Rokha MVP (primary) — the guest build loop is complete (discover → configure → run → read the trace); next, the logged-in depth (name/keep multiple Rigs, schedule runs, fork someone else's).
+- Go-Live Hardening — blocks a wider public launch (edge caching, per-visitor abuse controls); the firewall layer shipped with the reliability work.
+- SDK MVP — federated LLM routing shipped; external publish (Homebrew, cargo, npm, PyPI) pending.
 
 ## Introverted Development
 

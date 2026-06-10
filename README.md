@@ -1,6 +1,6 @@
 # Rokha SDK
 
-Rokha is the operating system for building with AI agents. In short: find the tools you need, compose them into something that works, and ship it. Agent-targeted, but human-usable — compose local workflows using our MCP/API set, or build in your browser. It's the scaffolding that turns scattered capabilities into reliable infrastructure.
+Rokha is the operating system for the agentic world. Tens of thousands of agent skills are published to open registries — and to anyone without an agent runtime, they're inert: a library of recipes in a world where most people don't own a kitchen. **Rokha is the kitchen** — find a capability and it actually runs, no install, no setup, real results with the receipts (a trace) to prove it. The runtime is the product; discovery, composition, and memory all feed the execution layer in the middle. Agent-targeted, but human-usable — compose workflows using our MCP/API set, or build in your browser.
 
 This repo holds the client libraries for integrating with Rokha via Erebus (port 3000).
 
