@@ -5,6 +5,22 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 0.7.3 — Swap a workflow step by asking (2026-06-10)
+
+_Schema 4.4.0 (additive) · SDK 0.7.3 (TypeScript + Python)._
+
+Started from a template and step 2 picked a tool you don't love? Now you
+just say so:
+
+- **New MCP tool: `rig_swap_skill`.** Re-resolves one step of a rig
+  against the live registry and re-points it — the step's instruction is
+  kept, and any live endpoint/params from the old tool are safely
+  cleared. Ask Rokha "use a different tool for step 2" and the editor
+  updates in place; external agents get the same single call over MCP.
+- Rokha's per-turn briefing now lists every step of a multi-step rig, so
+  she addresses steps by number from real state.
+- No SDK method changes — versions bumped in lockstep.
+
 ## 0.7.2 — Agents can fetch templates themselves (2026-06-10)
 
 _Schema 4.3.0 (additive) · SDK 0.7.2 (TypeScript + Python)._

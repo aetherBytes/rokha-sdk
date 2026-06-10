@@ -1,6 +1,6 @@
 [project]
 name = "rokha-sdk"
-version = "0.7.2"
+version = "0.7.3"
 description = "Python SDK for Rokha — the operating system for building with AI agents (marketplace, no-code workflow editor, memory layer): agents, harnesses, MCP tools, and Rokha Registry"
 requires-python = ">=3.10"
 dependencies = ["httpx>=0.27"]
