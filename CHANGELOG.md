@@ -5,6 +5,19 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Product — every skill now tells you if it really runs (2026-06-10)
+
+_No SDK or schema changes — the 4.6.0 ingestion endpoint, now visible._
+
+Open any skill in the Registry and you'll see its **execution badge**,
+derived from the skill's actual definition file (not its marketing
+blurb): ⚡ **Runs here now** — instruction-shaped skills the model can
+execute faithfully, today — or 🔒 **Needs the Rokha runtime** — skills
+that depend on command-line tools or installs, listed by name, honest
+about being a demonstration until the hosted runtime arrives. The detail
+panel also now shows the skill's real definition file, so what you read
+is what runs.
+
 ## 0.7.5 — Skills become real, readable tools (2026-06-10)
 
 _Schema 4.6.0 (additive) · SDK 0.7.5 (TypeScript + Python)._
