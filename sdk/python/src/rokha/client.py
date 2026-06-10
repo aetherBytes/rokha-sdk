@@ -26,7 +26,7 @@ class RokhaError(Exception):
 
 
 class RokhaClient:
-    SCHEMA_VERSION = "4.5.0"
+    SCHEMA_VERSION = "4.6.0"
 
     def __init__(
         self,
@@ -78,6 +78,16 @@ class RokhaClient:
 
     def health(self) -> dict[str, Any]:
         return self.get("/health")
+
+    def get_skill_md(self, provider: str, slug: str) -> dict[str, Any]:
+        """Ingest a registry listing's real SKILL.md (schema 4.6.0).
+
+        Fetched from its source registry, parsed, and classified
+        server-side. ``classification`` answers "can a model execute this
+        faithfully?" — ``prompt`` yes; ``scripted``/``mcp`` need a runtime.
+        No auth.
+        """
+        return self.get("/api/marketplace/registry/skill-md", provider=provider, slug=slug)
 
     def check_schema_compat(self) -> SchemaCompatReport:
         """Verify the live Erebus schema version matches this SDK's expected version.

@@ -5,6 +5,27 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 0.7.5 — Skills become real, readable tools (2026-06-10)
+
+_Schema 4.6.0 (additive) · SDK 0.7.5 (TypeScript + Python)._
+
+A skill listing used to be a card — a name and a short blurb. Now Rokha
+reads the actual skill:
+
+- **New endpoint: `GET /api/marketplace/registry/skill-md`** — fetches a
+  listing's real SKILL.md from its source registry, parses it, and
+  returns a structured tool definition: the full instructions, what
+  binaries it needs, what scripts it references, and an execution
+  **classification** — `prompt` (a model can run it faithfully, today),
+  `scripted` / `mcp` (needs a runtime — the honest "demonstration" label
+  until the Rokha runtime arrives).
+- **Runs use the real thing.** When you run a skill in the Editor, the
+  engine now executes the skill's *actual* full instructions — not the
+  card blurb — and the needs-a-runtime call is made from the skill's own
+  declared requirements, not a guess.
+- **SDK:** `getSkillMd(provider, slug)` (TS) / `get_skill_md(provider,
+  slug)` (Python).
+
 ## Product — the Editor opens, and runs get honest (2026-06-10)
 
 _No SDK or schema changes — a product update worth knowing about._

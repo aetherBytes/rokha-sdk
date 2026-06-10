@@ -20,8 +20,28 @@ export interface SchemaCompatReport {
   message: string;
 }
 
+export interface SkillMdBundle {
+  ok: boolean;
+  provider: string;
+  slug: string;
+  name: string;
+  description?: string;
+  homepage?: string;
+  /** prompt = a model can execute it faithfully; scripted/mcp = needs a runtime. */
+  classification: 'prompt' | 'scripted' | 'mcp';
+  classification_basis?: string;
+  requires_bins?: string[];
+  has_install_steps?: boolean;
+  scripts_referenced?: string[];
+  frontmatter_metadata?: Record<string, unknown> | null;
+  body: string;
+  body_chars?: number;
+  truncated?: boolean;
+  cached?: boolean;
+}
+
 export class RokhaClient {
-  static readonly SCHEMA_VERSION = '4.5.0';
+  static readonly SCHEMA_VERSION = '4.6.0';
 
   readonly baseUrl: string;
   readonly timeout: number;
@@ -127,6 +147,17 @@ export class RokhaClient {
 
   async health(): Promise<HealthResponse> {
     return this.get('/health');
+  }
+
+  /**
+   * Ingest a registry listing's real SKILL.md (schema 4.6.0): fetched from
+   * its source registry, parsed, and classified server-side. The
+   * `classification` answers "can a model execute this faithfully?" —
+   * `prompt` yes; `scripted`/`mcp` need a runtime. No auth.
+   */
+  async getSkillMd(provider: 'clawhub' | 'rokha', slug: string): Promise<SkillMdBundle> {
+    const q = new URLSearchParams({ provider, slug });
+    return this.get(`/api/marketplace/registry/skill-md?${q}`);
   }
 
   /**

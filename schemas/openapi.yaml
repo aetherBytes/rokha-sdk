@@ -17,7 +17,7 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 4.5.0
+  version: 4.6.0
   license:
     name: MIT
     url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
@@ -1208,6 +1208,31 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/RegistryListResponse' }
 
+  /api/marketplace/registry/skill-md:
+    get:
+      tags: [marketplace]
+      summary: Ingest a listing's real SKILL.md — fetched from its source registry, parsed and classified
+      description: >-
+        Returns the skill's actual SKILL.md (frontmatter + body) plus a derived
+        tool definition: an execution classification (prompt = a model can run
+        it faithfully; scripted/mcp = needs a runtime), the binaries it
+        requires, and the scripts it references. Provider-scoped — only known
+        source registries are fetched. Cached server-side.
+      operationId: getSkillMd
+      parameters:
+        - { name: provider, in: query, required: true, schema: { type: string, enum: [clawhub, rokha] } }
+        - { name: slug, in: query, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: Parsed + classified SKILL.md bundle
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SkillMdBundle' }
+        '400':
+          description: Unsupported provider or unsafe slug
+        '404':
+          $ref: '#/components/responses/NotFound'
+
   /api/marketplace/registry/{provider}/{id}:
     get:
       tags: [marketplace]
@@ -2251,6 +2276,30 @@ components:
           items: { type: string }
         limit: { type: integer, minimum: 1, maximum: 500 }
         offset: { type: integer, minimum: 0 }
+
+    SkillMdBundle:
+      type: object
+      required: [ok, provider, slug, name, classification, body]
+      properties:
+        ok: { type: boolean }
+        provider: { type: string }
+        slug: { type: string }
+        name: { type: string }
+        description: { type: string }
+        homepage: { type: string }
+        classification:
+          type: string
+          enum: [prompt, scripted, mcp]
+          description: prompt = a model can execute it faithfully; scripted/mcp = needs a runtime
+        classification_basis: { type: string }
+        requires_bins: { type: array, items: { type: string } }
+        has_install_steps: { type: boolean }
+        scripts_referenced: { type: array, items: { type: string } }
+        frontmatter_metadata: { type: object, additionalProperties: true, nullable: true }
+        body: { type: string }
+        body_chars: { type: integer }
+        truncated: { type: boolean }
+        cached: { type: boolean }
 
     RegistryListing:
       type: object
