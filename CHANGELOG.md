@@ -5,6 +5,14 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Product — Start Building, one click from any skill (2026-06-10)
+
+_No SDK or schema changes._
+
+The **Start Building** button on every skill card is live: click it and
+the skill becomes your workflow's harness with the Editor open and ready
+— discovery to building in one motion, no login needed.
+
 ## 0.7.6 — Memory records gain an always-load switch (2026-06-10)
 
 _Schema 4.7.0 (additive) · SDK 0.7.6 (TypeScript + Python)._
