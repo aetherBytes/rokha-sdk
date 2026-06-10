@@ -17,7 +17,7 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 4.0.0
+  version: 4.1.0
   license:
     name: MIT
     url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
@@ -52,6 +52,8 @@ tags:
     description: Live discovery of running tools, agents, protocols
   - name: llm
     description: Federated LLM proxy — caller-keyed Anthropic forwarding
+  - name: rigs
+    description: Rigs (workflows of configured harnesses) + run traces — the Working Rig surface
 
 security: []  # default: no auth. Routes that need it set their own.
 
@@ -1299,6 +1301,277 @@ paths:
           content:
             application/json:
               schema: { type: object, additionalProperties: true }
+
+  /api/discovery/recent:
+    get:
+      tags: [discovery]
+      summary: Recent mesh activity (cross-registry events, newest first)
+      description: |
+        JSON read of the mesh activity pulse — listings synced/updated across
+        connected registries, with provider, action, and counts. The
+        agent-consumable mirror of the SSE pulse stream. No auth.
+      operationId: discoverRecent
+      parameters:
+        - name: limit
+          in: query
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: Recent events
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+
+  /api/marketplace/mcp-proxy:
+    post:
+      tags: [mcp]
+      summary: Stateless one-shot outbound MCP probe/call
+      description: |
+        Probe or invoke an arbitrary MCP endpoint without provisioning a
+        persisted connection. Hard-guarded — method allowlist
+        (`tools/list` | `tools/call`), SSRF protection (https only in prod,
+        private/metadata IPs blocked), 15s timeout, 256KB response cap.
+        `tools/list` is public; `tools/call` requires a bearer JWT.
+      operationId: mcpProxy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [endpoint, method]
+              properties:
+                endpoint: { type: string, description: "Target MCP JSON-RPC endpoint URL" }
+                method: { type: string, enum: ["tools/list", "tools/call"] }
+                params:
+                  type: object
+                  additionalProperties: true
+                  description: "For tools/call: { name, arguments }"
+      responses:
+        '200':
+          description: "Flattened result: { ok, method, endpoint, tools? | result? }"
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+        '401': { description: "tools/call without a valid token" }
+        '400': { description: "Disallowed method or invalid/blocked endpoint" }
+
+  # ============================================================
+  # Rigs + Traces — the Working Rig surface
+  # A Rig is a workflow of configured harnesses; a trace is the
+  # record of a run (input in, result out). Authed surface is
+  # owner-scoped via bearer JWT. The SAME surface is mirrored for
+  # pre-login visitors under /api/anon/{rigs,harnesses,traces},
+  # keyed by an `x-anon-session-id` header instead of a JWT.
+  # ============================================================
+
+  /api/rigs:
+    get:
+      tags: [rigs]
+      summary: List the caller's rigs
+      operationId: listRigs
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: Rigs
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+    post:
+      tags: [rigs]
+      summary: Create a rig
+      operationId: createRig
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key: { type: string }
+                summary: { type: string }
+                content: { type: object, additionalProperties: true }
+      responses:
+        '200': { description: Created rig }
+
+  /api/rigs/{id}:
+    get:
+      tags: [rigs]
+      summary: Get a rig
+      operationId: getRig
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200': { description: Rig }
+    put:
+      tags: [rigs]
+      summary: Update a rig
+      operationId: updateRig
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200': { description: Updated rig }
+
+  /api/rigs/{id}/harnesses:
+    get:
+      tags: [rigs]
+      summary: List a rig's harness memberships (position + role)
+      operationId: listRigHarnesses
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200': { description: Memberships }
+    post:
+      tags: [rigs]
+      summary: Add a harness to a rig
+      operationId: addRigHarness
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                harness_id: { type: string }
+                position: { type: integer }
+                role: { type: string }
+      responses:
+        '200': { description: Membership created }
+
+  /api/traces:
+    get:
+      tags: [rigs]
+      summary: List the caller's run traces (newest first)
+      operationId: listTraces
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { name: limit, in: query, schema: { type: integer, default: 50 } }
+        - { name: offset, in: query, schema: { type: integer, default: 0 } }
+      responses:
+        '200':
+          description: "Traces: { success, data, total, limit, offset }"
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+    post:
+      tags: [rigs]
+      summary: Record a trace (one harness/rig × a result)
+      operationId: createTrace
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                harness_id: { type: string }
+                rig_id: { type: string }
+                trace_kind: { type: string, enum: [atomic, run] }
+                input: { type: object, additionalProperties: true }
+                result: {}
+                status: { type: string, enum: [success, error, partial, running] }
+                metadata: { type: object, additionalProperties: true }
+      responses:
+        '200': { description: Created trace }
+
+  /api/traces/{id}:
+    get:
+      tags: [rigs]
+      summary: Get a trace
+      operationId: getTrace
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200': { description: Trace }
+
+  /api/anon/rigs:
+    get:
+      tags: [rigs]
+      summary: Pre-login Working Rig surface (anon mirror)
+      description: |
+        The pre-login mirror of the rigs/harnesses/traces surface. All verbs
+        and subpaths of `/api/rigs`, `/api/harnesses`, and `/api/traces` are
+        available under `/api/anon/...`, scoped to an ephemeral visitor
+        identity supplied in the `x-anon-session-id` header (no JWT). A fresh
+        id is a fresh slate; abandoned anon data expires after ~24h.
+      operationId: anonRigs
+      parameters:
+        - name: x-anon-session-id
+          in: header
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Rigs for this anon session }
+
+  # ============================================================
+  # Agent choreographies (SSE)
+  # ============================================================
+
+  /api/agents/rokha-agent/remix/stream/public:
+    post:
+      tags: [agents]
+      summary: "Remix (SSE): the agent builds a rig from a random skill, live"
+      description: |
+        Server-Sent Events choreography — the agent discovers a random
+        registry skill, targets it as the Working Rig's harness, fills the
+        build config, and hands off to a run. Events: `content`,
+        `tool_start`, `tool_result`, `ui_directive`, `done`. Anon-scoped via
+        request `user_context.anon_session_id`.
+      operationId: remixStream
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: { type: string }
+                user_context: { type: object, additionalProperties: true }
+      responses:
+        '200':
+          description: SSE stream (text/event-stream)
+          content:
+            text/event-stream:
+              schema: { type: string }
+
+  /api/agents/rokha-agent/run/stream/public:
+    post:
+      tags: [agents]
+      summary: "Run (SSE): the agent executes the saved Working Rig's harness"
+      description: |
+        Server-Sent Events choreography — the agent reads the caller's SAVED
+        Working Rig and executes its harness: a live MCP `tools/call` when an
+        endpoint + tool are configured, a `tools/list` probe when only an
+        endpoint is set, or an agentic run (the agent performs the skill from
+        its description + instruction + params) when neither — then writes an
+        atomic trace. Events: `content`, `tool_start`, `tool_result`,
+        `ui_directive`, `run_result` ({status, latency_ms, trace_id}),
+        `done`. Anon-scoped via `user_context.anon_session_id`.
+      operationId: runStream
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: { type: string }
+                user_context: { type: object, additionalProperties: true }
+      responses:
+        '200':
+          description: SSE stream (text/event-stream)
+          content:
+            text/event-stream:
+              schema: { type: string }
 
 # ================================================================
 # Components
