@@ -5,6 +5,17 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Product — Remix takes requests (2026-06-10)
+
+_No SDK or schema changes._
+
+Remix — the "watch Rokha build a workflow, live" button — now takes
+requests. Type **`/remix`** followed by anything ("summarize",
+"humanizer", "weather") and Rokha finds the best matching skill on the
+mesh and builds with *that*, narrating every step. Plain `/remix` keeps
+the surprise-me random pick. Works before you log in. (Builders get the
+same power programmatically: pass a target with the remix call.)
+
 ## Product — Start Building, one click from any skill (2026-06-10)
 
 _No SDK or schema changes._
