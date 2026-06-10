@@ -5,6 +5,19 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 0.7.4 — Privacy-safe product analytics (2026-06-10)
+
+_Schema 4.5.0 (additive) · SDK 0.7.4 (TypeScript + Python)._
+
+Rokha now measures itself the way it treats your data — privately:
+
+- **New capture surface** (`/api/analytics/*`): anonymous, session-keyed
+  visit and interaction capture. Attribution is random UUIDs only — never
+  wallet addresses, tokens, or raw IPs — and the client honors Do Not
+  Track. This powers "is the product working" questions (visits, feature
+  adoption) without third-party trackers; nothing leaves the Rokha stack.
+- No SDK method changes — versions bumped in lockstep.
+
 ## 0.7.3 — Swap a workflow step by asking (2026-06-10)
 
 _Schema 4.4.0 (additive) · SDK 0.7.3 (TypeScript + Python)._

@@ -17,7 +17,7 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 4.4.0
+  version: 4.5.0
   license:
     name: MIT
     url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
@@ -54,6 +54,8 @@ tags:
     description: Federated LLM proxy — caller-keyed Anthropic forwarding
   - name: rigs
     description: Rigs (workflows of configured harnesses) + run traces — the Working Rig surface
+  - name: analytics
+    description: Privacy-safe product-analytics capture — anon-session-keyed, fire-and-forget
 
 security: []  # default: no auth. Routes that need it set their own.
 
@@ -1310,6 +1312,82 @@ paths:
           content:
             application/json:
               schema: { type: object, additionalProperties: true }
+
+  # ============================================================
+  # Analytics — privacy-safe capture (added 4.5.0)
+  # ============================================================
+
+  /api/analytics/session/start:
+    post:
+      tags: [analytics]
+      summary: Begin (or refresh) an analytics session
+      description: |
+        Registers a browser session keyed by the client-minted anon session
+        UUID (the same id the chat uses). Attribution is UUIDs only — never
+        wallet addresses, tokens, or raw IPs. Idempotent per session id.
+      operationId: analyticsSessionStart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [session_id]
+              properties:
+                session_id: { type: string, format: uuid }
+                referrer: { type: string, maxLength: 300 }
+                utm: { type: object, additionalProperties: { type: string } }
+      responses:
+        '204': { description: Recorded }
+
+  /api/analytics/session/end:
+    post:
+      tags: [analytics]
+      summary: Mark an analytics session's last activity
+      operationId: analyticsSessionEnd
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [session_id]
+              properties:
+                session_id: { type: string, format: uuid }
+      responses:
+        '204': { description: Recorded }
+
+  /api/analytics/events:
+    post:
+      tags: [analytics]
+      summary: Ingest a batch of navigation/interaction events
+      description: |
+        Batched capture (max 50 events). Categories: `navigation`,
+        `interaction`. Bounded payloads; events never carry PII.
+      operationId: analyticsIngestEvents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [session_id, events]
+              properties:
+                session_id: { type: string, format: uuid }
+                events:
+                  type: array
+                  maxItems: 50
+                  items:
+                    type: object
+                    required: [category, action]
+                    properties:
+                      category: { type: string, enum: [navigation, interaction] }
+                      action: { type: string, maxLength: 64 }
+                      surface: { type: string, maxLength: 128 }
+                      metadata: { type: object }
+      responses:
+        '204': { description: Recorded }
+        '400': { description: Invalid batch (size/category/length) }
 
   /api/discovery/recent:
     get:
