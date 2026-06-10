@@ -41,7 +41,7 @@ export interface SkillMdBundle {
 }
 
 export class RokhaClient {
-  static readonly SCHEMA_VERSION = '4.6.0';
+  static readonly SCHEMA_VERSION = '4.7.0';
 
   readonly baseUrl: string;
   readonly timeout: number;

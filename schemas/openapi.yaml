@@ -17,7 +17,7 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 4.6.0
+  version: 4.7.0
   license:
     name: MIT
     url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
@@ -2128,6 +2128,12 @@ components:
           additionalProperties: true
           nullable: true
         is_public: { type: boolean }
+        always_load:
+          type: boolean
+          description: >-
+            Explicit always-load-vs-retrievable split: true = injected into
+            agent context every turn; false (default) = retrievable by
+            relevance (keyword/fuzzy/semantic search).
         version: { type: integer }
         created_at: { type: string, format: date-time }
         updated_at: { type: string, format: date-time }
@@ -2147,6 +2153,10 @@ components:
           type: object
           additionalProperties: true
         is_public: { type: boolean, default: false }
+        always_load:
+          type: boolean
+          default: false
+          description: true = inject into agent context every turn; false = retrievable by relevance
       required: [harness_type, key, content]
 
     HarnessUpdateRequest:

@@ -5,6 +5,19 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 0.7.6 — Memory records gain an always-load switch (2026-06-10)
+
+_Schema 4.7.0 (additive) · SDK 0.7.6 (TypeScript + Python)._
+
+Harness records (Rokha's memory layer) now carry an explicit
+`always_load` flag: `true` means the record is injected into the agent's
+context every turn (core identity, your profile); `false` (the default)
+means it's retrieved on demand by relevance search. Previously this
+split was hardwired into the agent — now it's data on the record, so
+what the agent always knows vs. looks up is declared, inspectable, and
+editable. Create/update/search all accept it; no SDK method changes —
+versions bumped in lockstep.
+
 ## Product — every skill now tells you if it really runs (2026-06-10)
 
 _No SDK or schema changes — the 4.6.0 ingestion endpoint, now visible._
