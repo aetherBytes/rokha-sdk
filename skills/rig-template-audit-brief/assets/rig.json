@@ -1,0 +1,20 @@
+{
+  "$schema": "https://rokha.ai/schemas/rig-template-v1.json",
+  "name": "Audit & Brief",
+  "intent": "inspect the subject, then turn the findings into a plain-language brief with a verdict",
+  "intent_category": "audit",
+  "steps": [
+    {
+      "role": "analyze",
+      "tag": "audit",
+      "query": "audit security analysis",
+      "instruction": "Examine the subject named in the rig intent. List concrete findings — what it is, what it does, anything risky or notable — as terse bullet points."
+    },
+    {
+      "role": "report",
+      "tag": "summarize",
+      "query": "summarize report",
+      "instruction": "Turn the previous step's findings into a short plain-language brief (3-5 sentences) a non-expert can act on, ending with a one-line verdict."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://rokha.ai/schemas/rig-template-v1.json",
+  "name": "Write & Critique",
+  "intent": "write a piece, then critique it against the actual output",
+  "intent_category": "build",
+  "steps": [
+    {
+      "role": "create",
+      "tag": "write",
+      "query": "writing",
+      "instruction": "Write the piece the user's intent asks for. If no specifics were given, produce a short, vivid example of this skill's best work."
+    },
+    {
+      "role": "review",
+      "tag": "critique",
+      "query": "review critique feedback",
+      "instruction": "Critique the previous step's output in 2-3 sharp, constructive sentences, then grade it A-F with one line of justification."
+    }
+  ]
+}

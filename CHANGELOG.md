@@ -5,6 +5,23 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Skills — Rig templates: start a workflow from a pattern (2026-06-10)
+
+_New first-party skills; no wire-contract change._
+
+Two **rig templates** join the first-party skills catalog — ready-made
+workflow patterns any agent (or the editor's one-click "Start from a
+template") can instantiate against the live Registry:
+
+- **Write & Critique** — step 1 writes, step 2 critiques the actual output.
+- **Audit & Brief** — step 1 inspects, step 2 writes the plain-language
+  verdict.
+
+Each template is a standard skill whose `assets/rig.json` carries the
+skeleton (per-step registry queries + default instructions), and whose
+SKILL.md documents the full public-API instantiation flow — so the same
+pattern works for a human in the editor and an external agent over the API.
+
 ## 0.7.1 — Chain steps into real workflows (2026-06-10)
 
 _Schema 4.2.0 (additive) · SDK 0.7.1 (TypeScript + Python)._
