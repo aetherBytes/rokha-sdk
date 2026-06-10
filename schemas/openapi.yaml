@@ -17,7 +17,7 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 4.1.0
+  version: 4.2.0
   license:
     name: MIT
     url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
@@ -1529,6 +1529,32 @@ paths:
         `tool_start`, `tool_result`, `ui_directive`, `done`. Anon-scoped via
         request `user_context.anon_session_id`.
       operationId: remixStream
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: { type: string }
+                user_context: { type: object, additionalProperties: true }
+      responses:
+        '200':
+          description: SSE stream (text/event-stream)
+          content:
+            text/event-stream:
+              schema: { type: string }
+
+  /api/agents/rokha-agent/run/stream:
+    post:
+      tags: [agents]
+      summary: "Run (SSE, authenticated): execute the caller's saved Rig"
+      description: |
+        The authenticated twin of the public run stream — scoped to the
+        caller's real identity (bearer JWT). Multi-harness Rigs run as a
+        threaded flow: a parent `run` trace plus per-step `atomic` traces,
+        each step's output feeding the next.
+      operationId: runStreamAuthed
+      security: [{ bearerAuth: [] }]
       requestBody:
         content:
           application/json:

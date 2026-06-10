@@ -5,6 +5,27 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 0.7.1 — Chain steps into real workflows (2026-06-10)
+
+_Schema 4.2.0 (additive) · SDK 0.7.1 (TypeScript + Python)._
+
+The build loop grows up: with an account you can now **chain multiple
+tools into one workflow** — and watch the whole thing run as a single,
+threaded flow.
+
+- **Multi-step Rigs.** Your first tool leads the flow; "+ add harness"
+  chains the next step. Each step has its own instruction and settings,
+  and you can reorder or remove steps freely.
+- **Threaded runs.** Run the Rig and each step's output feeds the next —
+  ask step one to write something and step two to critique it, and the
+  critique is about the *actual* output. The record is a run trace with
+  each step's atomic trace nested under it.
+- **My Rigs.** Name your Rig, keep several, and load any of them back
+  into the workbench. Whichever you touched last is the one Rokha sees
+  as "your rig."
+- **Wire contract:** the authenticated run stream is now documented
+  (schema 4.2.0, additive). Guests keep the full single-step loop.
+
 ## 0.7.0 — Build it, run it, read the trace (2026-06-10)
 
 _Schema 4.1.0 (additive) · SDK 0.7.0 (TypeScript + Python)._
