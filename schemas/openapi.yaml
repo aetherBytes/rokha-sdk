@@ -17,7 +17,7 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 4.2.0
+  version: 4.3.0
   license:
     name: MIT
     url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
@@ -1082,6 +1082,13 @@ paths:
 
         Tool execution requires JWT for tier-gated tools; tool listing is
         public.
+
+        Notable tool families (enumerate live via `tools/list`): harness /
+        rig / trace CRUD (the Working-Rig surface), and `skills_list` +
+        `skills_read` (added 4.3.0) — fetch the first-party skills catalog
+        at `/api/skills`, including rig templates' `assets/rig.json`
+        skeletons, so an agent can instantiate a workflow template entirely
+        over MCP.
       operationId: mcpJsonRpc
       security:
         - bearerAuth: []
