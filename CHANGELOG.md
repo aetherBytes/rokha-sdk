@@ -5,6 +5,25 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Product — the Editor opens, and runs get honest (2026-06-10)
+
+_No SDK or schema changes — a product update worth knowing about._
+
+- **The Editor is now open to everyone — no login needed.** Search the
+  registry, pick a skill, configure it, run it, and read the full record
+  of what happened, straight from the browser. Sign-in is only needed
+  for the deeper stuff (saving named workflows, multi-step libraries).
+- **Runs now tell you the truth.** Skills backed by a live endpoint run
+  for real, as always. Skills that are really instructions for a model
+  (writing, critique, analysis) run for real too — the model *is* the
+  engine, and the result says so. And skills that need real tooling
+  (command-line programs, installs, external fetching) no longer
+  pretend: you get a clearly-labeled **demonstration** of what the
+  output looks like, never invented results.
+- **Where this is going:** a Rokha-hosted runtime that actually executes
+  those tool-backed skills for you — no installs, no setup. The
+  demonstration label is the placeholder for that button.
+
 ## 0.7.4 — Privacy-safe product analytics (2026-06-10)
 
 _Schema 4.5.0 (additive) · SDK 0.7.4 (TypeScript + Python)._
