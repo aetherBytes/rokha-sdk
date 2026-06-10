@@ -17,7 +17,7 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 4.3.0
+  version: 4.4.0
   license:
     name: MIT
     url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
@@ -1084,11 +1084,13 @@ paths:
         public.
 
         Notable tool families (enumerate live via `tools/list`): harness /
-        rig / trace CRUD (the Working-Rig surface), and `skills_list` +
+        rig / trace CRUD (the Working-Rig surface), `skills_list` +
         `skills_read` (added 4.3.0) — fetch the first-party skills catalog
         at `/api/skills`, including rig templates' `assets/rig.json`
         skeletons, so an agent can instantiate a workflow template entirely
-        over MCP.
+        over MCP — and `rig_swap_skill` (added 4.4.0): re-resolve one step
+        of a rig against the live registry and re-point it, keeping the
+        step's instruction.
       operationId: mcpJsonRpc
       security:
         - bearerAuth: []
