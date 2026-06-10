@@ -22,6 +22,11 @@ the basics herself:
   quick-start buttons lay out cleanly around the screen, tuck extras into
   tidy dropdowns to save space, and the footer keeps Docs / X / Contact as
   compact icons. Nothing important gets lost on a small screen.
+- **A tidier top bar on phones.** The menu now holds the main destinations
+  (Rokha, the Registry, the Editor), and the feed button moves up next to
+  it — so the wasted gap beside the logo is gone and the quick-start
+  buttons sit neatly under the bar. One less row of clutter, more room for
+  the actual screen.
 - **New guided tutorial — Agent Skills.** A short, narrated walkthrough of
   the thing everything here is built from: what a *skill* is, the open
   `SKILL.md` standard that lets **any** agent use it, and how you compose
