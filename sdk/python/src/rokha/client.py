@@ -26,7 +26,7 @@ class RokhaError(Exception):
 
 
 class RokhaClient:
-    SCHEMA_VERSION = "4.0.0"
+    SCHEMA_VERSION = "4.1.0"
 
     def __init__(
         self,
@@ -199,6 +199,51 @@ class RokhaClient:
 
     def discover_all(self) -> dict[str, Any]:
         return self.get("/api/discovery/all")
+
+    def discover_recent(self, limit: int = 20) -> dict[str, Any]:
+        """Recent mesh activity (cross-registry events, newest first). No auth."""
+        return self.get("/api/discovery/recent", limit=limit)
+
+    def mcp_proxy(self, endpoint: str, method: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
+        """Stateless one-shot outbound MCP probe/call via the SSRF-guarded proxy.
+
+        `method` is 'tools/list' (public) or 'tools/call' (requires the
+        client's Bearer JWT; params = {"name": ..., "arguments": {...}}).
+        """
+        return self.post("/api/marketplace/mcp-proxy", {"endpoint": endpoint, "method": method, "params": params or {}})
+
+    # --- Rigs + Traces (the Working Rig surface) ---
+    # Authed: owner-scoped via the Bearer JWT. Pre-login: pass
+    # anon_session_id to hit the /api/anon mirror (x-anon-session-id header).
+
+    def _rig_prefix_headers(self, anon_session_id: str | None) -> tuple[str, dict[str, str]]:
+        if anon_session_id:
+            return "/api/anon", {"x-anon-session-id": anon_session_id}
+        return "/api", {}
+
+    def list_rigs(self, anon_session_id: str | None = None) -> dict[str, Any]:
+        prefix, headers = self._rig_prefix_headers(anon_session_id)
+        return self._request("GET", f"{prefix}/rigs", headers=headers)
+
+    def get_rig(self, rig_id: str, anon_session_id: str | None = None) -> dict[str, Any]:
+        prefix, headers = self._rig_prefix_headers(anon_session_id)
+        return self._request("GET", f"{prefix}/rigs/{rig_id}", headers=headers)
+
+    def create_rig(self, body: dict[str, Any], anon_session_id: str | None = None) -> dict[str, Any]:
+        prefix, headers = self._rig_prefix_headers(anon_session_id)
+        return self._request("POST", f"{prefix}/rigs", json=body, headers=headers)
+
+    def update_rig(self, rig_id: str, body: dict[str, Any], anon_session_id: str | None = None) -> dict[str, Any]:
+        prefix, headers = self._rig_prefix_headers(anon_session_id)
+        return self._request("PUT", f"{prefix}/rigs/{rig_id}", json=body, headers=headers)
+
+    def list_traces(self, limit: int = 50, offset: int = 0, anon_session_id: str | None = None) -> dict[str, Any]:
+        prefix, headers = self._rig_prefix_headers(anon_session_id)
+        return self._request("GET", f"{prefix}/traces", params={"limit": limit, "offset": offset}, headers=headers)
+
+    def get_trace(self, trace_id: str, anon_session_id: str | None = None) -> dict[str, Any]:
+        prefix, headers = self._rig_prefix_headers(anon_session_id)
+        return self._request("GET", f"{prefix}/traces/{trace_id}", headers=headers)
 
     def close(self) -> None:
         self._http.close()

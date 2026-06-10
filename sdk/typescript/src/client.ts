@@ -5,6 +5,7 @@ import { HarnessesClient } from './harnesses.js';
 import { LlmClient } from './llm.js';
 import { MCPClient } from './mcp.js';
 import { MarketplaceClient } from './marketplace.js';
+import { RigsClient } from './rigs.js';
 import { WalletsClient } from './wallets.js';
 
 const DEFAULT_BASE_URL = 'http://localhost:3000';
@@ -20,7 +21,7 @@ export interface SchemaCompatReport {
 }
 
 export class RokhaClient {
-  static readonly SCHEMA_VERSION = '4.0.0';
+  static readonly SCHEMA_VERSION = '4.1.0';
 
   readonly baseUrl: string;
   readonly timeout: number;
@@ -34,6 +35,7 @@ export class RokhaClient {
   readonly llm: LlmClient;
   readonly mcp: MCPClient;
   readonly marketplace: MarketplaceClient;
+  readonly rigs: RigsClient;
   readonly wallets: WalletsClient;
 
   constructor(config: Partial<RokhaConfig> = {}) {
@@ -48,6 +50,7 @@ export class RokhaClient {
     this.llm = new LlmClient(this);
     this.mcp = new MCPClient(this);
     this.marketplace = new MarketplaceClient(this);
+    this.rigs = new RigsClient(this);
     this.wallets = new WalletsClient(this);
   }
 

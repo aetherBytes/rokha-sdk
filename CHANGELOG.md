@@ -5,6 +5,48 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 0.7.0 — Build it, run it, read the trace (2026-06-10)
+
+_Schema 4.1.0 (additive) · SDK 0.7.0 (TypeScript + Python)._
+
+The big one: the **full build loop now works end to end, before you even
+log in**. Pick any tool from the Registry, drop it into your Rig, give it
+an instruction, hit **Save & Run** — Rokha executes it and the result
+lands as a permanent, readable record (a *trace*).
+
+**In the app:**
+
+- **The Editor is now part of the main screen.** No separate sandbox —
+  the Editor tab lays your workbench out right next to the chat: your Rig,
+  a live map of its structure, Rokha's thinking, and a searchable Registry
+  pane so you never have to leave to go find a tool.
+- **Configure your harness.** Targeting a skill now opens a config panel:
+  tell Rokha what to do with it (the instruction), optionally point it at
+  a live tool server (it probes what's really there and builds the input
+  form from the server's actual contract), and set parameters.
+- **Run anything.** Tools with a live server get called for real. Tools
+  without one — most of the catalog — Rokha runs *herself*, performing the
+  skill and producing its output. Either way you get a trace.
+- **Traces — your run history.** A new view lists every run with its full
+  input and output. One tap asks Rokha to dissect what came back.
+- **Remix goes all the way now.** The "watch Rokha build" button no longer
+  stops after picking a tool — she discovers, targets, configures, runs,
+  and reads the result, live, end to end.
+- **Ask Rokha to build it for you.** Every config field has an "ask Rokha
+  to fill" button — she edits the same Rig you see, and the screen updates
+  as she works.
+
+**In the SDK / wire contract (additive — your 4.0.0 code keeps working):**
+
+- New documented endpoints: recent mesh activity, the guarded MCP
+  probe/call proxy, the full **Rigs + Traces** surface (including its
+  pre-login mirror), and the two live agent streams (Remix and Run).
+- TypeScript: new `client.rigs` (with `.anon(sessionId)` for the pre-login
+  mirror), `marketplace.discoverRecent()`, `marketplace.mcpProxy()`.
+- Python: `list_rigs` / `get_rig` / `create_rig` / `update_rig` /
+  `list_traces` / `get_trace` (all with an optional `anon_session_id`),
+  `discover_recent()`, `mcp_proxy()`.
+
 ## App — A refreshed landing + a guided "Agent Skills" walkthrough (2026-06-09)
 
 _A frontend/app pass. No SDK or wire-contract (`schemas/openapi.yaml`)

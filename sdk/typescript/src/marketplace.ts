@@ -45,4 +45,21 @@ export class MarketplaceClient {
   async discoverAll(): Promise<unknown> {
     return this.client.get('/api/discovery/all');
   }
+
+  /** Recent mesh activity (cross-registry events, newest first). No auth. */
+  async discoverRecent(limit = 20): Promise<unknown> {
+    return this.client.get(`/api/discovery/recent?limit=${limit}`);
+  }
+
+  /**
+   * Stateless one-shot outbound MCP probe/call via the SSRF-guarded proxy.
+   * `tools/list` is public; `tools/call` requires the client's bearer JWT.
+   */
+  async mcpProxy(
+    endpoint: string,
+    method: 'tools/list' | 'tools/call',
+    params: Record<string, unknown> = {},
+  ): Promise<unknown> {
+    return this.client.post('/api/marketplace/mcp-proxy', { endpoint, method, params });
+  }
 }

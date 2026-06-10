@@ -17,6 +17,8 @@ export type {
 export { HarnessesClient } from './harnesses.js';
 export { MCPClient } from './mcp.js';
 export { MarketplaceClient } from './marketplace.js';
+export { RigsClient } from './rigs.js';
+export type { TraceRecord } from './rigs.js';
 export { WalletsClient } from './wallets.js';
 
 export type {
