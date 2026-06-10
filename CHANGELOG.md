@@ -31,6 +31,11 @@ the basics herself:
   void elements, highlights that stay locked onto whatever Rokha is
   pointing at (even while you scroll on a phone), and a calmer default
   view.
+- **On phones, Rokha stays out of your way.** When you ask her something
+  on a small screen, she no longer flips you over to a data view and away
+  from what you were reading — she answers in chat and just points you to
+  the feed if there's more to see. (On desktop, where the views sit beside
+  the chat, she still pulls them up for you.)
 
 ## Docs — FAQ + Common Terms reference pages (2026-06-09)
 
