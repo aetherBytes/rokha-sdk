@@ -5,6 +5,22 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 0.7.2 — Agents can fetch templates themselves (2026-06-10)
+
+_Schema 4.3.0 (additive) · SDK 0.7.2 (TypeScript + Python)._
+
+The rig templates that landed below are now reachable from *inside* the
+agent mesh, not just over REST:
+
+- **New MCP tools: `skills_list` + `skills_read`.** Any agent connected
+  over MCP (`/mcp/jsonrpc`) — including Rokha herself in chat — can list
+  the first-party skills catalog (filter by kind, e.g. `rig-template`),
+  read a skill's SKILL.md, or pull a template's `assets/rig.json`
+  skeleton, then build the rig with the existing harness/rig tools. Ask
+  Rokha "start me from a template" and she does the whole loop herself.
+- No SDK method changes — the bump keeps `SCHEMA_VERSION` in lockstep
+  with the served contract.
+
 ## Skills — Rig templates: start a workflow from a pattern (2026-06-10)
 
 _New first-party skills; no wire-contract change._
