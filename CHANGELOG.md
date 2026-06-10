@@ -5,6 +5,16 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Product — chain two skills, no login (2026-06-10)
+
+_No SDK or schema changes._
+
+Visitors can now chain a **second step** onto their workflow before
+signing in — step 1's output feeds step 2, so you feel composition
+actually working, not just read about it. Ready-made templates seed both
+steps too. The third step (and naming, saving, automation) is where the
+account comes in.
+
 ## Product — Remix takes requests (2026-06-10)
 
 _No SDK or schema changes._
