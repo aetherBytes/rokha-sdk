@@ -23,6 +23,11 @@ Any AI agent that speaks MCP can now use Rokha's registry directly:
 - Account-scoped tools (memory, tasks, agent messaging) still require
   authentication, as before.
 
+- **New first-party skill: `rokha-registry`.** A portable agent skill
+  (in this repo's `skills/`) that teaches ANY agent the flow above —
+  search, vet, install — so the capability travels with the skill file
+  itself. Vetting downloads before installing is the documented practice.
+
 SDKs `0.8.0` (TS + Python) track schema `4.8.0` (additive).
 
 ## Product — Run for real: skills actually run now (2026-06-11)
