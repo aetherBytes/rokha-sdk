@@ -5,6 +5,25 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Product — Run for real: skills actually run now (2026-06-11)
+
+_The headline. No SDK or schema changes — a new runtime._
+
+The thing the whole platform was built for: **skills now actually run.**
+Open a skill that needs real tooling, hit **⚡ Run for real**, and Rokha
+spins up an isolated cloud sandbox, installs and executes the skill for
+real, and hands you back the result with a full record of every command
+it ran — no install on your machine, no setup, no API keys. The recipes
+finally have a kitchen.
+
+- **One free real run, no login.** Every visitor gets a genuine sandboxed
+  execution to try it. Logged in unlocks more.
+- **Honest by design.** What runs is real; the receipt proves it. A skill
+  that needs a tool the runtime doesn't carry yet says so plainly instead
+  of faking a result.
+- **Safe + bounded.** Every run is isolated, time-limited, and holds no
+  secrets; the free runtime has a daily budget so it stays sustainable.
+
 ## Product — chain two skills, no login (2026-06-10)
 
 _No SDK or schema changes._
