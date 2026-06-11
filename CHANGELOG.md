@@ -5,6 +5,26 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 4.8.0 / SDK 0.8.0 — agents can now browse and adopt skills, no account needed (2026-06-11)
+
+Any AI agent that speaks MCP can now use Rokha's registry directly:
+
+- **Public discovery.** The MCP endpoint's handshake (`initialize`,
+  `tools/list`) needs no authentication — an outside agent can see the
+  toolbox before deciding anything.
+- **Two new public tools.** `registry_search` searches 30,000+ published
+  agent skills by plain text; `registry_get_skill` returns an
+  install-ready SKILL.md (standard agent-skills format, frontmatter
+  included) plus what the skill needs to run — everything an agent needs
+  to add the skill to its own library.
+- Proven end-to-end with Claude Code as the test agent: it searched the
+  registry, fetched a design skill, and installed it into its own skill
+  list — over the public MCP door, zero setup.
+- Account-scoped tools (memory, tasks, agent messaging) still require
+  authentication, as before.
+
+SDKs `0.8.0` (TS + Python) track schema `4.8.0` (additive).
+
 ## Product — Run for real: skills actually run now (2026-06-11)
 
 _The headline. No SDK or schema changes — a new runtime._

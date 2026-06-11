@@ -17,7 +17,7 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 4.7.0
+  version: 4.8.0
   license:
     name: MIT
     url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
@@ -1082,8 +1082,14 @@ paths:
           - `tools/list` — enumerate tools
           - `tools/call` — invoke a tool with arguments
 
-        Tool execution requires JWT for tier-gated tools; tool listing is
-        public.
+        PUBLIC (no auth, 4.8.0): the discovery handshake — `initialize`,
+        `tools/list`, `resources/list`, `prompts/list`, `ping` — plus
+        `tools/call` on the read-only registry tools `registry_search`
+        (free-text search over the 30k-skill registry) and
+        `registry_get_skill` (install-ready SKILL.md — agentskills.io
+        frontmatter + body + classification + required binaries — so any
+        agent can adopt a Registry skill directly). Every other method/tool
+        requires `Authorization: Bearer <JWT>`.
 
         Notable tool families (enumerate live via `tools/list`): harness /
         rig / trace CRUD (the Working-Rig surface), `skills_list` +
