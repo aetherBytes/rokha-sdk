@@ -5,6 +5,27 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Product — a friendlier front door (2026-06-12)
+
+_No SDK or schema changes — a design release._
+
+The whole experience got a usability overhaul, phones first:
+
+- **The landing now says what Rokha is.** "Pick a skill. Watch it run." —
+  with one button to try a skill and one to watch Rokha build a workflow
+  live.
+- **Simpler first view, growing as you do.** The editor opens as one
+  clean workbench; extra panels appear when they're useful instead of
+  all at once. Every view explains itself in plain words.
+- **Real phone support.** Bottom tab navigation, readable text sizes,
+  full-width skill descriptions, one-tap filters, and a labeled menu for
+  the rare controls.
+- **Find skills by how they run.** A new filter splits the catalog into
+  skills that run instantly, skills that use the cloud runtime, and live
+  API/MCP servers.
+- **Smoother flow.** After adding a skill to your workflow, one tap takes
+  you straight to building it.
+
 ## 4.8.0 / SDK 0.8.0 — agents can now browse and adopt skills, no account needed (2026-06-11)
 
 Any AI agent that speaks MCP can now use Rokha's registry directly:
