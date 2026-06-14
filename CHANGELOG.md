@@ -5,6 +5,27 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Product — a faster, cleaner catalog (2026-06-13)
+
+_No SDK or schema changes — a performance + design release._
+
+The skill catalog got quicker and tidier:
+
+- **Search is dramatically faster.** Looking through tens of thousands of
+  skills now returns in a blink instead of a noticeable pause.
+- **Filters are instant and full.** Filtering by how a skill runs used to
+  crawl and often showed only a handful of cards; now it returns a full
+  page right away, and the catalog remembers how each skill runs so the
+  filter keeps getting faster for everyone.
+- **Browse at your own pace.** Results load in clean pages with a "Load
+  more" button instead of an endless scroll, and narrow filters
+  automatically fill the screen so you're never left staring at three
+  results.
+- **A real loading screen.** The Rokha mark now greets you while a view
+  loads, instead of a flicker.
+- **Phone polish.** The catalog's filter controls and the view picker
+  were reworked to fit small screens cleanly edge-to-edge.
+
 ## Product — a friendlier front door (2026-06-12)
 
 _No SDK or schema changes — a design release._
