@@ -1,7 +1,7 @@
 # Stage 2 probe — stdio MCP servers
 
 Recipe for probing an npm-distributed MCP server in a sandboxed Node env
-(Rokha WebContainer, or any local sandbox). Run only after Stage 1 returned
+(Rokha's cloud runtime sandbox, or any local sandbox). Run only after Stage 1 returned
 LOW or MEDIUM risk with no FAILs.
 
 ## Why a sandbox
@@ -13,9 +13,9 @@ your machine. Don't do that on the user's real OS. Run it where:
 - A leaked credential exfiltration request goes nowhere outbound that matters
 - The whole environment is reset on the next session
 
-In Rokha today that means a Rokha WebContainer iframe. Outside
-Rokha, that means a fresh Docker container, a microVM, or an isolated
-WSL session — the skill works in any of them.
+In Rokha today that means Rokha's cloud runtime sandbox (an isolated
+Fargate container). Outside Rokha, that means a fresh Docker container,
+a microVM, or an isolated WSL session — the skill works in any of them.
 
 ## Recipe
 

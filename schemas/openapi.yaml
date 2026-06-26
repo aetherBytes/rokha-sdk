@@ -17,7 +17,7 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 4.8.0
+  version: 0.0.0-dev.1
   license:
     name: MIT
     url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
@@ -323,9 +323,9 @@ paths:
       summary: Register a new email account
       description: |
         Creates a user via email + password. Returns a JWT immediately
-        (account is usable). Also returns a `verification_token` — in dev,
-        you can POST it directly to `/api/auth/email/verify`; in prod it's
-        emailed to the user.
+        (account is usable). A verification link is delivered out-of-band
+        (emailed to the user); the verification token is never returned in
+        the response body.
       operationId: emailRegister
       requestBody:
         required: true
@@ -1082,23 +1082,27 @@ paths:
           - `tools/list` — enumerate tools
           - `tools/call` — invoke a tool with arguments
 
-        PUBLIC (no auth, 4.8.0): the discovery handshake — `initialize`,
+        PUBLIC (no auth): the discovery handshake — `initialize`,
         `tools/list`, `resources/list`, `prompts/list`, `ping` — plus
         `tools/call` on the read-only registry tools `registry_search`
         (free-text search over the 30k-skill registry) and
         `registry_get_skill` (install-ready SKILL.md — agentskills.io
         frontmatter + body + classification + required binaries — so any
-        agent can adopt a Registry skill directly). Every other method/tool
-        requires `Authorization: Bearer <JWT>`.
+        agent can adopt a Registry skill directly), and the pure-compute
+        authoring tool `skill_author` (build a standards-compliant SKILL.md
+        from `name` + `description` + `instructions`, optional
+        `allowed_tools` / `license`; returns the assembled SKILL.md). Every
+        other method/tool requires `Authorization: Bearer <JWT>`.
 
         Notable tool families (enumerate live via `tools/list`): harness /
         rig / trace CRUD (the Working-Rig surface), `skills_list` +
-        `skills_read` (added 4.3.0) — fetch the first-party skills catalog
-        at `/api/skills`, including rig templates' `assets/rig.json`
-        skeletons, so an agent can instantiate a workflow template entirely
-        over MCP — and `rig_swap_skill` (added 4.4.0): re-resolve one step
-        of a rig against the live registry and re-point it, keeping the
-        step's instruction.
+        `skills_read` — fetch the first-party skills catalog at
+        `/api/skills`, including rig templates' `assets/rig.json` skeletons,
+        so an agent can instantiate a workflow template entirely over MCP;
+        `rig_swap_skill` — re-resolve one step of a rig against the live
+        registry and re-point it, keeping the step's instruction; and
+        `skill_author` — author a portable Agent Skill (SKILL.md) the same
+        way the human Build-a-Skill builder does (two-front-door parity).
       operationId: mcpJsonRpc
       security:
         - bearerAuth: []
@@ -1918,7 +1922,6 @@ components:
         tier: { type: string, enum: [free, casual, pro] }
         expires_at: { type: string, format: date-time }
         email_verified: { type: boolean }
-        verification_token: { type: string, description: "Returned on register; in dev, POST to /api/auth/email/verify" }
       required: [success, token]
 
     CliDeviceStartResponse:
@@ -2105,8 +2108,6 @@ components:
         name: { type: string }
         provider: { type: string }
         context_length: { type: integer }
-        cost_per_input_token: { type: number }
-        cost_per_output_token: { type: number }
 
     # --- Harnesses ---
 
@@ -2274,7 +2275,6 @@ components:
         name: { type: string }
         description: { type: string }
         listing_type: { type: string, enum: [tool, rig, agent, workflow, skill, server] }
-        creator_wallet: { type: string }
         status: { type: string, enum: [pending, approved, rejected, featured] }
         metadata:
           type: object

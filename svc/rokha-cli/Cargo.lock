@@ -1158,7 +1158,7 @@ dependencies = [
 
 [[package]]
 name = "rokha-cli"
-version = "0.4.0"
+version = "0.0.0-dev.1"
 dependencies = [
  "base64",
  "clap",

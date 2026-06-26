@@ -127,7 +127,7 @@ CORS is open on all skills endpoints. Auth is never required.
 |-------|------|---------------|------|
 | Distribution | Portable SKILL.md folders | `skills/` in this repo + `/api/skills/*` | [agentskills.io](https://agentskills.io) |
 | Capability | Callable MCP tools | `rokha-protocols` (port 8001), e.g. `rokha_audit`, `create_harness` | [MCP 2025-11-25](https://spec.modelcontextprotocol.io) |
-| Consumer | The thing running the skill | Rokha (browser), `ro` (terminal/WebContainer), Claude Code, Cursor, Goose, … | n/a — any agent |
+| Consumer | The thing running the skill | Rokha (browser), `ro` (terminal), Claude Code, Cursor, Goose, … | n/a — any agent |
 
 The skill **teaches** the agent how to do something. The MCP tools are
 **what** the skill calls. The consumer **runs** the workflow. Don't conflate.

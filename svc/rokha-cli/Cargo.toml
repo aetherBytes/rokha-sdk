@@ -1,6 +1,6 @@
 [package]
 name = "rokha-cli"
-version = "0.4.0"
+version = "0.0.0-dev.1"
 edition = "2021"
 description = "Rokha CLI — thin client for rokha.ai"
 license = "MIT"

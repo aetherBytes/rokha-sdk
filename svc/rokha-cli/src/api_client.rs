@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-pub const SCHEMA_VERSION: &str = "3.2.0";
+pub const SCHEMA_VERSION: &str = "0.0.0-dev.1";
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Tool {
