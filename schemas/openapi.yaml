@@ -1090,9 +1090,11 @@ paths:
         frontmatter + body + classification + required binaries — so any
         agent can adopt a Registry skill directly), and the pure-compute
         authoring tool `skill_author` (build a standards-compliant SKILL.md
-        from `name` + `description` + `instructions`, optional
-        `allowed_tools` / `license`; returns the assembled SKILL.md). Every
-        other method/tool requires `Authorization: Bearer <JWT>`.
+        from `name` + `description` + `instructions`, plus optional
+        `compatibility` (runtime/environment requirements, ≤500 chars),
+        `allowed_tools` (space-separated, scoped allowlist), `license`, and
+        `metadata` (a string→string object); returns the assembled SKILL.md).
+        Every other method/tool requires `Authorization: Bearer <JWT>`.
 
         Notable tool families (enumerate live via `tools/list`): harness /
         rig / trace CRUD (the Working-Rig surface), `skills_list` +

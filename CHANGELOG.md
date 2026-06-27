@@ -5,6 +5,30 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Skill authoring goes full-spec — declare runtime needs (2026-06-27)
+
+The `skill_author` tool (and the in-browser builder) now support the complete
+[agentskills.io](https://agentskills.io/specification) frontmatter, so an
+authored skill can declare everything the spec allows — including whether it
+needs a runtime:
+
+- **`compatibility`** (≤500 chars) — the spec's human-readable signal that a
+  skill needs more than plain instructions: system packages, a language
+  version, network access, or bundled scripts (e.g. `Requires Python 3.14+ and
+  uv`). Agents that read it can warn, check the environment, or decide whether
+  to activate the skill. Omit it for pure-instruction skills.
+- **`metadata`** — an arbitrary string→string map for extra properties not
+  defined by the spec (e.g. `author`, `version`).
+- **`allowed_tools`** is now correctly **space-separated** with optional
+  scoping, matching the spec (e.g. `Bash(git:*) Bash(jq:*) Read`), and the
+  builder nudges least-privilege scopes.
+
+`skill_author` over `/mcp/jsonrpc` accepts the new optional `compatibility` and
+`metadata` arguments and returns them in the assembled SKILL.md. Additive and
+backward-compatible — existing callers are unaffected.
+
+_No version bump — Rokha is still pre-release (`0.0.0-dev.1`)._
+
 ## Build a skill, run it anywhere (2026-06-25)
 
 You can now build a portable Agent Skill — a standard SKILL.md — right in
