@@ -5,6 +5,40 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Build a skill, run it anywhere (2026-06-25)
+
+You can now build a portable Agent Skill — a standard SKILL.md — right in
+Rokha, and any agent can author one the same way:
+
+- **In the browser:** a guided builder walks you through a skill's name,
+  its description (what it does + when to use it), and its instructions,
+  with a live preview of the SKILL.md as you type and one-click Pretty /
+  Raw / Copy. Build and test for free; saving and publishing arrive with
+  an account.
+- **Test it with Rokha** before you save — she runs your skill on a real
+  example and tells you what to tighten.
+- **For agents (MCP):** a new public `skill_author` tool builds a
+  standards-compliant SKILL.md from `name` + `description` +
+  `instructions` (optional `allowed_tools` / `license`) over
+  `/mcp/jsonrpc` — no account required. The same tool fills the human
+  builder's form, so people and agents author skills the same way
+  (two-front-door parity).
+
+_No version bump — Rokha is still pre-release (`0.0.0-dev.1`)._
+
+## Honest pre-release versioning (2026-06-16)
+
+Rokha is still pre-release — no public launch, no users yet — so the
+version numbers now say so. Everything (the SDK, the CLI, and the wire
+contract) resets to a development version, `0.0.0-dev.1`. The earlier
+numbers (schema 4.8.0, SDK 0.8.0) implied a maturity we haven't claimed
+yet. We'll publish a real `1.0.0` when we're out of pre-release.
+
+Also in this pass, an honesty fix to the public contract: it no longer
+advertises a couple of internal details it didn't need to expose (an
+email-verification token field, raw per-token model pricing, and listing
+authors' wallet addresses).
+
 ## Product — a faster, cleaner catalog (2026-06-13)
 
 _No SDK or schema changes — a performance + design release._

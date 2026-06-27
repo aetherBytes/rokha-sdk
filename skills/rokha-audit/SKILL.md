@@ -2,7 +2,7 @@
 name: rokha-audit
 description: Security and compliance audit for MCP tools, agents, and skills found in the wild. Run before installing or invoking any unfamiliar tool. Produces a clear "safe to use / here's how" or "found these vulnerabilities" verdict with the schema, endpoint, install command, and trust signals the agent or user needs to make a decision. Use when the user mentions auditing, vetting, security-checking, or "is this safe" about an MCP tool, ClawHub skill, or Smithery server.
 license: MIT
-compatibility: Requires Rokha's `rokha_audit` MCP tool (served by rokha-protocols on port 8001 in dev, or Rokha's public MCP endpoint in prod). Stage 2 probe is optional and benefits from a sandboxed Node environment (Rokha WebContainer, Claude Code's bash, or any local Node).
+compatibility: Requires Rokha's `rokha_audit` MCP tool (served by rokha-protocols on port 8001 in dev, or Rokha's public MCP endpoint in prod). Stage 2 probe is optional and benefits from a sandboxed Node environment (Rokha's cloud runtime sandbox, Claude Code's bash, or any local Node).
 metadata:
   author: rokha
   version: "0.1.0"
@@ -58,7 +58,7 @@ tool that already failed basic checks.
 ## Stage 2 — Live probe (only in a sandbox)
 
 Only run this stage if:
-1. The user is in a sandboxed environment (Rokha WebContainer, a fresh container, or explicit `--probe` flag), AND
+1. The user is in a sandboxed environment (Rokha's cloud runtime sandbox, a fresh container, or explicit `--probe` flag), AND
 2. Stage 1's risk is LOW or MEDIUM with no FAILs.
 
 What to do:
@@ -142,7 +142,7 @@ Saved to harness: <key>
 ## Related
 
 - Heuristic scan source of truth: Rokha MCP server (`rokha_audit` tool)
-- Stage 2 sandbox: Rokha WebContainer (in-browser, on rokha.ai) or
+- Stage 2 sandbox: Rokha's cloud runtime sandbox (Fargate, on rokha.ai) or
   any local Node + sandbox env
 - Findings persistence: Rokha harnesses (wallet-scoped, private)
 - Cross-agent portability: this skill ships as a standalone SKILL.md
