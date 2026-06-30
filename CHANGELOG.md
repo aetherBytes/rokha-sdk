@@ -5,6 +5,25 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Easier to start, consistent on every screen (2026-07-01)
+
+More newcomer-friendly polish across the app:
+
+- **A gentler way to begin building.** Before the full set of build options,
+  there's now a calm first step that explains, in plain words, what "building"
+  even means here — then a single "Start building" button to dive in. It greets
+  first-timers and steps aside for people who already know their way around
+  (and it remembers where you left off, so you're never bounced back to the
+  start).
+- **One consistent look.** Section titles and backgrounds now match across the
+  app, so moving between the chat, the registry, and the build area feels like
+  one place rather than three.
+- **Cleaner on phones.** The first-run screens and the registry's quick filters
+  are tidier and easier to tap on small screens — contained, evenly sized, and
+  no more awkward full-bleed backgrounds.
+
+_No version bump — Rokha is still pre-release (`0.0.0-dev.1`)._
+
 ## Meet Rokha — a friendlier first run (2026-06-30)
 
 Opening Rokha for the first time now greets you instead of dropping you onto a
