@@ -5,6 +5,28 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## A calmer, clearer way to browse the registry (2026-06-30)
+
+The registry — where you discover capabilities to build on — got a
+newcomer-first facelift:
+
+- **Opens calm, not crowded.** Instead of a wall of filters and cards, the
+  registry now greets you with a plain-English intro to what a skill is, a
+  prominent search, and a short "popular right now" list. The full catalog,
+  with all its filters, is one search or one click away.
+- **One clean reading column.** Browsing the full catalog is now a single
+  scrollable column (no more grid-vs-list toggle to fuss with). Every listing
+  is clearly tagged by what it is — **Skill**, **Harness**, or **Rig** — and by
+  how it runs, so you can tell at a glance what you're looking at.
+- **Fuller descriptions.** Some registries only hand back a short blurb in
+  their listings; where a fuller description is available, Rokha now shows it
+  so you get the whole picture before you commit.
+- **Read here, act there.** Opening a listing shows what it does and ideas for
+  what you can build with it; the actions — add it to your rig, start building,
+  view its source — sit together in one place.
+
+_No version bump — Rokha is still pre-release (`0.0.0-dev.1`)._
+
 ## Skill authoring goes full-spec — declare runtime needs (2026-06-27)
 
 The `skill_author` tool (and the in-browser builder) now support the complete
