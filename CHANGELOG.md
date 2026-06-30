@@ -5,6 +5,24 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Meet Rokha — a friendlier first run (2026-06-30)
+
+Opening Rokha for the first time now greets you instead of dropping you onto a
+blank screen:
+
+- **A plain-English intro.** Rokha is your **Librarian** for the agentic world —
+  the helper who finds a real capability, runs it for real (no install, no
+  setup), and shows you the trace to prove it. The first view says exactly that.
+- **Starter prompts.** A few one-tap "try asking…" suggestions so you have
+  somewhere to begin, plus a simple three-step "how it works."
+- **A clear nudge to the chat box** so it's obvious where to type, and a
+  "what is Rokha?" explainer one click away.
+- **Polished on phones.** The same first-run guidance now works on mobile, the
+  intro reads cleanly on a small screen, and you can add things to your rig
+  right from the listings.
+
+_No version bump — Rokha is still pre-release (`0.0.0-dev.1`)._
+
 ## A calmer, clearer way to browse the registry (2026-06-30)
 
 The registry — where you discover capabilities to build on — got a
