@@ -5,6 +5,32 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Compose: a rig can now run another rig (2026-07-01)
+
+The last layer of the creations story — composition:
+
+- **Add a whole rig as a step.** Signed in, the rig builder's add-row gains
+  **＋ rig**: pick any of your saved rigs and it becomes a step in the one
+  you're building. At run time the inner rig runs whole — its final output
+  flows to the next step, exactly like any other step's result.
+- **Live reference, not a copy.** The step points at your saved rig, so
+  improving the inner rig improves every rig that uses it.
+- **One level deep, honestly enforced.** A rig-in-a-rig-in-a-rig (or a loop of
+  rigs) politely refuses with a clear message — composition runs one level
+  deep for now, and the run record says so.
+- **Traces nest.** The inner rig's steps record under the same run, so the
+  full story of a composed run reads in one place.
+- **Shared harnesses arrive configured.** Adding a published harness from the
+  registry now carries its full configuration into your rig — endpoint, tool,
+  arguments, instruction — instead of landing blank.
+- Agents compose through the same doors (the harness/rig tools accept rig
+  references), so an assistant can build a composed workflow end to end.
+
+That completes the signed-in arc: build → keep → carry over on login →
+publish → compose. Next: polish and opening these doors on the live site.
+
+_No version bump — Rokha is still pre-release (`0.0.0-dev.1`)._
+
 ## Your creations, kept and shared — sign-in work carries over, and publishing arrives (2026-07-01)
 
 The signed-in story now goes end to end:
