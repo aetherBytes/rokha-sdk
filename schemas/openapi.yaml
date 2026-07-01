@@ -1109,7 +1109,9 @@ paths:
         `skill_author` — author a portable Agent Skill (SKILL.md) the same
         way the human Build-a-Skill builder does (two-front-door parity); and
         `harness_author` — configure a Harness (a skill/instruction wired to
-        run) the same way the human Build-a-Harness builder does.
+        run) the same way the human Build-a-Harness builder does; and
+        `skill_save` (JWT) — persist an authored skill to the signed-in
+        user's creations (upsert by name; saving is a logged-in capability).
       operationId: mcpJsonRpc
       security:
         - bearerAuth: []

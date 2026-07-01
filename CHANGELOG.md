@@ -5,6 +5,30 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Build a Rig on your phone — and your creations start to stick (2026-07-01)
+
+Two big steps toward the full builder experience:
+
+- **The Rig builder now works on phones.** The whole make-things path — write a
+  skill → wrap it in a harness → turn it into a Rig → run it — no longer
+  dead-ends on mobile. The simple linear flow builds and runs on a phone;
+  the advanced layouts (graph, loops, trees) politely point you to a bigger
+  screen. The builder also got a calmer look: one structure picker instead of
+  a row of four, clearer buttons, and styling that matches the rest of the app.
+- **Signed-in creations now save for real.** Build a skill or a harness while
+  signed in and hit Save — it's kept in your account (saving the same name
+  again updates it, no duplicates). The assistant can save on your behalf too,
+  through a new signed-in `skill_save` tool — and it now *sees* the draft you
+  have open, so "what's missing from my draft?" gets a real answer.
+- Signed-out building is unchanged: build and test everything free; saving,
+  libraries, and publishing are what signing in unlocks.
+
+Coming next on this track: your pre-sign-in work carrying over when you log in,
+a "My Creations" library, publishing to the registry, and composing your saved
+pieces into bigger workflows.
+
+_No version bump — Rokha is still pre-release (`0.0.0-dev.1`)._
+
 ## Agents can build harnesses too — and a smoother build path (2026-07-01)
 
 Following the human "Build a Harness" workbench, an agent can now do the same
