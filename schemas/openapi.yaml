@@ -1211,6 +1211,7 @@ paths:
         - { name: listing_type, in: query, schema: { type: string, enum: [skill, server, agent] } }
         - { name: tag, in: query, schema: { type: string } }
         - { name: sort, in: query, schema: { type: string, enum: [downloads, stars, recent] } }
+        - { name: execution_class, in: query, schema: { type: string, enum: [prompt, scripted, mcp] }, description: 'Filter by classified execution class' }
         - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 500, default: 50 } }
         - { name: offset, in: query, schema: { type: integer, minimum: 0 } }
       responses:

@@ -5,6 +5,34 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Build a Harness — configure a skill and see it as a portable file (2026-07-01)
+
+The "Build a Harness" area is now a real workbench. A harness is a capability
+that's been *configured and made ready to run* — either a skill from the library
+wired up to run, or a plain instruction you hand to the assistant.
+
+- **Start from a choice, not a wall of options.** Pick "wrap a skill" or "write
+  an instruction," then get just the form for that path.
+- **Find a skill fast.** The skill finder opens on popular skills right away and
+  gives you one-click filters — most downloaded, latest, top rated, an
+  execution-type filter (runs instantly vs. runs in the cloud vs. a live
+  connection), and real tag chips pulled from the results. Filters now work
+  together with search and page through the full catalog correctly.
+- **Inspect before you commit.** Clicking a skill opens the same rich detail
+  card used elsewhere — clearer, easier-to-read text, a labeled description, and
+  a one-tap "Add to Rig."
+- **A harness is a portable file too.** As you build, a side panel shows your
+  harness written out as a standard skill file — the same open format skills
+  use — so it's inspectable and copyable. These configured files note that they
+  need the Rokha runtime to run.
+- **Your work sticks around.** Refreshing or switching tabs keeps you on the
+  page you were building, with your progress intact.
+
+Under the hood, the registry listing API gained an `execution_class` filter so
+tools can narrow the catalog by how a capability runs.
+
+_No version bump — Rokha is still pre-release (`0.0.0-dev.1`)._
+
 ## Easier to start, consistent on every screen (2026-07-01)
 
 More newcomer-friendly polish across the app:
