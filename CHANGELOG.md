@@ -5,6 +5,24 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Agents can build harnesses too — and a smoother build path (2026-07-01)
+
+Following the human "Build a Harness" workbench, an agent can now do the same
+thing over the API — two doors to the same place.
+
+- **Configure a harness from code.** A new authoring tool lets any agent set up
+  a harness — a skill (or a plain instruction) wired with its instruction,
+  optional label, and, when it's a live tool, an endpoint and its arguments —
+  and get the finished configuration back. In the Rokha app the very same tool
+  fills the human's live builder form, so a person and an agent build the exact
+  same way. It's free to use before signing in, just like building by hand.
+- **A clear path from idea to workflow.** The builder now links the pieces
+  end to end: turn a skill you just wrote into a harness in one tap, then turn
+  that harness into a runnable Rig — no copying, no dead ends.
+- **The assistant sees what you're looking at.** When you ask about a specific
+  item from the library, the assistant now knows exactly which one is on your
+  screen, so it answers about *that* one instead of guessing.
+
 ## Build a Harness — configure a skill and see it as a portable file (2026-07-01)
 
 The "Build a Harness" area is now a real workbench. A harness is a capability
