@@ -1093,7 +1093,10 @@ paths:
         from `name` + `description` + `instructions`, plus optional
         `compatibility` (runtime/environment requirements, ≤500 chars),
         `allowed_tools` (space-separated, scoped allowlist), `license`, and
-        `metadata` (a string→string object); returns the assembled SKILL.md).
+        `metadata` (a string→string object); returns the assembled SKILL.md),
+        and `harness_author` (pure-compute — configure a Harness: a skill or
+        instruction wired to run, from `kind` + `instruction` + optional `tag`
+        and a live MCP `endpoint`/`tool`/`params`; returns the config).
         Every other method/tool requires `Authorization: Bearer <JWT>`.
 
         Notable tool families (enumerate live via `tools/list`): harness /
@@ -1104,7 +1107,9 @@ paths:
         `rig_swap_skill` — re-resolve one step of a rig against the live
         registry and re-point it, keeping the step's instruction; and
         `skill_author` — author a portable Agent Skill (SKILL.md) the same
-        way the human Build-a-Skill builder does (two-front-door parity).
+        way the human Build-a-Skill builder does (two-front-door parity); and
+        `harness_author` — configure a Harness (a skill/instruction wired to
+        run) the same way the human Build-a-Harness builder does.
       operationId: mcpJsonRpc
       security:
         - bearerAuth: []
