@@ -1111,7 +1111,9 @@ paths:
         `harness_author` — configure a Harness (a skill/instruction wired to
         run) the same way the human Build-a-Harness builder does; and
         `skill_save` (JWT) — persist an authored skill to the signed-in
-        user's creations (upsert by name; saving is a logged-in capability).
+        user's creations (upsert by name; saving is a logged-in capability);
+        and `registry_publish` (JWT) — publish a creation as a searchable
+        registry listing (mirrors POST /api/marketplace/registry/publish).
       operationId: mcpJsonRpc
       security:
         - bearerAuth: []
@@ -1224,6 +1226,69 @@ paths:
       responses:
         '200':
           description: Paged registry index
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RegistryListResponse' }
+
+  /api/marketplace/registry/publish:
+    post:
+      tags: [marketplace]
+      summary: Publish one of your creations as a registry listing (JWT)
+      description: |
+        Logged-in users publish a creation (an authored skill, a harness, or a
+        rig) into the registry as a `provider='rokha'` listing — it surfaces in
+        normal registry search immediately. Re-publishing the same `name`
+        updates the listing; a name already published by another user is
+        rejected (409). Payloads carrying secret material (keys/tokens) are
+        rejected. The listing's public `author` is your display identity —
+        never a wallet or internal id.
+      operationId: publishRegistryListing
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, listing_type, description]
+              properties:
+                name: { type: string, description: 'Listing slug (kebab-case, ≤64) — the external_id' }
+                listing_type: { type: string, enum: [skill, server, rig], description: 'skill = an authored SKILL.md; server = a harness; rig = a rig' }
+                description: { type: string, maxLength: 4000 }
+                title: { type: string }
+                tags: { type: array, items: { type: string }, maxItems: 12 }
+                version: { type: string, default: 0.1.0 }
+                homepage: { type: string }
+                metadata: { type: object, description: 'The artifact rides here — e.g. {skill_md} / {harness: <config>} / {rig: <content>} (≤200KB)' }
+      responses:
+        '200': { description: Published — live in registry search }
+        '400': { description: Invalid name/type/description, or secret material detected }
+        '409': { description: Name already published by another user }
+
+  /api/marketplace/registry/publish/{external_id}:
+    delete:
+      tags: [marketplace]
+      summary: Unpublish one of your listings (JWT, owner-checked)
+      operationId: unpublishRegistryListing
+      security:
+        - bearerAuth: []
+      parameters:
+        - { name: external_id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200': { description: Unpublished — removed from search }
+        '404': { description: No live listing with that name under your account }
+
+  /api/marketplace/registry/mine:
+    get:
+      tags: [marketplace]
+      summary: Your live published listings (JWT)
+      operationId: myRegistryListings
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Your provider='rokha' listings
           content:
             application/json:
               schema: { $ref: '#/components/schemas/RegistryListResponse' }

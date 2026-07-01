@@ -5,6 +5,31 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Your creations, kept and shared — sign-in work carries over, and publishing arrives (2026-07-01)
+
+The signed-in story now goes end to end:
+
+- **What you build before signing in comes with you.** Log in and the rig,
+  harness, and chat history you built as a guest transfer into your account
+  automatically — nothing to redo, no lost work.
+- **A real "My Creations" library.** The build hub now lists everything you've
+  made — skills, harnesses, and rigs — with one-tap open-in-its-builder,
+  publish, and delete.
+- **Publish to the registry.** A creation can go live as a real registry
+  listing, searchable by anyone alongside the tens of thousands of synced
+  skills. Publishing the same name again updates it; names are first-come per
+  user; payloads that look like they contain keys or tokens are rejected; and
+  listings show your display name, never your wallet. Unpublish any time.
+- **Agents publish through the same door.** A new signed-in `registry_publish`
+  tool (documented in the API schema, with `POST /api/marketplace/registry/publish`,
+  unpublish, and a "my listings" endpoint) lets the assistant — or your own
+  agent — save and publish on your behalf.
+
+Next on this track: composing your saved pieces into bigger workflows — a rig
+that uses another rig as a step.
+
+_No version bump — Rokha is still pre-release (`0.0.0-dev.1`)._
+
 ## Build a Rig on your phone — and your creations start to stick (2026-07-01)
 
 Two big steps toward the full builder experience:
