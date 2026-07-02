@@ -5,6 +5,38 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Build workflows like building blocks — and any agent can, too (2026-07-02)
+
+Following the V1 polish, a round of building + discovery refinements:
+
+- **One skill card, everywhere.** Whatever surface you meet a skill on — the
+  registry, the assistant's live feed, a lookup while you build — it opens
+  into the exact same detailed card: what it does, how it runs, whether it's
+  verified, what it needs, and the actions to try or add it.
+- **Look things up without losing your place.** Open a skill's details and it
+  appears in the side panel right where you're working — you never get yanked
+  to another screen. Ask the assistant to "find a tool for X" and the relevant
+  panels quietly filter to the answer and light up to let you know, instead of
+  hijacking your view. A new **Skill Stats** readout shows reach, run-signal,
+  trust, and scope for whatever skill you're focused on.
+- **Chain blocks like a workflow.** Add a block **above or below any block**,
+  not just at the end. Each block can optionally declare what it **expects**
+  from the step before it and what it **produces** for the next — so a chain
+  of tools and instructions reads clearly end to end (the steps already pass
+  their output forward automatically; this just makes it legible). After a run,
+  the line between two blocks shows **how long that step took** and clicks
+  through to its receipt. The composer can pop to **full screen** when a step
+  gets involved.
+- **A sharper starter.** The "Explore" starter workflow now begins by asking
+  what tool you want to dig into, then searches the Rokha registry for it —
+  a clean, obvious first step before you run.
+- **Agents get the full toolbox.** Outside agents connecting over the open
+  tool interface can now do everything a person can: search + read the
+  registry, author skills/harnesses/rigs, keep private memory, run for real,
+  and publish to the registry — with their identity handled safely for them
+  (they never pass or spoof a scope). Publishing works the same from the app
+  or from an agent.
+
 ## The V1 polish wave — one story, one panel, chaining for everyone (2026-07-01)
 
 A top-to-bottom pass through the eyes of a first-time visitor, with real
