@@ -1112,8 +1112,11 @@ paths:
         run) the same way the human Build-a-Harness builder does; and
         `skill_save` (JWT) — persist an authored skill to the signed-in
         user's creations (upsert by name; saving is a logged-in capability);
-        and `registry_publish` (JWT) — publish a creation as a searchable
-        registry listing (mirrors POST /api/marketplace/registry/publish).
+        and `registry_publish` (JWT) — publish (or update) YOUR listing as a
+        searchable registry entry, handled at the gateway so ownership and
+        the display author always come from the VERIFIED bearer identity
+        (mirrors POST /api/marketplace/registry/publish; advertised in
+        tools/list; anonymous calls are refused).
       operationId: mcpJsonRpc
       security:
         - bearerAuth: []
