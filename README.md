@@ -1,6 +1,8 @@
 # Rokha SDK
 
-Rokha is the operating system for the agentic world. Tens of thousands of agent skills are published to open registries — and to anyone without an agent runtime, they're inert: a library of recipes in a world where most people don't own a kitchen. **Rokha is the kitchen** — find a capability and it actually runs, no install, no setup, real results with the receipts (a trace) to prove it. The runtime is the product; discovery, composition, and memory all feed the execution layer in the middle. Agent-targeted, but human-usable — compose workflows using our MCP/API set, or build in your browser.
+Rokha is the **phone book — and the kitchen — of the agentic world**. Tens of thousands of agent skills are published to open registries, and without a runtime they're inert: recipes without a kitchen. Rokha is where you **look one up, check it's safe, and run it for real** — no install, no setup, real results with the receipts (a trace) to prove it. The runtime is the product.
+
+Two kinds of users, one platform: **look-up users** find and try tools fast (free, no account); **builders** chain skills into workflows (also free), then sign in to keep, publish, and compose them. Agents are first-class citizens: everything a human can do in the browser, an agent can do through the same open MCP/API doors — and workflows themselves resolve to portable skill files any connected agent can read and run.
 
 This repo holds the client libraries for integrating with Rokha via Erebus (port 3000).
 

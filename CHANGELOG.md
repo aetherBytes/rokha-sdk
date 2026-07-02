@@ -5,6 +5,43 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## The V1 polish wave — one story, one panel, chaining for everyone (2026-07-01)
+
+A top-to-bottom pass through the eyes of a first-time visitor, with real
+capacity guarantees underneath:
+
+- **One story everywhere.** The landing, the chat intro, the registry, and the
+  builder now tell the same story in the same words: Rokha is your librarian —
+  ask in plain words, she finds a real tool, runs it live, and shows you the
+  receipt. One vocabulary for how a skill runs ("Runs now" / "Runs in the
+  cloud" / "Live connection") across every card, chip, and filter.
+- **One assist panel.** Everything that helps while you work — chat, run
+  receipts, Rokha's live reasoning, registry lookups, the doc you're
+  authoring, live network readouts — lives in one side panel. Open extra
+  containers, split them either direction, drag to move, resize. New info on
+  a tab you're not watching pulses its chip; nothing ever yanks your view.
+- **Chaining is free.** Multi-step workflows no longer wait for an account —
+  chain as many steps as the flow needs, signed in or not. Accounts keep the
+  keeps: a saved library, publishing, composing workflows into bigger ones,
+  scheduled runs.
+- **Fair-use budgets, honestly enforced.** Free usage is bounded server-side
+  by daily token budgets — per person and platform-wide — so the free tier
+  stays healthy. Hit one and the app says so plainly (it resets tomorrow;
+  your own API key or a plan raises it). Runs also carry per-run ceilings
+  sized to your tier.
+- **Trust on every listing.** A 🛡 safety-read button asks Rokha to vet the
+  exact listing (what it accesses, what could go wrong); verified flags and
+  quality scores now show where they exist; a requirements row says what a
+  skill needs to run; and an unclassified listing says so instead of showing
+  nothing.
+- **Workflows are files.** A rig now resolves to a portable, standard skill
+  file — the whole flow, its inputs and outputs, and how to run it via
+  Rokha's open MCP/API doors — so any connected agent can read it and run
+  the workflow like a skill. A publish button lives right in the builder.
+- **Watch a live build.** The one-button demo, the guided tours, and the
+  starter prompts were all re-checked against the app as it is today — every
+  button does what it says, and the tours drive the new panel for real.
+
 ## Compose: a rig can now run another rig (2026-07-01)
 
 The last layer of the creations story — composition:
