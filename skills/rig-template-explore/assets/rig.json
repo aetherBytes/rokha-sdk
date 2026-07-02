@@ -1,0 +1,26 @@
+{
+  "$schema": "https://rokha.ai/schemas/rig-template-v1.json",
+  "name": "Explore",
+  "intent": "explore a registry listing — a skill, harness, or rig — and dissect what it's actually for",
+  "intent_category": "explore",
+  "steps": [
+    {
+      "role": "lookup",
+      "tag": "lookup",
+      "query": "search registry discovery tools",
+      "instruction": "Take the registry listing the user names — a skill, harness, or rig — or pick one that's trending right now. Pull up everything about it: what it does, how it runs (live tool, cloud runtime, or instructions), and who made it."
+    },
+    {
+      "role": "use-cases",
+      "tag": "use-cases",
+      "query": "analyze documentation summarize",
+      "instruction": "Dissect its use cases: three concrete, real-world workflows this tool enables, what other registry skills pair well with it (name them), and who it's for."
+    },
+    {
+      "role": "brief",
+      "tag": "brief",
+      "query": "write report markdown",
+      "instruction": "Write an explorer's brief in plain English: what it is, when to reach for it, the top use cases, the best pairings, and what to try first."
+    }
+  ]
+}

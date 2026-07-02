@@ -13,10 +13,11 @@ metadata:
 
 # Rig Template — Audit & Brief
 
-A two-step workflow skeleton: **analyze → report**. Step 1 inspects the
-subject (a tool, a claim, a dataset — whatever the user's intent names);
-step 2 receives the findings and writes the brief a human actually wants to
-read, ending in a clear verdict.
+A three-step workflow skeleton: **fetch → analyze → report**. Step 1 fetches
+the target (a Rokha Registry listing, a URL, a repo, or an endpoint); step 2
+inspects it for security issues — what it accesses, trust boundaries, risky
+patterns; step 3 writes the brief a human actually wants to read, ending in
+a clear trust verdict.
 
 Each step carries a registry *query*, resolved against the live Rokha
 Registry at instantiation — the pattern adapts to the mesh's current
@@ -27,12 +28,15 @@ inventory.
 Machine-readable skeleton: `assets/rig.json` (served at
 `/api/skills/rig-template-audit-brief/assets/rig.json`, no auth):
 
-- **Step 1 · analyze** — an audit/inspection skill (registry query:
-  `audit security analysis`), instructed to examine the subject and list
-  concrete findings.
-- **Step 2 · report** — a summarization skill (registry query:
-  `summarize report`), instructed to turn the findings into a short brief
-  with a verdict.
+- **Step 1 · fetch** — a fetch skill (registry query:
+  `fetch url http request`), instructed to gather the target's source
+  material — registry listings welcome.
+- **Step 2 · analyze** — a security skill (registry query:
+  `security audit code review`), instructed to inspect what it accesses,
+  its trust boundaries, and risky patterns.
+- **Step 3 · report** — a writing skill (registry query:
+  `write report markdown`), instructed to write the audit brief with a
+  clear trust verdict.
 
 ## How an agent instantiates this (the public-API path)
 

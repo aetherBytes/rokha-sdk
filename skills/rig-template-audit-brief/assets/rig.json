@@ -1,20 +1,26 @@
 {
   "$schema": "https://rokha.ai/schemas/rig-template-v1.json",
-  "name": "Audit & Brief",
-  "intent": "inspect the subject, then turn the findings into a plain-language brief with a verdict",
+  "name": "Audit",
+  "intent": "fetch a target and audit it for security and trust-boundary issues",
   "intent_category": "audit",
   "steps": [
     {
+      "role": "fetch",
+      "tag": "fetch",
+      "query": "fetch url http request",
+      "instruction": "Fetch the target the user provides \u2014 a registry listing (skill, harness, or rig), a URL, a repo, or an endpoint \u2014 and gather its source material."
+    },
+    {
       "role": "analyze",
-      "tag": "audit",
-      "query": "audit security analysis",
-      "instruction": "Examine the subject named in the rig intent. List concrete findings — what it is, what it does, anything risky or notable — as terse bullet points."
+      "tag": "analyze",
+      "query": "security audit code review",
+      "instruction": "Inspect it for security issues: what it accesses (tools, endpoints, credentials), trust boundaries, and risky patterns; flag anything suspicious."
     },
     {
       "role": "report",
-      "tag": "summarize",
-      "query": "summarize report",
-      "instruction": "Turn the previous step's findings into a short plain-language brief (3-5 sentences) a non-expert can act on, ending with a one-line verdict."
+      "tag": "report",
+      "query": "write report markdown",
+      "instruction": "Write the findings up as a concise audit brief: scope, findings by severity, and a clear trust verdict."
     }
   ]
 }

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://rokha.ai/schemas/rig-template-v1.json",
+  "name": "Full workflow",
+  "intent": "the Explore and Audit patterns chained into one flow: pick a registry listing, dissect its use cases, vet its safety, and land on a verdict",
+  "intent_category": "build",
+  "steps": [
+    {
+      "role": "lookup",
+      "tag": "lookup",
+      "query": "search registry discovery tools",
+      "instruction": "Take the registry listing the user names — a skill, harness, or rig — or pick one that's trending. Pull up everything about it: what it does, how it runs, who made it."
+    },
+    {
+      "role": "use-cases",
+      "tag": "use-cases",
+      "query": "analyze documentation summarize",
+      "instruction": "Dissect its use cases: three concrete workflows it enables, what registry skills pair well with it, and who it's for."
+    },
+    {
+      "role": "vet",
+      "tag": "vet",
+      "query": "security audit code review",
+      "instruction": "Give it the safety read: what it accesses (tools, endpoints, credentials), trust boundaries, what could go wrong, and any red flags."
+    },
+    {
+      "role": "verdict",
+      "tag": "verdict",
+      "query": "write report markdown",
+      "instruction": "Combine the exploration and the audit into one decision brief: what it is, the top use cases, the safety read, and a clear adopt / try-with-care / avoid verdict."
+    }
+  ]
+}
