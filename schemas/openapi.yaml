@@ -1117,6 +1117,13 @@ paths:
         the display author always come from the VERIFIED bearer identity
         (mirrors POST /api/marketplace/registry/publish; advertised in
         tools/list; anonymous calls are refused).
+
+        Scope is identity-derived, never client-supplied: for the wallet-scoped
+        JWT tools (`rig_author`, `create_harness`/`list_harnesses`/`get_harness`/
+        `update_harness`/`delete_harness`/`search_harnesses`) the gateway derives
+        the owner from your verified token and overrides any `wallet_address`
+        argument — so you never pass your scope, can't spoof another's, and a
+        rig you author lands in the same scope the run endpoint reads from.
       operationId: mcpJsonRpc
       security:
         - bearerAuth: []
