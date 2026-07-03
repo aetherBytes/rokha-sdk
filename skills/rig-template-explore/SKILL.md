@@ -37,6 +37,18 @@ Machine-readable skeleton: `assets/rig.json` (served at
 - **Step 3 · brief** — a writing skill (query: `write report markdown`),
   instructed to produce the plain-English explorer's brief.
 
+## The intended agent workflow (search → explore)
+
+1. `POST /mcp/jsonrpc` → `registry_search` (no auth) to FIND your target skill
+   among 54k+ listings; `registry_get_skill` for its full SKILL.md.
+2. Feed that target as this rig's declared **input** (`input.label` in
+   `assets/rig.json`) — the pinned step 1 (**Rokha Registry Search**) performs
+   a REAL registry lookup + document fetch on it at run time (never a
+   model guess).
+3. Run the rig (recreate it via `rig_author`, or `harness_create` +
+   `rig_add_harness`, then the public run stream) — the output is a
+   plain-English brief; every step writes a trace you can read back.
+
 ## How an agent instantiates this (the public-API path)
 
 Fetch this template's `assets/rig.json`, resolve each step's `query` via

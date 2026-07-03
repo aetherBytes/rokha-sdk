@@ -5,6 +5,31 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Real lookups, fuller receipts, and a front page that says what you get (2026-07-03)
+
+- **Starter workflows do a real search.** The "Explore" and "Audit" starters'
+  first step now performs an actual registry search and fetches the listing's
+  real document at run time — the analysis downstream works from the genuine
+  artifact, never a best guess.
+- **Receipts record what actually flowed in.** Every step's receipt now
+  separates *what came in* (the previous step's full output, or the workflow's
+  own input) from *how the step was configured* — including runs in the cloud
+  sandbox. Reading a receipt now answers "what did this step actually consume?"
+  at a glance.
+- **The whole final answer, in chat.** A workflow's last step is its
+  deliverable — the assistant now shows it in full instead of trimming it
+  mid-sentence (with an honest pointer to the receipts if it's truly huge).
+- **The registry front page states the offer.** Live listing count (54k+ and
+  growing), what every listing carries (run signals, quality scores, what it
+  needs), and the part agents care about: the same registry is readable through
+  one standard MCP endpoint — Claude Code, Cursor, or any MCP client. The
+  builder's intro now also says the quiet part: everything you make is a
+  standard, portable SKILL.md.
+- **Security hardening.** Tightened ownership checks on the agent door
+  (private memory can only be edited or deleted by its owner) and fixed scope
+  handling for email/Google accounts. Found in an internal review; no known
+  exploitation — we're pre-launch.
+
 ## Build workflows like building blocks — and any agent can, too (2026-07-02)
 
 Following the V1 polish, a round of building + discovery refinements:

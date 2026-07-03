@@ -1,26 +1,43 @@
 {
   "$schema": "https://rokha.ai/schemas/rig-template-v1.json",
   "name": "Explore",
-  "intent": "explore a registry listing — a skill, harness, or rig — and dissect what it's actually for",
+  "intent": "Explore a registry listing — a skill, harness, or rig — and dissect what it's actually for.",
   "intent_category": "explore",
+  "input": {
+    "label": "the skill or tool to explore",
+    "kind": "skill",
+    "hint": "pick the registry listing you want to dig into"
+  },
   "steps": [
     {
-      "role": "lookup",
+      "role": "primary",
       "tag": "lookup",
       "query": "search registry discovery tools",
-      "instruction": "Take the registry listing the user names — a skill, harness, or rig — or pick one that's trending right now. Pull up everything about it: what it does, how it runs (live tool, cloud runtime, or instructions), and who made it."
+      "pin": {
+        "name": "Rokha Registry Search",
+        "source": "rokha",
+        "slug": "rokha-registry",
+        "description": "Search the Rokha Registry of published agent skills, harnesses, and rigs — Rokha runs it over her own MCP registry tools."
+      },
+      "expects": "the skill/tool the user wants to explore (its name)",
+      "instruction": "Search the Rokha Registry for the skill/tool the user named as the input. Pull up everything about it: what it does, how it runs (live tool, cloud runtime, or instructions), and who made it.",
+      "produces": "the chosen listing + what it does and how it runs"
     },
     {
-      "role": "use-cases",
+      "role": "step",
       "tag": "use-cases",
       "query": "analyze documentation summarize",
-      "instruction": "Dissect its use cases: three concrete, real-world workflows this tool enables, what other registry skills pair well with it (name them), and who it's for."
+      "expects": "the chosen listing + what it does",
+      "instruction": "Using the previous step's listing, dissect its use cases: three concrete, real-world workflows this tool enables, what other registry skills pair well with it (name them), and who it's for.",
+      "produces": "three use cases + best pairings + who it's for"
     },
     {
-      "role": "brief",
+      "role": "step",
       "tag": "brief",
       "query": "write report markdown",
-      "instruction": "Write an explorer's brief in plain English: what it is, when to reach for it, the top use cases, the best pairings, and what to try first."
+      "expects": "the use cases + pairings",
+      "instruction": "Write an explorer's brief in plain English: what it is, when to reach for it, the top use cases, the best pairings, and what to try first.",
+      "produces": "a plain-English explorer's brief"
     }
   ]
 }
