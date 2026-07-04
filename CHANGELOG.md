@@ -5,7 +5,7 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
-## Your own cloud sandbox — persistent, and it works any tool (unreleased)
+## Your own cloud sandbox — persistent, browser-capable, and honest (unreleased)
 
 - **A sandbox that stays with you.** Start an isolated cloud machine once and it
   stays up for your whole session — a real shell (curl, npm, python, git) plus
@@ -17,6 +17,19 @@ face of Rokha; the wire contract it depends on is
 - **Live servers are now runnable.** Any listing with a live connection can be
   worked directly: the runtime connects to the server, discovers its real
   tools, and uses them — no install.
+- **Attach catalog servers by name.** Tell the sandbox to attach a known tool
+  server (say, a browser-automation server) and it resolves the right package
+  from the registry, starts it inside your sandbox, and keeps it warm for the
+  session — repeat calls answer in seconds.
+- **A real browser, when you need one.** Start a *browser sandbox* and page
+  automation works for real: navigate, read, click — the actual page, not a
+  summary of one. Browser sandboxes use a bigger machine, so they draw a bit
+  more of the day's free allowance (shown plainly before you start).
+- **Run it for real, or it says no.** The old "demonstration of what this tool
+  would output" is gone everywhere. If something can't genuinely execute, Rokha
+  tells you exactly what's missing and where the real run lives — she never
+  produces pretend output. Every run's receipt now also records precisely what
+  input the step consumed.
 
 ## v0.1.0 — the first versioned cut (2026-07-03)
 
