@@ -26,7 +26,7 @@ class RokhaError(Exception):
 
 
 class RokhaClient:
-    SCHEMA_VERSION = "0.0.0-dev.1"
+    SCHEMA_VERSION = "0.1.0"
 
     def __init__(
         self,

@@ -5,6 +5,27 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## v0.1.0 — the first versioned cut (2026-07-03)
+
+Rokha's public surface graduates from the pre-release `0.0.0-dev.1` freeze to
+**v0.1.0** — one number across the wire contract (`/api/schema`), the
+TypeScript and Python SDKs, and the `ro` CLI. `v1.0.0` lands when the
+logged-in experience reaches the same bar as the pre-login product.
+
+What's live behind this cut:
+
+- **One registry, nine sources.** The catalog now folds in the Official MCP
+  Registry, Glama, skills.sh, Docker's MCP Catalog, and Anthropic's own Agent
+  Skills alongside ClawHub and Smithery — ~131,000 findable skills and
+  servers, each with the richest details its home registry exposes (install
+  counts, pull counts, quality scores, licenses, live endpoints).
+- **The cloud runtime runs more of the catalog.** Real sandboxed execution now
+  works for skills from ClawHub, skills.sh, Anthropic's skills, and Rokha's
+  own — not just one source. Every run still produces a full receipt.
+- **More free runs while we're pre-launch.** Visitors get 5 free real runs a
+  day (was 1); free accounts get 25 (was 5). Platform-wide daily ceilings
+  still bound total spend.
+
 ## Real lookups, fuller receipts, and a front page that says what you get (2026-07-03)
 
 - **Starter workflows do a real search.** The "Explore" and "Audit" starters'
