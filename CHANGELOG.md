@@ -5,6 +5,19 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Your own cloud sandbox — persistent, and it works any tool (unreleased)
+
+- **A sandbox that stays with you.** Start an isolated cloud machine once and it
+  stays up for your whole session — a real shell (curl, npm, python, git) plus
+  live Model Context Protocol connectivity. Watch every command and result in
+  the new SANDBOX panel; it winds down on its own when idle.
+- **The assistant drives it too.** Ask Rokha to "curl this url in my sandbox"
+  or "list that server's tools" and the command runs for real in YOUR sandbox,
+  with the receipt in the log.
+- **Live servers are now runnable.** Any listing with a live connection can be
+  worked directly: the runtime connects to the server, discovers its real
+  tools, and uses them — no install.
+
 ## v0.1.0 — the first versioned cut (2026-07-03)
 
 Rokha's public surface graduates from the pre-release `0.0.0-dev.1` freeze to
