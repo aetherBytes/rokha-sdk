@@ -5,6 +5,46 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## A friendlier front door, a livelier Rokha, and a tougher directory (unreleased)
+
+A large polish-and-hardening pass across the whole pre-login product, shaped by
+a founder walkthrough playing a brand-new visitor. Highlights:
+
+- **Three doors on the front page.** The landing now shows you the whole product
+  at a glance: *Chat with Rokha* (ask in plain words), *Explore the Registry*
+  (130k+ skills & live servers from 9 registries), and *Build & run for real*
+  (compose a workflow — every run leaves a receipt) — plus the standing promise,
+  stated plainly: test any tool in an isolated sandbox **before** it ever
+  touches your own agents.
+- **Rokha feels alive now.** Send a question and seeds gust in toward the mark;
+  while she works, a calm glowing orbit circles the logo; and when she finishes,
+  a whirlwind of seeds spirals up across the screen. Subtle, fast, and switched
+  off automatically for reduced-motion users.
+- **Connecting to modern live servers actually works.** Two real bugs were found
+  and fixed by exercising live connections end-to-end: many current tool servers
+  rejected our handshake outright, and servers that require a session dropped
+  the follow-up calls. Both fixed — discovery *and* real execution now work
+  across the modern server ecosystem, including servers exposing 80+ tools.
+- **A tougher, more honest directory.** The registry now probes live servers for
+  real (dead links get flagged with evidence, not hidden), shows each server's
+  actual tool list on its page, displays licenses everywhere, adds ~20 browse
+  categories and a "moving now" strip, and serves crawlable listing pages so
+  the catalog can be found from a plain web search.
+- **Building without fear.** A new "builds in progress" indicator in the navbar
+  means navigating away never loses your work — one click jumps you back into
+  the skill, harness, or rig you were making. Blocks in a workflow can be
+  dragged to reorder. Hand-off buttons (turn a harness into a rig) now *add to*
+  what you were building instead of replacing it.
+- **Smarter ready-made workflows.** Start a template from a specific listing and
+  that listing becomes step one — configurable like any other block. Start from
+  just a name and the registry search stays as step one, with the found tool
+  landing as its own editable block right after.
+- **Better on phones.** The builder got solid, readable surfaces and a trimmed
+  layout on small screens — one idea per line, everything still reachable.
+- **The sandbox panel grew up.** One big obvious Start button, clear
+  run/restart/stop controls, and a click-to-load command helper with ready-made
+  templates for testing APIs and probing live tool servers by hand.
+
 ## Your own cloud sandbox — persistent, browser-capable, and honest (unreleased)
 
 - **A sandbox that stays with you.** Start an isolated cloud machine once and it
