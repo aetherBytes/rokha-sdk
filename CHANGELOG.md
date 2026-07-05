@@ -5,6 +5,50 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Your account grows up: profile, private keys, and an assistant who can run the whole show (unreleased)
+
+The first big pass on the logged-in experience — plus a set of upgrades that
+make Rokha (the assistant) genuinely able to guide you from first question to
+real execution.
+
+- **A real profile.** Upload a profile photo, tune how Rokha addresses and
+  helps you with quick "personality notes" (she reads them on every reply),
+  browse everything she remembers for you with clear filters — and see at a
+  glance which memories shape her behavior versus plain account records.
+- **Bring any key, never expose it.** The account vault now stores ANY named
+  secret (a GitHub token, a weather key…), not just a model key. Attach a
+  saved key to a workflow block by its short name and the value is filled in
+  server-side only at the moment of the live call — it never appears in your
+  workflow, your receipts, or the assistant's view. Masked forever after
+  saving; nothing can echo it back.
+- **Your sessions, back in your hands.** Saved conversations now have a real
+  Open button — jump back into any chat from your profile. This pass also
+  fixed a real bug where non-wallet accounts never saw their history at all.
+- **Your work on the public pulse — anonymously.** Activity you set to
+  "pulse" now genuinely shows in the public live streams as an anonymous
+  operator handle, with private content stripped. Private stays private.
+- **Sign-in, simplified for launch.** Rokha will launch with Google and
+  crypto-wallet sign-in only — we don't store passwords, by design. (Email +
+  password stays built but switched off.)
+- **Publish safely.** Publishing to the registry now hard-refuses anything
+  that carries account data — profile records, chat history, or attached
+  keys can never end up in a public listing.
+- **Ready-made workflows stay light.** The starter Explore/Audit workflows
+  now read a tool's real listing and document instead of trying to execute
+  it — so they run instantly for ANY tool, no runtime needed. Heavier
+  workflows that truly execute tools build on top, via a live connection or
+  the cloud sandbox.
+- **The assistant runs the sandbox now.** Ask for a sandbox and Rokha can
+  start it (it costs a run from your daily allowance — she says so and asks
+  first), check on it, run work inside it, and shut it down when you're done.
+- **She can walk you there.** Ask Rokha to "show me the builder" or "open the
+  registry" and the app actually takes you to that surface, with the relevant
+  panel highlighted — and a long-dead piece of her guidance (pointing at your
+  workflow while you build) is back alive.
+- **Published creations are first-class listings.** Your published skills and
+  workflows now show their full document, and the catalog can be filtered to
+  Rokha-published entries like any other source.
+
 ## A friendlier front door, a livelier Rokha, and a tougher directory (unreleased)
 
 A large polish-and-hardening pass across the whole pre-login product, shaped by
