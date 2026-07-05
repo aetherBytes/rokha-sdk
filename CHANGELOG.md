@@ -32,7 +32,20 @@ test.
   every account. Admin access means the admin console, nothing more.
 - **Pick a model per step.** A workflow block can now pin the AI model it
   runs on — "preferred" swaps down gracefully when the pin isn't available;
-  "required" refuses to run without it, with an honest typed error.
+  "required" refuses to run without it, with an honest typed error. Proven
+  end-to-end: one workflow ran its first step on a fast model and its
+  second on a bigger one, with each step's model recorded in the run's
+  receipt.
+- **See your allowance before you sign in.** The live allowance meters are
+  also a side-rail view now — anonymous visitors see the limits tied to
+  their browser session (AI fuel, runs, chats, and when they reset), read
+  from the same counters the platform enforces with. Checking your usage
+  never spends any of it.
+- **Outside agents get the same powers.** Any agent building workflows over
+  Rokha's public MCP endpoint can set per-step model pins too — the tool
+  descriptions teach the semantics, and the audit fixed a bug where
+  workflow steps authored by outside agents could be silently skipped at
+  run time. Two front doors, one behavior.
 
 ## Your account grows up: profile, private keys, and an assistant who can run the whole show (unreleased)
 
