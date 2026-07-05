@@ -5,6 +5,35 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Plans that tell the truth — and a payments rail under them (unreleased)
+
+The subscription surface grew up. Every claim on the Plans page is now a
+number the platform actually enforces, and real payments are wired and in
+test.
+
+- **Honest plans, plainly stated.** Every plan now includes the whole
+  product — discovery, building, real runs, secrets, scheduling,
+  publishing. Paid tiers raise your daily capacity (AI fuel, sandbox runs,
+  saved chats); they don't unlock hidden features. The Plans page states
+  exactly what each tier gets, and every number matches what the platform
+  enforces.
+- **See your allowance live.** The Plans page now shows live meters for
+  every daily limit — how much AI fuel and how many sandbox runs you've
+  used today, when they reset — read from the same counters the platform
+  enforces with, so they can't drift.
+- **Pro is coming soon.** The top tier is visible but not yet purchasable —
+  we're sizing it from real usage before opening it.
+- **Real payments, safely.** Subscriptions flow through a hosted checkout
+  by a major payment processor — your card details never touch Rokha's
+  servers, and cancellation stops billing on both sides. Currently in test
+  mode ahead of launch.
+- **Everyone plays by the same rules.** Operator accounts no longer get any
+  special capacity — the same limits, budgets, and model access apply to
+  every account. Admin access means the admin console, nothing more.
+- **Pick a model per step.** A workflow block can now pin the AI model it
+  runs on — "preferred" swaps down gracefully when the pin isn't available;
+  "required" refuses to run without it, with an honest typed error.
+
 ## Your account grows up: profile, private keys, and an assistant who can run the whole show (unreleased)
 
 The first big pass on the logged-in experience — plus a set of upgrades that
