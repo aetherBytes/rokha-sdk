@@ -36,6 +36,12 @@ test.
   end-to-end: one workflow ran its first step on a fast model and its
   second on a bigger one, with each step's model recorded in the run's
   receipt.
+- **Top-ups are real now.** The Builder plan is **$19.99/month**, and you
+  can buy one-off run packs (+50 runs for $5, +200 for $15) as a separate,
+  non-recurring purchase. Purchased runs bank, never expire, and kick in
+  automatically after your daily allowance runs out. Payments are processed
+  exactly once — a repeated payment notification can never double-charge or
+  double-credit you.
 - **See your allowance before you sign in.** The live allowance meters are
   also a side-rail view now — anonymous visitors see the limits tied to
   their browser session (AI fuel, runs, chats, and when they reset), read
