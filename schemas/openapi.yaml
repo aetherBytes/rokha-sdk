@@ -1178,11 +1178,15 @@ paths:
 
         Scope is identity-derived, never client-supplied: for the wallet-scoped
         JWT tools (`rig_author`, `create_harness`/`list_harnesses`/`get_harness`/
-        `update_harness`/`delete_harness`/`search_harnesses`, and the
-        `schedule_*` suite) the gateway derives the owner from your verified
-        token and overrides any `wallet_address` argument — so you never pass
-        your scope, can't spoof another's, and a rig you author lands in the
-        same scope the run endpoint reads from.
+        `update_harness`/`delete_harness`/`search_harnesses`, the `schedule_*`
+        suite, and `get_allowances`) the gateway derives the owner from your
+        verified token and overrides any `wallet_address` argument — so you
+        never pass your scope, can't spoof another's, and a rig you author
+        lands in the same scope the run endpoint reads from.
+        `get_allowances` (read-only) returns the caller's own live allowances —
+        daily limits + today's usage (AI-fuel tokens, cloud sandbox runs, chat
+        turns, saved chats, per-reply/per-run ceilings) plus any banked run/
+        token top-up credits; reading never spends any of it.
       operationId: mcpJsonRpc
       security:
         - bearerAuth: []
