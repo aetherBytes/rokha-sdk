@@ -1164,14 +1164,25 @@ paths:
         searchable registry entry, handled at the gateway so ownership and
         the display author always come from the VERIFIED bearer identity
         (mirrors POST /api/marketplace/registry/publish; advertised in
-        tools/list; anonymous calls are refused).
+        tools/list; anonymous calls are refused); and the rig SCHEDULE suite
+        (JWT) — `schedule_create` (run a SAVED rig automatically on an
+        `hourly` | `daily` | `weekly` cadence; pass the rig's UUID as
+        `rig_id`; every fire is owner-scoped and draws on the owner's daily
+        run budget — a spent budget skips the fire, recorded as
+        `skipped_budget`; cap 20 schedules per account), `schedule_list`
+        (cadence, enabled, next/last run, run count, last status —
+        `ok` | `partial` (some steps failed) | `error` | `skipped_budget`),
+        `schedule_delete`, and `schedule_pause` (`paused: true|false`) —
+        the same schedules the UI's 🕐 Schedule panel and /api/schedules
+        manage.
 
         Scope is identity-derived, never client-supplied: for the wallet-scoped
         JWT tools (`rig_author`, `create_harness`/`list_harnesses`/`get_harness`/
-        `update_harness`/`delete_harness`/`search_harnesses`) the gateway derives
-        the owner from your verified token and overrides any `wallet_address`
-        argument — so you never pass your scope, can't spoof another's, and a
-        rig you author lands in the same scope the run endpoint reads from.
+        `update_harness`/`delete_harness`/`search_harnesses`, and the
+        `schedule_*` suite) the gateway derives the owner from your verified
+        token and overrides any `wallet_address` argument — so you never pass
+        your scope, can't spoof another's, and a rig you author lands in the
+        same scope the run endpoint reads from.
       operationId: mcpJsonRpc
       security:
         - bearerAuth: []

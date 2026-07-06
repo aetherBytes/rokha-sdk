@@ -5,6 +5,34 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Your rigs on autopilot — real scheduling, for every kind of workflow (unreleased)
+
+The automation promise is now real end-to-end: a saved rig can run itself.
+
+- **Schedule any rig, hourly / daily / weekly.** From the builder's 🕐 panel,
+  from your Profile's new SCHEDULES tab, or just by asking Rokha ("run my
+  audit rig every morning") — agents get the same door over MCP
+  (`schedule_create` / `schedule_list` / `schedule_delete` /
+  `schedule_pause`). Every fire is owned by you, draws on your daily run
+  allowance (a spent day skips the fire and says so — honestly), and writes
+  the same traces as a hand-run.
+- **Every kind of workflow runs on a schedule — including ones that need a
+  sandbox.** A scheduled step that needs real tooling now executes in the
+  isolated cloud sandbox automatically; steps pinned to a specific AI model
+  honor your stored key exactly like a hand-run, and refuse plainly (never
+  fake) when they can't.
+- **A dashboard that tells the truth.** The SCHEDULES tab shows every
+  schedule across all your rigs — next fire, run count, and a last status
+  that reflects what actually happened inside the run (ok · partial ·
+  error · skipped), not just "the request went through".
+- **No install commands, ever.** Rokha's answers now consistently speak the
+  platform's core promise — everything in the directory *runs here*, no
+  setup — and the numbers she quotes (130k+ listings, free daily runs) are
+  verified against the live platform.
+- Under the hood, the old scheduling machinery that *looked* like it ran
+  jobs (but didn't) was deleted outright — everything that schedules now
+  really fires, in keeping with the no-pretending rule.
+
 ## Honest labels in the directory — and templates that always run (unreleased)
 
 - **Badges now tell the truth.** A published **Harness** (your configured,
