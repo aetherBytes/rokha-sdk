@@ -42,6 +42,15 @@ test.
   automatically after your daily allowance runs out. Payments are processed
   exactly once — a repeated payment notification can never double-charge or
   double-credit you.
+- **Pay with USDC, if that's your thing.** Alongside card checkout, plans
+  and top-up packs can be paid directly in USDC on Solana: the app shows a
+  pay request any Solana wallet can open, and the payment is verified
+  on-chain by our servers before anything activates — same exactly-once
+  guarantees as card payments. ($1 = 1 USDC; no quotes to expire.)
+- **A sandbox heads-up in the footer.** Whenever your cloud sandbox is
+  running, a small live badge appears in the footer showing how many runs
+  you have left today (including banked top-up runs). Click it to jump to
+  the sandbox console.
 - **See your allowance before you sign in.** The live allowance meters are
   also a side-rail view now — anonymous visitors see the limits tied to
   their browser session (AI fuel, runs, chats, and when they reset), read
