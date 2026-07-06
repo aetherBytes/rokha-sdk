@@ -5,6 +5,21 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Top up anything, on any plan — buy more AI fuel or more runs (unreleased)
+
+Upsells now extend every gated limit, and they work on every plan — you never
+have to subscribe just to get more of one thing.
+
+- **AI-fuel top-ups.** Out of your daily AI budget? Buy a fuel pack (500k
+  tokens for $5, 2M for $15). Purchased fuel banks, never expires, and kicks in
+  automatically only after your daily allowance runs out — and you're charged
+  for exactly what you use past the cap, so no purchased token is ever wasted.
+- **Run top-ups** (already available) work the same way — extra sandbox runs
+  that bank and never expire.
+- **Every plan can buy both**, including the free plan — capacity is the
+  product, not a locked feature. Pay by card or in USDC on Solana.
+- Your plan page shows what you've banked at a glance, right under the meters.
+
 ## Your rigs on autopilot — real scheduling, for every kind of workflow (unreleased)
 
 The automation promise is now real end-to-end: a saved rig can run itself.
