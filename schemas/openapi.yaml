@@ -108,6 +108,54 @@ paths:
               schema:
                 type: string
 
+  /v0.1/servers:
+    get:
+      tags: [registry]
+      summary: Generic MCP Registry API — list servers (spec-compatible mirror)
+      description: >
+        Serves Rokha's registry in the official MCP Registry wire shape so any
+        spec-compliant client (VS Code, Copilot, MCP Hub, Azure API Center)
+        discovers our listings with zero Rokha-specific code. Read-only,
+        anonymous. Response envelope: `{ servers: [{ server, _meta }],
+        metadata: { count, nextCursor } }`. Rokha extras live under
+        `_meta["ai.rokha/listing"]` (provider, executionClass, probeVerified,
+        license, downloads, url). Mirror also at `/api/registry/v0.1/servers`.
+      operationId: listSpecServers
+      parameters:
+        - { name: cursor, in: query, required: false, schema: { type: string }, description: Opaque pagination cursor from metadata.nextCursor }
+        - { name: limit, in: query, required: false, schema: { type: integer, minimum: 1, maximum: 100 } }
+        - { name: search, in: query, required: false, schema: { type: string } }
+        - { name: provider, in: query, required: false, schema: { type: string }, description: Rokha extension — restrict to one source provider }
+      responses:
+        '200':
+          description: Spec-shaped server list
+          content:
+            application/json:
+              schema: { type: object }
+
+  /v0.1/servers/{name}/versions/{version}:
+    get:
+      tags: [registry]
+      summary: Generic MCP Registry API — single server detail
+      description: >
+        Resolve one server by its spec `name` (Rokha's external_id, which may
+        contain slashes). `{version}` accepts `latest` (or the stored version);
+        a concrete mismatch 404s. Returns the same `{ server, _meta }` envelope.
+        The bare `/v0.1/servers/{name}` form is also served. Mirror at
+        `/api/registry/v0.1/servers/...`.
+      operationId: getSpecServer
+      parameters:
+        - { name: name, in: path, required: true, schema: { type: string } }
+        - { name: version, in: path, required: true, schema: { type: string }, description: "`latest` or a concrete version" }
+      responses:
+        '200':
+          description: Spec-shaped server object
+          content:
+            application/json:
+              schema: { type: object }
+        '404':
+          description: Unknown server name or version
+
   /api/schema:
     get:
       tags: [meta]
@@ -1227,7 +1275,7 @@ paths:
       parameters:
         - { name: search, in: query, schema: { type: string } }
         - { name: provider, in: query, schema: { type: string }, description: 'Filter by source (clawhub, smithery, smithery_skills, ...)' }
-        - { name: listing_type, in: query, schema: { type: string, enum: [skill, server, agent] } }
+        - { name: listing_type, in: query, schema: { type: string, enum: [skill, server, harness, rig, agent] } }
         - { name: tag, in: query, schema: { type: string } }
         - { name: sort, in: query, schema: { type: string, enum: [downloads, stars, recent] } }
         - { name: execution_class, in: query, schema: { type: string, enum: [prompt, scripted, mcp] }, description: 'Filter by classified execution class' }
@@ -1264,7 +1312,7 @@ paths:
               required: [name, listing_type, description]
               properties:
                 name: { type: string, description: 'Listing slug (kebab-case, ≤64) — the external_id' }
-                listing_type: { type: string, enum: [skill, server, rig], description: 'skill = an authored SKILL.md; server = a harness; rig = a rig' }
+                listing_type: { type: string, enum: [skill, harness, rig], description: 'skill = an authored SKILL.md; harness = a harness config; rig = a rig. (server is accepted as a legacy alias for a harness publish)' }
                 description: { type: string, maxLength: 4000 }
                 title: { type: string }
                 tags: { type: array, items: { type: string }, maxItems: 12 }
@@ -2359,7 +2407,7 @@ components:
         id: { type: string }
         name: { type: string }
         description: { type: string }
-        listing_type: { type: string, enum: [tool, rig, agent, workflow, skill, server] }
+        listing_type: { type: string, enum: [tool, rig, agent, workflow, skill, server, harness] }
         status: { type: string, enum: [pending, approved, rejected, featured] }
         metadata:
           type: object
@@ -2417,7 +2465,7 @@ components:
           type: array
           items: { type: string }
         source: { type: string, enum: [clawhub, smithery, smithery_skills] }
-        listing_type: { type: string, enum: [skill, server] }
+        listing_type: { type: string, enum: [skill, server, harness, rig] }
         external_id: { type: string }
         provider_id: { type: string }
         external_updated_at: { type: string, format: date-time }

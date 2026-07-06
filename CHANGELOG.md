@@ -5,6 +5,26 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Honest labels in the directory — and templates that always run (unreleased)
+
+- **Badges now tell the truth.** A published **Harness** (your configured,
+  runnable block) is its own listing type in the registry — searchable and
+  filterable as `harness`. External live tool servers no longer wear the
+  HARNESS badge by accident: they're labeled as what they are — a skill with
+  a connection requirement — with the "Live connection" glyph carrying the
+  live-endpoint signal. Publishing accepts the old spelling too, so nothing
+  breaks for existing integrations.
+- **Ready-made workflows only pick tools they can actually run.** When a
+  template fills its analysis steps from the registry, it now only selects
+  skills an AI step can legitimately perform on its own. Previously a fuzzy
+  match could land on a live tool server and the step would refuse at run
+  time; now a step with no runnable match simply keeps its built-in
+  instructions — every template run completes for real.
+- **Standard registry API, documented.** Rokha's directory speaks the
+  official MCP Registry wire format at `/v0.1/servers` — any spec-compliant
+  client can browse our ~130k listings with zero Rokha-specific code. Now
+  fully documented in the public API schema.
+
 ## Plans that tell the truth — and a payments rail under them (unreleased)
 
 The subscription surface grew up. Every claim on the Plans page is now a
