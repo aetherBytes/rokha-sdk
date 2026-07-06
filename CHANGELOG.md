@@ -31,6 +31,35 @@ pass makes the run experience beginner-obvious.
 hitting jargon or a confusing button. *Next:* the same clarity carried into the
 logged-in surfaces as we finish the post-login experience.
 
+## The honesty audit — truer labels, visible limits, and docs that guide you (unreleased)
+
+A hands-on audit of the whole product, fixing every place where what you saw
+didn't match what would really happen.
+
+- **Ask Rokha about your limits — she reads the real numbers now.** "Walk me
+  through my allowances" gets your live daily budgets and today's usage
+  (AI fuel, sandbox runs, chats, banked top-ups) — before you sign in (your
+  session's limits) and after (your plan's). The numbers come from the same
+  counters the platform enforces, never guesses.
+- **Truer run labels for CLI tools.** Some GitHub-style skills document their
+  commands in a way that slipped past classification and wore a "Runs now"
+  badge they hadn't earned. The classifier now catches setup docs, install
+  commands, and CLI-manual patterns — and mislabeled listings quietly correct
+  themselves as people open them.
+- **Cards say what a thing IS before you click.** Listings now show provenance
+  up front — "GitHub project", "installs CLI tooling" — and tools that work on
+  your own machine's files honestly say so: adopt their SKILL.md into your own
+  agent instead of a cloud run that couldn't reach your data.
+- **Ready-made workflows guide you.** Applying a template now shows a green
+  getting-started card listing exactly what to do (pick the input, name your
+  workflow, then Run) — each step checks off as you go. And the Explore/Audit
+  templates no longer falsely claim to need a sandbox; they're light by design.
+- **Workflow docs got sharper.** A harness doc now leads with a compact Target
+  line (what it wraps · where it's from · how it executes), its configuration
+  block carries every field the runtime actually reads (with saved keys as
+  aliases only — never values), and the doc panel flips between a harness and
+  the skill it wraps with one click while you build.
+
 ## Top up anything, on any plan — buy more AI fuel or more runs (unreleased)
 
 Upsells now extend every gated limit, and they work on every plan — you never
