@@ -5,6 +5,32 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Clearer runs — know when a sandbox is needed, and Remix that actually runs (unreleased)
+
+Building your first workflow shouldn't require knowing what a "sandbox" is. This
+pass makes the run experience beginner-obvious.
+
+- **Two kinds of run, said plainly.** Most workflows just run — Rokha does the
+  work with AI or calls a live tool directly, and it's instant. A *sandbox* — a
+  private, sealed-off cloud computer — only comes in for skills that ship their
+  own code to run, so untrusted code can never touch your data. The run button
+  now names which one you're getting ("Run" vs "Run in a sandbox"), instead of
+  the old "run for real" that made the everyday path sound fake. Everything runs
+  for real; the only difference is whether a sandbox is involved.
+- **A built-in "why a sandbox?" tip.** A tap-to-open explainer sits right next
+  to the run button and teaches the difference in one short read — teacher mode
+  while you build, because this is a new world for most people.
+- **Remix now runs what it finds.** The one-tap "surprise me" demo used to pick
+  a skill and describe it; now it actually runs the skill for real, then breaks
+  down what it did — a fuller look at the whole loop in one tap.
+- **More free everyday runs.** The kind of run that doesn't need a sandbox got a
+  more generous daily allowance — your daily AI budget is the real limit there,
+  not an arbitrary run count.
+
+*Where it gets us:* a newcomer can build and run their first workflow without
+hitting jargon or a confusing button. *Next:* the same clarity carried into the
+logged-in surfaces as we finish the post-login experience.
+
 ## Top up anything, on any plan — buy more AI fuel or more runs (unreleased)
 
 Upsells now extend every gated limit, and they work on every plan — you never
