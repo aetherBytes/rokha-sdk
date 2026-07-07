@@ -5,6 +5,41 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## One registry, everywhere — browsing moves into the side rail (unreleased)
+
+The Registry used to be two different things: a full-screen catalog tab AND a
+compact lookup panel in the side rail. Two layouts, two behaviors, twice the
+places for them to drift. Now there's one.
+
+- **The registry lives in the side rail, on every screen.** Hit "Registry" in
+  the nav (or the landing's Explore door) and the registry panel comes up right
+  beside whatever you're doing — chatting, building, reading a receipt. No more
+  leaving your work to go browse; discovery rides alongside it. On phones the
+  same panel opens as the pull-up feed.
+- **The good cards came along.** The rail now shows the catalog's full-size
+  cards — type and "how it runs" badges, source colors, downloads and stars,
+  tags — and a card expands **in place** into the complete detail view (safety
+  read, requirements, provenance, Add-to-Rig, START BUILDING, SKILL.md and
+  Source links). Same card, same behavior, everywhere.
+- **Registry stats became data readouts.** The old catalog sidebar's SOURCES
+  and TOP TAGS boards moved into the 📊 DATA dropdown as their own views — and
+  they're still live filters: tap a source or a tag there and the registry list
+  narrows to it.
+- **Opening a skill from anywhere still lands exactly on it** — searched from
+  the landing, clicked in a data view, or steered by Rokha, the list filters to
+  that skill with its card open and scrolled into view.
+- **Ready-made workflows: one list, streamlined.** The starter set is now
+  Explore · Audit · Write & critique — and the landing and the builder read
+  from the same list, so what you see is the same everywhere.
+- **Receipts got readable.** Run receipts now render structured results
+  properly: uniform records show as real tables, long text reads as prose
+  instead of cramped code, and key/value pairs line up — the formatted view
+  finally beats the raw data.
+
+*Where it gets us:* one registry surface to polish instead of two, and
+discovery that never pulls you away from what you're building. *Next:* the
+same rail-first clarity through the rest of the signed-in experience.
+
 ## Clearer runs — know when a sandbox is needed, and Remix that actually runs (unreleased)
 
 Building your first workflow shouldn't require knowing what a "sandbox" is. This
