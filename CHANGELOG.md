@@ -7,6 +7,22 @@ face of Rokha; the wire contract it depends on is
 
 
 
+## Your data, in the open — privacy policy, terms, and one-click export (unreleased)
+
+Rokha now says plainly what it collects and lets you take your data with you.
+New public pages at [rokha.ai/privacy](https://rokha.ai/privacy) and
+[rokha.ai/terms](https://rokha.ai/terms) (linked from the site footer) describe
+the practice as it actually works: measurement is first-party and cookieless,
+tied to a random session id — never your name, wallet, or email; Do Not Track
+is honored; there are no third-party ad trackers and no selling of personal
+data; retention windows are published. Any future insight products will use
+aggregated, anonymized statistics only — that guardrail is now written into
+the policy. And it's self-serve: logged in, Profile → **Your data → Download
+my data** hands you everything Rokha holds for your account as one JSON file.
+Where this gets us: the measurement that makes the product better is now
+paired with a policy you can read and an export you can click. Next: self-serve
+account deletion.
+
 ## Connect Rokha to your agent in one click — MCP auth-spec support (unreleased)
 
 Rokha now speaks the standard MCP authorization protocol, so a modern agent
