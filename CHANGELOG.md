@@ -35,6 +35,25 @@ agents: `auth_resolve`, `auth_connections`, `auth_connect`, `gateway_register`,
 `gateway_list`, and the webhook-trigger suite (`hook_*`). Schedules also gained
 minute cadences (every 1/5/15 minutes).
 
+## The full walkthrough — welcome to publish, on every screen size (unreleased)
+
+We walked the whole product end to end — first visit, chat, find a tool, build
+a workflow, run it, publish it — on desktop, small laptops, and phones, and
+fixed everything that got in the way.
+
+- **Publishing now proves it worked.** Publish a workflow and the button says
+  so plainly — "✓ published — live in the registry" — then stays in a
+  published state ("◉ published · update"), so a re-click reads as the update
+  it actually is. Verified the whole loop live: publish → find it in the
+  registry by name → anyone can open it.
+- **The registry panel got its search box.** Type-to-search rides at the top
+  of the registry panel itself — find a tool by name wherever you are.
+- **Phones are first-class.** Signed-in users get a Profile tab in the bottom
+  bar (keys, plan, saved work — previously unreachable on phones), the ROKHA
+  wordmark no longer clips next to the account controls, and receipt rows
+  never push their controls off-screen. Cards, builder, runs, and receipts all
+  verified end-to-end at phone width — solid backgrounds, nothing cut off.
+
 ## One registry, everywhere — browsing moves into the side rail (unreleased)
 
 The Registry used to be two different things: a full-screen catalog tab AND a
