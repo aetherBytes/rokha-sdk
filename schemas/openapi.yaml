@@ -2068,6 +2068,66 @@ paths:
           description: JSON-RPC response
           content: { application/json: { schema: { $ref: '#/components/schemas/MCPJsonRpcResponse' } } }
 
+  # ============================================================
+  # MCP OAuth server — Rokha as an auth-spec resource+authorization server
+  # ============================================================
+  /.well-known/oauth-protected-resource:
+    get:
+      tags: [oauth]
+      summary: "MCP-auth-spec protected-resource metadata (RFC 9728)"
+      description: |
+        Names Rokha's authorization server + scopes for the MCP door. Modern
+        MCP clients fetch this after a 401 (the `/mcp/jsonrpc` 401 carries a
+        `WWW-Authenticate: Bearer resource_metadata="…"` header) to auto-start
+        the OAuth flow.
+      operationId: oauthProtectedResourceMetadata
+      responses: { '200': { description: metadata, content: { application/json: { schema: { type: object, additionalProperties: true } } } } }
+  /.well-known/oauth-authorization-server:
+    get:
+      tags: [oauth]
+      summary: "MCP-auth-spec authorization-server metadata (RFC 8414)"
+      description: "Advertises authorize/token/register endpoints, PKCE S256, and the authorization_code + refresh_token grants."
+      operationId: oauthAuthorizationServerMetadata
+      responses: { '200': { description: metadata, content: { application/json: { schema: { type: object, additionalProperties: true } } } } }
+  /oauth/register:
+    post:
+      tags: [oauth]
+      summary: "Dynamic client registration (RFC 7591)"
+      description: "An MCP client self-registers with `{ client_name, redirect_uris[] }` and gets a public PKCE `client_id` (no secret)."
+      operationId: oauthRegisterClient
+      requestBody: { required: true, content: { application/json: { schema: { type: object, properties: { client_name: { type: string }, redirect_uris: { type: array, items: { type: string } } }, required: [redirect_uris] } } } }
+      responses: { '200': { description: "{ client_id, redirect_uris, token_endpoint_auth_method }", content: { application/json: { schema: { type: object, additionalProperties: true } } } } }
+  /oauth/authorize:
+    get:
+      tags: [oauth]
+      summary: "OAuth 2.1 authorization endpoint (PKCE S256)"
+      description: |
+        The browser lands here from an MCP client. Validates the client +
+        registered redirect_uri + S256 PKCE, then redirects to the `/connect`
+        consent page where the human logs in and approves. On approval a
+        single-use, PKCE-bound code redirects back to the client.
+      operationId: oauthAuthorize
+      parameters:
+        - { in: query, name: client_id, required: true, schema: { type: string } }
+        - { in: query, name: redirect_uri, required: true, schema: { type: string } }
+        - { in: query, name: response_type, required: true, schema: { type: string, enum: [code] } }
+        - { in: query, name: code_challenge, required: true, schema: { type: string } }
+        - { in: query, name: code_challenge_method, required: true, schema: { type: string, enum: [S256] } }
+        - { in: query, name: state, schema: { type: string } }
+      responses: { '307': { description: Redirect to the consent page } }
+  /oauth/token:
+    post:
+      tags: [oauth]
+      summary: "OAuth 2.1 token endpoint (authorization_code + refresh_token)"
+      description: |
+        `grant_type=authorization_code` (with `code`, `code_verifier`,
+        `client_id`, `redirect_uri`) exchanges a consented code for a Bearer
+        access token + a rotating refresh token — the Bearer the MCP doors
+        accept. `grant_type=refresh_token` renews without another human consent.
+      operationId: oauthToken
+      requestBody: { required: true, content: { application/x-www-form-urlencoded: { schema: { type: object, properties: { grant_type: { type: string }, code: { type: string }, code_verifier: { type: string }, client_id: { type: string }, redirect_uri: { type: string }, refresh_token: { type: string } }, required: [grant_type] } } } }
+      responses: { '200': { description: "{ access_token, token_type, expires_in, refresh_token, scope }", content: { application/json: { schema: { type: object, additionalProperties: true } } } } }
+
 # ================================================================
 # Components
 # ================================================================

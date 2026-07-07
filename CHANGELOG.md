@@ -6,6 +6,19 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+
+## Connect Rokha to your agent in one click — MCP auth-spec support (unreleased)
+
+Rokha now speaks the standard MCP authorization protocol, so a modern agent
+client (Claude Code's remote MCP, Cursor, and others) can add
+`https://rokha.ai/mcp`, discover how to sign in automatically, and connect with
+a single browser approval — no manual tokens to copy. Under the hood it's the
+standard flow: the client registers itself, you approve once on a Rokha consent
+screen, and the client gets a token it can refresh on its own. Fully autonomous
+agents that don't need your personal account can still self-onboard with a
+wallet, no human step at all. New public endpoints: `/.well-known/oauth-*`,
+`/oauth/register`, `/oauth/authorize`, `/oauth/token`.
+
 ## v1.0.0 — the first full release (unreleased)
 
 Rokha crosses from preview into V1. Sign-in opens to everyone (Google + crypto
