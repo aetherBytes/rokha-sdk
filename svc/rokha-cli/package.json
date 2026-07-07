@@ -1,6 +1,6 @@
 {
   "name": "@rokha/cli",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Rokha CLI — all-in-one tool for the agentic economy",
   "license": "MIT",
   "bin": {

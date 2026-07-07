@@ -17,7 +17,7 @@
 class Rokha < Formula
   desc "Rokha CLI — picks and shovels for the agentic economy"
   homepage "https://rokha.ai"
-  version "0.1.0"
+  version "1.0.0"
   license "MIT"
 
   on_macos do

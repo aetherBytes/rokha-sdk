@@ -5,6 +5,20 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+
+## v1.0.0 — the first full release (unreleased)
+
+Rokha crosses from preview into V1. Sign-in opens to everyone (Google + crypto
+wallet), the whole paid spine is live — save, publish, price, schedule,
+webhooks — and the runtime, registry, builder, and MCP gateway ship as one
+product. Real payments are on (subscriptions + prepaid credits). This is the
+first release we version at **1.0.0**; the wire contract, the SDKs, and the CLI
+all move to 1.0.0 in lockstep. New since the last cut: the MCP gateway ("one
+link, all your tools, credentials handled"), the four-rung connect-anything
+auth (open · paste-a-key · one-click · automatic), minute-cadence schedules,
+inbound webhooks, and `list_saved_keys` (see what's attachable without ever
+exposing a secret).
+
 ## Connect anything — OAuth broker, spec auth, and the MCP gateway (unreleased)
 
 Rokha now handles credentials for you, the way the big hosted gateways do — so

@@ -17,7 +17,7 @@ info:
 
     The full operational rule lives in the main repo's `CLAUDE.md` under
     "Public Surface Contract".
-  version: 0.1.0
+  version: 1.0.0
   license:
     name: MIT
     url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
@@ -1191,7 +1191,10 @@ paths:
         connected services + their vault aliases), and `auth_connect` (JWT —
         start a Connect: pass a Tier-1 `provider` or any `server_url`; returns
         the browser consent URL, and on approval the token lands in your vault
-        as `oauth-<provider>` / `mcp-<host>`, injectable via `secret_refs`);
+        as `oauth-<provider>` / `mcp-<host>`, injectable via `secret_refs`); and
+        `list_saved_keys` (JWT — list the caller's saved keys & secrets:
+        provider + alias + a MASKED preview, NEVER a value, so an agent sees
+        what is attachable by `secret_refs` without reading secret material);
         and the GATEWAY suite (JWT) — `gateway_register` (register an external
         MCP server behind your ONE Rokha gateway endpoint with credentials
         injected server-side; `secret_alias` names the vault key/grant that
