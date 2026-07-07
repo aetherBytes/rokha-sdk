@@ -54,17 +54,24 @@ fixed everything that got in the way.
   never push their controls off-screen. Cards, builder, runs, and receipts all
   verified end-to-end at phone width — solid backgrounds, nothing cut off.
 
-## One registry, everywhere — browsing moves into the side rail (unreleased)
+## One registry, everywhere — one results list, plus a real front door (unreleased)
 
-The Registry used to be two different things: a full-screen catalog tab AND a
-compact lookup panel in the side rail. Two layouts, two behaviors, twice the
-places for them to drift. Now there's one.
+The Registry used to be two different things: a full-screen catalog AND a
+compact lookup panel in the side rail — two result lists that could drift
+apart. Now there's ONE results surface, with a proper front door in front
+of it.
 
-- **The registry lives in the side rail, on every screen.** Hit "Registry" in
-  the nav (or the landing's Explore door) and the registry panel comes up right
-  beside whatever you're doing — chatting, building, reading a receipt. No more
-  leaving your work to go browse; discovery rides alongside it. On phones the
-  same panel opens as the pull-up feed.
+- **One results list, in the side rail, on every screen.** The registry's
+  listings live in the side rail panel — right beside whatever you're doing,
+  chatting, building, or reading a receipt, with its own big search bar. On
+  phones it opens as the pull-up feed.
+- **The Registry page is the front door.** Hit "Registry" in the nav (or the
+  landing's Explore door) and you get the registry's own page: what it is in
+  plain words, the live numbers (130k+ skills and servers across 9
+  registries), a big search, one-tap "Show me" picks (runs now · runs in the
+  cloud · live connection), ~20 browse categories, what's moving in the last
+  24h, and jump-offs into the data views. Every button routes into that one
+  results list — the page explains, the rail delivers.
 - **The good cards came along.** The rail now shows the catalog's full-size
   cards — type and "how it runs" badges, source colors, downloads and stars,
   tags — and a card expands **in place** into the complete detail view (safety
