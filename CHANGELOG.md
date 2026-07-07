@@ -7,6 +7,25 @@ face of Rokha; the wire contract it depends on is
 
 
 
+## Take your work anywhere — portable export/import in every builder (unreleased)
+
+Anything you build in Rokha is now portable. Every builder — Skill, Harness,
+and Rig — gets an **Export** button that copies your work as one shareable
+schema, and an **Import** box that rebuilds it from a paste. A Rig export
+carries the whole tree: every step's configuration and the documents of the
+skills it references, so the workflow arrives complete — nothing to hunt down
+on the other side. Move a workflow between machines, share it with a teammate,
+keep a backup, or fork someone else's starting point. Safety is built in:
+saved keys travel as **name references only** (never the secret values — the
+import lists what you'll need to re-attach from your own vault), importing
+never overwrites something you already made with the same name, and a
+malformed or mismatched paste gets a plain-English error pointing at the right
+builder. There's also a **readable Markdown rendering** of the whole tree for
+sharing with people, alongside the machine-importable form. Where this gets
+us: your creations stop being locked to one account or one browser — they're
+files you own. Next: agents get their own export/import door over the public
+MCP endpoint.
+
 ## Your data, in the open — privacy policy, terms, and one-click export (unreleased)
 
 Rokha now says plainly what it collects and lets you take your data with you.
