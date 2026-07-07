@@ -5,6 +5,36 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Connect anything — OAuth broker, spec auth, and the MCP gateway (unreleased)
+
+Rokha now handles credentials for you, the way the big hosted gateways do — so
+you can build workflows across authenticated tools without leaving Rokha or
+juggling keys. Four rungs, easiest first:
+
+- **Open** — most public tools need nothing. Just add and run.
+- **Key (paste once)** — for API-key services, save the key once; it becomes a
+  reusable alias any step can attach, masked forever and never shown in traces.
+- **Connect (one click)** — for big providers (GitHub, Google, Slack, Notion,
+  Jira, GitLab, Discord, Reddit, Linear, X, Microsoft): click Connect, approve
+  on their page, and it's wired into every rig, schedule, and webhook you build
+  — refreshed for you, forever.
+- **Automatic** — modern MCP servers that publish their own login: Rokha
+  discovers it and registers itself on the spot, so you just approve in the
+  browser. No setup on our side, no setup on yours.
+
+Not sure which a server needs? Ask Rokha, or hit the resolver — it reads the
+server and tells you the one next step.
+
+And the centerpiece: **your own MCP gateway.** Register your servers once and
+point any agent or IDE at a single Rokha endpoint — it sees all their tools at
+once, with credentials injected safely server-side. The keys never leave Rokha.
+
+New public surface: `/api/oauth/*` (resolve, connect, connections, callback),
+`/api/gateway/*` (servers CRUD + the aggregated MCP door). New MCP tools for
+agents: `auth_resolve`, `auth_connections`, `auth_connect`, `gateway_register`,
+`gateway_list`, and the webhook-trigger suite (`hook_*`). Schedules also gained
+minute cadences (every 1/5/15 minutes).
+
 ## One registry, everywhere — browsing moves into the side rail (unreleased)
 
 The Registry used to be two different things: a full-screen catalog tab AND a

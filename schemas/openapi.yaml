@@ -56,6 +56,10 @@ tags:
     description: Rigs (workflows of configured harnesses) + run traces — the Working Rig surface
   - name: analytics
     description: Privacy-safe product-analytics capture — anon-session-keyed, fire-and-forget
+  - name: oauth
+    description: OAuth broker — connect third-party providers + MCP-auth-spec servers; grants land in the vault
+  - name: gateway
+    description: User MCP gateway — one endpoint aggregating all your servers, credentials injected server-side
 
 security: []  # default: no auth. Routes that need it set their own.
 
@@ -1166,7 +1170,8 @@ paths:
         (mirrors POST /api/marketplace/registry/publish; advertised in
         tools/list; anonymous calls are refused); and the rig SCHEDULE suite
         (JWT) — `schedule_create` (run a SAVED rig automatically on an
-        `hourly` | `daily` | `weekly` cadence; pass the rig's UUID as
+        `every-1-min` | `every-5-min` | `every-15-min` | `hourly` | `daily` |
+        `weekly` cadence; pass the rig's UUID as
         `rig_id`; every fire is owner-scoped and draws on the owner's daily
         run budget — a spent budget skips the fire, recorded as
         `skipped_budget`; cap 20 schedules per account), `schedule_list`
@@ -1174,12 +1179,31 @@ paths:
         `ok` | `partial` (some steps failed) | `error` | `skipped_budget`),
         `schedule_delete`, and `schedule_pause` (`paused: true|false`) —
         the same schedules the UI's 🕐 Schedule panel and /api/schedules
-        manage.
+        manage; the WEBHOOK-TRIGGER suite (JWT) — `hook_create` (bind a SAVED
+        rig to a secret URL that outside systems POST to fire it, the payload
+        becoming the rig's run input; rate-limited per hook; every fire is
+        budget-gated), `hook_list`, `hook_delete` (revokes the URL), and
+        `hook_pause`; the AUTH-LADDER suite — `auth_resolve` (classify how any
+        MCP server authenticates: `open` | `key` (paste a token in the vault) |
+        `tier1` (one-click account-wide OAuth Connect) | `oauth_spec` (the
+        server speaks the MCP auth spec — Rokha connects via dynamic client
+        registration; works without login), `auth_connections` (JWT — your
+        connected services + their vault aliases), and `auth_connect` (JWT —
+        start a Connect: pass a Tier-1 `provider` or any `server_url`; returns
+        the browser consent URL, and on approval the token lands in your vault
+        as `oauth-<provider>` / `mcp-<host>`, injectable via `secret_refs`);
+        and the GATEWAY suite (JWT) — `gateway_register` (register an external
+        MCP server behind your ONE Rokha gateway endpoint with credentials
+        injected server-side; `secret_alias` names the vault key/grant that
+        authenticates it) and `gateway_list` (your registered servers + the
+        gateway URL an MCP client connects to — every server's tools appear
+        namespaced `<slug>_<tool>`).
 
         Scope is identity-derived, never client-supplied: for the wallet-scoped
         JWT tools (`rig_author`, `create_harness`/`list_harnesses`/`get_harness`/
-        `update_harness`/`delete_harness`/`search_harnesses`, the `schedule_*`
-        suite, and `get_allowances`) the gateway derives the owner from your
+        `update_harness`/`delete_harness`/`search_harnesses`, the `schedule_*`,
+        `hook_*`, `auth_connect`/`auth_connections`, and `gateway_*` suites,
+        and `get_allowances`) the gateway derives the owner from your
         verified token and overrides any `wallet_address` argument — so you
         never pass your scope, can't spoof another's, and a rig you author
         lands in the same scope the run endpoint reads from.
@@ -1868,6 +1892,178 @@ paths:
           content:
             text/event-stream:
               schema: { type: string }
+
+  # ============================================================
+  # OAuth broker — "auth, credentials, sessions handled for you"
+  # ============================================================
+  /api/oauth/resolve:
+    get:
+      tags: [oauth]
+      summary: "Auth ladder: how does this MCP server authenticate?"
+      description: |
+        Classify any MCP server URL so a client knows the ONE next step:
+        `open` (no credential — just call it), `key` (save a token in the
+        vault once, then attach via `secret_refs`), `tier1` (a known provider —
+        one-click account-wide OAuth Connect at `/api/oauth/connect/{provider}`),
+        or `oauth_spec` (the server speaks the MCP auth spec — connect it
+        directly via `POST /api/oauth/connect/mcp`; Rokha discovers its auth
+        server and dynamically registers as a client). The response `hint`
+        spells out the step.
+      operationId: oauthResolve
+      security: [ { bearerAuth: [] } ]
+      parameters:
+        - in: query
+          name: server
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: "{ mode, hint, provider?, alias? }"
+          content: { application/json: { schema: { type: object, additionalProperties: true } } }
+  /api/oauth/connect/{provider}:
+    get:
+      tags: [oauth]
+      summary: "Start a Tier-1 OAuth Connect (returns the consent URL)"
+      description: |
+        Begin a one-click Connect for a known provider (github, google, x,
+        atlassian, microsoft, slack, notion, gitlab, discord, reddit, linear).
+        Returns `redirect_url` to open in a browser; on approval the token
+        lands in the caller's vault as `oauth-<provider>` (account-wide,
+        refreshed automatically), usable via `secret_refs`. 503 if the
+        provider isn't configured on the deployment.
+      operationId: oauthConnect
+      security: [ { bearerAuth: [] } ]
+      parameters:
+        - in: path
+          name: provider
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: "{ redirect_url, provider, alias }"
+          content: { application/json: { schema: { type: object, additionalProperties: true } } }
+  /api/oauth/connect/mcp:
+    post:
+      tags: [oauth]
+      summary: "Connect any MCP-auth-spec server (dynamic client registration)"
+      description: |
+        The Tier-2 handshake: given `{ server_url }`, Rokha probes the server,
+        discovers its protected-resource + authorization-server metadata,
+        dynamically registers itself as a client (RFC 7591), and returns a
+        PKCE consent `redirect_url`. On approval the token is stored in the
+        vault as `mcp-<host>`, bound to that server, refreshed automatically.
+      operationId: oauthConnectMcp
+      security: [ { bearerAuth: [] } ]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, properties: { server_url: { type: string } }, required: [server_url] } } }
+      responses:
+        '200':
+          description: "{ redirect_url, mode, issuer, alias }"
+          content: { application/json: { schema: { type: object, additionalProperties: true } } }
+  /api/oauth/connections:
+    get:
+      tags: [oauth]
+      summary: "List the caller's OAuth connections + available providers"
+      operationId: oauthConnections
+      security: [ { bearerAuth: [] } ]
+      responses:
+        '200':
+          description: "{ connected: [...], available: [...] }"
+          content: { application/json: { schema: { type: object, additionalProperties: true } } }
+  /api/oauth/callback/{provider}:
+    get:
+      tags: [oauth]
+      summary: "OAuth redirect callback (browser; not called directly)"
+      description: |
+        The provider's redirect target. Authenticated by a sealed state
+        parameter (no JWT). Exchanges the code, stores the grant, and
+        redirects home with `?oauth=<id>&status=connected`.
+      operationId: oauthCallback
+      parameters:
+        - in: path
+          name: provider
+          required: true
+          schema: { type: string }
+      responses:
+        '307': { description: Redirect home with a status query param }
+
+  # ============================================================
+  # User MCP gateway — one endpoint, all your servers, auth injected
+  # ============================================================
+  /api/gateway/servers:
+    get:
+      tags: [gateway]
+      summary: "List servers registered behind your Rokha gateway"
+      operationId: gatewayList
+      security: [ { bearerAuth: [] } ]
+      responses:
+        '200':
+          description: "{ servers: [...], gateway_url }"
+          content: { application/json: { schema: { type: object, additionalProperties: true } } }
+    post:
+      tags: [gateway]
+      summary: "Register an external MCP server behind the gateway"
+      description: |
+        Bundle an external MCP server behind your ONE gateway endpoint.
+        `secret_alias` names the vault key/OAuth grant that authenticates it
+        (omit for open servers); `header_name`/`header_prefix` shape the
+        injected auth header (default `Authorization: Bearer `). Its tools
+        then appear at the gateway namespaced `<slug>_<tool>`. Cap 20.
+      operationId: gatewayRegister
+      security: [ { bearerAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                server_url: { type: string }
+                secret_alias: { type: string }
+                header_name: { type: string }
+                header_prefix: { type: string }
+              required: [name, server_url]
+      responses:
+        '200':
+          description: "{ id, slug, gateway_url }"
+          content: { application/json: { schema: { type: object, additionalProperties: true } } }
+  /api/gateway/servers/{id}:
+    delete:
+      tags: [gateway]
+      summary: "Remove a server from your gateway"
+      operationId: gatewayRemove
+      security: [ { bearerAuth: [] } ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: "{ ok }", content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+  /api/gateway/mcp:
+    post:
+      tags: [gateway]
+      summary: "The gateway MCP door — aggregated tools from all your servers"
+      description: |
+        MCP JSON-RPC over one endpoint. `initialize` answers as
+        `rokha-gateway`; `tools/list` fans out to every registered server
+        (credentials injected server-side, just-in-time OAuth refresh) and
+        returns the union namespaced `<slug>_<tool>` (partial fan-out reports
+        `_meta.unavailable`); `tools/call` de-namespaces and forwards with the
+        credential injected. The client holds ONLY its Rokha JWT — real keys
+        never leave the platform. Point any MCP client (Claude Code, Cursor,
+        an agent) here to reach all your servers through one connection.
+      operationId: gatewayMcp
+      security: [ { bearerAuth: [] } ]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/MCPJsonRpcRequest' } } }
+      responses:
+        '200':
+          description: JSON-RPC response
+          content: { application/json: { schema: { $ref: '#/components/schemas/MCPJsonRpcResponse' } } }
 
 # ================================================================
 # Components
