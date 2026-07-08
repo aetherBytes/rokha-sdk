@@ -7,7 +7,25 @@ face of Rokha; the wire contract it depends on is
 
 
 
-## Take your work anywhere — portable export/import in every builder (unreleased)
+## Rokha on your phone — a focused, cleaner mobile experience (now live on rokha.ai)
+
+Rokha now feels built for your phone, not just squeezed onto it. On mobile it's
+a **heads-up monitor**: browse the registry, chat with Rokha, sign in, and
+manage your account, keys, and creations — with a calmer, more legible look.
+Building — authoring skills and workflows — stays a desktop experience for now:
+a phone shows a friendly "open on a bigger screen" note instead of a cramped
+canvas, so each surface is sized for what you actually do there. Under the hood
+the whole mobile interface got a pass — readable panels that don't fight the
+background, a cleaner chat bar and bottom navigation, a tidier profile with
+tabs that scroll instead of running off-screen, and a stack of small fixes (an
+activity panel that overflowed, a feed button that did nothing on the profile
+page, off-center buttons). We've also started reskinning the main pages to match
+the profile screen — the nicest surface — one view at a time. Where this gets
+us: mobile becomes a real place to keep tabs on your work and handle the simple
+things, with more arriving on phones as we go. Next: the remaining views get the
+same treatment.
+
+## Take your work anywhere — portable export/import in every builder (now live on rokha.ai)
 
 Anything you build in Rokha is now portable. Every builder — Skill, Harness,
 and Rig — gets an **Export** button that copies your work as one shareable
