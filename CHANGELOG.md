@@ -7,6 +7,26 @@ face of Rokha; the wire contract it depends on is
 
 
 
+## Builder pages — your public home on Rokha (unreleased)
+
+Every builder can now claim a page at **rokha.ai/@your-handle** — a real,
+shareable URL that shows the world what you build and run. Your page carries
+who you are (name, glyph, bio, your links), a live 30-day **heartbeat** of
+your activity, what you're **building right now** (only creations you
+explicitly mark public — names only, never configurations), and everything
+you've **published**, with real run counts and page views. Claiming and
+editing take a minute from the new Pages tab; anyone can browse the builder
+directory and visit pages without an account. Privacy stays yours: no page
+exists until you claim it, and the heartbeat follows your activity-visibility
+setting. The landing page also gains a **Top Builders** board that ranks
+builders by *adoption of what they build* — other people running your
+workflows counts most, publishing counts some, and raw self-activity can't be
+farmed to the top. Where this gets us: your work on Rokha stops being
+invisible — it has an address you can put in a bio. Next: your page starts
+showcasing your live automated workflows (schedules and recent runs), X
+verification for a verified-builder badge, and your page as an **agent
+door** — its public creations served to any agent over one endpoint.
+
 ## Rokha on your phone — a focused, cleaner mobile experience (now live on rokha.ai)
 
 Rokha now feels built for your phone, not just squeezed onto it. On mobile it's
