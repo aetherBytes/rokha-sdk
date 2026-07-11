@@ -27,6 +27,17 @@ showcasing your live automated workflows (schedules and recent runs), X
 verification for a verified-builder badge, and your page as an **agent
 door** — its public creations served to any agent over one endpoint.
 
+**Update (directory + rig pages, unreleased):** the Pages tab grew into a
+full browsing surface — a filterable, searchable directory where every
+builder shows as a rich profile card (photo area, bio, links, activity
+sparkline, their top published work). And every **workflow you publish now
+gets its own page** at rokha.ai/@you/your-workflow — you choose per workflow
+whether that page presents as a detail view (what it is, how it's built, how
+to run it) or as an **app view**, the surface built for workflows that serve
+a live dashboard or frontend. App view embeds the served app once the
+security-reviewed relay ships; until then it says exactly what's running and
+where, and points you to run it on Rokha — no pretend output, ever.
+
 ## Rokha on your phone — a focused, cleaner mobile experience (now live on rokha.ai)
 
 Rokha now feels built for your phone, not just squeezed onto it. On mobile it's
