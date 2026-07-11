@@ -52,6 +52,19 @@ works properly on your phone now: it's in the bottom navigation, search sits
 pinned at the top, filters at the bottom, and the builder cards are the first
 thing you see — with workflow page links clearly marked as links.
 
+**Update (the showcase, unreleased):** your page is now a full-screen
+showcase, not a profile card. Pick a **featured workflow** and it headlines
+the page: if it serves a live app or dashboard, that's what visitors see
+(with a fullscreen button — live embeds arrive with the security review);
+otherwise its document takes the stage, and visitors can flip between the
+two. Your info — bio, links, a live activity chart, everything you've
+published — rides alongside in its own rail. Pages carry a small, subtle
+"Built on Rokha" mark; **removing it is coming as a paid perk** on higher
+plans, alongside the featured-workflow and subdomain ladder already on the
+plans page. And a preview of what's next: **sell your builds** — set a price
+on a workflow and visitors run it right from your page, with Rokha handling
+the metering. That lands with the marketplace round; the page teases it today.
+
 ## Rokha on your phone — a focused, cleaner mobile experience (now live on rokha.ai)
 
 Rokha now feels built for your phone, not just squeezed onto it. On mobile it's
