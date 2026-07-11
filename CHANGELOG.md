@@ -38,6 +38,17 @@ a live dashboard or frontend. App view embeds the served app once the
 security-reviewed relay ships; until then it says exactly what's running and
 where, and points you to run it on Rokha — no pretend output, ever.
 
+**Update (photos, polish + page tiers, unreleased):** builder cards got a
+facelift — your **profile photo** now shows on your page (the same one you set
+on your profile), a cleaner card with your headline stats set apart from the
+title, a builder badge (everyone starts as a **Seeker**; rarer badges are
+coming), and a 30-day activity bar on every card. We also set the plan for how
+your presence grows as you do: **every page gets its own address**
+(rokha.ai/@you) on every plan, you can **feature your best workflows** as their
+own pages (1 on Free, 3 on Builder, unlimited on Pro), and Pro adds your own
+**custom subdomain** (you.rokha.ai). Those page perks are rolling out — the
+plans show them tagged so you know what's live versus on the way.
+
 ## Rokha on your phone — a focused, cleaner mobile experience (now live on rokha.ai)
 
 Rokha now feels built for your phone, not just squeezed onto it. On mobile it's
