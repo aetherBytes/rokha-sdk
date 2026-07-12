@@ -94,6 +94,21 @@ stay fast), and the old pick-a-symbol "glyph" field is retired — your page
 shows the default mark until you upload a real photo, which then follows you
 everywhere: your page, your cards, the leaderboard.
 
+## Every build has an ID you can actually use (unreleased)
+
+Every saved workflow and building block on Rokha has always had a permanent
+ID under the hood — now it's in your hands. The builder shows it right next
+to the "saved" indicator as a small click-to-copy chip, and the document
+view of anything you build carries it too, with a line explaining exactly
+how to use it. And it *is* useful now: paste an ID into any Rokha search —
+the registry, your workflows, your building blocks — and it finds that exact
+record, no name-guessing. Agents get the same power: the public tools accept
+IDs directly and their descriptions teach the workflow, so an agent handed
+just an ID (from a chat, a document, a teammate) can fetch the real thing.
+Where this gets us: your builds have a stable address you can share between
+people, sessions, and agents. Next: IDs surfacing in run results and traces
+so everything links back to the thing that produced it.
+
 ## Rokha on your phone — a focused, cleaner mobile experience (now live on rokha.ai)
 
 Rokha now feels built for your phone, not just squeezed onto it. On mobile it's
