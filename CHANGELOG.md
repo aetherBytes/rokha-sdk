@@ -73,6 +73,16 @@ you can now switch chains after signing in (Profile → Identity → Chain): eac
 chain holds its own address, so the switch is how you choose which account
 you're acting as — no more guessing at the login door.
 
+**Update (badges + photos everywhere, unreleased):** builder badges are now
+real, decided by the platform: everyone starts as a **Seeker**, and the
+founder's pages wear a one-of-a-kind metallic **Architect** badge — the first
+rung of a badge ladder that will grow from what you actually do on Rokha, not
+what you type in. Profile photos now show on the landing **Top Builders**
+board too (each page's photo is served as a light, cacheable image, so lists
+stay fast), and the old pick-a-symbol "glyph" field is retired — your page
+shows the default mark until you upload a real photo, which then follows you
+everywhere: your page, your cards, the leaderboard.
+
 ## Rokha on your phone — a focused, cleaner mobile experience (now live on rokha.ai)
 
 Rokha now feels built for your phone, not just squeezed onto it. On mobile it's
