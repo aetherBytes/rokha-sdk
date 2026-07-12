@@ -60,6 +60,8 @@ tags:
     description: OAuth broker — connect third-party providers + MCP-auth-spec servers; grants land in the vault
   - name: gateway
     description: User MCP gateway — one endpoint aggregating all your servers, credentials injected server-side
+  - name: pages
+    description: Builder Pages — every builder's public /@handle profile page + the Top Builders leaderboard
 
 security: []  # default: no auth. Routes that need it set their own.
 
@@ -1200,7 +1202,20 @@ paths:
         injected server-side; `secret_alias` names the vault key/grant that
         authenticates it) and `gateway_list` (your registered servers + the
         gateway URL an MCP client connects to — every server's tools appear
-        namespaced `<slug>_<tool>`).
+        namespaced `<slug>_<tool>`); the WALLET-AUTH suite (PUBLIC — this is
+        how an agent with a wallet keypair becomes a logged-in user without a
+        browser): `auth_wallet_challenge` (returns a message to sign; Solana
+        base58/Ed25519 or EVM 0x/EIP-191 addresses) and `auth_wallet_verify`
+        (submit the signature → auto-registers a new wallet, free tier, and
+        returns the `session_token` JWT every gated tool needs — mirrors
+        `/api/wallets/challenge` + `/api/wallets/verify`); and the BUILDER
+        PAGES suite — public reads `page_directory` (claimed pages),
+        `page_leaderboard` (the Top Builders board) and `page_get` (any
+        /@handle page; counts a genuine view), plus JWT-gated `page_me`
+        (your page, or `{claimed:false, suggested_handle}`), `page_claim`
+        (claim/update your public /@handle — owner is always the verified
+        bearer) and `page_rig_config` (mode / featured / linked for one of
+        your published rigs' sub-pages) — mirrors `/api/pages/*`.
 
         Scope is identity-derived, never client-supplied: for the wallet-scoped
         JWT tools (`rig_author`, `create_harness`/`list_harnesses`/`get_harness`/
@@ -1458,6 +1473,175 @@ paths:
           content:
             text/markdown:
               schema: { type: string }
+
+  # ============================================================
+  # Builder Pages — public profile pages (/@handle)
+  # ============================================================
+
+  /api/pages:
+    get:
+      tags: [pages]
+      summary: Directory of claimed builder pages
+      description: >-
+        All CLAIMED public builder pages with aggregate stats (listings,
+        runs, badge, leaderboard rank). Public, no auth. Pages exist only
+        once their owner claims a handle.
+      operationId: pagesDirectory
+      responses:
+        '200':
+          description: '{ pages: [...] }'
+          content:
+            application/json:
+              schema: { type: object }
+
+  /api/pages/leaderboard:
+    get:
+      tags: [pages]
+      summary: Top Builders leaderboard
+      description: >-
+        The ranked Top Builders board (the landing surface): a weighted,
+        log-damped adoption score per builder — all-time rig runs weigh
+        heaviest, then other runs and shipped creations, plus last-7-day
+        actions and page views. Raw score components ride along. Public.
+      operationId: pagesLeaderboard
+      parameters:
+        - { name: limit, in: query, schema: { type: integer }, description: '1-100, default 10' }
+        - { name: offset, in: query, schema: { type: integer }, description: page offset into the ranked board }
+      responses:
+        '200':
+          description: '{ leaders: [...], total, offset }'
+          content:
+            application/json:
+              schema: { type: object }
+
+  /api/pages/{handle}:
+    get:
+      tags: [pages]
+      summary: A builder's public page
+      description: >-
+        What /@handle renders — profile, links, badge, public creations,
+        30-day activity heartbeat, view counts, rig sub-pages. A genuine
+        open counts a page view (human OR agent); pass `preview=1` for
+        card/list hydration that must NOT count. Public, no auth.
+      operationId: pageByHandle
+      parameters:
+        - { name: handle, in: path, required: true, schema: { type: string } }
+        - { name: preview, in: query, schema: { type: string }, description: '"1" = do not count a view' }
+      responses:
+        '200':
+          description: The page
+          content:
+            application/json:
+              schema: { type: object }
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/pages/{handle}/avatar:
+    get:
+      tags: [pages]
+      summary: A builder's profile photo (image bytes)
+      operationId: pageAvatar
+      parameters:
+        - { name: handle, in: path, required: true, schema: { type: string } }
+      responses:
+        '200': { description: The image (content-type per upload) }
+        '404': { description: No photo set }
+
+  /api/pages/{handle}/rig/{slug}:
+    get:
+      tags: [pages]
+      summary: A rig sub-page (/@handle/slug)
+      description: >-
+        One published rig presented under its owner's page — only for rigs
+        whose owner opted in (`linked`). Public, no auth.
+      operationId: pageRigSubpage
+      parameters:
+        - { name: handle, in: path, required: true, schema: { type: string } }
+        - { name: slug, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: The rig sub-page
+          content:
+            application/json:
+              schema: { type: object }
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/pages/me:
+    get:
+      tags: [pages]
+      summary: Your page (or a claim suggestion) (JWT)
+      description: >-
+        Your page as the verified identity sees it. Unclaimed →
+        `{ claimed: false, suggested_handle }`.
+      operationId: myPage
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Your page state
+          content:
+            application/json:
+              schema: { type: object }
+    put:
+      tags: [pages]
+      summary: Claim or update your page (JWT)
+      description: >-
+        Claim your public /@handle (or update it — your existing handle
+        edits in place, a new one renames). Owner is ALWAYS the verified
+        bearer identity. handle — lowercase letters/numbers/-/_ , ≤32, no
+        edge hyphen, reserved and derived-shape names refused; display_name
+        ≤80; bio ≤600; glyph 1-2 chars; links — array of {label, url}.
+      operationId: claimPage
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [handle]
+              properties:
+                handle: { type: string }
+                display_name: { type: string }
+                bio: { type: string }
+                glyph: { type: string }
+                links: { type: array, items: { type: object } }
+      responses:
+        '200': { description: '{ ok, handle }' }
+        '400': { description: Invalid handle / lengths, or handle reserved }
+        '409': { description: Handle taken }
+
+  /api/pages/me/rig/{slug}:
+    put:
+      tags: [pages]
+      summary: Configure one of your rig sub-pages (JWT)
+      description: >-
+        Owner config for ONE published rig on your page — mode ('builder'
+        detail view | 'app' app-output surface), featured (headline it in
+        your SHOWCASE; single slot, featuring one un-features the rest),
+        linked (mint the public /@handle/slug link — opt-in; rigs get no
+        sub-page by default). Claim your page first.
+      operationId: configRigSubpage
+      security:
+        - bearerAuth: []
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mode: { type: string, enum: [builder, app] }
+                featured: { type: boolean }
+                linked: { type: boolean }
+      responses:
+        '200': { description: '{ ok, slug, rig_pages }' }
+        '400': { description: Bad slug/mode, nothing to set, or too many configs }
+        '404': { description: Claim your page first }
 
   # ============================================================
   # Discovery
