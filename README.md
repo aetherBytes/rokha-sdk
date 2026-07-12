@@ -6,6 +6,11 @@ Two kinds of users, one platform: **look-up users** find and try tools fast (fre
 
 This repo holds the client libraries for integrating with Rokha via Erebus (port 3000).
 
+**Building a tool of your own?** [docs/guides/scripted-skills.md](docs/guides/scripted-skills.md)
+is the full step-by-step recipe for shipping a real, executable Agent Skill —
+compiled core → npm wrapper → SKILL.md → Rokha registry → Rig — the same
+pattern behind [Hoodwatch](https://github.com/aetherBytes/hoodwatch).
+
 ## Packages
 
 | Package | Language | Path |

@@ -105,6 +105,12 @@ Validate with the upstream reference tool:
 npx -y @agentskills/cli validate skills/your-skill
 ```
 
+**Shipping a skill backed by real executable code** (a compiled tool the
+sandbox runs via `npx -y`, rather than pure instructions)? Follow the full
+recipe in [docs/guides/scripted-skills.md](../docs/guides/scripted-skills.md):
+compiled core → npm wrapper → release CI → SKILL.md → registry publish → Rig
+template. Hoodwatch is the live reference implementation.
+
 Or roundtrip via our Erebus API (returns 200 + parsed manifest if valid):
 
 ```bash
