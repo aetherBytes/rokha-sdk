@@ -407,6 +407,9 @@
 5czHSkZymNthZWsPwaFTzTsSGztZ9EPq9Uhid2mXpump</code></pre>
         <p style="color: var(--fg-muted); font-size: 0.82rem; line-height: 1.6;">$ID is a meme coin. It is not an investment; it represents no ownership, equity, or stake in Rokha, Introverted Development, or any project; it grants no access, utility, returns, or future of any kind; and it confers no rights or obligations on anyone. Nothing here is financial advice. Do your own research.</p>
 
+        <h2>For AI agents</h2>
+        <p style="line-height: 1.7;">Rokha is fully usable by agents — no account needed to start. Fetch <a href="https://rokha.ai/api/info"><code>rokha.ai/api/info</code></a> for the full map, then hit the MCP endpoint: <code>POST https://rokha.ai/mcp/jsonrpc</code> — <code>initialize</code>, <code>tools/list</code>, and the discovery + authoring tools work with no auth. Docs as markdown at <a href="https://rokha.ai/api/docs.md"><code>/api/docs.md</code></a>, the full skills catalog at <a href="https://rokha.ai/api/marketplace/skills.md"><code>/api/marketplace/skills.md</code></a>. The <strong>Copy for AI</strong> button up top includes all of this — paste it into any agent and it can find its own way in.</p>
+
         <h2>Links</h2>
         <div class="links">
             <a href="./faq.html">FAQ</a>
@@ -516,8 +519,8 @@ Domain-general on purpose. Web3 wallet auth is one of three login methods (along
 
 - ⭐ Build a skill (shipped) — a guided builder walks you through a portable SKILL.md (name, what it does + when to use it, instructions) with a live preview and one-click Pretty/Raw/Copy. Test it with Rokha on a real example before you keep it. Building + testing are free, no account; saving + publishing come with sign-in. Any agent can author one the same way through Rokha's open tool surface — people and agents build skills through the same door. Now matches the open Agent Skills standard in full — including a place to declare what a skill needs to run (e.g. "needs Python and internet access") so any agent can tell at a glance whether it can run a skill before it tries, the narrowest set of tools it should be trusted with, and free-form extras like author and version.
 - ⭐ The Editor is open to everyone (shipped) — the workflow Editor no longer waits behind a wall: search the Registry, pick a skill, configure it, run it, and read the full record of what happened — from the browser, no login.
-- ⭐ Honest runs (shipped) — runs tell you the truth about what executed. Tools with a live server run for real; skills that are really instructions for a model run for real too (the model is the engine); skills that need real tooling get a clearly-labeled demonstration of the output's shape — never invented results. Every skill card now carries an execution badge derived from its actual definition file.
-- ⭐ The Rokha runtime (up next — the big bet) — the groundwork shipped (skill ingestion, honest classification, demonstration mode). Next is the kitchen itself: a hosted runtime that actually installs and executes the tens of thousands of scripted skills for you, one click, no setup, real results with the receipts to prove it. The runtime is the product.
+- ⭐ Honest runs (shipped) — every execution path runs for real or says plainly why it can't. Tools with a live server run for real; skills that are instructions for a model run for real too (the model is the engine); skills that need real tooling execute in the hosted cloud sandbox. Nothing is ever faked — a step with no live path refuses with a typed reason instead of inventing output.
+- ⭐ The Rokha runtime (shipped — the kitchen is live) — the big bet, delivered: a hosted runtime installs and executes published skills for you in an isolated cloud sandbox — one click, no setup, real results with receipts. One free real run daily as a guest; daily quotas by plan once signed in. The runtime is the product.
 - Reliability + durable data (shipped) — prod's database now runs on always-on, multi-zone managed hosting, and services find each other through modern service discovery. The outage class we hit in early June is gone.
 - Multi-step workflows + templates (shipped) — chain tools into one workflow (each step feeds the next), start from ready-made patterns, and keep a named "My Rigs" library with an account. Guests keep the full single-step loop.
 - Remix (shipped) — one button: Rokha autonomously discovers a real tool, targets it, configures it, runs it, and reads you the result — live, end to end. Now takes requests, too (/remix <anything>).
@@ -525,6 +528,27 @@ Domain-general on purpose. Web3 wallet auth is one of three login methods (along
 - Rokha MVP (primary) — the guest build loop is complete (discover → configure → run → read the trace); next, the logged-in depth (name/keep multiple Rigs, schedule runs, fork someone else's).
 - Go-Live Hardening — blocks a wider public launch (edge caching, per-visitor abuse controls); the firewall layer shipped with the reliability work.
 - SDK MVP — federated LLM routing shipped; external publish (Homebrew, cargo, npm, PyPI) pending.
+
+## For AI agents — connect here
+
+Rokha is fully usable by agents, no account needed to start:
+
+- **The map:** GET https://rokha.ai/api/info — every public endpoint, auth
+  method, and a suggested first flow, as JSON.
+- **MCP endpoint:** POST https://rokha.ai/mcp/jsonrpc (protocol 2025-11-25).
+  \`initialize\`, \`tools/list\`, and the discovery + authoring tools
+  (registry_search, registry_get_skill, skill_author, harness_author, ...)
+  work with NO auth. Wallet-scoped tools (rigs, memory, publish) need a JWT —
+  auth flows are described in /api/info.
+- **llms.txt:** GET https://rokha.ai/llms.txt
+- **Docs as markdown:** GET https://rokha.ai/api/docs.md - skills catalog:
+  GET https://rokha.ai/api/marketplace/skills.md (append /md to any listing
+  URL for markdown).
+- **Wire contract:** GET https://rokha.ai/api/schema (OpenAPI 3.1).
+
+Suggested first flow: registry_search for a capability -> registry_get_skill
+for its SKILL.md -> run the Explore rig template on it
+(GET https://rokha.ai/api/skills/rig-template-explore).
 
 ## Introverted Development
 
@@ -537,6 +561,18 @@ $ID — a Solana meme coin attached to the group. Think of it as a flag you plan
 CA: 5czHSkZymNthZWsPwaFTzTsSGztZ9EPq9Uhid2mXpump
 
 $ID is a meme coin. It is not an investment; it represents no ownership, equity, or stake in Rokha, Introverted Development, or any project; it grants no access, utility, returns, or future of any kind; and it confers no rights or obligations on anyone. Nothing here is financial advice. Do your own research.
+
+## For AI agents — connect here
+
+Rokha is fully usable by agents, no account needed to start:
+
+- The map: GET https://rokha.ai/api/info — every public endpoint, auth method, and a suggested first flow, as JSON. Start here.
+- MCP endpoint: POST https://rokha.ai/mcp/jsonrpc (protocol 2025-11-25). initialize, tools/list, and the discovery + authoring tools (registry_search, registry_get_skill, skill_author, harness_author, …) work with NO auth. Wallet-scoped tools (rigs, memory, publish) ride a JWT — auth flows are in /api/info.
+- llms.txt: GET https://rokha.ai/llms.txt
+- Docs as markdown: GET https://rokha.ai/api/docs.md · skills catalog: GET https://rokha.ai/api/marketplace/skills.md (append /md to any listing URL for a markdown rendering).
+- Wire contract: GET https://rokha.ai/api/schema (OpenAPI 3.1; /api/schema/version for the drift check).
+
+Suggested first flow: registry_search for a capability → registry_get_skill for its SKILL.md → run the Explore rig template on it (GET https://rokha.ai/api/skills/rig-template-explore).
 
 ## Links
 
