@@ -45,8 +45,8 @@ title, a builder badge (everyone starts as a **Seeker**; rarer badges are
 coming), and a 30-day activity bar on every card. We also set the plan for how
 your presence grows as you do: **every page gets its own address**
 (rokha.ai/@you) on every plan, you can **feature your best workflows** as their
-own pages (1 on Free, 3 on Builder, unlimited on Pro), and Pro adds your own
-**custom subdomain** (you.rokha.ai). Those page perks are rolling out — the
+own pages (1 on Free, 3 on Builder, unlimited on Pro), and Pro makes
+rokha.ai/@you fully yours. Those page perks are rolling out — the
 plans show them tagged so you know what's live versus on the way. Pages also
 works properly on your phone now: it's in the bottom navigation, search sits
 pinned at the top, filters at the bottom, and the builder cards are the first
