@@ -65,6 +65,14 @@ plans page. And a preview of what's next: **sell your builds** — set a price
 on a workflow and visitors run it right from your page, with Rokha handling
 the metering. That lands with the marketplace round; the page teases it today.
 
+**Update (your page, your account, unreleased):** page settings now live in
+your Profile too — a dedicated PAGE tab with the same claim/edit panel as the
+Pages tab, and the claim button now says what it means ("Claim your page —
+free" until you have one, "Edit your page" after). For multi-chain wallets,
+you can now switch chains after signing in (Profile → Identity → Chain): each
+chain holds its own address, so the switch is how you choose which account
+you're acting as — no more guessing at the login door.
+
 ## Rokha on your phone — a focused, cleaner mobile experience (now live on rokha.ai)
 
 Rokha now feels built for your phone, not just squeezed onto it. On mobile it's
