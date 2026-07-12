@@ -65,6 +65,17 @@ plans page. And a preview of what's next: **sell your builds** — set a price
 on a workflow and visitors run it right from your page, with Rokha handling
 the metering. That lands with the marketplace round; the page teases it today.
 
+**Update (the page comes alive, unreleased):** your page is now interactive.
+Click any published creation — a workflow, skill, or tool — and it takes over
+the main stage with its **full document** and live stats; workflows that serve
+a dashboard show it right there, fullscreen-able. A new **Ask Rokha** panel
+lets any visitor talk to Rokha *about your page* — she can see what you've
+published and what's on screen, and answers from fact. Workflow pages are now
+opt-in: nothing gets its own public link by default — you mint a shareable
+link for a specific workflow when you want to advertise just that one. And
+pages carry the platform's builder badges, including a one-of-a-kind metallic
+**Architect** mark for the platform's creator.
+
 **Update (your page, your account, unreleased):** page settings now live in
 your Profile too — a dedicated PAGE tab with the same claim/edit panel as the
 Pages tab, and the claim button now says what it means ("Claim your page —
