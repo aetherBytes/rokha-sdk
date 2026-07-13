@@ -73,6 +73,40 @@ Phantom does. Where this gets us: wallet login is boring — click, pick
 your chain, sign, you're in. Next: rate-limiting on the public sign-in
 doors.
 
+## Your workflow can bring its own dashboard (unreleased)
+
+A workflow can now ship its **own interface**. Have its last step write a
+self-contained HTML page, and Rokha renders it — your charts, your layout, your
+tool's real UI — right inside the app and on your workflow's public page. Every
+input is simply a fresh run, so there's no server to host and nothing to deploy.
+
+That page is **someone else's code**, so we treat it that way: it runs walled off
+in its own sandbox with no access to your session, your account, or the page
+around it, and it can't call out to the network. It also carries a permanent
+**"builder's app — sandboxed, not Rokha"** badge that the app itself cannot paint
+over or remove. Rokha will never ask you for a seed phrase or a private key —
+and if a panel ever does, that badge is how you know it isn't us.
+
+Where this gets us: a workflow stops being a description and becomes a product
+with a face. Next: showing a workflow's recent live runs on the same page.
+
+## Nobody can pretend to be us — or to be support (unreleased)
+
+Names like `rokha-support`, `admin`, `security-alerts` or "Rokha Official" are now
+refused across the platform — for page addresses, display names, and anything you
+publish. This isn't about brand: it's the oldest trick there is — *"hi, this is
+support, paste your recovery phrase."*
+
+Blocking an exact word list doesn't work, because an impostor doesn't need to be
+exact — only convincing. So we compare what a name **looks like**, not what it
+spells: `r0kha`, `adm1n`, `5upport`, `r-o-k-h-a`, and even lookalike letters from
+other alphabets all resolve to the same reserved name and are turned away.
+Ordinary names are untouched — `modern`, `helpful`, `teamwork` and `rooted` are
+just words, and they still work.
+
+Where this gets us: when a page says it's us, or says it's support, you can
+believe it. Next: verified badges for builders.
+
 ## Tell us when we break something (unreleased)
 
 Rokha is in beta, so things will break — and now there's a proper way to tell us.
