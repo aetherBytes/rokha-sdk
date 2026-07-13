@@ -7,6 +7,25 @@ face of Rokha; the wire contract it depends on is
 
 
 
+## Wallet sign-in: first try, on the chain you meant (unreleased)
+
+Three fixes to signing in with a crypto wallet. The big one: the
+"Invalid or expired challenge" error that forced people to retry over
+and over is gone. Sign-in works by having your wallet sign a one-time
+challenge — but challenges were being held in one server's short-term
+memory, so when the second half of your login landed on a different
+server, that server had never heard of your challenge and rejected it.
+Challenges now live in shared storage every server can see, valid for
+10 minutes and usable exactly once. Second: multi-chain wallets (like
+Bitget) now ask which network you mean — EVM or Solana — BEFORE
+connecting, instead of silently assuming EVM. That matters because each
+chain is a different address, which means a different account; now you
+pick the identity you intend up front. Third: Solana connect no longer
+breaks on wallets that report their address a little differently than
+Phantom does. Where this gets us: wallet login is boring — click, pick
+your chain, sign, you're in. Next: rate-limiting on the public sign-in
+doors.
+
 ## Your listings now credit YOU by name (unreleased)
 
 Publishing through the API or MCP door used to stamp the listing's author
