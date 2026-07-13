@@ -7,6 +7,22 @@ face of Rokha; the wire contract it depends on is
 
 
 
+## Pick your model, keep your name clean (unreleased)
+
+Two fixes from the polish pass. **Model switching works now**: if you've
+added your own Anthropic API key, choosing any Claude model for your
+Rokha (Profile → Agents) actually takes — newer model families rejected
+a request setting the older ones accepted, which silently killed every
+chat after a switch. Fixed for the current families, plus a safety net
+so a brand-new model can never break the switch again.
+
+And a small decency floor on names: handles, display names, and
+published workflow names now refuse the obvious profanity and slurs —
+including the l33t-spelled and dash-injected variants — while staying
+deliberately narrow so real names (Scunthorpe, a therapeutic tool, an
+analysis workflow) are never caught. It's a floor, not a censor; the
+moderation tools behind the scenes handle anything creative.
+
 ## Run any builder's workflow right on their page — no account needed (unreleased)
 
 A builder's public page is now a place you can *use*, not just read.
@@ -55,9 +71,11 @@ Chain), and it comes with two ready-made Rigs you can run or schedule:
 audit one coin you name, or watch every fresh launch across Solana's
 launchpads and get a ranked risk digest.
 
-It's **published and runnable now** — nothing to install, no toolchain,
-no API keys: the tool ships as a package the sandbox fetches and runs in
-seconds, so the workflows execute for real and leave a receipt.
+The tool ships as a package the sandbox fetches and runs in seconds —
+nothing to install, no toolchain, no API keys — so once its wrapper is
+published, the workflows execute for real and leave a receipt.
+(Publishing the `@aetherbytes/solwatch` npm wrapper is the last step
+before sandbox runs can fetch it; the audit workflows are live on Rokha.)
 
 Where this gets us: a second proof that a real, useful tool can be
 built ON Rokha and handed to anyone as a skill — find it, run it, read
@@ -185,18 +203,22 @@ us: publish a skill or workflow and it reads "by YourName", matching your
 public page, with zero setup. Next: richer author cards linking listings
 back to builder pages.
 
-## Your rig gets its own product page (live 2026-07-13)
+## Run any builder's workflow right on their page (live 2026-07-13)
 
-Every workflow you publish on your builder page can now mint its own standalone
-page — a clean product site at rokha.ai/@you/your-rig with a hero, a "how it
-works" pipeline drawn from the workflow's real steps (even nested workflows
-read honestly), stats, and a run button. You theme it: a tagline, an accent
-color, and a hero glyph, all editable from your page settings — and the same
-knobs are available to agents over the MCP door. Free for everyone; deeper
-customization (full themes, your own branding, white-label, custom domains,
-selling your workflow) arrives with the paid ladder. Where this gets us:
-publishing on Rokha now ends in something you can actually link, share, and
-advertise as YOURS. Next: showcasing live scheduled runs on those pages.
+Your builder page at **rokha.ai/@you** is now a place people can *use*, not just
+read. Click anything you've published and the whole page focuses on it: its
+document, its stats, and — for runnable workflows — a run panel that asks for
+exactly the input the workflow needs, runs it for real, and renders the result
+as a live dashboard right there. No account needed to try: every visitor gets a
+small free daily allowance (the runner always pays for their own run, never the
+creator). You theme your page — a tagline, an accent color, a hero glyph — from
+your settings, and the same knobs are available to agents over the MCP door.
+
+(Standalone per-workflow product pages at `rokha.ai/@you/your-rig` are built but
+still gated off while we polish them — the `/@you` profile page is the live way
+to run a builder's workflows today. Deeper customization — full themes, your own
+branding, white-label, custom domains, selling your workflow — arrives with the
+paid ladder.) Next: showcasing live scheduled runs on those pages.
 
 ## Build a real, executable skill — the full recipe, written down (live 2026-07-13)
 
