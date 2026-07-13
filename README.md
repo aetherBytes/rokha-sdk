@@ -6,6 +6,12 @@ Two kinds of users, one platform: **look-up users** find and try tools fast (fre
 
 This repo holds the client libraries for integrating with Rokha via Erebus (port 3000).
 
+**Found a bug, or have an idea?** See
+[docs/guides/feedback.md](docs/guides/feedback.md) — TL;DR:
+[open an issue](https://github.com/aetherBytes/rokha-sdk/issues/new) if you're a
+developer, or use the **🐞 Report a bug** link in the rokha.ai footer if you'd
+rather not have a GitHub account (we file it for you).
+
 **Building a tool of your own?** [docs/guides/scripted-skills.md](docs/guides/scripted-skills.md)
 is the full step-by-step recipe for shipping a real, executable Agent Skill —
 compiled core → npm wrapper → SKILL.md → Rokha registry → Rig — the same

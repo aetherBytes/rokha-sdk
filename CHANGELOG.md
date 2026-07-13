@@ -73,6 +73,27 @@ Phantom does. Where this gets us: wallet login is boring — click, pick
 your chain, sign, you're in. Next: rate-limiting on the public sign-in
 doors.
 
+## Tell us when we break something (unreleased)
+
+Rokha is in beta, so things will break — and now there's a proper way to tell us.
+A **🐞 Report a bug** link in the site footer opens a short form: what happened,
+what you expected. Send it, and it lands directly in our issue tracker with a
+reference number you can quote back at us.
+
+**You don't need a GitHub account.** We file the report for you. The form
+attaches the page you were on, your browser and the build — and it says so, up
+front, before you send. No IP, no wallet, no keys. Leaving a contact is optional;
+skip it and the report still lands, we just can't reply.
+
+Building on the SDK or the API? [Open an issue](https://github.com/aetherBytes/rokha-sdk/issues/new)
+instead — you'll want a thread you can subscribe to. The new
+[feedback guide](docs/guides/feedback.md) covers both doors, what makes a report
+we can actually fix (with a template), and — importantly — why security issues
+should be emailed rather than filed publicly.
+
+Where this gets us: a beta is only as good as the reports it gets. Next: replying
+to reporters who leave a contact.
+
 ## Run a workflow straight from its page (unreleased)
 
 Every workflow you publish can have its own page — and now people can actually
