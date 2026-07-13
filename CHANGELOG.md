@@ -7,6 +7,18 @@ face of Rokha; the wire contract it depends on is
 
 
 
+## Your listings now credit YOU by name (unreleased)
+
+Publishing through the API or MCP door used to stamp the listing's author
+with your raw account identity — for wallet sign-ins, a long hex address.
+Now the display author is your claimed builder-page name (falling back to
+your identity if you haven't claimed one), derived server-side. Nobody can
+claim to be someone they're not: a caller-supplied author name is ignored —
+the platform derives who you are from your verified login. Where this gets
+us: publish a skill or workflow and it reads "by YourName", matching your
+public page, with zero setup. Next: richer author cards linking listings
+back to builder pages.
+
 ## Your rig gets its own product page (live 2026-07-13)
 
 Every workflow you publish on your builder page can now mint its own standalone
