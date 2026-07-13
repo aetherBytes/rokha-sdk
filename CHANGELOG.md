@@ -66,6 +66,29 @@ Phantom does. Where this gets us: wallet login is boring — click, pick
 your chain, sign, you're in. Next: rate-limiting on the public sign-in
 doors.
 
+## Run a workflow straight from its page (unreleased)
+
+Every workflow you publish can have its own page — and now people can actually
+RUN it there. Type your input, press run, and the result renders right on the
+page as a live dashboard: a headline verdict, the key numbers, the details.
+No install, no account needed to look, and nothing to set up.
+
+Two things worth knowing about how it works. **The person who runs it pays for
+it** — running someone's published workflow always draws on YOUR own free
+allowance, never the creator's. Publishing something popular can't drain your
+balance. And there's **no new way in for anything untrusted**: a run's output is
+just data, rendered by us — the sandbox it ran in still can't reach the outside
+world, and every interaction is simply a fresh run.
+
+For builders: make your workflow's final step emit a small `rokha_app` block
+(a title, a verdict, some metrics and sections) and Rokha turns it into that
+dashboard automatically — on your page and inside the app. One documented
+recipe, every workflow.
+
+Where this gets us: a published workflow is no longer a description of a thing —
+it's the thing, running, for whoever you send the link to. Next: showing a
+workflow's recent live runs on its page.
+
 ## Your listings now credit YOU by name (unreleased)
 
 Publishing through the API or MCP door used to stamp the listing's author
