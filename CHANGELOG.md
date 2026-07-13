@@ -7,6 +7,28 @@ face of Rokha; the wire contract it depends on is
 
 
 
+## Run any builder's workflow right on their page — no account needed (unreleased)
+
+A builder's public page is now a place you can *use*, not just read.
+Click anything they've published and the whole page focuses on it: its
+document, its stats, and — for runnable workflows — a run panel that
+asks for exactly the input the workflow needs (say, a coin address),
+runs it for real, and renders the result as a live dashboard, right
+there. Chat with Rokha about what you're looking at without leaving.
+
+Two more doors opened. You can now **try a run without an account** —
+every visitor gets a small free daily allowance, and when it's spent
+Rokha says so plainly and offers sign-in for a bigger one. And if you
+like someone's workflow but want it YOUR way, **Customize** drops a
+fresh copy straight into the Builder as your own starting point.
+Either way, runs always spend the runner's allowance — publishing
+something popular never costs its creator.
+
+Under the hood, long runs got reliable: live progress streams used to
+drop mid-run on the busiest path (the run always finished — you just
+couldn't watch it). That's fixed, and even if a connection blips, the
+page now recovers the result instead of showing an error.
+
 ## Solwatch: check a Solana coin before you buy it (unreleased)
 
 A new skill on Rokha that audits any Solana memecoin with real
