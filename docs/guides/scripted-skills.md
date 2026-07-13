@@ -275,37 +275,51 @@ between a tool agents can compose and a tool they have to guess at.
 Rokha's registry door is idempotent — publishing an existing slug under the
 same owner **updates** it, so you can re-run on every release.
 
-**As a human (or agent) with a Rokha login** — the public door derives the
-owner from your token:
+**Use the MCP door** (`POST /mcp/jsonrpc` with `registry_publish`). Humans and
+agents both publish through it, and it derives the owner from your **verified
+session token** — a caller cannot publish into someone else's account by putting
+a different wallet in the body.
+
+> ⚠ **GOTCHA (we hit this):** the REST endpoint
+> `POST /api/marketplace/registry/publish` is **wallet-signature-gated** — a
+> plain bearer token gets `403 signature_required`. Reach for the MCP door
+> instead; it accepts the session token directly. Same result, one door.
 
 ```bash
-curl -X POST https://rokha.ai/api/marketplace/registry/publish \
+# $JWT = your Rokha session token. Treat it like a password: never commit it,
+# never paste it into a chat or an issue, and prefer a short-lived one.
+curl -X POST https://rokha.ai/mcp/jsonrpc \
   -H "content-type: application/json" \
   -H "authorization: Bearer $JWT" \
   -d '{
-    "name": "yourtool",
-    "listing_type": "skill",
-    "title": "YourTool",
-    "description": "…the SKILL.md description…",
-    "version": "0.1.0",
-    "homepage": "https://github.com/you/yourtool",
-    "tags": ["…"],
-    "metadata": {
-      "slug": "yourtool",
-      "skill_md": "…the full SKILL.md content…",
-      "npm": "@you/yourtool",
-      "execution_class": "scripted"
+    "jsonrpc": "2.0", "id": 1, "method": "tools/call",
+    "params": {
+      "name": "registry_publish",
+      "arguments": {
+        "name": "yourtool",
+        "listing_type": "skill",
+        "title": "YourTool",
+        "description": "…the SKILL.md description…",
+        "version": "0.1.0",
+        "homepage": "https://github.com/example/yourtool",
+        "tags": ["example", "scripted"],
+        "metadata": {
+          "slug": "yourtool",
+          "skill_md": "…the full SKILL.md content…",
+          "npm": "@example/yourtool",
+          "execution_class": "scripted"
+        }
+      }
     }
   }'
 ```
 
-**As an agent over MCP**: `POST /mcp/jsonrpc` → `initialize` → `tools/list` →
-`registry_publish` with the same fields. (No token? `GET /llms.txt` documents
-the self-service OAuth flow — dynamic client registration, PKCE, no human
-pre-registration.)
+No token yet? An agent can register itself and sign in **headlessly** with a
+wallet keypair — `auth_wallet_challenge` → sign → `auth_wallet_verify` returns
+the session token. `GET /llms.txt` documents the full flow.
 
 Verify: `registry_search "yourtool"` (MCP) or
-`GET /api/marketplace/registry?search=yourtool`.
+`GET /api/marketplace/registry?search=yourtool` — the second is public, no token.
 
 ## Step 6 — Compose it into a Rig (the workflow other people run)
 
@@ -351,7 +365,135 @@ How anyone instantiates it:
   MCP tool with their own input, execute through the run stream, read the
   traces.
 
-## Step 7 — Run it for real and check the receipt
+## Step 7 — Give your tool a UI (without breaking the sandbox)
+
+Your tool probably has a `serve` command, or you'd like the run to *show*
+something rather than dump JSON. Here's the constraint that decides the design:
+
+> **The sandbox your skill runs in is egress-only.** It can call out to the
+> internet; **nothing can call in.** No browser — not yours, not Rokha's — can
+> reach a web server running inside it. That isn't a limitation to route
+> around; it's the wall that makes it safe to run untrusted code, and it does
+> not move.
+
+So a live `serve` inside a run is never viewable from outside. Instead, **the
+run ships its frontend OUT as an artifact.** Two mechanisms, both of which any
+tool can implement:
+
+### a. The `rokha_app` block — a native view, no HTML at all
+
+Have your tool's JSON output carry a top-level `rokha_app` key. Rokha's output
+rail renders it natively — you write no frontend code, and there's no
+tool-specific code in Rokha either:
+
+```jsonc
+{
+  "rokha_app": {
+    "title": "YourTool report — example-input",
+    "verdict": "caution",                 // free-form status word
+    "score": 54,                          // 0-100, optional
+    "metrics": [                          // stat tiles; tone drives the color
+      { "label": "Items scanned", "value": "1,204",  "tone": "neutral" },
+      { "label": "Problems",      "value": "3",      "tone": "warn"    },
+      { "label": "Critical",      "value": "0",      "tone": "good"    }
+    ],
+    "sections": [                         // markdown OR table per section
+      { "heading": "Findings", "markdown": "- **Thing A** — explanation…" },
+      { "heading": "Detail",   "table": {
+          "columns": ["item", "status"],
+          "rows": [["alpha", "ok"], ["beta", "failed"]] } }
+    ]
+  }
+}
+```
+
+`tone` ∈ `good | neutral | warn | danger`. Point your Rig's final step at this
+output and you get a dashboard. **This is the general contract — any rig that
+emits `rokha_app` gets rendered, whatever it does.**
+
+### b. A self-contained HTML artifact — your real UI, as a file
+
+If you want *your* interface (charts and all), emit **one HTML file with the
+data baked in**: CSS and JS inlined, no network requests, no external assets.
+The simplest way is to reuse the exact page your `serve` command already
+returns, injecting the run's JSON and stubbing out the fetch:
+
+```js
+// Same page `serve` renders; the data is embedded, so it needs no server.
+const REPORT = { /* …the run's JSON… */ };
+window.fetch = async () => ({ json: async () => REPORT });
+```
+
+The file renders anywhere — `file://`, a static host, or a hard-sandboxed
+iframe — and regenerates on every run with the new input. The sandbox stays
+sealed; you still get the pixels.
+
+> ⚠ **GOTCHA — escape `</` when you embed JSON in a `<script>` tag.** A payload
+> containing `</script>` (a token name, a URL, hostile input) closes the tag
+> early and breaks the page — or worse, injects markup. Always
+> `json.replace("</", "<\\/")` before embedding. Treat the JSON as untrusted
+> even when it's your own tool's output: the data inside it came from the
+> internet.
+
+**Rule of thumb:** emit `rokha_app` always (it's cheap and it's what agents
+read), and add the HTML artifact when your tool genuinely has a visual story to
+tell.
+
+---
+
+## Security — the non-negotiables
+
+Your skill runs on other people's accounts, on inputs you'll never see, and its
+output is rendered in other people's browsers. Assume every input is hostile.
+
+**Secrets**
+
+- **Never bake a secret into the binary, the npm package, or `SKILL.md`.** They
+  are all public artifacts. Anyone can `npm pack` your wrapper and read it.
+- A skill that needs a key should take it from the **environment** and fail
+  loudly with a typed error when it's missing — never fall back to a key you
+  shipped. In Rokha, users attach their own keys by **alias**; the value is
+  injected server-side at call time and never appears in your skill, the run
+  receipt, or an agent's view.
+- **The runner pays, and the runner supplies the credentials.** Never design a
+  skill that spends *your* key on someone else's run.
+- Publishing tokens (npm, crates.io, registries) live **only** in CI secrets.
+  Scope them as narrowly as the registry allows, and never echo them in a build
+  log. If one leaks, revoke it — don't rotate around it.
+
+**Input and output**
+
+- Every input from the network is hostile: an attacker controls token names,
+  URLs, metadata, symbols. Validate before you interpolate — **never build a
+  shell command by string-concatenating an input**. Pass arguments as an array;
+  don't shell out through `sh -c`.
+- Bound everything: request timeouts, retry counts, response sizes, loop
+  iterations. A hostile endpoint that streams forever must hit a wall.
+- **Escape before you embed** — the `</` rule above for HTML; parameterized
+  queries only, never string-built SQL, for anything that touches a database.
+- A malformed response must degrade into your output contract (a warning, a
+  null field), **never a panic and never invented data**.
+
+**Honesty**
+
+- If your tool cannot do something for real, it must **say so and exit
+  non-zero** — never emit plausible-looking fake output. A skill that
+  role-plays execution is worse than one that fails: it launders a guess into
+  something a person will act on. Rokha treats fabricated output as a bug in
+  the skill.
+- Document your blind spots in `SKILL.md`. "This check can't see X" is a
+  feature; a silent gap is a liability.
+
+**Least privilege**
+
+- `allowed-tools` in `SKILL.md` should be the narrowest set that works (a
+  scripted skill usually needs exactly `Bash(npx:*)`).
+- Your binary should need **no** filesystem access outside its working
+  directory and no inbound network. If it wants more, ask why.
+
+---
+
+## Step 8 — Run it for real and check the receipt
 
 Every Rokha run writes a **trace**: the exact command, the tool's real output,
 per step. That's the proof the skill executes rather than being role-played.
@@ -367,20 +509,52 @@ over MCP) and read the trace.
 
 ---
 
+## Release-day gotchas (every one of these bit us)
+
+- **A missing CI secret SKIPS the publish silently — it does not fail.** That's
+  deliberate (binaries still build), but it means a green ✅ release can publish
+  nothing at all. After your first tag, *check the registry*, not the checkmark:
+  `curl -s https://registry.npmjs.org/@example/yourtool | head -c 100`.
+- **A publish token scoped to one package can't create a NEW one.** If you reuse
+  the token from an existing project and it was granular-scoped to *that
+  package*, publishing a brand-new name 403s. Scope the token to the whole
+  **org/scope**, not a single package.
+- **CI's compiler is newer than yours.** Our release failed on a lint that
+  didn't exist in the local toolchain (`-D warnings` turns any new lint into an
+  error). Either pin the toolchain in CI, or expect to fix a lint you've never
+  seen — don't assume a green local build means a green CI.
+- **Keep every version string in lockstep** — the binary's manifest, the npm
+  wrapper's `package.json`, and `SKILL.md`'s `metadata.version`. A wrapper that
+  publishes `0.1.1` while the skill advertises `0.1.0` is a support ticket.
+- **Nothing published? Then a bad tag costs nothing.** Fix forward and cut the
+  next patch tag rather than force-moving a tag someone may already have.
+
+---
+
 ## Checklist
 
 - [ ] Binary builds static, ≤ a few MB, every command has `--json`
 - [ ] Failures degrade into the output contract — no panics, no fabricated data
+- [ ] No secret is baked into the binary, the npm package, or `SKILL.md`
+- [ ] Inputs are validated; arguments passed as an array, never through `sh -c`
+- [ ] Timeouts, retry caps, and size limits on every network call
 - [ ] `Cargo.toml` pins `include = ["/src/**", …]` (leading slashes!)
 - [ ] npm wrapper resolves every platform your CI actually builds
 - [ ] CI: npm publish first; GitHub release + crates.io `continue-on-error`
-- [ ] `npx -y @you/yourtool --help` works from a clean machine
+- [ ] **Verified the package actually appeared on the registry** (green ✅ ≠ published)
+- [ ] `npx -y @example/yourtool --help` works from a clean machine
 - [ ] SKILL.md: router-grade description, output contract, honest limitations
-- [ ] Published to the registry (idempotent — re-run per release)
+- [ ] Published to the Rokha registry via the MCP door (idempotent — re-run per release)
 - [ ] Rig template: scripted step + instruction step, `{{input}}` declared
+- [ ] Emits `rokha_app` so the run renders as a view (+ an HTML artifact if it has a UI)
+- [ ] `</` escaped anywhere JSON is embedded in HTML
 - [ ] One real end-to-end run with a trace you've actually read
 
-**Reference implementation:** [aetherBytes/hoodwatch](https://github.com/aetherBytes/hoodwatch)
-— the audit engine (Rust), npm wrapper, release workflow, SKILL.md, and the two
-rig templates (`rig-template-hoodwatch-audit`, `rig-template-hoodwatch-watch`)
-are all this recipe, live.
+**Reference implementations — both are this recipe, live:**
+
+- [aetherBytes/hoodwatch](https://github.com/aetherBytes/hoodwatch) — the
+  Robinhood Chain memecoin auditor (Rust engine, npm wrapper, release workflow,
+  SKILL.md, two rig templates).
+- [aetherBytes/solwatch](https://github.com/aetherBytes/solwatch) — the Solana
+  sister tool, which adds the **`rokha_app` block** and the **self-contained
+  HTML artifact** from Step 7, plus the full data-vis dashboard.

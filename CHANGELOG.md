@@ -33,10 +33,17 @@ Chain), and it comes with two ready-made Rigs you can run or schedule:
 audit one coin you name, or watch every fresh launch across Solana's
 launchpads and get a ranked risk digest.
 
+It's **published and runnable now** — nothing to install, no toolchain,
+no API keys: the tool ships as a package the sandbox fetches and runs in
+seconds, so the workflows execute for real and leave a receipt.
+
 Where this gets us: a second proof that a real, useful tool can be
 built ON Rokha and handed to anyone as a skill — find it, run it, read
-the trace. Next: publishing the tool so runs execute in the Rokha
-sandbox with nothing to install.
+the trace. And the recipe is written down so you can do the same: see
+**[Build a scripted Agent Skill](docs/guides/scripted-skills.md)**, now
+covering how to give your tool a live view without opening a hole into
+the sandbox, the security rules a skill running on other people's
+accounts must follow, and the release traps that bite everyone once.
 
 ## Rigs that agents build no longer duplicate themselves (unreleased)
 
