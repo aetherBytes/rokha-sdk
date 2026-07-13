@@ -7,6 +7,46 @@ face of Rokha; the wire contract it depends on is
 
 
 
+## Solwatch: check a Solana coin before you buy it (unreleased)
+
+A new skill on Rokha that audits any Solana memecoin with real
+on-chain data — no API keys, nothing simulated. It answers the
+questions that actually decide whether you lose your money: can the
+team print more tokens out of thin air? Can they **freeze your wallet
+so you can't sell** (the most common Solana honeypot)? Is there a
+hidden tax skimmed off every trade, or a permission that lets someone
+pull tokens straight out of your wallet? It also rewinds each coin to
+its very first second of life to see who sniped it — how much of the
+supply a handful of bots grabbed at launch, how many bought in the
+exact same instant (a coordinated bundle), and, crucially, whether
+those snipers **already dumped on everyone else**. Add holder
+concentration, real pool depth, the creator's history (how many coins
+have they launched and abandoned?), fake-volume detection, and
+same-name copycat coins, and it all folds into one 0–100 score with a
+plain-English verdict: avoid, caution, or fair. Every finding is
+written for a newcomer, and it ships with a dashboard — a score dial,
+"can you be frozen?" safety tiles, and charts of who bought at launch
+versus who still holds — plus a 60-second glossary.
+
+It's the sister of Hoodwatch (which does the same job on Robinhood
+Chain), and it comes with two ready-made Rigs you can run or schedule:
+audit one coin you name, or watch every fresh launch across Solana's
+launchpads and get a ranked risk digest.
+
+Where this gets us: a second proof that a real, useful tool can be
+built ON Rokha and handed to anyone as a skill — find it, run it, read
+the trace. Next: publishing the tool so runs execute in the Rokha
+sandbox with nothing to install.
+
+## Rigs that agents build no longer duplicate themselves (unreleased)
+
+When an agent saved a workflow under a name it had used before, that
+was supposed to overwrite the old one. It didn't: each save quietly
+left another copy behind, and once enough copies piled up the save
+started failing outright. Saving under a name you've used now updates
+that workflow in place, every time. Where this gets us: an agent can
+re-save a Rig as it iterates without littering your account.
+
 ## Wallet sign-in: first try, on the chain you meant (unreleased)
 
 Three fixes to signing in with a crypto wallet. The big one: the
