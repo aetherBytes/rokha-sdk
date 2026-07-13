@@ -7,7 +7,20 @@ face of Rokha; the wire contract it depends on is
 
 
 
-## Build a real, executable skill — the full recipe, written down (unreleased)
+## Your rig gets its own product page (live 2026-07-13)
+
+Every workflow you publish on your builder page can now mint its own standalone
+page — a clean product site at rokha.ai/@you/your-rig with a hero, a "how it
+works" pipeline drawn from the workflow's real steps (even nested workflows
+read honestly), stats, and a run button. You theme it: a tagline, an accent
+color, and a hero glyph, all editable from your page settings — and the same
+knobs are available to agents over the MCP door. Free for everyone; deeper
+customization (full themes, your own branding, white-label, custom domains,
+selling your workflow) arrives with the paid ladder. Where this gets us:
+publishing on Rokha now ends in something you can actually link, share, and
+advertise as YOURS. Next: showcasing live scheduled runs on those pages.
+
+## Build a real, executable skill — the full recipe, written down (live 2026-07-13)
 
 Rokha doesn't just index skills — it RUNS them, and now there's a complete
 step-by-step guide to shipping one of your own:
@@ -28,7 +41,7 @@ from "I built a useful tool" to "anyone — human or agent — can run it on
 Rokha" is now documented end to end. Next: more first-party tools built on
 this recipe.
 
-## Agents are full citizens — register, claim a page, all over MCP (unreleased)
+## Agents are full citizens — register, claim a page, all over MCP (live 2026-07-13)
 
 An AI agent with a wallet keypair can now do the ENTIRE user lifecycle over
 Rokha's one MCP endpoint, no browser and no human hand-holding: request a
@@ -50,7 +63,7 @@ us: "works for agents" now includes *becoming someone* on Rokha, not just
 using it anonymously. Next: agent-owned pages showcasing the workflows those
 agents build and run.
 
-## Builder pages — your public home on Rokha (unreleased)
+## Builder pages — your public home on Rokha (live 2026-07-13)
 
 Every builder can now claim a page at **rokha.ai/@your-handle** — a real,
 shareable URL that shows the world what you build and run. Your page carries
@@ -137,7 +150,7 @@ stay fast), and the old pick-a-symbol "glyph" field is retired — your page
 shows the default mark until you upload a real photo, which then follows you
 everywhere: your page, your cards, the leaderboard.
 
-## Every build has an ID you can actually use (unreleased)
+## Every build has an ID you can actually use (live 2026-07-13)
 
 Every saved workflow and building block on Rokha has always had a permanent
 ID under the hood — now it's in your hands. The builder shows it right next
@@ -189,7 +202,7 @@ us: your creations stop being locked to one account or one browser — they're
 files you own. Next: agents get their own export/import door over the public
 MCP endpoint.
 
-## Your data, in the open — privacy policy, terms, and one-click export (unreleased)
+## Your data, in the open — privacy policy, terms, and one-click export (live 2026-07-13)
 
 Rokha now says plainly what it collects and lets you take your data with you.
 New public pages at [rokha.ai/privacy](https://rokha.ai/privacy) and
@@ -205,7 +218,7 @@ Where this gets us: the measurement that makes the product better is now
 paired with a policy you can read and an export you can click. Next: self-serve
 account deletion.
 
-## Connect Rokha to your agent in one click — MCP auth-spec support (unreleased)
+## Connect Rokha to your agent in one click — MCP auth-spec support (live 2026-07-13)
 
 Rokha now speaks the standard MCP authorization protocol, so a modern agent
 client (Claude Code's remote MCP, Cursor, and others) can add
@@ -217,7 +230,7 @@ agents that don't need your personal account can still self-onboard with a
 wallet, no human step at all. New public endpoints: `/.well-known/oauth-*`,
 `/oauth/register`, `/oauth/authorize`, `/oauth/token`.
 
-## v1.0.0 — the first full release (unreleased)
+## v1.0.0 — the first full release (live 2026-07-13)
 
 Rokha crosses from preview into V1. Sign-in opens to everyone (Google + crypto
 wallet), the whole paid spine is live — save, publish, price, schedule,
@@ -230,7 +243,7 @@ auth (open · paste-a-key · one-click · automatic), minute-cadence schedules,
 inbound webhooks, and `list_saved_keys` (see what's attachable without ever
 exposing a secret).
 
-## Connect anything — OAuth broker, spec auth, and the MCP gateway (unreleased)
+## Connect anything — OAuth broker, spec auth, and the MCP gateway (live 2026-07-13)
 
 Rokha now handles credentials for you, the way the big hosted gateways do — so
 you can build workflows across authenticated tools without leaving Rokha or
@@ -260,7 +273,7 @@ agents: `auth_resolve`, `auth_connections`, `auth_connect`, `gateway_register`,
 `gateway_list`, and the webhook-trigger suite (`hook_*`). Schedules also gained
 minute cadences (every 1/5/15 minutes).
 
-## The full walkthrough — welcome to publish, on every screen size (unreleased)
+## The full walkthrough — welcome to publish, on every screen size (live 2026-07-13)
 
 We walked the whole product end to end — first visit, chat, find a tool, build
 a workflow, run it, publish it — on desktop, small laptops, and phones, and
@@ -279,7 +292,7 @@ fixed everything that got in the way.
   never push their controls off-screen. Cards, builder, runs, and receipts all
   verified end-to-end at phone width — solid backgrounds, nothing cut off.
 
-## One registry, everywhere — one results list, plus a real front door (unreleased)
+## One registry, everywhere — one results list, plus a real front door (live 2026-07-13)
 
 The Registry used to be two different things: a full-screen catalog AND a
 compact lookup panel in the side rail — two result lists that could drift
@@ -321,7 +334,7 @@ of it.
 discovery that never pulls you away from what you're building. *Next:* the
 same rail-first clarity through the rest of the signed-in experience.
 
-## Clearer runs — know when a sandbox is needed, and Remix that actually runs (unreleased)
+## Clearer runs — know when a sandbox is needed, and Remix that actually runs (live 2026-07-13)
 
 Building your first workflow shouldn't require knowing what a "sandbox" is. This
 pass makes the run experience beginner-obvious.
@@ -347,7 +360,7 @@ pass makes the run experience beginner-obvious.
 hitting jargon or a confusing button. *Next:* the same clarity carried into the
 logged-in surfaces as we finish the post-login experience.
 
-## The honesty audit — truer labels, visible limits, and docs that guide you (unreleased)
+## The honesty audit — truer labels, visible limits, and docs that guide you (live 2026-07-13)
 
 A hands-on audit of the whole product, fixing every place where what you saw
 didn't match what would really happen.
@@ -376,7 +389,7 @@ didn't match what would really happen.
   aliases only — never values), and the doc panel flips between a harness and
   the skill it wraps with one click while you build.
 
-## Top up anything, on any plan — buy more AI fuel or more runs (unreleased)
+## Top up anything, on any plan — buy more AI fuel or more runs (live 2026-07-13)
 
 Upsells now extend every gated limit, and they work on every plan — you never
 have to subscribe just to get more of one thing.
@@ -391,7 +404,7 @@ have to subscribe just to get more of one thing.
   product, not a locked feature. Pay by card or in USDC on Solana.
 - Your plan page shows what you've banked at a glance, right under the meters.
 
-## Your rigs on autopilot — real scheduling, for every kind of workflow (unreleased)
+## Your rigs on autopilot — real scheduling, for every kind of workflow (live 2026-07-13)
 
 The automation promise is now real end-to-end: a saved rig can run itself.
 
@@ -419,7 +432,7 @@ The automation promise is now real end-to-end: a saved rig can run itself.
   jobs (but didn't) was deleted outright — everything that schedules now
   really fires, in keeping with the no-pretending rule.
 
-## Honest labels in the directory — and templates that always run (unreleased)
+## Honest labels in the directory — and templates that always run (live 2026-07-13)
 
 - **Badges now tell the truth.** A published **Harness** (your configured,
   runnable block) is its own listing type in the registry — searchable and
@@ -439,7 +452,7 @@ The automation promise is now real end-to-end: a saved rig can run itself.
   client can browse our ~130k listings with zero Rokha-specific code. Now
   fully documented in the public API schema.
 
-## Plans that tell the truth — and a payments rail under them (unreleased)
+## Plans that tell the truth — and a payments rail under them (live 2026-07-13)
 
 The subscription surface grew up. Every claim on the Plans page is now a
 number the platform actually enforces, and real payments are wired and in
@@ -496,7 +509,7 @@ test.
   workflow steps authored by outside agents could be silently skipped at
   run time. Two front doors, one behavior.
 
-## Your account grows up: profile, private keys, and an assistant who can run the whole show (unreleased)
+## Your account grows up: profile, private keys, and an assistant who can run the whole show (live 2026-07-13)
 
 The first big pass on the logged-in experience — plus a set of upgrades that
 make Rokha (the assistant) genuinely able to guide you from first question to
@@ -540,7 +553,7 @@ real execution.
   workflows now show their full document, and the catalog can be filtered to
   Rokha-published entries like any other source.
 
-## A friendlier front door, a livelier Rokha, and a tougher directory (unreleased)
+## A friendlier front door, a livelier Rokha, and a tougher directory (live 2026-07-13)
 
 A large polish-and-hardening pass across the whole pre-login product, shaped by
 a founder walkthrough playing a brand-new visitor. Highlights:
@@ -580,7 +593,7 @@ a founder walkthrough playing a brand-new visitor. Highlights:
   run/restart/stop controls, and a click-to-load command helper with ready-made
   templates for testing APIs and probing live tool servers by hand.
 
-## Your own cloud sandbox — persistent, browser-capable, and honest (unreleased)
+## Your own cloud sandbox — persistent, browser-capable, and honest (live 2026-07-13)
 
 - **A sandbox that stays with you.** Start an isolated cloud machine once and it
   stays up for your whole session — a real shell (curl, npm, python, git) plus
