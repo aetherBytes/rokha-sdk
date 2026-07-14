@@ -6,6 +6,43 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Build workflows as a graph, not just a line (unreleased)
+
+Until now the Rig Builder had one open shape: a straight chain — step 1,
+then step 2, then step 3. That covers a lot, but real workflows branch:
+fetch two sources at once, then compare them; fan work out, then pull the
+results back together. The **Graph** structure is now open to everyone,
+right next to Linear.
+
+**A canvas that stays readable.** Graph steps are cards you drag anywhere;
+the connecting lines route *around* cards instead of through them, every
+card shows its execution order and a one-line summary of what it does,
+and one click (⌗ arrange) lays the whole graph out top-to-bottom in
+run order.
+
+**Every step is fully editable in place.** Each card opens the same
+editor the chain uses — pick a skill from the registry, wire a live
+endpoint or a plain HTTP call, write the instruction, set params. No
+second-class steps.
+
+**Runs light up the map.** When a graph runs, each card marks itself as
+it executes — a pulse on the step that's running now, then a ✓ or ✕ with
+its timing. You watch the workflow move through its own picture.
+
+**Switching shapes converts your work.** Flip a chain to a graph and your
+steps come with you, wired in order and ready to re-arrange. Flip a graph
+back to a chain and it converts too — as long as it really is a straight
+line; a branching graph refuses to flatten rather than silently dropping
+connections.
+
+We also fixed real execution bugs while opening the gate — a couple of
+graph shapes that looked fine in the builder but quietly ran as something
+simpler are now executed exactly as drawn.
+
+Loop (cycles and conditional routing) and Tree structures are next —
+they're visible in the selector as coming-soon.
+
+
 ## Tell us something's broken, and hear back (unreleased)
 
 We got our first real bug report from someone outside the team. It went
