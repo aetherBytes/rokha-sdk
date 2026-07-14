@@ -6,6 +6,33 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Tell us something's broken, and hear back (unreleased)
+
+We got our first real bug report from someone outside the team. It went
+where it was supposed to go — and then, from the reporter's side, it
+vanished. No trace of it in their profile, no way to know if anyone had
+read it, no reply. You told us something and got silence back. That's a
+bad way to treat the person who took the time.
+
+So reports are now a real thing you own, not a message in a bottle.
+
+**You can see what you sent.** There's a **Reports** section in your
+profile: every bug and idea you've sent, when you sent it, and where it
+stands — received, with the team, replied, fixed. It shows up in your
+live pulse alongside everything else your account does.
+
+**We can actually answer you.** When someone on our side responds, the
+reply lands right there under your report. No account on anything else
+needed, no inbox to check.
+
+**And we stop losing them.** A report is now written down the moment you
+hit send, before it goes anywhere else — so even if everything
+downstream is having a bad day, your report is safe and we still get it.
+
+You never needed an account anywhere else to tell us something was
+broken. Now you don't need one to hear back, either.
+
+
 ## Rokha got a lot better at conversation (unreleased)
 
 We sat down, had a real working session with Rokha, and wrote down every
