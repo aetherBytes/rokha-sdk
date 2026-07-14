@@ -6,6 +6,36 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha speaks — and the Pro plan opens (unreleased)
+
+**Talk to Rokha, out loud.** There's a mic button in the chat bar: tap it,
+say what you want, and it sends — and with spoken replies switched on she
+answers in an actual voice. Replies now also **stream in word by word**
+(voice or not), and you watch her tool calls light up live as she works
+instead of staring at a spinner.
+
+**Live conversation mode.** One button (or a keyboard shortcut you pick in
+Profile → Agents) opens a hands-free session: the mic stays open, you talk
+back and forth, and you can interrupt her mid-sentence just by speaking —
+like a phone call. Ending it closes everything; nothing ever listens
+outside a session you explicitly started. Free accounts hear your
+browser's built-in voices; paid plans get Rokha's real voice, powered by
+best-in-class speech engines with hard daily and monthly allowances so
+costs can never run away.
+
+**The Pro plan is open — $99.99/month.** Built for people running real
+workloads: 100 cloud runs a day on **bigger, faster sandboxes** with twice
+the time budget, **priority capacity** when the runtime is busy, a
+**stronger model in chat**, 4× the voice allowance, schedules down to
+every minute, and much larger everything (sessions, message sizes, build
+slots). Coming soon and included in Pro: a local terminal agent you run on
+your own machine.
+
+**A top-up store that makes sense.** Three plain categories — extra runs,
+extra AI fuel, and (new) voice packs — each showing what you've banked and
+what it's for. No subscription required; packs kick in automatically after
+your daily allowance and never expire.
+
 ## Build workflows as a graph, not just a line (unreleased)
 
 Until now the Rig Builder had one open shape: a straight chain — step 1,
