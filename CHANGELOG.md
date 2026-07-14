@@ -6,6 +6,49 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha got a lot better at conversation (unreleased)
+
+We sat down, had a real working session with Rokha, and wrote down every
+place the conversation went sideways. Then we fixed each one at the root.
+
+**She remembers, even through maintenance.** Your conversation used to
+live only in the server's short-term memory — if we shipped an update
+mid-chat, her next reply could come back as a blank-slate greeting. Now
+the conversation itself is the durable record: after any restart she
+picks up exactly where you left off, mid-thought.
+
+**@handles work everywhere.** Say "@sage" — or a close-enough guess, or
+just their display name — and Rokha knows you mean a builder on the
+platform. She can pull up their public page, their published tools, the
+builder directory, and the leaderboard herself, and she can **adopt a
+published rig into your account** on your say-so (your own copy, running
+on your own allowance — never the creator's). She'll never again tell you
+a builder's published tool is "internal" or invisible to her.
+
+**Ask for a tool by name, get that tool.** When you name a thing
+("hoodwatch audit"), she now searches for that exact name first instead
+of paraphrasing it into a category and offering you a lookalike.
+
+**"Run it" runs it.** Telling her to run your staged workflow now fires
+the run directly — the same thing the ▶ button does — instead of her
+describing the button to you. Asking *about* running still just answers;
+only a direct ask spends your allowance.
+
+**One sandbox, one owner.** If you're logged in, the cloud sandbox you
+start from the UI and the one Rokha manages in chat are now the same
+machine, billed to your own plan's daily runs (it used to draw from the
+much smaller anonymous allowance — and a failed browser-sandbox start
+could quietly eat runs; both fixed).
+
+Also: your display name now lives in exactly one place — set it on your
+Profile and your public page, the directory, the leaderboard, and the
+author line on everything you publish all follow. Impersonation-name
+protection still screens every rename.
+
+Next: keep tightening the conversation loop — fewer clarifying questions
+when you've already given her the answer.
+
+
 ## See who's really behind a coin — wallet bubblemaps (unreleased)
 
 Our two open-source memecoin auditors just learned to spot **groups of
