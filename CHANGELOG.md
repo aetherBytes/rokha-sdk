@@ -6,6 +6,45 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## See who's really behind a coin — wallet bubblemaps (unreleased)
+
+Our two open-source memecoin auditors just learned to spot **groups of
+wallets working together**, and to draw them.
+
+Rug-pullers rarely use one wallet. They fund a fleet from a single
+source, buy their own launch across a dozen fresh addresses, and shuffle
+bags between them — so a coin that looks "widely held" is really one
+person wearing twenty hats. Both auditors now trace where each big
+wallet's money originally came from, watch for buys that land in the same
+block, and follow transfers between holders — then group the wallets that
+are provably connected. The headline number is **effective
+concentration**: your top-10 holders recalculated with the sockpuppets
+merged back into one. On Solana we can go further and *prove* it — when
+several launch buys rode the same atomic bundle, that's not a guess.
+
+Every audit now draws this as an **interactive bubble map** you can click
+through: each wallet is a bubble sized by how much it holds, lines show
+funding and transfers, and you can toggle each kind of connection on and
+off. It ships inside the report itself — open it anywhere, no internet
+needed — and renders right inside Rokha when you run the audit there.
+
+Care was taken not to cry wolf: exchanges and bridges pass money between
+thousands of unrelated people, so the tool deliberately refuses to link
+wallets through them. A tool that flags everyone flags nothing.
+
+**Robinhood Chain launches are visible again.** The launchpad these coins
+were built on went quiet and a new one took its place on different
+plumbing — so our scanner had been finding nothing. It now follows the
+new one (and still reads the old coins), and immediately found **176
+recent launches**. It also caught a repeating rug template running on the
+chain right now — same creator cut, same fake burn, same airdrop, then
+the liquidity yanked — on coins that popular chart sites still showed as
+healthy. The chain doesn't lie; the charts lag.
+
+Next: recurring-offender reputation that builds up over time, and social
+signals layered on top of the chain data.
+
+
 
 ## Pick your model, keep your name clean (unreleased)
 
