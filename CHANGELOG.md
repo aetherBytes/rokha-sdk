@@ -6,6 +6,26 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Your cloud sandbox — now warm (unreleased)
+
+The wait is gone. The isolated cloud computer your tools run in used to
+take a couple of minutes to boot from cold before every run. Now:
+
+- **Repeat runs are instant.** A run reuses the machine you already have
+  running, so the second one starts in seconds — not a fresh boot.
+- **Keep it alive.** A new switch holds your sandbox on until you turn it
+  off, so it's always ready while you build. Free gets 1 hour a day,
+  Builder 6, Pro 24 — always-on building. Run the clock out and you can
+  top up more sandbox time for a few dollars; you only pay while the
+  machine is actually held open.
+- **Faster first runs, too.** Leaner images and pre-warmed capacity trim
+  the remaining cold starts.
+
+Where it gets us: the sandbox finally feels instant — a real cloud
+computer for your agents that's ready when you are. What's next: the same
+warm-start treatment reaching every run surface, and richer sandbox
+controls.
+
 ## Limits now explain themselves — and sell you the fix (unreleased)
 
 Hitting a daily limit used to look like a broken tool: a run would die
