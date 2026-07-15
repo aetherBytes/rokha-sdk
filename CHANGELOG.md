@@ -31,6 +31,33 @@ Existing accounts aren't disrupted: schedules you already have keep
 running even if you're over the new free cap — you just can't add more
 without upgrading.
 
+## Rokha can drive the whole app — and see your screen (unreleased)
+
+Rokha (the assistant) is now a full user of her own product:
+
+**Say where, she goes.** "Open the movers view." "Take me to my page."
+"Split the rail — registry and sandbox, two grids." "Make the main window
+70/30." Every tab, rail view, and data readout is hers to present on
+request — deterministically, not by guesswork. On phones she points
+instead of yanking, and your view-lock always wins.
+
+**She sees your window.** Each message quietly carries what's on your
+screen — which tab, which rail panes, which data view — so "what am I
+looking at?" gets a factual answer and "open traces next to this"
+composes against reality.
+
+**Work at conversation pace.** Ask her to prepare a command ("get me a
+curl that queries this API"), review it, then say "send it" — it executes
+in your cloud sandbox, which stays warm between commands. Ask for three
+workflows in one breath and she builds all three in one turn. Your rig
+pages too: link, brand, showcase, always-on — all configurable by
+asking.
+
+And the NEWS hub grew up: a real **Spotlight** (the newest features,
+showcased), an honest **Roadmap** (shipped · building · planned — selling
+your builds from your page, X participation feeding the leaderboard,
+Rokha in your terminal, white-label pages), and a **Site Updates** feed.
+
 ## Your rig gets a real product page (unreleased)
 
 Every published rig can now have its own standalone page at
