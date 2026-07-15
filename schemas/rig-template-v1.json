@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rokha.ai/schemas/rig-template-v1.json",
+  "title": "Rokha rig template (skeleton) v1",
+  "description": "The machine-readable workflow skeleton a creator ships next to a skill (assets/rig.json) and publishes as a rig listing's metadata.rig. It is what makes the rig adoptable and runnable on Rokha: the Builder's template picker instantiates it, adopt-on-run converts it into the runner's own executable rig, and the rig product page reads its input declaration. THE EXECUTED CONTRACT IS `steps[].instruction` plus the pinned skill's SKILL.md — a step's `command` is informational documentation for agents reading the raw skeleton, never executed verbatim. All strings are truncated server-side to the limits noted here; the skeleton is treated as untrusted published content.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 120,
+      "description": "The rig's display name. Its lowercased-dashed form is the rig's page slug (rokha.ai/@handle/<slug>)."
+    },
+    "intent": {
+      "type": "string",
+      "maxLength": 400,
+      "description": "One sentence: what the whole workflow produces."
+    },
+    "intent_category": {
+      "type": "string",
+      "maxLength": 40,
+      "description": "Optional grouping hint (e.g. audit, monitor, explore)."
+    },
+    "input": {
+      "type": "object",
+      "description": "The rig's declared run-time input — the page's input field labels itself from this, and the run's input flows into step 1.",
+      "properties": {
+        "label": {
+          "type": "string",
+          "maxLength": 140
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "text",
+            "skill"
+          ],
+          "description": "text = free text; skill = the input names a registry skill/tool (the Explore/Audit template pattern). Rendered as a text field either way."
+        },
+        "hint": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Placeholder / example value."
+        }
+      },
+      "required": [
+        "label"
+      ],
+      "additionalProperties": true
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "description": "The workflow chain, executed in order (v1 adopts as a linear chain). A step WITH a pin runs that skill; a step WITHOUT a pin is a pure instruction (agent) step.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "Informational: 'primary' for the load-bearing tool step, 'step' otherwise."
+          },
+          "tag": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "Short step label (e.g. scan, brief)."
+          },
+          "query": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Registry search query the Builder uses to (re)resolve this step against the live registry when no pin is honored."
+          },
+          "pin": {
+            "type": "object",
+            "description": "Pin a SPECIFIC published skill — used verbatim instead of resolving `query`. NOTE the key is `source` (the registry source key, e.g. 'rokha'), not 'provider'.",
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 120
+              },
+              "source": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "slug": {
+                "type": "string",
+                "maxLength": 200
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 400
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": true
+          },
+          "instruction": {
+            "type": "string",
+            "maxLength": 4000,
+            "description": "THE EXECUTED CONTRACT: what this step actually does. For a scripted skill, spell out the real invocation and flags here (the sandbox agent composes the command from this plus the pinned skill's SKILL.md). Include your knob conventions (e.g. the `dashboard` param: on = also pass --app-html ./rokha-app.html; off = data-only)."
+          },
+          "expects": {
+            "type": "string",
+            "maxLength": 400,
+            "description": "What flows IN (the rig input, or the previous step's output)."
+          },
+          "produces": {
+            "type": "string",
+            "maxLength": 400,
+            "description": "What this step hands forward."
+          },
+          "params": {
+            "type": "object",
+            "maxProperties": 8,
+            "description": "Editable run knobs seeded into the adopted copy (scalars only; string values ≤200 chars). Convention: `dashboard: \"on\"|\"off\"` controls whether the run ships ./rokha-app.html.",
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            }
+          },
+          "command": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "INFORMATIONAL ONLY — the canonical invocation, as documentation for agents reading the raw skeleton. It is NEVER executed verbatim by Rokha; keep the real recipe in `instruction` + the skill's SKILL.md, and keep this line consistent with them."
+          }
+        },
+        "required": [
+          "instruction"
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "required": [
+    "name",
+    "intent",
+    "steps"
+  ],
+  "additionalProperties": true
+}

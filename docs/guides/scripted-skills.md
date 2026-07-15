@@ -327,6 +327,10 @@ A Rokha **Rig** chains your skill with instruction steps into a runnable
 workflow. Ship a rig *template* next to the skill: a small `rig.json` skeleton
 any agent can fetch and instantiate with its own input.
 
+The skeleton's full JSON Schema is served at
+**https://rokha.ai/schemas/rig-template-v1.json** — validate your `rig.json`
+against it before publishing.
+
 ```jsonc
 {
   "$schema": "https://rokha.ai/schemas/rig-template-v1.json",
@@ -337,11 +341,13 @@ any agent can fetch and instantiate with its own input.
     {
       "role": "primary",
       "tag": "scan",
-      "pin": { "name": "yourtool", "provider": "rokha", "slug": "yourtool" },
+      "query": "yourtool audit",
+      "pin": { "name": "yourtool", "source": "rokha", "slug": "yourtool" },
       "command": "npx -y @you/yourtool run {{input}} --json",
+      "params": { "dashboard": "on" },
       "expects": "the input the user named",
-      "instruction": "Run yourtool on the input. Return the full JSON.",
-      "produces": "the raw result JSON"
+      "instruction": "Run yourtool ONCE on the input with --json. If the `dashboard` param is 'on' (the default), also pass --app-html ./rokha-app.html so the run ships its dashboard as the live APP view; if 'off', skip it — the JSON output already carries the rokha_app block. Ship big outputs as files (./rokha-result.json), never printed back.",
+      "produces": "the raw result JSON (with its rokha_app block)"
     },
     {
       "role": "step",
@@ -354,16 +360,45 @@ any agent can fetch and instantiate with its own input.
 }
 ```
 
-The pattern to copy: **step 1 is your scripted skill** (the sandbox runs the
-`npx` command for real), **step 2 is a pure instruction step** (the agent
-reads step 1's trace output and writes for humans). Tool for truth, model for
-prose.
+Three rules the schema encodes:
 
-How anyone instantiates it:
-- **Human**: Rokha Builder → templates → your rig → type the input → Run.
-- **Agent**: fetch the template's `rig.json`, recreate it via the `rig_author`
-  MCP tool with their own input, execute through the run stream, read the
-  traces.
+- **`instruction` is the executed contract.** The sandbox agent composes the
+  real command from each step's `instruction` plus your skill's SKILL.md.
+  `command` is *documentation* for agents reading the raw skeleton — it is
+  never executed verbatim, so keep it consistent with the instruction.
+- **The pin key is `source`** (the registry source key, e.g. `"rokha"`), and
+  a pin-less step is a pure instruction (agent) step.
+- **`params` are the runner's knobs** — scalar values the runner can flip
+  without editing the instruction. The platform convention worth copying:
+  `dashboard: "on" | "off"` decides whether the run writes
+  `./rokha-app.html` (agents that only want the data run with it off; the
+  JSON's `rokha_app` block renders natively either way).
+
+The pattern to copy: **step 1 is your scripted skill** (the sandbox runs the
+real command), **step 2 is a pure instruction step** (the agent reads step
+1's trace output and writes for humans). Tool for truth, model for prose.
+
+**Then PUBLISH the rig itself** — this is what makes it adoptable, runnable
+from your page, and eligible for a standalone product page
+(`rokha.ai/@you/<rig-slug>`). Same `registry_publish` door as the skill, with
+the skeleton riding `metadata.rig`:
+
+```jsonc
+{
+  "name": "rig-template-yourtool-audit",
+  "listing_type": "rig",
+  "title": "YourTool Audit",
+  "description": "…the intent sentence…",
+  "metadata": { "slug": "rig-template-yourtool-audit", "rig": { /* the rig.json skeleton, verbatim */ } }
+}
+```
+
+How anyone runs it after that:
+- **Human**: your page (`rokha.ai/@you`) → the rig → type the input → Run —
+  or Builder → templates. Runs always bill the runner, never you.
+- **Agent**: `registry_search` → `registry_adopt` (their own copy) → the run
+  stream with `user_context.rig_id` + `run_input` — or in a Rokha chat, one
+  `rig_run` tool call.
 
 ## Step 7 — Give your tool a UI (without breaking the sandbox)
 
@@ -392,24 +427,38 @@ tool-specific code in Rokha either:
     "title": "YourTool report — example-input",
     "verdict": "caution",                 // free-form status word
     "score": 54,                          // 0-100, optional
+    "subject": "example-input",          // what the run worked on
     "metrics": [                          // stat tiles; tone drives the color
       { "label": "Items scanned", "value": "1,204",  "tone": "neutral" },
       { "label": "Problems",      "value": "3",      "tone": "warn"    },
-      { "label": "Critical",      "value": "0",      "tone": "good"    }
+      { "label": "Critical",      "value": "0",      "tone": "ok"      }
     ],
-    "sections": [                         // markdown OR table per section
+    "sections": [                         // markdown, table, or graph per section
       { "heading": "Findings", "markdown": "- **Thing A** — explanation…" },
       { "heading": "Detail",   "table": {
           "columns": ["item", "status"],
           "rows": [["alpha", "ok"], ["beta", "failed"]] } }
+    ],
+    "actions": [                          // optional: re-run buttons on the dashboard
+      { "id": "run", "label": "Check another",
+        "input": { "label": "Input", "hint": "what to work on next" } }
     ]
   }
 }
 ```
 
-`tone` ∈ `good | neutral | warn | danger`. Point your Rig's final step at this
-output and you get a dashboard. **This is the general contract — any rig that
-emits `rokha_app` gets rendered, whatever it does.**
+`tone` ∈ `ok | neutral | warn | bad` (the synonyms `good`/`danger` are accepted
+and mapped). Limits, so you don't trip them: `title`/`subject` ≤200 chars,
+`verdict` ≤60, ≤12 metrics, ≤12 sections (markdown ≤20k chars; tables ≤8
+columns × ≤60 rows), ≤6 actions. A section may also carry a `graph`
+(`{"kind":"bubblemap","nodes":[…],"edges":[…],"clusters":[…]}`, ≤400 nodes /
+≤1200 edges) — Rokha renders it as an interactive bubble map.
+
+An `action` renders as a native button (+ optional input field) under the
+dashboard; pressing it fires a **fresh run of the same rig** with that input,
+billed to whoever pressed it. Point your Rig's final step at this output and
+you get a dashboard. **This is the general contract — any rig that emits
+`rokha_app` gets rendered, whatever it does.**
 
 ### b. A self-contained HTML artifact — your real UI, as a file
 
@@ -424,9 +473,19 @@ const REPORT = { /* …the run's JSON… */ };
 window.fetch = async () => ({ json: async () => REPORT });
 ```
 
-The file renders anywhere — `file://`, a static host, or a hard-sandboxed
-iframe — and regenerates on every run with the new input. The sandbox stays
-sealed; you still get the pixels.
+**Save it to `./rokha-app.html` in the run's working directory** — that exact
+filename is the convention Rokha's runtime picks up and renders as the run's
+live APP view (hard-sandboxed: scripts allowed, zero network, no cookies or
+storage). Size cap ~500 KB — oversized artifacts are dropped, not truncated,
+so keep it lean. The file renders anywhere — `file://`, a static host, or that
+sandboxed frame — and regenerates on every run with the new input. The sandbox
+stays sealed; you still get the pixels.
+
+Your embedded dashboard can offer its own re-run controls by posting to the
+host: `window.parent.postMessage({ rokha: "app_action", action: "run",
+input: "<value>" }, "*")` — same effect as a declared `action` (a fresh run of
+the rig, billed to the presser). Nothing is ever posted back into your frame;
+the new run's output replaces the view.
 
 > ⚠ **GOTCHA — escape `</` when you embed JSON in a `<script>` tag.** A payload
 > containing `</script>` (a token name, a URL, hostile input) closes the tag

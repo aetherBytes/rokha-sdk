@@ -2385,6 +2385,114 @@ components:
         name: { type: string }
       required: [error]
 
+    # --- The rokha_app output contract (how a run presents itself as an APP) ---
+    # A run whose final result carries a top-level `rokha_app` object renders
+    # as a native dashboard on every Rokha app surface (the APP rail, the
+    # profile run panel, the rig product page). Additionally, a run may save
+    # ONE self-contained HTML file to ./rokha-app.html in its working
+    # directory (zero network, `</` escaped in embedded JSON, ~500 KB cap —
+    # oversized is dropped, not truncated); it rides the trace result as
+    # `app_html` and renders as the run's live app in a hard-sandboxed frame.
+
+    RokhaApp:
+      type: object
+      description: >-
+        The generic app block. All fields optional, but the object must carry
+        substance (a title, verdict, score, metric, or section). Strings are
+        truncated and collections capped server/client-side — emit within the
+        limits noted per field.
+      properties:
+        title: { type: string, maxLength: 200, description: 'Banner headline' }
+        subject: { type: string, maxLength: 200, description: 'What the run worked on (e.g. the input address)' }
+        verdict: { type: string, maxLength: 60, description: 'Free text; tone-mapped for color (adopt/ok · caution/warn · avoid/bad)' }
+        score: { type: number, minimum: 0, maximum: 100 }
+        metrics:
+          type: array
+          maxItems: 12
+          items:
+            type: object
+            properties:
+              label: { type: string, maxLength: 120 }
+              value: { type: string, maxLength: 200 }
+              tone: { type: string, enum: [ok, warn, bad, neutral], description: 'Synonyms good→ok, danger→bad accepted' }
+            required: [label, value]
+        sections:
+          type: array
+          maxItems: 12
+          description: 'Each section renders any mix of markdown (≤20k chars), a table, and a graph.'
+          items:
+            type: object
+            properties:
+              heading: { type: string, maxLength: 200 }
+              markdown: { type: string, maxLength: 20000 }
+              table:
+                type: object
+                properties:
+                  columns: { type: array, maxItems: 8, items: { type: string, maxLength: 120 } }
+                  rows:
+                    type: array
+                    maxItems: 60
+                    items: { type: array, maxItems: 8, items: { type: string, maxLength: 400 } }
+              graph:
+                type: object
+                description: 'Interactive bubble map, rendered natively.'
+                properties:
+                  kind: { type: string, enum: [bubblemap] }
+                  nodes:
+                    type: array
+                    maxItems: 400
+                    items:
+                      type: object
+                      properties:
+                        id: { type: string, maxLength: 120 }
+                        label: { type: string, maxLength: 120 }
+                        size: { type: number, minimum: 0, maximum: 1000000 }
+                        group: { type: integer }
+                        roles: { type: array, maxItems: 8, items: { type: string, maxLength: 40 } }
+                      required: [id]
+                  edges:
+                    type: array
+                    maxItems: 1200
+                    items:
+                      type: object
+                      properties:
+                        from: { type: string }
+                        to: { type: string }
+                        kind: { type: string, enum: [funding, transfer, same_block, bundle] }
+                        weight: { type: number, minimum: 0, maximum: 100 }
+                      required: [from, to, kind]
+                  clusters:
+                    type: array
+                    maxItems: 60
+                    items:
+                      type: object
+                      properties:
+                        id: { type: integer }
+                        label: { type: string, maxLength: 120 }
+                        pct: { type: number, minimum: 0, maximum: 100 }
+                        note: { type: string, maxLength: 400 }
+                      required: [id]
+                required: [kind]
+        actions:
+          type: array
+          maxItems: 6
+          description: >-
+            Re-run affordances rendered as native buttons; pressing one fires a
+            fresh run of the same rig with the given input, billed to the
+            presser. An embedded rokha-app.html triggers the same via
+            postMessage({rokha:'app_action', action, input}) to its parent.
+          items:
+            type: object
+            properties:
+              id: { type: string, maxLength: 40 }
+              label: { type: string, maxLength: 80 }
+              input:
+                type: object
+                properties:
+                  label: { type: string, maxLength: 80 }
+                  hint: { type: string, maxLength: 200 }
+            required: [id, label]
+
     # --- Skills ---
 
     SkillFrontmatterMetadata:
