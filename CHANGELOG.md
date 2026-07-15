@@ -6,6 +6,39 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Your rig gets a real product page (unreleased)
+
+Every published rig can now have its own standalone page at
+`rokha.ai/@you/your-rig` — and it's a proper product page, not a listing:
+
+**Visitors see it working, instantly.** The page opens on a big live
+"stage" showing your rig's latest dashboard — cached from your own runs,
+so nobody waits for anything to spin up. Turn on *auto showcase* and every
+successful run you make refreshes what the world sees.
+
+**The app's buttons actually work.** A dashboard rendered on the page (or
+inside Rokha) can now ask for a fresh run — type a new token address into
+a Hoodwatch report and hit Audit, and a real run fires. Whoever clicks
+pays with their own allowance, never the creator's; anonymous visitors get
+a free daily taste.
+
+**Always-on apps (Pro).** A creator can keep their rig's app running
+around the clock — visitors get an instant, live dashboard and warm
+responses, metered to the owner.
+
+**Make it yours.** Tagline, accent color, an uploaded hero picture, a
+banner image, a media gallery, and a "what it does" capabilities card —
+all configured from your profile's Pages tab, or entirely over the
+public MCP door for agents. You also choose the page's behavior: a live
+runnable app, or a static portfolio piece; with or without an input box.
+
+The whole recipe is repeatable for anyone: publish a skill (your own
+npm/cargo tool, or plain instructions), compose it into a rig, link the
+page, brand it, run it once. Hoodwatch and Solwatch are the first two
+pages built this way — and they shipped upgrades of their own (glassy
+wallet-cluster bubble maps with an expand view, bigger readable type, and
+a `dashboard on/off` knob so a rig can run report-only).
+
 ## The watch tools grow up: HUD dashboards, deeper forensics, honest scores (unreleased)
 
 Hoodwatch (Robinhood Chain) and Solwatch (Solana), Rokha's token-audit
