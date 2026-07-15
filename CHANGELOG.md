@@ -6,6 +6,16 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Sign in with your wallet from your phone (unreleased)
+
+Wallet sign-in on mobile used to be a dead end: phone browsers can't see
+wallet apps the way desktop browsers see extensions, so the sign-in panel
+found nothing to connect to. Now, on a phone, each wallet shows up as an
+**"Open in MetaMask / Phantom / Bitget Wallet"** button that hands you
+straight into that wallet's built-in browser — where connecting, signing,
+and logging in work exactly like on desktop. Nothing to configure, and
+desktop sign-in is unchanged.
+
 ## Rokha speaks — and the Pro plan opens (unreleased)
 
 **Talk to Rokha, out loud.** There's a mic button in the chat bar: tap it,
