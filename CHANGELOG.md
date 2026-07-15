@@ -6,6 +6,31 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Plans you can see before you sign in (unreleased)
+
+The plans finally advertise themselves. The landing page now carries a
+pricing pill — **Free forever · Builder $19.99 · Pro $99.99 — see
+plans** — that opens a full plans view for anyone, no account needed.
+The cards render the *live* plan catalog straight from the platform, so
+what's advertised is always exactly what's enforced.
+
+The ladder itself got a deliberate retune so each step up means
+something:
+
+- **Free** stays the whole product — 250k AI tokens a day, real cloud
+  runs, scheduling, publishing — resized to a taste that's still far
+  beyond what comparable products give away: 10 cloud runs a day and 2
+  schedules.
+- **Builder ($19.99)** is now a real jump: 5× the runs (50/day), 4× the
+  AI fuel, 10× the schedules at faster cadences, and Rokha's real voice.
+- **Pro ($99.99)** doubled its headline: **200 cloud runs a day** (up
+  from 100) on the bigger, faster sandboxes, plus priority capacity, a
+  stronger model in chat, 4× voice, and every-minute schedules.
+
+Existing accounts aren't disrupted: schedules you already have keep
+running even if you're over the new free cap — you just can't add more
+without upgrading.
+
 ## Your rig gets a real product page (unreleased)
 
 Every published rig can now have its own standalone page at
