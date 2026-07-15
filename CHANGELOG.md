@@ -6,6 +6,70 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Limits now explain themselves — and sell you the fix (unreleased)
+
+Hitting a daily limit used to look like a broken tool: a run would die
+with a cryptic error buried in the run receipt, and you had to dig to
+learn it was your plan's cap, not a bug. That's fixed, everywhere:
+
+- **A loud, clear banner the moment a limit blocks you** — any run,
+  sandbox, or app interaction that's denied on an allowance now says so
+  front-and-center, with the honest options: it resets tomorrow, log in
+  for more, upgrade, or grab a top-up. One tap opens the plans view.
+- **Run receipts name tier limits.** A failed run that died on a cap
+  (like running out of agent turns mid-audit) is labeled as a plan
+  limit right in the receipt, with the upgrade path next to it — no
+  more decoding error codes.
+- **"Dissect this trace" got smarter.** Asking Rokha to explain a
+  failed run now hands her the actual failure — the error, what the
+  step was doing, any partial output — so she diagnoses the real
+  problem and tells you exactly what upgrading would change, instead of
+  guessing.
+- **The live work feed reads newest-first** — Rokha's THINKING feed now
+  puts the latest turn at the top, matching the run receipts, so you
+  never scroll to find what just happened.
+
+Where it gets us: free-tier friction is now honest signage instead of
+mystery failures. What's next: the same clarity on chat-level limits.
+
+## Build an app on Rokha like it's a standard (unreleased)
+
+The "give your tool a face" story graduated from folklore to a stated,
+validated contract — so anyone can ship a Hoodwatch-class product on
+Rokha by following the docs, not by reading our code.
+
+- **The `rokha_app` block is now a real schema.** The full field spec —
+  title, subject, verdict, score, metric tiles, markdown/table/graph
+  sections, and the new interactive bubble-map graphs and re-run action
+  buttons — lives in the wire contract (`/api/schema`) with every size
+  limit stated. Emit the block from your workflow's final step and
+  Rokha renders a native dashboard; no frontend code, no special-casing.
+- **The rig template skeleton got its schema too.** The `$schema` URL
+  every template references is now actually served
+  (`https://rokha.ai/schemas/rig-template-v1.json`) — validate your
+  `rig.json` before publishing. The guide also states the rule that
+  matters most: a step's `instruction` (plus your skill's SKILL.md) is
+  what actually executes; `command` is documentation.
+- **The scripted-skills guide's workflow chapter was corrected and
+  completed**: the right pin key, the `params` knob convention
+  (`dashboard: on|off` — agents that only want data skip the HTML), and
+  the previously missing step — *publish the rig itself* — that makes
+  your workflow adoptable, runnable from your page, and eligible for
+  its own product page.
+- **Rokha runs rigs from chat now.** Ask her to "run <rig> on <input>"
+  and she adopts your own copy and fires the real run — results land in
+  the run receipts, dashboards land in the APP view. Her window
+  steering also actually moves the requested pane when you ask.
+- **Dashboards are opt-in for speed-sensitive callers**: the audit
+  tools' JSON output always carries the `rokha_app` block, durable
+  reports no longer force an HTML artifact, and one flag opts the
+  embedded dashboard back in when a human is watching.
+
+Where it gets us: the flagship audit tools are no longer special — they
+are worked examples of a documented pattern. What's next: cutting new
+engine releases with the leaner flags and letting builders loose on the
+contract.
+
 ## Plans you can see before you sign in (unreleased)
 
 The plans finally advertise themselves. The landing page now carries a
