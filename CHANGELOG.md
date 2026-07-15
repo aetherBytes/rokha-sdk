@@ -6,6 +6,37 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The watch tools grow up: HUD dashboards, deeper forensics, honest scores (unreleased)
+
+Hoodwatch (Robinhood Chain) and Solwatch (Solana), Rokha's token-audit
+tools, got a big upgrade wave:
+
+**A real dashboard.** Audit reports are no longer a scrolling list — they
+render as a full-width instrument panel: a score gauge, a risk radar you
+can hover for the findings behind each axis, launch-sniper charts (on
+Solana, a buy timeline where the launch-moment spike *is* the bundle
+signature), holder-concentration bars, and the interactive wallet-cluster
+bubble map. The same dashboard appears whether you run an audit inside
+Rokha, save a report file, or serve the tool's own local dashboard.
+
+**Launchpads can't hide.** On Robinhood Chain, discovery now watches the
+trading venues themselves rather than any single launchpad, so when pads
+appear, vanish, or gate themselves (as the chain's biggest one just did),
+new token launches still show up — each tagged with the venue it launched
+on, plus an honest per-venue coverage count.
+
+**Scores tell you when they can move.** A risk score is a snapshot of a
+live chain: a team verifying their contract or revoking a mint authority
+can legitimately swing the same token's score between runs. Reports now
+say so, and flag clearly when a check *couldn't run* — unknown is never
+presented as safe.
+
+**Deeper data.** The tools now accept optional RPC/explorer API keys, and
+Rokha's own runtime supplies them — so audits resolve full holder sets,
+launch-sniper histories, and wider wallet-cluster funding trails instead
+of hitting public rate limits. Rust users can also now install both tools
+straight from crates.io.
+
 ## Sign in with your wallet from your phone (unreleased)
 
 Wallet sign-in on mobile used to be a dead end: phone browsers can't see
