@@ -1573,7 +1573,10 @@ paths:
       summary: Your page (or a claim suggestion) (JWT)
       description: >-
         Your page as the verified identity sees it. Unclaimed →
-        `{ claimed: false, suggested_handle }`.
+        `{ claimed: false, suggested_handle }`. Also carries your badge
+        collection — `badges` is every badge you've earned (seeker /
+        builder / architect / influencer / …), `badge` the ACTIVE one shown
+        on public surfaces (choose it via PUT /api/pages/me/badge).
       operationId: myPage
       security:
         - bearerAuth: []
@@ -1612,6 +1615,33 @@ paths:
         '200': { description: '{ ok, handle }' }
         '400': { description: Invalid handle / lengths, or handle reserved }
         '409': { description: Handle taken }
+
+  /api/pages/me/badge:
+    put:
+      tags: [pages]
+      summary: Choose your active badge (JWT)
+      description: >-
+        Badges are a collection — you earn several (seeker for everyone,
+        builder once a rig of yours is run by another wallet, influencer as
+        a verified X promoter, more over time) and choose which ONE fronts
+        your identity on every public surface (page, directory,
+        leaderboard, rig sub-pages). GET /api/pages/me lists what you've
+        earned; setting an unearned badge is refused with that list.
+      operationId: setActiveBadge
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [badge]
+              properties:
+                badge: { type: string, description: one of your earned badges }
+      responses:
+        '200': { description: '{ ok, badge, badges }' }
+        '400': { description: 'badge_not_earned — the response lists your earned badges' }
 
   /api/pages/me/rig/{slug}:
     put:

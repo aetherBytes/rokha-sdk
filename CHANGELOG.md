@@ -6,6 +6,20 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Badges become a collection — earn several, wear one (unreleased)
+
+Your builder profile earns badges as you go, and now they stack. You
+collect all the ones you qualify for — *seeker* the moment you arrive,
+*builder* once someone else runs a workflow you published, plus special
+grants like *influencer* for verified promoters — and you pick which ONE
+fronts your identity everywhere people see you: your page, the builder
+directory, the leaderboard, and your product pages. Change your active
+badge any time (in the app, or over the API/agent tools). Setting one you
+haven't earned is politely refused.
+
+Where it gets us: reputation you can actually show. What's next: more
+earnable badges tied to real activity.
+
 ## Your cloud sandbox — now warm (unreleased)
 
 The wait is gone. The isolated cloud computer your tools run in used to
