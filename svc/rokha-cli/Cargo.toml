@@ -22,6 +22,10 @@ toml = "0.8"
 dirs = "5"
 base64 = "0.22"
 futures-util = "0.3"
+# Browser-control plane: drive a local Chrome over the DevTools Protocol (CDP)
+# so Rokha can bring up rokha.ai and steer its views from the terminal. Plain
+# ws:// to 127.0.0.1 only — no TLS backend pulled in.
+tokio-tungstenite = { version = "0.24", default-features = false, features = ["connect", "handshake"] }
 
 # Voice (GIVE_RO_A_VOICE, day-0). Behind the default-on `voice` feature so
 # `cargo install rokha-cli --no-default-features` still builds on a box without

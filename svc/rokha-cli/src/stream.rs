@@ -29,6 +29,17 @@ pub enum ChatEvent {
     Done,
 }
 
+/// Extract the agent's `ui_directives` (HUD steering) from a `content` event
+/// payload, if any — `metadata.ui_directives`. Returns `None` when absent or
+/// empty. The browser-control plane forwards these into the page.
+pub fn ui_directives(content_json: &serde_json::Value) -> Option<serde_json::Value> {
+    let dirs = content_json.get("metadata")?.get("ui_directives")?;
+    if dirs.as_array().map(|a| a.is_empty()).unwrap_or(true) {
+        return None;
+    }
+    Some(dirs.clone())
+}
+
 /// Extract the canonical reply text from a `content` event payload. The authed
 /// door returns `response`; the public door returns `content`.
 pub fn content_text(json: &serde_json::Value) -> String {

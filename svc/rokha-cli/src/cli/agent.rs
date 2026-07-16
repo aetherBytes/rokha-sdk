@@ -13,12 +13,29 @@ use std::cell::Cell;
 use std::io::Write;
 use tokio::io::{AsyncBufReadExt, BufReader};
 
-pub async fn repl(client: &RokhaClient) -> i32 {
+pub async fn repl(client: &RokhaClient, use_browser: bool) -> i32 {
     let creds = match gate::require_paid("ro agent") {
         Ok(c) => c,
         Err(code) => return code,
     };
     let http = crate::api_client::http_client();
+
+    // Browser-control plane: attach a local Chrome at rokha.ai so Rokha can
+    // steer its views from the terminal. Optional — a failure never blocks chat.
+    let mut browser = if use_browser {
+        match crate::browser::Browser::launch_or_attach("https://rokha.ai").await {
+            Ok(b) => {
+                println!("\x1b[2m(browser control on — Rokha can steer rokha.ai)\x1b[0m");
+                Some(b)
+            }
+            Err(e) => {
+                eprintln!("\x1b[2m(browser control unavailable: {e})\x1b[0m");
+                None
+            }
+        }
+    } else {
+        None
+    };
 
     println!();
     println!(
@@ -53,7 +70,7 @@ pub async fn repl(client: &RokhaClient) -> i32 {
             }
             _ => {}
         }
-        run_turn(&http, client.base_url(), &creds.jwt, msg).await;
+        run_turn(&http, client.base_url(), &creds.jwt, msg, browser.as_mut()).await;
     }
     println!("bye.");
     0
@@ -61,11 +78,19 @@ pub async fn repl(client: &RokhaClient) -> i32 {
 
 /// Stream a single turn and render it live. Returns nothing — errors are printed
 /// inline (with a loud upsell when the failure is a tier/allowance limit).
-async fn run_turn(http: &reqwest::Client, base: &str, jwt: &str, message: &str) {
+async fn run_turn(
+    http: &reqwest::Client,
+    base: &str,
+    jwt: &str,
+    message: &str,
+    browser: Option<&mut crate::browser::Browser>,
+) {
     // `Cell` so the FnMut render closure can mutate render state without an
     // exclusive borrow leaking past the await.
     let header_shown = Cell::new(false);
     let streamed = Cell::new(false);
+    // HUD directives collected from the turn's canonical `content` event.
+    let directives: std::cell::RefCell<Option<serde_json::Value>> = std::cell::RefCell::new(None);
 
     let render = |evt: ChatEvent| match evt {
         ChatEvent::ContentStart => {}
@@ -100,6 +125,10 @@ async fn run_turn(http: &reqwest::Client, base: &str, jwt: &str, message: &str) 
                     print!("\x1b[1mRo\x1b[0m  {text}");
                 }
             }
+            // Capture any HUD steering to forward to the browser after the turn.
+            if let Some(dirs) = stream::ui_directives(&json) {
+                *directives.borrow_mut() = Some(dirs);
+            }
         }
         ChatEvent::Error { message, status } => {
             println!();
@@ -111,6 +140,14 @@ async fn run_turn(http: &reqwest::Client, base: &str, jwt: &str, message: &str) 
 
     let res = stream::stream_chat(http, base, Some(jwt), message, render).await;
     println!(); // terminate the reply line
+
+    // Browser-control: forward any HUD directives into the attached page.
+    if let (Some(b), Some(dirs)) = (browser, directives.into_inner()) {
+        if let Err(e) = b.apply_directives(&dirs).await {
+            eprintln!("\x1b[2m(browser steer failed: {e})\x1b[0m");
+        }
+    }
+
     if let Err(e) = res {
         eprintln!("\x1b[31m⚠ {e}\x1b[0m");
         // Transport-level errors carry the HTTP status inside the string.

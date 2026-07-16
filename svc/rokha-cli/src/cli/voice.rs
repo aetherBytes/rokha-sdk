@@ -14,12 +14,28 @@ use std::cell::{Cell, RefCell};
 use std::io::Write;
 use tokio::io::{AsyncBufReadExt, BufReader};
 
-pub async fn convo(client: &RokhaClient) -> i32 {
+pub async fn convo(client: &RokhaClient, use_browser: bool) -> i32 {
     let creds = match gate::require_paid("ro voice") {
         Ok(c) => c,
         Err(code) => return code,
     };
     let http = crate::api_client::http_client();
+
+    // Browser-control plane (optional): Rokha can steer rokha.ai as you talk.
+    let mut browser = if use_browser {
+        match crate::browser::Browser::launch_or_attach("https://rokha.ai").await {
+            Ok(b) => {
+                println!("\x1b[2m(browser control on — Rokha can steer rokha.ai)\x1b[0m");
+                Some(b)
+            }
+            Err(e) => {
+                eprintln!("\x1b[2m(browser control unavailable: {e})\x1b[0m");
+                None
+            }
+        }
+    } else {
+        None
+    };
 
     // Honest availability check — never pretend voice works when it doesn't.
     match client.voice_health().await {
@@ -97,6 +113,7 @@ pub async fn convo(client: &RokhaClient) -> i32 {
         let reply = RefCell::new(String::new());
         let streamed = Cell::new(false);
         let header = Cell::new(false);
+        let directives: RefCell<Option<serde_json::Value>> = RefCell::new(None);
         let render = |evt: ChatEvent| match evt {
             ChatEvent::ContentDelta { text } => {
                 if !header.get() {
@@ -123,6 +140,9 @@ pub async fn convo(client: &RokhaClient) -> i32 {
                         *reply.borrow_mut() = text;
                     }
                 }
+                if let Some(dirs) = stream::ui_directives(&json) {
+                    *directives.borrow_mut() = Some(dirs);
+                }
             }
             ChatEvent::Error { message, .. } => {
                 println!();
@@ -135,6 +155,13 @@ pub async fn convo(client: &RokhaClient) -> i32 {
         if let Err(e) = res {
             eprintln!("\x1b[31m⚠ {e}\x1b[0m");
             continue;
+        }
+
+        // 3b. Forward any HUD steering into the attached browser.
+        if let (Some(b), Some(dirs)) = (browser.as_mut(), directives.into_inner()) {
+            if let Err(e) = b.apply_directives(&dirs).await {
+                eprintln!("\x1b[2m(browser steer failed: {e})\x1b[0m");
+            }
         }
 
         // 4. Speak the reply.

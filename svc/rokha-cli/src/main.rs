@@ -1,6 +1,7 @@
 #[cfg(feature = "voice")]
 mod audio;
 mod api_client;
+mod browser;
 mod cli;
 mod config;
 mod credentials;
@@ -50,9 +51,23 @@ enum Commands {
     /// Send a one-shot message to the Rokha agent
     Chat { message: String },
     /// Interactive REPL with the Rokha agent (paid feature)
-    Agent,
+    Agent {
+        /// Also drive a local browser at rokha.ai — Rokha steers its views
+        #[arg(long)]
+        browser: bool,
+    },
     /// Talk to Rokha out loud — voice conversation (paid feature)
-    Voice,
+    Voice {
+        /// Also drive a local browser at rokha.ai — Rokha steers its views
+        #[arg(long)]
+        browser: bool,
+    },
+    /// Open rokha.ai in a local browser Rokha can control (needs Chrome)
+    Browser {
+        /// URL to open
+        #[arg(default_value = "https://rokha.ai")]
+        url: String,
+    },
     /// Launch the TUI dashboard
     Tui,
     /// MCP server (JSON-RPC over stdio)
@@ -110,14 +125,15 @@ async fn main() {
             0
         }
         Commands::Chat { message } => cli::agents::chat(&client, &message).await,
-        Commands::Agent => cli::agent::repl(&client).await,
-        Commands::Voice => {
+        Commands::Agent { browser } => cli::agent::repl(&client, browser).await,
+        Commands::Voice { browser } => {
             #[cfg(feature = "voice")]
             {
-                cli::voice::convo(&client).await
+                cli::voice::convo(&client, browser).await
             }
             #[cfg(not(feature = "voice"))]
             {
+                let _ = browser;
                 eprintln!(
                     "This build has no voice support. Reinstall with default features \
                      (voice), or on Linux ensure libasound2 is present."
@@ -125,6 +141,20 @@ async fn main() {
                 1
             }
         }
+        Commands::Browser { url } => match browser::Browser::launch_or_attach(&url).await {
+            Ok(mut b) => {
+                if let Err(e) = b.navigate(&url).await {
+                    eprintln!("ro browser: navigate failed: {e}");
+                }
+                println!("✓ {url} is open in your browser and remote-controllable.");
+                println!("  Run `ro agent --browser` (or `ro voice --browser`) — Rokha can steer it.");
+                0
+            }
+            Err(e) => {
+                eprintln!("ro browser: {e}");
+                1
+            }
+        },
         Commands::Login => cli::auth::login(client.base_url()).await,
         Commands::Whoami => cli::auth::whoami().await,
         Commands::Logout => cli::auth::logout().await,
