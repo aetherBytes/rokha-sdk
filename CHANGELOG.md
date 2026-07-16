@@ -6,6 +6,31 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha can search the web — and carry the tools you pick (unreleased)
+
+**Ask Rokha something current and she looks it up.** She can now search
+the open web mid-conversation — live results folded straight into her
+answer with the links she actually used, so you get today's facts instead
+of what a model happened to memorize months ago.
+
+**Your own default toolkit.** It's part of an *agent toolkit* you
+control: in Profile → Agents you pick which tools Rokha carries into every
+chat — web search and a live market-data lookup to start — and she reaches
+for them on her own when a question needs one. Opt-in, per-account, with
+fair daily limits so nothing runs away.
+
+Where it gets us: Rokha stops being boxed in by what she already knew.
+What's next: more first-party tools in the kit, and attaching your own.
+
+
+## Every part of Rokha has its own link now (unreleased)
+
+The main surfaces — the registry, the builder, your pages, the news hub —
+each live at their own real web address now. Bookmark exactly where you
+were, share a direct link that opens right there, and search engines can
+finally see them properly. Small thing, big quality-of-life.
+
+
 ## Badges become a collection — earn several, wear one (unreleased)
 
 Your builder profile earns badges as you go, and now they stack. You
