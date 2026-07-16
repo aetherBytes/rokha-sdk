@@ -2,7 +2,9 @@ mod api_client;
 mod cli;
 mod config;
 mod credentials;
+mod gate;
 mod mcp;
+mod stream;
 mod tui;
 
 use clap::{Parser, Subcommand};
@@ -45,6 +47,8 @@ enum Commands {
     },
     /// Send a one-shot message to the Rokha agent
     Chat { message: String },
+    /// Interactive REPL with the Rokha agent (paid feature)
+    Agent,
     /// Launch the TUI dashboard
     Tui,
     /// MCP server (JSON-RPC over stdio)
@@ -56,8 +60,14 @@ enum Commands {
 
 #[derive(Subcommand)]
 enum ToolsAction {
-    List,
-    Info { name: String },
+    /// List registry listings (optionally filtered by a search query)
+    List {
+        #[arg(default_value = "")]
+        query: String,
+    },
+    Info {
+        name: String,
+    },
 }
 
 #[derive(Subcommand)]
@@ -90,12 +100,13 @@ async fn main() {
         }
         Commands::Tools { action } => {
             match action {
-                ToolsAction::List => cli::tools::list(&client).await,
+                ToolsAction::List { query } => cli::tools::list(&client, &query).await,
                 ToolsAction::Info { name } => cli::tools::info(&client, &name).await,
             }
             0
         }
         Commands::Chat { message } => cli::agents::chat(&client, &message).await,
+        Commands::Agent => cli::agent::repl(&client).await,
         Commands::Login => cli::auth::login(client.base_url()).await,
         Commands::Whoami => cli::auth::whoami().await,
         Commands::Logout => cli::auth::logout().await,

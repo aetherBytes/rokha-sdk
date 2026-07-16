@@ -13,7 +13,7 @@ path = "src/main.rs"
 [dependencies]
 clap = { version = "4", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
-reqwest = { version = "0.12", features = ["json"] }
+reqwest = { version = "0.12", features = ["json", "stream"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 ratatui = "0.28"
@@ -21,3 +21,17 @@ crossterm = "0.28"
 toml = "0.8"
 dirs = "5"
 base64 = "0.22"
+futures-util = "0.3"
+
+# Voice (GIVE_RO_A_VOICE, day-0). Behind the default-on `voice` feature so
+# `cargo install rokha-cli --no-default-features` still builds on a box without
+# ALSA. The released binaries always carry it (CI installs libasound2-dev on
+# Linux; macOS uses CoreAudio, no extra deps). See the MVP doc's Distribution
+# section. `ro voice` degrades loud-and-honest if audio init fails at runtime.
+cpal = { version = "0.15", optional = true }
+rodio = { version = "0.19", optional = true, default-features = false, features = ["symphonia-mp3"] }
+hound = { version = "3", optional = true }
+
+[features]
+default = ["voice"]
+voice = ["dep:cpal", "dep:rodio", "dep:hound"]
