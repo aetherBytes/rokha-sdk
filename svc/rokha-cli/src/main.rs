@@ -1,3 +1,5 @@
+#[cfg(feature = "voice")]
+mod audio;
 mod api_client;
 mod cli;
 mod config;
@@ -49,6 +51,8 @@ enum Commands {
     Chat { message: String },
     /// Interactive REPL with the Rokha agent (paid feature)
     Agent,
+    /// Talk to Rokha out loud — voice conversation (paid feature)
+    Voice,
     /// Launch the TUI dashboard
     Tui,
     /// MCP server (JSON-RPC over stdio)
@@ -107,6 +111,20 @@ async fn main() {
         }
         Commands::Chat { message } => cli::agents::chat(&client, &message).await,
         Commands::Agent => cli::agent::repl(&client).await,
+        Commands::Voice => {
+            #[cfg(feature = "voice")]
+            {
+                cli::voice::convo(&client).await
+            }
+            #[cfg(not(feature = "voice"))]
+            {
+                eprintln!(
+                    "This build has no voice support. Reinstall with default features \
+                     (voice), or on Linux ensure libasound2 is present."
+                );
+                1
+            }
+        }
         Commands::Login => cli::auth::login(client.base_url()).await,
         Commands::Whoami => cli::auth::whoami().await,
         Commands::Logout => cli::auth::logout().await,
