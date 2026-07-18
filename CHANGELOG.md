@@ -6,6 +6,25 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Gust — run your X account from a Rig (unreleased)
+
+**Meet Gust, our line of tooling for X.** No building required — grab a
+ready-made workflow and drive your own X account: search recent tweets by
+keyword, hashtag, mention, or handle, or post and reply. Rokha makes the
+real calls for you, so your agents act as *you*.
+
+**Connect once, then it just runs.** Link X with a single click, adopt a
+Gust workflow, and run it. Every run acts on YOUR account and only yours —
+never the creator's — and your token is locked to X: it can never travel
+to any other site. Two workflows are live now (read and post); more X
+actions, scheduling, and audit-then-post are on the way.
+
+Where it gets us: connecting an account you already use turns into
+something an agent can actually operate — safely, on your behalf. What's
+next: likes, reposts, mentions monitoring, and posting on a schedule.
+Find them by searching *gust* in the registry.
+
+
 ## Rokha can search the web — and carry the tools you pick (unreleased)
 
 **Ask Rokha something current and she looks it up.** She can now search
