@@ -6,6 +6,33 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Where AI meets the blockchain — the product family (unreleased)
+
+**A sharper answer to "what is Rokha."** AI and the blockchain go hand in
+hand: agents will be the biggest users of the blockchain in the near
+future — software that holds value, settles it, and acts on it without
+waiting on a human. Rokha is the **operating system being built at the
+convergence of those two realities.** Same runtime, same registry, same
+resident agent — now with a clear line about where it's all headed.
+
+**A family of agent-tooling suites** sits on top of the platform, each a
+set of agent capabilities exposed through it. Built chain-agnostic and
+starting with **Robinhood Chain and Solana**:
+
+- **Gust** — X (Twitter) tooling for agents: read timelines and post to X
+  on your own account, under your own control.
+- **Signet** — the agent capability and trust layer: let an agent act
+  on-chain with real value (sign, pay, mint, deploy, trade) — bounded,
+  revocable, and audited, with no human approving every step. Chain-agnostic
+  by design, with per-chain adapters starting with Robinhood Chain and Solana.
+- **Sigil** *(on the roadmap)* — a coming launchpad and blockchain-tooling
+  suite: the gateway for agents into the blockchain.
+
+Where it gets us: the pitch and the personality now say the same thing —
+Rokha is the OS at the convergence of agents and the chain. What's next:
+Signet and Gust deepen; Sigil opens the launchpad.
+
+
 ## Rokha can search the web — and carry the tools you pick (unreleased)
 
 **Ask Rokha something current and she looks it up.** She can now search
