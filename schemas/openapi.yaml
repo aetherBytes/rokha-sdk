@@ -1486,8 +1486,9 @@ paths:
       summary: Directory of claimed builder pages
       description: >-
         All CLAIMED public builder pages with aggregate stats (listings,
-        runs, badge, leaderboard rank). Public, no auth. Pages exist only
-        once their owner claims a handle.
+        runs, badge, leaderboard rank) plus each builder's linked X
+        (`x_handle` / `x_verified` / `x_verified_type`). Public, no auth.
+        Pages exist only once their owner claims a handle.
       operationId: pagesDirectory
       responses:
         '200':
@@ -1504,7 +1505,9 @@ paths:
         The ranked Top Builders board (the landing surface): a weighted,
         log-damped adoption score per builder — all-time rig runs weigh
         heaviest, then other runs and shipped creations, plus last-7-day
-        actions and page views. Raw score components ride along. Public.
+        actions and page views. Raw score components ride along, as does
+        each builder's linked X (`x_handle` / `x_verified` /
+        `x_verified_type`). Public.
       operationId: pagesLeaderboard
       parameters:
         - { name: limit, in: query, schema: { type: integer }, description: '1-100, default 10' }
@@ -1522,7 +1525,11 @@ paths:
       summary: A builder's public page
       description: >-
         What /@handle renders — profile, links, badge, public creations,
-        30-day activity heartbeat, view counts, rig sub-pages. A genuine
+        30-day activity heartbeat, view counts, rig sub-pages. Carries the
+        builder's linked X when they have one: `x_handle` (no `@`, empty
+        when unlinked), `x_verified` (X's own paid check — a NARROWER
+        signal than the page's own `verified` mark), `x_verified_type`
+        (blue/business/government/''). A genuine
         open counts a page view (human OR agent); pass `preview=1` for
         card/list hydration that must NOT count. Public, no auth.
       operationId: pageByHandle
@@ -1555,7 +1562,8 @@ paths:
       summary: A rig sub-page (/@handle/slug)
       description: >-
         One published rig presented under its owner's page — only for rigs
-        whose owner opted in (`linked`). Public, no auth.
+        whose owner opted in (`linked`). Carries the owner's linked X
+        (`x_handle` / `x_verified` / `x_verified_type`). Public, no auth.
       operationId: pageRigSubpage
       parameters:
         - { name: handle, in: path, required: true, schema: { type: string } }
@@ -1579,6 +1587,10 @@ paths:
         collection — `badges` is every badge you've earned (seeker /
         builder / architect / influencer / …), `badge` the ACTIVE one shown
         on public surfaces (choose it via PUT /api/pages/me/badge).
+        Carries your linked X too — `x_handle` (no `@`, empty when
+        unlinked), `x_verified` (X's own paid check), `x_verified_type`
+        (blue/business/government/''). Reading this also refreshes a stale
+        link, so it is the cheapest way to keep an agent's view current.
       operationId: myPage
       security:
         - bearerAuth: []
@@ -1624,8 +1636,8 @@ paths:
       summary: Choose your active badge (JWT)
       description: >-
         Badges are a collection — you earn several (seeker for everyone,
-        builder once a rig of yours is run by another wallet, influencer as
-        a verified X promoter, more over time) and choose which ONE fronts
+        builder once a rig of yours is run by another wallet, influencer
+        the moment you link your X account, more over time) and choose which ONE fronts
         your identity on every public surface (page, directory,
         leaderboard, rig sub-pages). GET /api/pages/me lists what you've
         earned; setting an unearned badge is refused with that list.

@@ -6,6 +6,30 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Link your X to your builder page (unreleased)
+
+**Connect your X account once and it travels with your name.** Your handle
+now appears everywhere you show up — your profile, your builder page, every
+rig page you publish, the Top Builders board — and anyone can tap straight
+through to your X from any of them. If X checks your account, that check
+comes along too.
+
+**Linking earns you a badge.** The *X Linked* badge joins your collection
+the moment you connect, and you can fly it as your active badge like any
+other. Disconnect and it comes back off.
+
+**For anyone building against us:** the public page endpoints now carry
+`x_handle`, `x_verified` and `x_verified_type` alongside the existing badge
+and profile fields, so an agent reading a builder's page sees their X the
+same way a person does. Note that `x_verified` means *X's own paid check* —
+deliberately a narrower signal than a page's own verified mark, and the two
+are reported separately.
+
+Connecting is one press in Profile. A hiccup talking to X never costs you
+the connection, and losing your X session never silently un-links you —
+only disconnecting does that.
+
+
 ## Start from a template and actually get a workflow (unreleased)
 
 **The ready-made workflows now arrive built.** Pick *Explore*, *Audit*, or
