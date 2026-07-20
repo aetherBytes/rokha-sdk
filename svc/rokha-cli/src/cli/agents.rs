@@ -23,7 +23,7 @@ pub async fn chat(client: &RokhaClient, message: &str) -> i32 {
     };
 
     let url = format!("{}{}", client.base_url(), path);
-    let mut req = reqwest::Client::new().post(&url).json(&body);
+    let mut req = crate::api_client::http_client().post(&url).json(&body);
     if let Some(c) = &creds {
         req = req.bearer_auth(&c.jwt);
     }
@@ -65,9 +65,11 @@ pub async fn chat(client: &RokhaClient, message: &str) -> i32 {
 /// below. Mirrors the shape of `/api/agents/rokha-agent/chat`'s response:
 ///   { "response": "<text>", "tool_calls": [...], "tool_results": [...], ... }
 fn render_turn(json: &Value) {
+    // The authed door returns `response`; the public door returns `content`.
     let text = json
-        .get("response")
+        .get("content")
         .and_then(|v| v.as_str())
+        .or_else(|| json.get("response").and_then(|v| v.as_str()))
         .or_else(|| json.get("message").and_then(|v| v.as_str()))
         .unwrap_or("");
 
@@ -76,8 +78,16 @@ fn render_turn(json: &Value) {
     }
 
     // Inline tool render. Server's response shape may carry these in a few
-    // places depending on endpoint version; check both flat + nested.
-    if let Some(tools) = json.get("tool_calls").and_then(|v| v.as_array()) {
+    // places depending on endpoint version; check both flat + nested under
+    // `metadata` (the public door nests them there).
+    let meta = json.get("metadata");
+    let tool_calls = json
+        .get("tool_calls")
+        .or_else(|| meta.and_then(|m| m.get("tool_calls")));
+    let tool_results = json
+        .get("tool_results")
+        .or_else(|| meta.and_then(|m| m.get("tool_results")));
+    if let Some(tools) = tool_calls.and_then(|v| v.as_array()) {
         if !tools.is_empty() {
             eprintln!();
         }
@@ -92,12 +102,12 @@ fn render_turn(json: &Value) {
                 .get("function")
                 .and_then(|f| f.get("arguments"))
                 .and_then(|a| a.as_str())
-                .map(|s| compact_args(s))
+                .map(compact_args)
                 .unwrap_or_default();
-            eprintln!("\x1b[2m▸ tool · {}({}){}\x1b[0m", name, args, "");
+            eprintln!("\x1b[2m▸ tool · {}({})\x1b[0m", name, args);
         }
     }
-    if let Some(results) = json.get("tool_results").and_then(|v| v.as_array()) {
+    if let Some(results) = tool_results.and_then(|v| v.as_array()) {
         for r in results {
             let preview = r
                 .get("content")

@@ -6,6 +6,7 @@ import { LlmClient } from './llm.js';
 import { MCPClient } from './mcp.js';
 import { MarketplaceClient } from './marketplace.js';
 import { RigsClient } from './rigs.js';
+import { RuntimeClient } from './runtime.js';
 import { WalletsClient } from './wallets.js';
 
 const DEFAULT_BASE_URL = 'http://localhost:3000';
@@ -56,6 +57,7 @@ export class RokhaClient {
   readonly mcp: MCPClient;
   readonly marketplace: MarketplaceClient;
   readonly rigs: RigsClient;
+  readonly runtime: RuntimeClient;
   readonly wallets: WalletsClient;
 
   constructor(config: Partial<RokhaConfig> = {}) {
@@ -71,6 +73,7 @@ export class RokhaClient {
     this.mcp = new MCPClient(this);
     this.marketplace = new MarketplaceClient(this);
     this.rigs = new RigsClient(this);
+    this.runtime = new RuntimeClient(this);
     this.wallets = new WalletsClient(this);
   }
 

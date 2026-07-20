@@ -54,6 +54,8 @@ tags:
     description: Federated LLM proxy — caller-keyed Anthropic forwarding
   - name: rigs
     description: Rigs (workflows of configured harnesses) + run traces — the Working Rig surface
+  - name: runtime
+    description: Run for real — execute a skill in the isolated sandbox (free taste + tier-quota run)
   - name: analytics
     description: Privacy-safe product-analytics capture — anon-session-keyed, fire-and-forget
   - name: oauth
@@ -2054,6 +2056,92 @@ paths:
           content:
             text/event-stream:
               schema: { type: string }
+
+  /api/runtime/taste:
+    post:
+      tags: [runtime]
+      summary: "Run for real (free public taste)"
+      description: |
+        The public conversion door: ONE real sandbox run per anon session per
+        day, inside the global daily budget. No auth — the caller supplies an
+        `anon_session_id` (UUID) that scopes the free run. Executes the skill
+        in the isolated egress-only, no-secrets Fargate sandbox and writes a
+        trace anchored to `harness_id` (the run IS its own receipt).
+      operationId: runtimeTaste
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [anon_session_id, skill_provider, skill_slug, harness_id]
+              properties:
+                anon_session_id: { type: string, format: uuid }
+                skill_provider: { type: string }
+                skill_slug: { type: string }
+                instruction: { type: string }
+                params: { type: object, additionalProperties: true }
+                harness_id: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Run acknowledgement (carries a run_id to poll)
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+        '400': { description: Bad input (non-UUID id, invalid params) }
+        '429': { description: Free-run budget exhausted for the session/day }
+
+  /api/runtime/run:
+    post:
+      tags: [runtime]
+      summary: "Run for real (logged-in, tier quota)"
+      description: |
+        The authenticated run door — draws from the caller's tier daily quota
+        (not the anon free-taste), still under the global token ceiling. Owner
+        is derived from the verified JWT. Writes a trace anchored to
+        `harness_id`.
+      operationId: runtimeRun
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [skill_provider, skill_slug, harness_id]
+              properties:
+                skill_provider: { type: string }
+                skill_slug: { type: string }
+                instruction: { type: string }
+                params: { type: object, additionalProperties: true }
+                harness_id: { type: string, format: uuid }
+                model: { type: string }
+      responses:
+        '200':
+          description: Run acknowledgement (carries a run_id to poll)
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+        '401': { description: Not authenticated }
+        '429': { description: Tier daily quota exhausted }
+
+  /api/runtime/runs/{run_id}/progress:
+    get:
+      tags: [runtime]
+      summary: "Live run progress"
+      description: Poll a run's live stage events by run id (run-token gated server-side).
+      operationId: runtimeProgress
+      parameters:
+        - name: run_id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Progress snapshot
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
 
   /api/agents/rokha-agent/run/stream:
     post:
