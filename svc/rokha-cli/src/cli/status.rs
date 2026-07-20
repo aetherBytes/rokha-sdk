@@ -29,6 +29,7 @@ pub async fn run(client: &RokhaClient) {
 
     // 2. Remote reachability + schema (one HTTP call covers both via /api/schema/version)
     let http = reqwest::Client::builder()
+        .user_agent(crate::api_client::USER_AGENT)
         .timeout(PROBE_TIMEOUT)
         .build()
         .expect("failed to build http client");

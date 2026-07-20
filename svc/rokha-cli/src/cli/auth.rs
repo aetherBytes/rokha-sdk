@@ -46,11 +46,14 @@ struct StartBody {
 
 /// `ro login` — drives the device flow end-to-end.
 pub async fn login(base_url: &str) -> i32 {
-    let http = reqwest::Client::new();
+    let http = crate::api_client::http_client();
 
     let start: StartResponse = match http
         .post(format!("{}/api/auth/cli/start", base_url))
-        .json(&StartBody { scope: "cli", client: CLIENT_ID })
+        .json(&StartBody {
+            scope: "cli",
+            client: CLIENT_ID,
+        })
         .send()
         .await
         .and_then(|r| r.error_for_status())
@@ -85,7 +88,10 @@ pub async fn login(base_url: &str) -> i32 {
         println!("(could not auto-open browser — visit the link manually)");
     }
     println!();
-    println!("Waiting for authorization (expires in {} seconds)…", start.expires_in);
+    println!(
+        "Waiting for authorization (expires in {} seconds)…",
+        start.expires_in
+    );
 
     let started = std::time::Instant::now();
     let max_wait = Duration::from_secs(start.expires_in as u64);
@@ -167,9 +173,14 @@ pub async fn login(base_url: &str) -> i32 {
                     return 1;
                 }
                 println!();
-                println!("✓ Logged in as \x1b[1m{}\x1b[0m ({}, tier: {})",
-                    creds.identity.identity, creds.identity.auth_method, creds.identity.tier);
-                println!("  credentials: {}", credentials::credentials_path().display());
+                println!(
+                    "✓ Logged in as \x1b[1m{}\x1b[0m ({}, tier: {})",
+                    creds.identity.identity, creds.identity.auth_method, creds.identity.tier
+                );
+                println!(
+                    "  credentials: {}",
+                    credentials::credentials_path().display()
+                );
                 return 0;
             }
         }
@@ -189,9 +200,7 @@ pub async fn whoami() -> i32 {
     let claims = credentials::decode_payload(&creds.jwt);
     let exp_str = claims
         .as_ref()
-        .map(|c| {
-            chrono_like_format(c.exp).unwrap_or_else(|| format!("(exp={})", c.exp))
-        })
+        .map(|c| chrono_like_format(c.exp).unwrap_or_else(|| format!("(exp={})", c.exp)))
         .unwrap_or_else(|| "(unreadable JWT payload)".to_string());
 
     println!("Logged in as: {}", creds.identity.identity);
@@ -205,7 +214,10 @@ pub async fn whoami() -> i32 {
             println!("  scopes:      {}", c.scopes.join(", "));
         }
     }
-    println!("  file:        {}", credentials::credentials_path().display());
+    println!(
+        "  file:        {}",
+        credentials::credentials_path().display()
+    );
     0
 }
 
@@ -253,10 +265,7 @@ fn chrono_like_format(epoch_secs: i64) -> Option<String> {
     if epoch_secs <= 0 {
         return None;
     }
-    let now = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .ok()?
-        .as_secs() as i64;
+    let now = SystemTime::now().duration_since(UNIX_EPOCH).ok()?.as_secs() as i64;
     let delta = epoch_secs - now;
     let suffix = if delta < 0 {
         format!("expired {} ago", human_duration((-delta) as u64))

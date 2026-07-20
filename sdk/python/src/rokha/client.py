@@ -255,6 +255,63 @@ class RokhaClient:
         prefix, headers = self._rig_prefix_headers(anon_session_id)
         return self._request("GET", f"{prefix}/traces/{trace_id}", headers=headers)
 
+    # --- Runtime ("run for real") ---
+
+    def runtime_taste(
+        self,
+        anon_session_id: str,
+        skill_provider: str,
+        skill_slug: str,
+        harness_id: str,
+        instruction: str = "",
+        params: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """The free PUBLIC door: one real sandbox run per anon session per day.
+
+        No auth. `anon_session_id` (a UUID) scopes the free run; `harness_id`
+        (a UUID) anchors the trace that the run writes as its receipt.
+        """
+        return self.post(
+            "/api/runtime/taste",
+            {
+                "anon_session_id": anon_session_id,
+                "skill_provider": skill_provider,
+                "skill_slug": skill_slug,
+                "instruction": instruction,
+                "params": params or {},
+                "harness_id": harness_id,
+            },
+        )
+
+    def runtime_run(
+        self,
+        skill_provider: str,
+        skill_slug: str,
+        harness_id: str,
+        instruction: str = "",
+        params: dict[str, Any] | None = None,
+        model: str | None = None,
+    ) -> dict[str, Any]:
+        """The LOGGED-IN door: a real run against the caller's tier daily quota.
+
+        Requires the bearer JWT (set via `set_auth_token`). `harness_id` (a
+        UUID) anchors the trace.
+        """
+        body: dict[str, Any] = {
+            "skill_provider": skill_provider,
+            "skill_slug": skill_slug,
+            "instruction": instruction,
+            "params": params or {},
+            "harness_id": harness_id,
+        }
+        if model is not None:
+            body["model"] = model
+        return self.post("/api/runtime/run", body)
+
+    def runtime_progress(self, run_id: str) -> dict[str, Any]:
+        """Poll a run's live stage progress by run id."""
+        return self.get(f"/api/runtime/runs/{run_id}/progress")
+
     def close(self) -> None:
         self._http.close()
 

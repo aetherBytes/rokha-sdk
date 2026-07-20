@@ -1,6 +1,6 @@
 ---
 name: rig-template-audit-brief
-description: A ready-made two-step Rokha Rig pattern — step 1 audits/inspects a tool or claim, step 2 turns the findings into a plain-language brief with a verdict. Use when the user wants to "check something out and summarize it", vet a tool and get a readable report, or wants a worked example of an analyze → report workflow. Instantiable by any agent over Rokha's public API, or one click in the Rokha editor.
+description: A ready-made three-step Rokha Rig pattern — fetch → analyze → report. It takes ONE registry listing as its input: step 1 looks that listing up and fetches its real document, step 2 inspects the document for security and trust-boundary issues, step 3 writes a plain-language brief ending in an adopt / try-with-care / avoid verdict. Use when the user wants to vet a tool before adopting it, or wants a worked example of a fetch → analyze → report workflow. Instantiable by any agent over Rokha's public API, or one click in the Rokha editor.
 license: MIT
 compatibility: Works against any Rokha deployment (rokha.ai or self-hosted Erebus). Instantiation uses the public anon Working-Rig surface or the authenticated rigs API; running uses the run stream.
 metadata:
@@ -13,11 +13,11 @@ metadata:
 
 # Rig Template — Audit & Brief
 
-A three-step workflow skeleton: **fetch → analyze → report**. Step 1 fetches
-the target (a Rokha Registry listing, a URL, a repo, or an endpoint); step 2
-inspects it for security issues — what it accesses, trust boundaries, risky
-patterns; step 3 writes the brief a human actually wants to read, ending in
-a clear trust verdict.
+A three-step workflow skeleton: **fetch → analyze → report**. The rig declares
+one **input** — the registry listing you want vetted. Step 1 looks that listing
+up and fetches its real document; step 2 inspects the document for security
+issues — what it accesses, trust boundaries, risky patterns; step 3 writes the
+brief a human actually wants to read, ending in a clear trust verdict.
 
 Each step carries a registry *query*, resolved against the live Rokha
 Registry at instantiation — the pattern adapts to the mesh's current
@@ -28,9 +28,11 @@ inventory.
 Machine-readable skeleton: `assets/rig.json` (served at
 `/api/skills/rig-template-audit-brief/assets/rig.json`, no auth):
 
-- **Step 1 · fetch** — a fetch skill (registry query:
-  `fetch url http request`), instructed to gather the target's source
-  material — registry listings welcome.
+- **Step 1 · fetch** — PINNED to Rokha Registry Search (`rokha-registry`),
+  instructed to look up the listing named as the rig's input and fetch its
+  real document (SKILL.md / server page) — the source material for the audit.
+  Pinned rather than query-resolved because this step must be a known Rokha
+  capability, not a fuzzy match.
 - **Step 2 · analyze** — a security skill (registry query:
   `security audit code review`), instructed to inspect what it accesses,
   its trust boundaries, and risky patterns.

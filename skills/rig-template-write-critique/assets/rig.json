@@ -1,20 +1,24 @@
 {
   "$schema": "https://rokha.ai/schemas/rig-template-v1.json",
-  "name": "Write & Critique",
-  "intent": "write a piece, then critique it against the actual output",
+  "name": "Write & critique",
+  "intent": "Write a piece, then critique it against the actual output — a worked example of chaining two skills into one flow.",
   "intent_category": "build",
   "steps": [
     {
-      "role": "create",
+      "role": "primary",
       "tag": "write",
       "query": "writing",
-      "instruction": "Write the piece the user's intent asks for. If no specifics were given, produce a short, vivid example of this skill's best work."
+      "expects": "what to write (the user's intent)",
+      "instruction": "Write the piece the user's intent asks for. If no specifics were given, produce a short, vivid example of this skill's best work.",
+      "produces": "the written piece"
     },
     {
-      "role": "review",
+      "role": "step",
       "tag": "critique",
       "query": "review critique feedback",
-      "instruction": "Critique the previous step's output in 2-3 sharp, constructive sentences, then grade it A-F with one line of justification."
+      "expects": "the written piece",
+      "instruction": "Critique the previous step's output in 2-3 sharp, constructive sentences, then grade it A–F with one line of justification.",
+      "produces": "a 2-3 sentence critique + an A–F grade"
     }
   ]
 }
