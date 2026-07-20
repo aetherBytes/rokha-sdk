@@ -6,6 +6,33 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Start from a template and actually get a workflow (unreleased)
+
+**The ready-made workflows now arrive built.** Pick *Explore*, *Audit*, or
+*Write & critique* and the whole thing lands on your canvas — every step
+already wired, in order, ready to run. It used to look like nothing had
+happened: the steps were there underneath and the workflow really did run,
+but the canvas showed you an empty page. Fixed.
+
+**They also start you in the right place.** A template drops you on the one
+thing still missing rather than on finished work — Explore and Audit open
+asking which tool you want looked at, Write & critique opens asking what to
+write — with your remaining to-dos listed at the top where you can see them.
+
+**Templates are easier to find.** The button moved up next to My Rigs, so
+you meet the ready-made workflows at the start instead of discovering them
+halfway through building. And **Remix** — where Rokha picks something from
+the library and builds a workflow from it live — now lives in Rokha's own
+quick actions, so you can set her off from anywhere.
+
+We also corrected what two of the templates advertised: the Audit workflow
+is three steps, not two, and Write & critique now declares what each step
+hands to the next.
+
+Where it gets us: the fastest path into Rokha — pick a pattern, name it,
+run it — actually works end to end. What's next: more patterns, and letting
+Rokha assemble one for you from a plain-English description.
+
 ## Where AI meets the blockchain — the product family (unreleased)
 
 **A sharper answer to "what is Rokha."** AI and the blockchain go hand in
@@ -452,11 +479,24 @@ concentration**: your top-10 holders recalculated with the sockpuppets
 merged back into one. On Solana we can go further and *prove* it — when
 several launch buys rode the same atomic bundle, that's not a guess.
 
-Every audit now draws this as an **interactive bubble map** you can click
-through: each wallet is a bubble sized by how much it holds, lines show
-funding and transfers, and you can toggle each kind of connection on and
-off. It ships inside the report itself — open it anywhere, no internet
-needed — and renders right inside Rokha when you run the audit there.
+On **Robinhood Chain**, an audit draws this as an **interactive bubble
+map** you can click through: each wallet is a bubble sized by how much it
+holds, lines show funding and transfers, and you can toggle each kind of
+connection on and off. It ships inside the report itself — open it
+anywhere, no internet needed — and renders right inside Rokha.
+
+On **Solana** we deliberately took the map back out, and that's a feature.
+A picture of connections quietly claims to be the whole picture — a
+missing line reads as "these two are unrelated". But the free public data
+we read only lets us sample the biggest holders and their recent activity,
+so a missing line usually means "we didn't look there", not "no
+connection". Instead of a map that overclaims, a Solana audit now hands
+you a ranked list of what it actually found, each item labelled
+**proven**, **probable**, or **lead**, with the receipts — and it prints
+the limits of what it could see on every result, including clean ones. The
+top-holder number is stated as a floor: at least this concentrated, quite
+possibly worse. The map comes back when we can afford data good enough to
+justify it.
 
 Care was taken not to cry wolf: exchanges and bridges pass money between
 thousands of unrelated people, so the tool deliberately refuses to link
