@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rokha × X — Connect your account</title>
+<meta name="description" content="Link your X account to Rokha, wear the 𝕏 Linked badge, and automate posts and replies with the Gust toolset. Real calls on your own account — no keys pasted, no bot farm.">
+<meta property="og:title" content="Rokha × X — Connect your account">
+<meta property="og:description" content="Link X once. Then let your agents read, post, and reply on your own account through the Gust toolset and X's official MCP. Real calls, your timeline.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aetherbytes.github.io/rokha-sdk/x-integration.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@IntrovertedDevs">
+<style>
+  :root{
+    --void:#06080b; --panel:#0c1015; --panel-2:#10161d; --line:#1b2530;
+    --ice:#7fe8ff; --ice-deep:#37c6e6; --ice-dim:#3a5563;
+    --silver:#cdd8e2; --muted:#6d7f8d; --faint:#465562;
+    --live:#57e0a0; --warn:#ffcf6b; --xblack:#e9eef2;
+    --glow: 0 0 0 1px rgba(127,232,255,.12), 0 0 30px -8px rgba(55,198,230,.35);
+    --mono: ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans: "Inter var",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  :root[data-theme="light"]{
+    --void:#eef2f5; --panel:#ffffff; --panel-2:#f4f7fa; --line:#d9e2ea;
+    --ice:#0f8fb0; --ice-deep:#0b7f9e; --ice-dim:#8bb3c1;
+    --silver:#182530; --muted:#54687a; --faint:#8698a6; --xblack:#0b0f14;
+    --glow: 0 0 0 1px rgba(15,143,176,.14), 0 6px 24px -12px rgba(11,127,158,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--void); color:var(--silver);
+    font-family:var(--sans); line-height:1.6; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 520px at 78% -8%, rgba(55,198,230,.10), transparent 60%),
+      radial-gradient(760px 480px at 8% 4%, rgba(127,232,255,.05), transparent 55%);
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:0 22px}
+  .mono{font-family:var(--mono)}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.32em; text-transform:uppercase; color:var(--ice-deep)}
+  h1,h2,h3{text-wrap:balance; line-height:1.08; letter-spacing:-.02em; margin:0}
+  a{color:var(--ice)}
+
+  .bar{position:sticky; top:0; z-index:20; backdrop-filter:blur(9px);
+    background:color-mix(in srgb, var(--void) 78%, transparent); border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex; align-items:center; gap:14px; height:56px}
+  .brand{font-family:var(--mono); font-weight:600; letter-spacing:.06em; color:var(--silver)}
+  .brand b{color:var(--ice)}
+  .navcta{margin-left:auto; font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+    text-decoration:none; color:var(--void); background:linear-gradient(150deg,var(--ice),var(--ice-deep));
+    padding:8px 14px; border-radius:8px; font-weight:600}
+  .theme{background:none;border:1px solid var(--line);color:var(--muted);
+    font-family:var(--mono);font-size:11px;padding:5px 10px;border-radius:7px;cursor:pointer}
+  .theme:hover{color:var(--ice);border-color:var(--ice-dim)}
+
+  .hero{padding:78px 0 30px}
+  .hero .glyphrow{display:flex;align-items:center;gap:16px;margin-bottom:26px}
+  .glyphrow .x{font-family:var(--mono);font-size:30px;color:var(--xblack);
+    border:1px solid var(--line);border-radius:12px;width:52px;height:52px;
+    display:grid;place-items:center;background:var(--panel)}
+  .glyphrow .plus{color:var(--faint);font-size:20px}
+  .glyphrow .r{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--void);
+    width:52px;height:52px;border-radius:12px;display:grid;place-items:center;
+    background:linear-gradient(150deg,var(--ice),var(--ice-deep));box-shadow:var(--glow)}
+  h1{font-size:clamp(38px,7vw,68px);font-weight:800}
+  h1 .accent{background:linear-gradient(120deg,var(--ice),var(--ice-deep));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(17px,2.3vw,21px);color:var(--muted);max-width:60ch;margin:22px 0 0}
+  .sub b{color:var(--silver);font-weight:600}
+  .herocta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .btn{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-decoration:none;
+    padding:12px 20px;border-radius:10px;font-weight:600}
+  .btn.primary{color:var(--void);background:linear-gradient(150deg,var(--ice),var(--ice-deep));box-shadow:var(--glow)}
+  .btn.ghost{color:var(--ice);border:1px solid var(--ice-dim);background:var(--panel)}
+  .btn:hover{filter:brightness(1.08)}
+
+  section{padding:44px 0}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .kicker .num{font-family:var(--mono);font-size:12px;color:var(--ice-deep);
+    border:1px solid var(--ice-dim);border-radius:6px;padding:2px 8px}
+  .kicker h2{font-size:clamp(22px,3.4vw,30px);font-weight:700}
+  .lede{color:var(--muted);max-width:64ch;margin:-12px 0 26px;font-size:16px}
+
+  .cards{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;
+    position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;
+    background:linear-gradient(90deg,var(--ice),transparent 70%)}
+  .card h3{font-size:19px;font-weight:700;margin-bottom:6px}
+  .card .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ice-deep);margin-bottom:14px;display:inline-block}
+  .card p{font-size:14.5px;color:var(--muted);margin:0 0 16px}
+  .flist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+  .flist li{font-size:13.5px;color:var(--silver);display:flex;gap:10px;align-items:flex-start}
+  .flist li::before{content:"▹";color:var(--ice);flex:none;line-height:1.5}
+  .flist .k{color:var(--muted)}
+
+  .specs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  @media(max-width:720px){.specs{grid-template-columns:1fr 1fr}}
+  .spec{background:var(--panel);padding:20px 18px}
+  .spec .n{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--ice);
+    font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .spec .l{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.35}
+
+  .steps{display:flex;flex-direction:column;gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .step{background:var(--panel);padding:20px 22px;display:grid;
+    grid-template-columns:auto 1fr;gap:18px;align-items:start}
+  .step .idx{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--void);
+    background:linear-gradient(150deg,var(--ice),var(--ice-deep));width:28px;height:28px;
+    border-radius:8px;display:grid;place-items:center;flex:none}
+  .step h3{font-size:16px;font-weight:700;margin-bottom:5px}
+  .step p{margin:0;font-size:14px;color:var(--muted)}
+  .step p b{color:var(--silver);font-weight:600}
+  .path{display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-family:var(--mono);font-size:12px;color:var(--ice);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+  .chip .sep{color:var(--faint);margin:0 1px}
+  .lit{display:inline-flex;align-items:center;gap:8px;margin-top:8px;
+    background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:6px 8px 6px 12px}
+  .lit code{font-family:var(--mono);font-size:12.5px;color:var(--ice);white-space:nowrap}
+  .lit .k{color:var(--faint);font-size:11px}
+  .minicopy{background:none;border:1px solid var(--ice-dim);color:var(--ice);
+    font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    padding:4px 8px;border-radius:6px;cursor:pointer}
+  .minicopy:hover{background:var(--ice);color:var(--void)}
+  .minicopy.done{background:var(--live);color:var(--void);border-color:var(--live)}
+  .verify{font-family:var(--mono);font-size:12.5px;color:var(--live);margin-top:10px;display:flex;gap:9px;align-items:baseline}
+  .verify::before{content:"✓";flex:none}
+
+  .pricing{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;
+    display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+  .pricing .big{font-family:var(--mono);font-size:15px;color:var(--silver)}
+  .pricing .big b{color:var(--ice)}
+  .pricing .muted{font-size:13.5px;color:var(--muted);max-width:46ch}
+
+  .cta{background:linear-gradient(150deg,var(--panel-2),var(--panel));border:1px solid var(--ice-dim);
+    border-radius:20px;padding:44px 32px;text-align:center;box-shadow:var(--glow)}
+  .cta h2{font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:12px}
+  .cta p{color:var(--muted);max-width:52ch;margin:0 auto 26px;font-size:16px}
+
+  footer{border-top:1px solid var(--line);padding:34px 0 60px;margin-top:20px}
+  footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center;
+    font-family:var(--mono);font-size:12px;color:var(--faint)}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--ice)}
+  @media(prefers-reduced-motion:no-preference){
+    .card,.spec,.step{animation:rise .5s both}
+    @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <span class="brand"><b>ROKHA</b> × X</span>
+  <button class="theme" id="tg">☾ theme</button>
+  <a class="navcta" href="https://rokha.ai" target="_blank" rel="noopener">Link X →</a>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="glyphrow"><div class="x mono">𝕏</div><span class="plus">+</span><div class="r">R</div></div>
+  <div class="eyebrow">New · connect your account · drive it from Rokha</div>
+  <h1 style="margin-top:14px">Your <span class="accent">X account</span>, now part of the agentic OS.</h1>
+  <p class="sub">Link X once and it rides with your name everywhere. Then let your agents <b>read, post, and reply on your own account</b> — through Rokha's Gust tools and X's official MCP server. Real calls. Your timeline. No keys pasted, no bot farm.</p>
+  <div class="herocta">
+    <a class="btn primary" href="https://rokha.ai" target="_blank" rel="noopener">Link your X →</a>
+    <a class="btn ghost" href="#activate">See how it works</a>
+  </div>
+</div></header>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">01</span><h2>What's new</h2></div>
+  <div class="cards">
+    <div class="card">
+      <span class="tag">Identity · 𝕏 Linked badge</span>
+      <h3>Link your X, wear the badge</h3>
+      <p>Connect X in your profile and it stamps your identity — your handle rides with your name across Rokha, with a tap straight through to your X.</p>
+      <ul class="flist">
+        <li><span class="k">Your @handle appears on</span> your profile, builder page, every rig page, and the leaderboard</li>
+        <li>If X verifies your account, that <b>blue check comes along</b> too</li>
+        <li>Linking earns the <b>𝕏 Linked badge</b> — fly it as your active badge anytime</li>
+        <li>Rokha holds the token — <span class="k">disconnect anytime, it clears clean</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Capability · Gust + Official X MCP</span>
+      <h3>Connect once, your agent acts as you</h3>
+      <p>One connect and your rigs drive your own X account — the full REST surface plus X's first-party MCP server, with no keys ever living in the sandbox.</p>
+      <ul class="flist">
+        <li><b>Gust · Read X</b> and <b>Gust · Post to X</b> — real search, post, and threaded reply</li>
+        <li><b>X's official MCP</b> at <span class="mono">api.x.com/mcp</span> — <b>119 operations</b>, ready in the picker</li>
+        <li><b>You act, you pay</b> — every call lands on <i>your</i> timeline, never the creator's</li>
+        <li>Connect tokens are locked to X's own hosts — a shared tool can't hijack your login</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">02</span><h2>Meet Gust — the X toolset</h2></div>
+  <p class="lede">Gust is Rokha's line of X tools: small, composable rigs that run on your connected account. Adopt one, or chain several into an automation that runs itself.</p>
+  <div class="cards">
+    <div class="card">
+      <span class="tag">Available now</span>
+      <h3>Read &amp; post, on your account</h3>
+      <ul class="flist">
+        <li><b>Gust · Read X</b> — search recent posts by keyword, <span class="mono">#hashtag</span>, <span class="mono">@mention</span>, or <span class="mono">from:handle</span></li>
+        <li><b>Gust · Post to X</b> — post a tweet or a threaded reply, and get the real posted id back</li>
+        <li>Plus the full <b>official X MCP</b> — 119 operations across posts, search, users, lists, DMs, and analytics</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">What the connection unlocks</span>
+      <h3>Easy automation from Rokha</h3>
+      <ul class="flist">
+        <li><b>Schedule it</b> — post on a cadence, or pull mentions and tags on a timer</li>
+        <li><b>Audit → post</b> — chain a Hoodwatch or Solwatch run straight into a post, end to end</li>
+        <li><b>Compose flows</b> — read, judge sentiment, then reply, all in one rig</li>
+        <li><b>Hands-off runs</b> — set it once; Rokha runs it on your account, on your schedule</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="specs">
+    <div class="spec"><div class="n">119</div><div class="l">official X operations, one connect away</div></div>
+    <div class="spec"><div class="n">1</div><div class="l">login → one-click connect X, GitHub, Google</div></div>
+    <div class="spec"><div class="n">Real</div><div class="l">live calls to X's v2 API — not a simulation</div></div>
+    <div class="spec"><div class="n">Yours</div><div class="l">every action runs on your own account &amp; plan</div></div>
+  </div>
+</div></section>
+
+<section id="activate"><div class="wrap">
+  <div class="kicker"><span class="num">03</span><h2>How to connect — step by step</h2></div>
+  <p class="lede">Five steps from a fresh login to your first run on your own X account.</p>
+  <div class="steps">
+
+    <div class="step"><span class="idx">1</span><div>
+      <h3>Log in to rokha.ai</h3>
+      <p>Open <b>rokha.ai</b> and sign in with <b>Google</b> or a <b>Web3 wallet</b>. That's the only account you need — Rokha holds every connection under it.</p>
+      <div class="verify">You land on your home, signed in.</div>
+    </div></div>
+
+    <div class="step"><span class="idx">2</span><div>
+      <h3>Connect your X account</h3>
+      <p>Go to your profile and press <b>Link X</b>. Approve <b>Read and write</b> when X asks — write access is what lets a tool post for you. This stamps your page and stores the connection your rigs use.</p>
+      <div class="path"><span class="chip">Profile<span class="sep">›</span>API Keys<span class="sep">›</span>Connected services<span class="sep">›</span>Connect X</span></div>
+      <div class="verify">Your @handle + 𝕏 Linked badge appear on your page. Set it active in Profile › Page.</div>
+    </div></div>
+
+    <div class="step"><span class="idx">3</span><div>
+      <h3>Add an X tool</h3>
+      <p>From the Registry — or the builder page at <b>rokha.ai/@sage</b> — adopt a <b>Gust</b> rig, or target <b>X · Official MCP</b> to reach all 119 operations. Search for:</p>
+      <div class="lit"><span class="k">search</span><code>gust</code><button class="minicopy">copy</button></div>
+      <div class="verify">The rig lands on your canvas, its steps ready.</div>
+    </div></div>
+
+    <div class="step"><span class="idx">4</span><div>
+      <h3>Attach your connection</h3>
+      <p>On the step, add a <b>Saved key</b> so the rig runs on <i>your</i> account. Use the alias and header hint below — the token resolves to your own connected X, never the creator's.</p>
+      <div class="lit"><span class="k">alias</span><code>oauth-x</code><button class="minicopy">copy</button></div>
+      <div class="lit"><span class="k">hint</span><code>header:Authorization:Bearer </code><button class="minicopy">copy</button></div>
+      <div class="verify">The step shows a resolved connect-key, locked to x.com.</div>
+    </div></div>
+
+    <div class="step"><span class="idx">5</span><div>
+      <h3>Name it and run</h3>
+      <p>Give the rig a name, type your search query or tweet text as the input, and hit <b>Run</b>. Rokha makes the real call to X and shows you the trace — a post returns a real tweet id; a search returns real results.</p>
+      <div class="verify">A green trace with your posted tweet id — live, not simulated.</div>
+    </div></div>
+
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">04</span><h2>What it costs</h2></div>
+  <div class="pricing">
+    <div class="big">Free tier: <b>15 X credits / day</b></div>
+    <div class="muted">Enough for a search plus a post, every day, on us. Need more? Credit packs start at <b style="color:var(--ice)">$5</b>, or bring your own X API key to run on your own plan. Rokha runs a single X app, so a connect-only post lands on your timeline with nothing to set up.</div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="cta">
+    <div class="eyebrow" style="justify-content:center;display:flex">Ready in one connect</div>
+    <h2 style="margin-top:14px">Bring your X into the flow.</h2>
+    <p>Link your account, adopt a tool, and let your agents work your timeline — safely, on your own terms.</p>
+    <div class="herocta" style="justify-content:center">
+      <a class="btn primary" href="https://rokha.ai" target="_blank" rel="noopener">Link your X on rokha.ai →</a>
+      <a class="btn ghost" href="https://x.com/IntrovertedDevs" target="_blank" rel="noopener">Follow on 𝕏 →</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span><b style="color:var(--muted)">Rokha</b> — the OS for the agentic world</span>
+  <span>·</span><a href="https://rokha.ai" target="_blank" rel="noopener">rokha.ai</a>
+  <span>·</span><a href="https://x.com/IntrovertedDevs" target="_blank" rel="noopener">𝕏 @IntrovertedDevs</a>
+</div></footer>
+
+<script>
+  const root=document.documentElement, tg=document.getElementById('tg');
+  tg.addEventListener('click',()=>{
+    const cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+  document.querySelectorAll('.minicopy').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const code=btn.parentElement.querySelector('code').textContent;
+      navigator.clipboard.writeText(code).then(()=>{
+        const o=btn.textContent;btn.textContent='✓';btn.classList.add('done');
+        setTimeout(()=>{btn.textContent=o;btn.classList.remove('done')},1200);
+      });
+    });
+  });
+</script>
+</body>
+</html>
