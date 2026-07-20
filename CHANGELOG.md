@@ -6,6 +6,35 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Hold the coin, wear the hood — the Introverted badge (unreleased)
+
+**Holding 100k $ID now means something on Rokha.** Log in with the Solana
+wallet that holds it and the hooded **Introverted badge** lands on your
+identity automatically — your profile, your builder page, your rig pages, the
+leaderboard. It's checked live against the chain: no forms, no claim button,
+no telling anyone. Sell below the bar and the hood retires; buy back in and
+it returns.
+
+**Members get real headroom on the free tier.** While you hold: **2.5× daily
+runs** (25 instead of 10), the **real voice at paid-tier daily limits**, and
+the **paid-tier monthly X allowance** with the daily cap lifted. And the one
+that stays: **beta features for life** — early access unlocks the first day
+you qualify and never leaves, even if you sell every coin.
+
+**The badge is a stake, not a click.** On the badge ladder it sits above
+𝕏 Linked — you earn it by holding, and Rokha re-verifies while you're
+around. The check is a public read of the chain: no custody, no approvals,
+nothing ever moves.
+
+**For anyone building against us:** page-shaped responses can now carry
+`introverted` in `badge`/`badges`, and `/api/pages/me` adds `beta_access` —
+a for-life access flag, deliberately separate from the display badges.
+
+*The honest line:* $ID stays a meme coin, and these perks are discretionary
+community gifts — they may change or end at any time and are not a promise
+of utility or value. Full story: [the Introverted badge page](https://aetherbytes.github.io/rokha-sdk/introverted-badge.html).
+
+
 ## Link your X to your builder page (unreleased)
 
 **Connect your X account once and it travels with your name.** Your handle

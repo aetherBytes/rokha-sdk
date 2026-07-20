@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rokha × $ID — the Introverted badge</title>
+<meta name="description" content="Hold 100k $ID in your Solana wallet and Rokha recognizes you: the hooded Introverted badge, boosted free-tier allowances, and beta features for life. Community perks, checked live on-chain.">
+<meta property="og:title" content="Rokha × $ID — the Introverted badge">
+<meta property="og:description" content="Hold the coin, wear the hood. 100k $ID earns the Introverted badge on Rokha — boosted daily runs, real voice, X credits, and beta access for life.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aetherbytes.github.io/rokha-sdk/introverted-badge.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@IntrovertedDevs">
+<style>
+  :root{
+    --void:#06080b; --panel:#0c1015; --panel-2:#10161d; --line:#1b2530;
+    --ice:#4dffa6; --ice-deep:#00c853; --ice-dim:#2d6b4a;
+    --silver:#cdd8e2; --muted:#6d7f8d; --faint:#465562;
+    --live:#57e0a0; --warn:#ffcf6b; --xblack:#e9eef2;
+    --glow: 0 0 0 1px rgba(77,255,166,.12), 0 0 30px -8px rgba(0,200,83,.35);
+    --mono: ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans: "Inter var",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  :root[data-theme="light"]{
+    --void:#eef2f5; --panel:#ffffff; --panel-2:#f4f7fa; --line:#d9e2ea;
+    --ice:#0b7a44; --ice-deep:#0a6a3c; --ice-dim:#7fb99a;
+    --silver:#182530; --muted:#54687a; --faint:#8698a6; --xblack:#0b0f14;
+    --glow: 0 0 0 1px rgba(11,122,68,.14), 0 6px 24px -12px rgba(10,106,60,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--void); color:var(--silver);
+    font-family:var(--sans); line-height:1.6; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 520px at 78% -8%, rgba(0,200,83,.10), transparent 60%),
+      radial-gradient(760px 480px at 8% 4%, rgba(77,255,166,.05), transparent 55%);
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:0 22px}
+  .mono{font-family:var(--mono)}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.32em; text-transform:uppercase; color:var(--ice-deep)}
+  h1,h2,h3{text-wrap:balance; line-height:1.08; letter-spacing:-.02em; margin:0}
+  a{color:var(--ice)}
+
+  .bar{position:sticky; top:0; z-index:20; backdrop-filter:blur(9px);
+    background:color-mix(in srgb, var(--void) 78%, transparent); border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex; align-items:center; gap:14px; height:56px}
+  .brand{font-family:var(--mono); font-weight:600; letter-spacing:.06em; color:var(--silver)}
+  .brand b{color:var(--ice)}
+  .navcta{margin-left:auto; font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+    text-decoration:none; color:var(--void); background:linear-gradient(150deg,var(--ice),var(--ice-deep));
+    padding:8px 14px; border-radius:8px; font-weight:600}
+  .theme{background:none;border:1px solid var(--line);color:var(--muted);
+    font-family:var(--mono);font-size:11px;padding:5px 10px;border-radius:7px;cursor:pointer}
+  .theme:hover{color:var(--ice);border-color:var(--ice-dim)}
+
+  .hero{padding:78px 0 30px}
+  .hero .glyphrow{display:flex;align-items:center;gap:16px;margin-bottom:26px}
+  .glyphrow .hood{border:1px solid var(--line);border-radius:12px;width:52px;height:52px;
+    display:grid;place-items:center;background:var(--panel)}
+  .glyphrow .plus{color:var(--faint);font-size:20px}
+  .glyphrow .r{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--void);
+    width:52px;height:52px;border-radius:12px;display:grid;place-items:center;
+    background:linear-gradient(150deg,var(--ice),var(--ice-deep));box-shadow:var(--glow)}
+  h1{font-size:clamp(38px,7vw,68px);font-weight:800}
+  h1 .accent{background:linear-gradient(120deg,var(--ice),var(--ice-deep));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(17px,2.3vw,21px);color:var(--muted);max-width:60ch;margin:22px 0 0}
+  .sub b{color:var(--silver);font-weight:600}
+  .herocta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .btn{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-decoration:none;
+    padding:12px 20px;border-radius:10px;font-weight:600}
+  .btn.primary{color:var(--void);background:linear-gradient(150deg,var(--ice),var(--ice-deep));box-shadow:var(--glow)}
+  .btn.ghost{color:var(--ice);border:1px solid var(--ice-dim);background:var(--panel)}
+  .btn:hover{filter:brightness(1.08)}
+
+  section{padding:44px 0}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .kicker .num{font-family:var(--mono);font-size:12px;color:var(--ice-deep);
+    border:1px solid var(--ice-dim);border-radius:6px;padding:2px 8px}
+  .kicker h2{font-size:clamp(22px,3.4vw,30px);font-weight:700}
+  .lede{color:var(--muted);max-width:64ch;margin:-12px 0 26px;font-size:16px}
+
+  .cards{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;
+    position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;
+    background:linear-gradient(90deg,var(--ice),transparent 70%)}
+  .card h3{font-size:19px;font-weight:700;margin-bottom:6px}
+  .card .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ice-deep);margin-bottom:14px;display:inline-block}
+  .card p{font-size:14.5px;color:var(--muted);margin:0 0 16px}
+  .flist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+  .flist li{font-size:13.5px;color:var(--silver);display:flex;gap:10px;align-items:flex-start}
+  .flist li::before{content:"▹";color:var(--ice);flex:none;line-height:1.5}
+  .flist .k{color:var(--muted)}
+
+  .specs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  @media(max-width:720px){.specs{grid-template-columns:1fr 1fr}}
+  .spec{background:var(--panel);padding:20px 18px}
+  .spec .n{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--ice);
+    font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .spec .l{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.35}
+
+  .steps{display:flex;flex-direction:column;gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .step{background:var(--panel);padding:20px 22px;display:grid;
+    grid-template-columns:auto 1fr;gap:18px;align-items:start}
+  .step .idx{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--void);
+    background:linear-gradient(150deg,var(--ice),var(--ice-deep));width:28px;height:28px;
+    border-radius:8px;display:grid;place-items:center;flex:none}
+  .step h3{font-size:16px;font-weight:700;margin-bottom:5px}
+  .step p{margin:0;font-size:14px;color:var(--muted)}
+  .step p b{color:var(--silver);font-weight:600}
+  .lit{display:inline-flex;align-items:center;gap:8px;margin-top:8px;
+    background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:6px 8px 6px 12px}
+  .lit code{font-family:var(--mono);font-size:12.5px;color:var(--ice);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis;max-width:56vw}
+  .lit .k{color:var(--faint);font-size:11px}
+  .minicopy{background:none;border:1px solid var(--ice-dim);color:var(--ice);
+    font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    padding:4px 8px;border-radius:6px;cursor:pointer}
+  .minicopy:hover{background:var(--ice);color:var(--void)}
+  .minicopy.done{background:var(--live);color:var(--void);border-color:var(--live)}
+  .verify{font-family:var(--mono);font-size:12.5px;color:var(--live);margin-top:10px;display:flex;gap:9px;align-items:baseline}
+  .verify::before{content:"✓";flex:none}
+
+  .fine{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+  .fine p{font-size:13px;color:var(--muted);margin:0 0 10px}
+  .fine p:last-child{margin:0}
+  .fine b{color:var(--silver)}
+
+  .cta{background:linear-gradient(150deg,var(--panel-2),var(--panel));border:1px solid var(--ice-dim);
+    border-radius:20px;padding:44px 32px;text-align:center;box-shadow:var(--glow)}
+  .cta h2{font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:12px}
+  .cta p{color:var(--muted);max-width:52ch;margin:0 auto 26px;font-size:16px}
+
+  footer{border-top:1px solid var(--line);padding:34px 0 60px;margin-top:20px}
+  footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center;
+    font-family:var(--mono);font-size:12px;color:var(--faint)}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--ice)}
+  @media(prefers-reduced-motion:no-preference){
+    .card,.spec,.step{animation:rise .5s both}
+    @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <span class="brand"><b>ROKHA</b> × $ID</span>
+  <button class="theme" id="tg">☾ theme</button>
+  <a class="navcta" href="https://rokha.ai" target="_blank" rel="noopener">Open Rokha →</a>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="glyphrow">
+    <div class="hood" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="30" height="30">
+        <path d="M12 1.6c-5.2 0-8.2 4.1-8.2 9.2v8.6c0 1.7 3.7 3 8.2 3s8.2-1.3 8.2-3v-8.6c0-5.1-3-9.2-8.2-9.2z" fill="#0b3d25" stroke="#00e676" stroke-width="1.5"/>
+        <path d="M12 5.2c-3.3 0-5.2 2.7-5.2 6.1 0 3.3 2.1 5.7 5.2 5.7s5.2-2.4 5.2-5.7c0-3.4-1.9-6.1-5.2-6.1z" fill="#010604"/>
+      </svg>
+    </div>
+    <span class="plus">+</span><div class="r">R</div>
+  </div>
+  <div class="eyebrow">New · community recognition · rolling out</div>
+  <h1 style="margin-top:14px">Hold the coin, <span class="accent">wear the hood</span>.</h1>
+  <p class="sub">Keep <b>100k $ID</b> in your Solana wallet and Rokha recognizes you on sight: the hooded <b>Introverted badge</b> on your name, boosted free-tier allowances, and <b>beta features for life</b>. Checked live on-chain — no forms, no applications, no telling anyone.</p>
+  <div class="herocta">
+    <a class="btn primary" href="https://rokha.ai" target="_blank" rel="noopener">Log in with your wallet →</a>
+    <a class="btn ghost" href="#earn">How it works</a>
+  </div>
+</div></header>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">01</span><h2>What members get</h2></div>
+  <div class="cards">
+    <div class="card">
+      <span class="tag">Identity · the hooded badge</span>
+      <h3>A mark that can't be bought with words</h3>
+      <p>The Introverted badge is earned one way: holding. It rides with your name across Rokha and outranks the X badge on the ladder — a stake, not a click.</p>
+      <ul class="flist">
+        <li>The <b>green-rimlit hood</b> appears on your profile, builder page, rig pages, and the leaderboard</li>
+        <li><b>Holdings-honest</b> — verified against the chain when you log in, and rechecked while you're around</li>
+        <li>Sell below the bar and the hood retires; <span class="k">buy back in and it returns</span></li>
+        <li>Wear it as your active badge, or collect it beside Builder and 𝕏 Linked</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Perks · while you hold</span>
+      <h3>The free tier, upgraded</h3>
+      <p>Members on the free tier get real headroom — the everyday allowances jump toward paid-tier grade, on us.</p>
+      <ul class="flist">
+        <li><b>2.5× daily runs</b> — 25 real sandbox runs a day, up from 10</li>
+        <li><b>Full-grade voice</b> — talk to Rokha with the real voice at paid-tier daily limits</li>
+        <li><b>10× X credits</b> — the paid-tier monthly X allowance, no daily cap</li>
+        <li><b>Beta for life</b> — early features unlock once and <i>never</i> leave, even if you sell</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="specs">
+    <div class="spec"><div class="n">100k</div><div class="l">$ID held in your Solana wallet = membership</div></div>
+    <div class="spec"><div class="n">2.5×</div><div class="l">free-tier daily runs while you hold</div></div>
+    <div class="spec"><div class="n">10×</div><div class="l">monthly X credits, daily cap lifted</div></div>
+    <div class="spec"><div class="n">∞</div><div class="l">beta access — earned once, kept for life</div></div>
+  </div>
+</div></section>
+
+<section id="earn"><div class="wrap">
+  <div class="kicker"><span class="num">02</span><h2>How to earn it — step by step</h2></div>
+  <p class="lede">No forms, no linking, no waiting. The chain is the application.</p>
+  <div class="steps">
+
+    <div class="step"><span class="idx">1</span><div>
+      <h3>Hold 100k $ID</h3>
+      <p>In any Solana wallet you control. The coin lives at the address below — the same one on the front page.</p>
+      <div class="lit"><span class="k">$ID</span><code>5czHSkZymNthZWsPwaFTzTsSGztZ9EPq9Uhid2mXpump</code><button class="minicopy">copy</button></div>
+    </div></div>
+
+    <div class="step"><span class="idx">2</span><div>
+      <h3>Log in to rokha.ai with that wallet</h3>
+      <p>Sign in with the <b>same Solana wallet</b> that holds the coins. Rokha reads your balance straight off the chain — it never asks you to send, approve, or sign anything beyond the normal login.</p>
+      <div class="verify">The hooded badge lands on your identity, automatically.</div>
+    </div></div>
+
+    <div class="step"><span class="idx">3</span><div>
+      <h3>Wear it (or just collect it)</h3>
+      <p>Pick <b>Introverted</b> as your active badge in <b>Profile › Page</b> and the hood fronts your name everywhere. Your perks are already on either way — no toggle, no claim button.</p>
+      <div class="verify">Boosted allowances show up in your daily meters immediately.</div>
+    </div></div>
+
+    <div class="step"><span class="idx">4</span><div>
+      <h3>Stay a member by staying</h3>
+      <p>Rokha rechecks your balance when you log in and periodically while you're active. Drop below 100k and the badge steps down with your perks — <b>except beta access, which is yours for life</b> from the first day you qualified.</p>
+    </div></div>
+
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">03</span><h2>The fine print, plainly</h2></div>
+  <div class="fine">
+    <p><b>$ID is still a meme coin.</b> It is not an investment and represents no ownership, equity, or stake in Rokha or Introverted Development. The Introverted badge and its perks are <b>discretionary community gifts</b> — we offer them because we like our people, they may change or end at any time, and they are not a promise of utility, access, or value. Buy the coin for the bit, not the perks.</p>
+    <p><b>Your keys stay yours.</b> The membership check is a public read of the chain — Rokha never takes custody, never asks for approvals, and never moves anything. Logging in with your wallet is the whole ceremony.</p>
+    <p>Nothing here is financial advice. Do your own research.</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="cta">
+    <div class="eyebrow" style="justify-content:center;display:flex">The quiet ones get recognized</div>
+    <h2 style="margin-top:14px">Put the hood on.</h2>
+    <p>Hold 100k $ID, log in with your wallet, and Rokha does the rest — the badge, the boosts, and beta for life.</p>
+    <div class="herocta" style="justify-content:center">
+      <a class="btn primary" href="https://rokha.ai" target="_blank" rel="noopener">Log in on rokha.ai →</a>
+      <a class="btn ghost" href="https://x.com/IntrovertedDevs" target="_blank" rel="noopener">Follow on 𝕏 →</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span><b style="color:var(--muted)">Rokha</b> — the OS for the agentic world</span>
+  <span>·</span><a href="https://rokha.ai" target="_blank" rel="noopener">rokha.ai</a>
+  <span>·</span><a href="https://x.com/IntrovertedDevs" target="_blank" rel="noopener">𝕏 @IntrovertedDevs</a>
+</div></footer>
+
+<script>
+  const root=document.documentElement, tg=document.getElementById('tg');
+  tg.addEventListener('click',()=>{
+    const cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+  document.querySelectorAll('.minicopy').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const code=btn.parentElement.querySelector('code').textContent;
+      navigator.clipboard.writeText(code).then(()=>{
+        const o=btn.textContent;btn.textContent='✓';btn.classList.add('done');
+        setTimeout(()=>{btn.textContent=o;btn.classList.remove('done')},1200);
+      });
+    });
+  });
+</script>
+</body>
+</html>
