@@ -60,9 +60,12 @@ jobs:
             svc/rokha-cli/target
           key: ${{ matrix.target }}-cargo-${{ hashFiles('svc/rokha-cli/Cargo.lock') }}
 
-      - name: Install OpenSSL (linux only — for reqwest native-tls)
+      # libasound2-dev is required by alsa-sys, which `ro voice` pulls in on
+      # Linux (macOS uses CoreAudio and needs nothing). Without it the Linux
+      # targets fail the build script with exit 101 while macOS goes green.
+      - name: Install OpenSSL + ALSA (linux only — reqwest native-tls, ro voice)
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y pkg-config libssl-dev
+        run: sudo apt-get update && sudo apt-get install -y pkg-config libssl-dev libasound2-dev
 
       - name: Build
         working-directory: svc/rokha-cli
