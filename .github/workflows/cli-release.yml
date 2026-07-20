@@ -287,10 +287,16 @@ jobs:
         with:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
+      # Guard on the RAW secret, not NODE_AUTH_TOKEN: actions/setup-node with a
+      # registry-url injects a placeholder NODE_AUTH_TOKEN (XXXXX-XXXXX-…) into
+      # later steps, so an emptiness check on it passes even with no secret set
+      # and the publish then hard-fails E404 instead of no-opping.
       - name: Guard — token present?
         id: guard
+        env:
+          RAW_NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          if [ -z "$NODE_AUTH_TOKEN" ]; then
+          if [ -z "$RAW_NPM_TOKEN" ]; then
             echo "NPM_TOKEN unset — skipping @rokha/cli publish." && echo "go=false" >> "$GITHUB_OUTPUT"
           else
             echo "go=true" >> "$GITHUB_OUTPUT"
@@ -320,10 +326,16 @@ jobs:
         with:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
+      # Guard on the RAW secret, not NODE_AUTH_TOKEN: actions/setup-node with a
+      # registry-url injects a placeholder NODE_AUTH_TOKEN (XXXXX-XXXXX-…) into
+      # later steps, so an emptiness check on it passes even with no secret set
+      # and the publish then hard-fails E404 instead of no-opping.
       - name: Guard — token present?
         id: guard
+        env:
+          RAW_NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          if [ -z "$NODE_AUTH_TOKEN" ]; then
+          if [ -z "$RAW_NPM_TOKEN" ]; then
             echo "NPM_TOKEN unset — skipping npm publish." && echo "go=false" >> "$GITHUB_OUTPUT"
           else
             echo "go=true" >> "$GITHUB_OUTPUT"
