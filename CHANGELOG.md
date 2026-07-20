@@ -6,6 +6,17 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Bitget wallet: Solana login fixed (unreleased)
+
+**Logging in with Bitget on Solana works now.** Newer Bitget builds moved
+their working Solana connection to the modern wallet-discovery standard while
+still leaving a broken legacy hook behind — we were grabbing the broken one.
+Rokha now finds the real provider, rides out Bitget's duplicate
+registrations, and when the wallet has a stale connection request stuck from
+an earlier attempt, tells you exactly how to clear it instead of failing with
+a shrug. Pick Bitget → Solana on the login screen and approve once.
+
+
 ## Hold the coin, wear the hood — the Introverted badge (unreleased)
 
 **Holding 100k $ID now means something on Rokha.** Log in with the Solana
