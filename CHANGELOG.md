@@ -26,11 +26,13 @@ leaderboard. It's checked live against the chain: no forms, no claim button,
 no telling anyone. Sell below the bar and the hood retires; buy back in and
 it returns.
 
-**Members get real headroom on the free tier.** While you hold: **2.5× daily
-runs** (25 instead of 10), the **real voice at paid-tier daily limits**, and
-the **paid-tier monthly X allowance** with the daily cap lifted. And the one
-that stays: **beta features for life** — early access unlocks the first day
-you qualify and never leaves, even if you sell every coin.
+**Members get double allowances while they hold.** For now the badge doubles
+your daily allowances in every category, on any tier — runs, chat, the real
+voice, web search, X, sandbox time, even schedules (free-tier runs land at 25
+a day). Your Plan tab wears a **2× INTROVERTED** tag while the boost is on,
+and every meter reads the doubled cap. And the one that stays: **beta
+features for life** — early access unlocks the first day you qualify and
+never leaves, even if you sell every coin.
 
 **The badge is a stake, not a click.** On the badge ladder it sits above
 𝕏 Linked — you earn it by holding, and Rokha re-verifies while you're
