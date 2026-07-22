@@ -206,6 +206,21 @@
       <div class="s"><b><i>03</i>GET COUNTED</b>We pick it up automatically. Views, likes, reposts, replies and quotes all feed your score while the post is fresh.</div>
     </div>
     <div class="postline">Building on Rokha — my page: <span>rokha.ai/@you</span> ⌁ post it, that's it</div>
+    <div class="tblwrap" style="margin-top:18px"><table>
+      <tr><th>Qualifies</th><th>Doesn't qualify</th></tr>
+      <tr>
+        <td class="note">✓ A post from <b style="color:var(--silver)">your own linked X account</b> containing your page link — <span class="mono">rokha.ai/@your-handle</span> in the text or behind a shortened link</td>
+        <td class="note">✗ Posts from any account that isn't your linked one — fans, bots, impersonators earn nothing (for you or them)</td>
+      </tr>
+      <tr>
+        <td class="note">✓ Original posts and quote posts</td>
+        <td class="note">✗ Plain retweets of someone else's post</td>
+      </tr>
+      <tr>
+        <td class="note">✓ Stats counted while the post is fresh — its first 7 days, updated daily</td>
+        <td class="note">✗ Linking someone ELSE's page — points go only to the page owner who authored the post</td>
+      </tr>
+    </table></div>
   </div>
 </div></section>
 
@@ -220,7 +235,7 @@
     <tr><td class="sig"><span class="g">⬡</span>Rig runs</td><td class="num w">350</td><td><div class="meter"><i style="width:100%"></i></div></td><td class="num">839</td><td class="num">1,615</td><td class="num">2,418</td><td class="note">Others running YOUR Rigs — the heaviest signal on the board</td></tr>
     <tr><td class="sig"><span class="g">▶</span>Tool runs</td><td class="num w">150</td><td><div class="meter"><i style="width:43%"></i></div></td><td class="num">360</td><td class="num">692</td><td class="num">1,036</td><td class="note">Runs of your other creations — skills, harnesses, servers</td></tr>
     <tr><td class="sig"><span class="g">★</span>Saves</td><td class="num w">120</td><td><div class="meter"><i style="width:34%"></i></div></td><td class="num">288</td><td class="num">554</td><td class="num">829</td><td class="note">Other users saving your work (your own saves don't count)</td></tr>
-    <tr><td class="sig"><span class="g">𝕏</span>X engagement</td><td class="num w">100</td><td><div class="meter"><i style="width:29%"></i></div></td><td class="num">240</td><td class="num">462</td><td class="num">691</td><td class="note">Likes + reposts + replies + quotes on your qualifying posts</td></tr>
+    <tr><td class="sig"><span class="g">𝕏</span>X engagement</td><td class="num w">100</td><td><div class="meter"><i style="width:29%"></i></div></td><td class="num">240</td><td class="num">462</td><td class="num">691</td><td class="note">Weighted engagement units on your qualifying posts — replies count 27× a like (see the X-algorithm mix below)</td></tr>
     <tr><td class="sig"><span class="g">⇪</span>Shipped</td><td class="num w">80</td><td><div class="meter"><i style="width:23%"></i></div></td><td class="num">192</td><td class="num">369</td><td class="num">553</td><td class="note">Creations published to the registry</td></tr>
     <tr><td class="sig"><span class="g">𝕏</span>X views</td><td class="num w">50</td><td><div class="meter"><i style="width:14%"></i></div></td><td class="num">120</td><td class="num">231</td><td class="num">345</td><td class="note">Views on those posts — worth half an engagement unit</td></tr>
     <tr><td class="sig"><span class="g">⌗</span>Bug reports</td><td class="num w">40</td><td><div class="meter"><i style="width:11%"></i></div></td><td class="num">96</td><td class="num">185</td><td class="num">276</td><td class="note">Filed reports — making the platform better counts</td></tr>
@@ -230,7 +245,20 @@
 </div></section>
 
 <section><div class="wrap">
-  <div class="kicker"><span class="num">04</span><h2>Loyalty — showing up pays</h2></div>
+  <div class="kicker"><span class="num">04</span><h2>X engagement — weighted like X weighs it</h2></div>
+  <p class="lead">We use <b>everything we collect</b> from your posts — views, likes, reposts, quotes and replies — and we don't treat them as equal. <b>X open-sourced its ranking algorithm</b>, so our engagement mix uses the same ratios its ranker uses to value interactions: a reply is a conversation, a like is a nod. Your "X engagement" number is the weighted sum below (then log-damped like every repeatable signal). Views are scored separately at weight 50.</p>
+  <div class="tblwrap" style="margin-top:0"><table>
+    <tr><th>Interaction</th><th class="num">Units each</th><th style="width:110px">Scale</th><th>Why (per the open-source X algorithm)</th></tr>
+    <tr><td class="sig"><span class="g">↳</span>Reply</td><td class="num w">13.5</td><td><div class="meter"><i style="width:100%"></i></div></td><td class="note">X's ranker scores a reply at 13.5 — conversation is the strongest signal there, so it is here. One reply = 27 likes.</td></tr>
+    <tr><td class="sig"><span class="g">❝</span>Quote post</td><td class="num w">1.5</td><td><div class="meter"><i style="width:11%"></i></div></td><td class="note">A repost plus commentary — carries your work further than a bare repost</td></tr>
+    <tr><td class="sig"><span class="g">⇄</span>Repost</td><td class="num w">1.0</td><td><div class="meter"><i style="width:7%"></i></div></td><td class="note">X's ranker baseline: retweet = 1.0</td></tr>
+    <tr><td class="sig"><span class="g">♥</span>Like</td><td class="num w">0.5</td><td><div class="meter"><i style="width:4%"></i></div></td><td class="note">X's ranker values a fav at 0.5 — half a repost</td></tr>
+  </table></div>
+  <p class="note" style="margin-top:12px">Example: a post with 40 likes, 12 reposts, 2 quotes and 9 replies = 20 + 12 + 3 + 121.5 = <b style="color:var(--silver)">156.5 engagement units</b>. Want to climb? Start conversations, not just impressions.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">05</span><h2>Loyalty — showing up pays</h2></div>
   <div class="cards">
     <div class="card"><h3>Login days · 30-day window</h3><div class="big">10 <small>pts / day · max 300</small></div><p>Every day you're on Rokha counts. The 30-day window is the cap.</p></div>
     <div class="card"><h3>Consecutive streak</h3><div class="big">15 <small>pts / day · caps at 30</small></div><p>Max 450. Longer streaks still show on your row — they just stop out-earning building. Miss a day late at night? A streak survives until yesterday.</p></div>
@@ -239,7 +267,7 @@
 </div></section>
 
 <section><div class="wrap">
-  <div class="kicker"><span class="num">05</span><h2>Identity — one-time milestones</h2></div>
+  <div class="kicker"><span class="num">06</span><h2>Identity — one-time milestones</h2></div>
   <div class="tblwrap" style="margin-top:0"><table>
     <tr><th>Milestone</th><th class="num">Points</th><th>Notes</th></tr>
     <tr><td class="sig"><span class="g">𝕏</span>Link your X account</td><td class="num w">250</td><td class="note">Also unlocks X post points — <a href="./x-integration.html">how to link ↗</a></td></tr>
@@ -251,7 +279,7 @@
 </div></section>
 
 <section><div class="wrap">
-  <div class="kicker"><span class="num">06</span><h2>Fair by design</h2></div>
+  <div class="kicker"><span class="num">07</span><h2>Fair by design</h2></div>
   <div class="fair">
     <div class="rule"><span class="m">✓</span><div><b>Whales can't freeze the board.</b><p>Repeatable signals are log-damped — your 1,000th run is worth less than your 1st, so newcomers always have a path up.</p></div></div>
     <div class="rule"><span class="m">✓</span><div><b>Shipped work rules the top.</b><p>The numbers prove it: 1,000 rig runs ≈ 2,418 pts beats a maxed-out month of streaks + full identity + badges ≈ 1,918 pts — and even a viral X post with 1M views ≈ 1,611 pts. Building wins, by design.</p></div></div>
@@ -261,7 +289,7 @@
 </div></section>
 
 <section><div class="wrap">
-  <div class="kicker"><span class="num">07</span><h2>The Introverted boost</h2></div>
+  <div class="kicker"><span class="num">08</span><h2>The Introverted boost</h2></div>
   <div class="boost">
     <div class="mark">⛊</div>
     <div class="mult">×1.15</div>

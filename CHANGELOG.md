@@ -15,7 +15,9 @@ and rewards every kind of participation: shipping, saves, daily login
 streaks, identity milestones, bug reports, and X posts. Link your X account,
 post your `rokha.ai/@handle` page, and views + engagement on your own posts
 become points — posts are author-verified, so nobody can farm with your
-link. Introverted badge holders earn ×1.15 on everything. Scores are
+link. Engagement is weighted the way X's own open-sourced ranking algorithm
+weighs it: a reply counts 27× a like (reply 13.5 · quote 1.5 · repost 1.0 ·
+like 0.5). Introverted badge holders earn ×1.15 on everything. Scores are
 log-damped and capped so newcomers always have a path up, and every row
 shows its raw components.
 
