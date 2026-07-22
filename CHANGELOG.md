@@ -6,6 +6,22 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Your page, your brand — style knobs + the Rokha-designed cover (unreleased)
+
+**Builder pages got personal.** rokha.ai/@you now opens with a branded hero
+(banner, accent-ringed avatar, tagline, badges, live proof numbers) and a new
+**COVER** — an HTML welcome page every visitor sees first. You never write the
+HTML: describe what you want in Profile → Page (any style — cyberpunk neon to
+terminal minimal, CSS animation included) and **Rokha designs and saves it**.
+Covers render in a locked no-script sandbox, so nobody's cover can run code in
+your browser. Style yourself from the same panel: accent color, banner and
+full-page backdrop images, a transparency slider, a tagline, and a six-image
+gallery. Pages without a custom cover get a clean generated welcome built from
+their own real numbers. Full guide:
+[Your builder page](https://aetherbytes.github.io/rokha-sdk/your-page.html).
+Agents: `page_claim` now carries `style`, and `page_cover_set` saves covers —
+same validation, same doors.
+
 ## The Leaderboard, explained in full (unreleased)
 
 **Every weight on the builder leaderboard is now published** — see

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your builder page — make it yours</title>
+<meta name="description" content="Every Rokha builder gets rokha.ai/@you — a real product page for your work. Brand it: accent color, banner, backdrop, transparency, gallery, and a Rokha-designed HTML cover.">
+<meta property="og:title" content="Your builder page — make it yours">
+<meta property="og:description" content="rokha.ai/@you — accent, banner, backdrop, a transparency slider, a gallery, and an HTML cover Rokha designs for you. Any style. No code.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aetherbytes.github.io/rokha-sdk/your-page.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@Rokha_ai">
+<style>
+  :root{
+    --void:#06080b; --panel:#0c1015; --panel-2:#10161d; --line:#1b2530;
+    --ice:#7fe8ff; --ice-deep:#37c6e6; --ice-dim:#3a5563;
+    --silver:#cdd8e2; --muted:#6d7f8d; --faint:#465562;
+    --glow: 0 0 0 1px rgba(127,232,255,.12), 0 0 30px -8px rgba(55,198,230,.35);
+    --mono: ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans: "Inter var",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  :root[data-theme="light"]{
+    --void:#eef2f5; --panel:#ffffff; --panel-2:#f4f7fa; --line:#d9e2ea;
+    --ice:#0f8fb0; --ice-deep:#0b7f9e; --ice-dim:#8bb3c1;
+    --silver:#182530; --muted:#54687a; --faint:#8698a6;
+    --glow: 0 0 0 1px rgba(15,143,176,.14), 0 6px 24px -12px rgba(11,127,158,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--void); color:var(--silver);
+    font-family:var(--sans); font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 520px at 78% -8%, rgba(55,198,230,.10), transparent 60%),
+      radial-gradient(760px 480px at 8% 4%, rgba(127,232,255,.05), transparent 55%);
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:0 22px}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.32em; text-transform:uppercase; color:var(--ice-deep)}
+  h1,h2,h3{text-wrap:balance; line-height:1.1; letter-spacing:-.02em; margin:0}
+  a{color:var(--ice)}
+
+  .bar{position:sticky; top:0; z-index:20; backdrop-filter:blur(9px);
+    background:color-mix(in srgb, var(--void) 78%, transparent); border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex; align-items:center; gap:14px; height:56px}
+  .brand{font-family:var(--mono); font-weight:600; letter-spacing:.06em; color:var(--silver)}
+  .brand b{color:var(--ice)}
+  .theme{background:none;border:1px solid var(--line);color:var(--muted);
+    font-family:var(--mono);font-size:11px;padding:5px 10px;border-radius:7px;cursor:pointer;margin-left:auto}
+  .theme:hover{color:var(--ice);border-color:var(--ice-dim)}
+  .navcta{font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+    text-decoration:none; color:var(--void); background:linear-gradient(150deg,var(--ice),var(--ice-deep));
+    padding:8px 14px; border-radius:8px; font-weight:600}
+
+  .hero{padding:70px 0 26px}
+  h1{font-size:clamp(34px,6vw,56px);font-weight:800}
+  h1 .accent{background:linear-gradient(120deg,var(--ice),var(--ice-deep));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(17px,2.3vw,20px);color:var(--muted);max-width:62ch;margin:18px 0 0}
+  .sub b{color:var(--silver)}
+
+  section{padding:38px 0}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+  .kicker .num{font-family:var(--mono);font-size:12px;color:var(--ice-deep);
+    border:1px solid var(--ice-dim);border-radius:6px;padding:2px 8px}
+  .kicker h2{font-size:clamp(21px,3.2vw,28px);font-weight:700}
+  .lead{color:var(--muted);font-size:16px;max-width:70ch;margin:0 0 16px}
+  .lead b{color:var(--silver)}
+  p{margin:0 0 12px}
+  code{font-family:var(--mono);font-size:.92em;color:var(--ice);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 18px}
+  .card h3{font-family:var(--mono);font-size:13px;color:var(--silver);margin:0 0 6px;letter-spacing:.04em}
+  .card h3 i{font-style:normal;color:var(--ice);margin-right:7px}
+  .card p{font-size:14.5px;color:var(--muted);margin:0}
+  .card p b{color:var(--silver)}
+
+  .steps{counter-reset:s}
+  .step{display:grid;grid-template-columns:38px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:none}
+  .step::before{counter-increment:s;content:counter(s,decimal-leading-zero);
+    font-family:var(--mono);color:var(--ice-deep);font-size:14px;padding-top:2px}
+  .step b{color:var(--silver)}
+  .step p{font-size:15px;color:var(--muted);margin:2px 0 0;max-width:72ch}
+
+  .yesno{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+  .yn{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .yn h3{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 10px}
+  .yn.yes h3{color:#6fe0a8}.yn.no h3{color:#e08a8a}
+  .yn ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--muted)}
+  .yn li{margin-bottom:6px}
+  .yn li b{color:var(--silver)}
+
+  .callout{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ice-deep);
+    border-radius:10px;padding:14px 18px;font-size:15px;color:var(--muted);margin-top:14px}
+  .callout b{color:var(--silver)}
+
+  footer{border-top:1px solid var(--line);margin-top:36px;padding:26px 0 40px;
+    font-family:var(--mono);font-size:12px;color:var(--faint)}
+  footer .wrap{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--ice)}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <span class="brand"><b>ROKHA</b> · YOUR PAGE</span>
+  <button class="theme" id="tg">☾ theme</button>
+  <a class="navcta" href="https://rokha.ai" target="_blank" rel="noopener">Claim yours →</a>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">rokha.ai/@you · no code required</div>
+  <h1 style="margin-top:14px">Your builder page. <span class="accent">Make it yours.</span></h1>
+  <p class="sub">Every builder gets a real product page — your work, your numbers, your brand. Style it from a simple settings panel, and let <b>Rokha design your cover</b> — the welcome page every visitor sees first. Any aesthetic. Zero HTML on your part.</p>
+</div></header>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">01</span><h2>What's on your page</h2></div>
+  <p class="lead">Visitors get the full picture: who you are, proof your work gets used, and a way to <b>run your creations right there</b>.</p>
+  <div class="cards">
+    <div class="card"><h3><i>◈</i>YOUR IDENTITY</h3><p>Name, avatar, tagline, badges, leaderboard rank, your linked 𝕏 — one hero band, unmistakably you.</p></div>
+    <div class="card"><h3><i>▶</i>PROOF, NOT PROMISES</h3><p>Real runs, page views, and shipped creations — live numbers straight from the platform.</p></div>
+    <div class="card"><h3><i>⬡</i>RUNNABLE WORK</h3><p>Your published skills and rigs, each one runnable by any visitor — they pay their own way, never you.</p></div>
+    <div class="card"><h3><i>⌁</i>THE COVER</h3><p>A designed HTML welcome — the first thing everyone sees. Rokha builds it from your description (below).</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">02</span><h2>Brand it — the Style panel</h2></div>
+  <p class="lead">Everything lives in <b>Profile → Page</b> on rokha.ai. Change a knob, hit update, done:</p>
+  <div class="cards">
+    <div class="card"><h3><i>🎨</i>ACCENT COLOR</h3><p>One color tints your whole page — titles, rings, hovers, stats. Pick it with a color wheel.</p></div>
+    <div class="card"><h3><i>🖼</i>BANNER + BACKDROP</h3><p>A wide hero image behind your name, and a full-page background shown dimmed behind everything. Any public https image URL.</p></div>
+    <div class="card"><h3><i>◐</i>TRANSPARENCY SLIDER</h3><p>How solid your page renders over the backdrop — from near-glass to fully solid. Your call.</p></div>
+    <div class="card"><h3><i>▦</i>GALLERY + TAGLINE</h3><p>Up to six images, and one line under your name that says what you're about.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">03</span><h2>The cover — tell Rokha, she designs it</h2></div>
+  <p class="lead">You never write HTML. That's not a missing feature — it's the security model: <b>Rokha is the only author</b>, and every cover renders inside a locked sandbox where scripts simply cannot run.</p>
+  <div class="steps">
+    <div class="step"><div><b>Open Profile → Page → Cover</b><p>Right under the Style panel.</p></div></div>
+    <div class="step"><div><b>Pick a style, describe what you want</b><p>Style chips get you started — clean &amp; minimal, bold poster, terminal/hacker, soft editorial, playful — but the description is free-form. Cyberpunk neon with glitch flicker? Say exactly that.</p></div></div>
+    <div class="step"><div><b>Add imagery (optional)</b><p>Paste any public https image URL into the description, or just say <i>"use my banner"</i>, <i>"use my gallery"</i>, or <i>"use my profile photo"</i> — Rokha can read your own page's images.</p></div></div>
+    <div class="step"><div><b>Hit "✦ Ask Rokha to design it"</b><p>She designs the page in chat following her cover guidelines, saves it, and tells you to refresh. Want changes? Just keep talking to her — "more neon", "bigger title", "calmer". Say <i>"reset my cover"</i> any time to go back to the default.</p></div></div>
+  </div>
+  <div class="callout"><b>No cover yet?</b> You still look good — every page ships with a clean generated welcome built from your own name, tagline, accent, and real numbers.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">04</span><h2>What covers can and can't do</h2></div>
+  <div class="yesno">
+    <div class="yn yes"><h3>✓ Covers can</h3>
+      <ul>
+        <li><b>Any visual style</b> — neon cyberpunk to letterpress minimal</li>
+        <li><b>CSS animation</b> — pulses, scanlines, flicker, gradient motion</li>
+        <li><b>Images &amp; fonts by https URL</b> — hosted anywhere public</li>
+        <li>ASCII/Unicode art, bold typography, your accent color</li>
+        <li>Up to 64KB — a lot of room for HTML + CSS</li>
+      </ul>
+    </div>
+    <div class="yn no"><h3>✗ Covers can't</h3>
+      <ul>
+        <li><b>No JavaScript</b> — refused on save AND inert in the sandbox</li>
+        <li><b>No working links or buttons</b> — the cover is a poster; navigation lives in the page around it</li>
+        <li>No iframes, embeds, or forms</li>
+        <li>No file uploads yet — host images anywhere public and pass the URL</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><b>Why so strict?</b> Your cover shows on a page other people visit. Double-walled safety — Rokha-only authoring + a zero-permission sandbox — means nobody's cover can ever run code in a visitor's browser. Yours included.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">05</span><h2>For agents (the other front door)</h2></div>
+  <p class="lead">Everything above works over MCP too — same doors, same validation: <code>page_claim</code> carries the <code>style</code> object (accent, banner_url, bg_url, panel_opacity, tagline, gallery), and <code>page_cover_set</code> saves a cover with the design guidelines right in the tool description. Connect to <code>https://rokha.ai/mcp/jsonrpc</code> with your session token.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="callout" style="text-align:center; border-left:none; box-shadow:var(--glow); padding:32px 22px">
+    <div class="eyebrow" style="margin-bottom:10px">Two minutes, start to shipped</div>
+    <div style="font-size:clamp(18px,3vw,26px); font-weight:700; color:var(--silver)">Claim <span style="color:var(--ice)">rokha.ai/@you</span>, set an accent, tell Rokha your vibe.</div>
+    <div style="margin-top:18px"><a class="navcta" href="https://rokha.ai" target="_blank" rel="noopener" style="font-size:14px; padding:12px 22px">Open Rokha →</a></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span><b style="color:var(--muted)">Rokha</b> — the OS for the agentic world</span>
+  <span>·</span><a href="https://rokha.ai" target="_blank" rel="noopener">rokha.ai</a>
+  <span>·</span><a href="./index.html">docs home</a>
+  <span>·</span><a href="./get-started.html">get started</a>
+  <span>·</span><a href="./leaderboard.html">the leaderboard</a>
+  <span>·</span><a href="./x-integration.html">connect X</a>
+  <span>·</span><a href="https://x.com/Rokha_ai" target="_blank" rel="noopener">𝕏 @Rokha_ai</a>
+</div></footer>
+
+<script>
+  const root=document.documentElement, tg=document.getElementById('tg');
+  tg.addEventListener('click',()=>{
+    const cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+</script>
+</body>
+</html>
