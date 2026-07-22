@@ -6,6 +6,19 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The Leaderboard, explained in full (unreleased)
+
+**Every weight on the builder leaderboard is now published** — see
+[the leaderboard page](https://aetherbytes.github.io/rokha-sdk/leaderboard.html).
+The board ranks what the community actually uses (Rig runs weigh heaviest)
+and rewards every kind of participation: shipping, saves, daily login
+streaks, identity milestones, bug reports, and X posts. Link your X account,
+post your `rokha.ai/@handle` page, and views + engagement on your own posts
+become points — posts are author-verified, so nobody can farm with your
+link. Introverted badge holders earn ×1.15 on everything. Scores are
+log-damped and capped so newcomers always have a path up, and every row
+shows its raw components.
+
 ## Bitget wallet: Solana login fixed (unreleased)
 
 **Logging in with Bitget on Solana works now.** Newer Bitget builds moved

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Rokha Leaderboard — how builders climb</title>
+<meta name="description" content="The Rokha leaderboard ranks builders by what the community actually uses — and rewards every kind of participation. Every weight is published. No black box.">
+<meta property="og:title" content="The Rokha Leaderboard — how builders climb">
+<meta property="og:description" content="Build things agents actually run. Climb for it. Every weight published, every score auditable — plus the X rule and the Introverted ×1.15 boost.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aetherbytes.github.io/rokha-sdk/leaderboard.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@Rokha_ai">
+<style>
+  :root{
+    --void:#06080b; --panel:#0c1015; --panel-2:#10161d; --line:#1b2530;
+    --ice:#7fe8ff; --ice-deep:#37c6e6; --ice-dim:#3a5563;
+    --silver:#cdd8e2; --muted:#6d7f8d; --faint:#465562;
+    --glow: 0 0 0 1px rgba(127,232,255,.12), 0 0 30px -8px rgba(55,198,230,.35);
+    --mono: ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans: "Inter var",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  :root[data-theme="light"]{
+    --void:#eef2f5; --panel:#ffffff; --panel-2:#f4f7fa; --line:#d9e2ea;
+    --ice:#0f8fb0; --ice-deep:#0b7f9e; --ice-dim:#8bb3c1;
+    --silver:#182530; --muted:#54687a; --faint:#8698a6;
+    --glow: 0 0 0 1px rgba(15,143,176,.14), 0 6px 24px -12px rgba(11,127,158,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0; background:var(--void); color:var(--silver);
+    font-family:var(--sans); font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 520px at 78% -8%, rgba(55,198,230,.10), transparent 60%),
+      radial-gradient(760px 480px at 8% 4%, rgba(127,232,255,.05), transparent 55%);
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:0 22px}
+  .mono{font-family:var(--mono)}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.32em; text-transform:uppercase; color:var(--ice-deep)}
+  h1,h2,h3{text-wrap:balance; line-height:1.08; letter-spacing:-.02em; margin:0}
+  a{color:var(--ice)}
+
+  .bar{position:sticky; top:0; z-index:20; backdrop-filter:blur(9px);
+    background:color-mix(in srgb, var(--void) 78%, transparent); border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex; align-items:center; gap:14px; height:56px}
+  .brand{font-family:var(--mono); font-weight:600; letter-spacing:.06em; color:var(--silver)}
+  .brand b{color:var(--ice)}
+  .theme{background:none;border:1px solid var(--line);color:var(--muted);
+    font-family:var(--mono);font-size:11px;padding:5px 10px;border-radius:7px;cursor:pointer;margin-left:auto}
+  .theme:hover{color:var(--ice);border-color:var(--ice-dim)}
+  .navcta{font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+    text-decoration:none; color:var(--void); background:linear-gradient(150deg,var(--ice),var(--ice-deep));
+    padding:8px 14px; border-radius:8px; font-weight:600}
+
+  .hero{padding:74px 0 34px}
+  .hero .glyphrow{display:flex;align-items:center;gap:16px;margin-bottom:26px}
+  .glyphrow .cup{border:1px solid var(--line);border-radius:12px;width:52px;height:52px;font-size:24px;
+    display:grid;place-items:center;background:var(--panel)}
+  .glyphrow .plus{color:var(--faint);font-size:20px}
+  .glyphrow .r{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--void);
+    width:52px;height:52px;border-radius:12px;display:grid;place-items:center;
+    background:linear-gradient(150deg,var(--ice),var(--ice-deep));box-shadow:var(--glow)}
+  h1{font-size:clamp(36px,6.6vw,62px);font-weight:800}
+  h1 .accent{background:linear-gradient(120deg,var(--ice),var(--ice-deep));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(17px,2.3vw,21px);color:var(--muted);max-width:60ch;margin:22px 0 0}
+  .sub b{color:var(--silver);font-weight:600}
+  .herocta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .btn{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-decoration:none;
+    padding:12px 20px;border-radius:10px;font-weight:600}
+  .btn.primary{color:var(--void);background:linear-gradient(150deg,var(--ice),var(--ice-deep));box-shadow:var(--glow)}
+  .btn.ghost{color:var(--ice);border:1px solid var(--ice-dim);background:var(--panel)}
+  .btn:hover{filter:brightness(1.08)}
+
+  section{padding:42px 0}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+  .kicker .num{font-family:var(--mono);font-size:12px;color:var(--ice-deep);
+    border:1px solid var(--ice-dim);border-radius:6px;padding:2px 8px}
+  .kicker h2{font-size:clamp(22px,3.4vw,30px);font-weight:700}
+  .lead{color:var(--muted);font-size:16px;max-width:68ch;margin:0 0 18px}
+  .lead b{color:var(--silver)}
+
+  .ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+  .way{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 20px 18px;position:relative;overflow:hidden}
+  .way::before{content:'';position:absolute;inset:0 auto 0 0;width:2px;background:linear-gradient(180deg,var(--ice),transparent)}
+  .way .glyphs{font-size:19px;color:var(--ice);letter-spacing:.35em}
+  .way h3{font-family:var(--mono);font-size:14.5px;margin:12px 0 6px;letter-spacing:.03em}
+  .way p{font-size:15px;color:var(--muted);margin:0}
+  .way p b{color:var(--silver)}
+  .way .pts{font-family:var(--mono);font-size:12px;color:var(--ice-deep);margin-top:12px;letter-spacing:.06em}
+
+  .xrule{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 26px 22px}
+  .xrule .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:6px}
+  .xrule .s{font-size:15px;color:var(--muted)}
+  .xrule .s b{display:block;color:var(--silver);font-family:var(--mono);font-size:14px;margin-bottom:4px}
+  .xrule .s b i{font-style:normal;color:var(--ice-deep);margin-right:7px}
+  .postline{font-family:var(--mono);font-size:14px;color:var(--silver);background:var(--panel-2);border:1px dashed var(--line);
+    border-radius:8px;padding:11px 14px;margin-top:18px;overflow-x:auto;white-space:nowrap}
+  .postline span{color:var(--ice)}
+
+  .formula{font-family:var(--mono);font-size:15px;color:var(--silver);background:var(--panel);
+    border:1px solid var(--line);border-left:3px solid var(--ice-deep);padding:14px 18px;border-radius:8px;
+    overflow-x:auto;white-space:nowrap;margin:0 0 10px}
+  .formula small{color:var(--muted)}
+  .note{color:var(--muted);font-size:14px}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel);margin-top:14px}
+  th{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+     text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:10px 13px;border-bottom:1px solid var(--line);vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .sig{color:var(--silver);font-weight:600;white-space:nowrap}
+  .sig .g{color:var(--ice);margin-right:6px}
+  .w{font-family:var(--mono);color:var(--ice);font-weight:600}
+  .meter{height:5px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;min-width:90px;position:relative;overflow:hidden}
+  .meter i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--ice-dim),var(--ice));border-radius:2px}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 18px}
+  .card h3{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+  .big{font-family:var(--mono);font-size:26px;color:var(--silver);font-variant-numeric:tabular-nums}
+  .big small{font-size:13px;color:var(--muted)}
+  .card p{font-size:14px;color:var(--muted);margin:6px 0 0}
+
+  .fair{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+  .rule{display:flex;gap:11px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 17px;font-size:15px}
+  .rule .m{color:var(--ice);font-family:var(--mono);flex:none}
+  .rule b{color:var(--silver)}
+  .rule p{color:var(--muted);margin:2px 0 0}
+
+  .boost{display:flex;flex-wrap:wrap;gap:18px;align-items:center;background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:22px 24px;box-shadow:var(--glow)}
+  .boost .mark{font-size:34px;color:var(--ice)}
+  .boost .mult{font-family:var(--mono);font-size:30px;color:var(--silver);font-variant-numeric:tabular-nums}
+  .boost p{font-size:15px;color:var(--muted);max-width:52ch;margin:0}
+  .boost p b{color:var(--silver)}
+  .boost a{white-space:nowrap}
+
+  .cta{margin-top:8px;text-align:center;border:1px solid var(--line);border-radius:14px;
+    background:var(--panel);box-shadow:var(--glow);padding:46px 24px}
+  .cta h2{font-size:clamp(22px,3.6vw,32px);font-weight:800}
+  .cta h2 .accent{background:linear-gradient(120deg,var(--ice),var(--ice-deep));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .cta p{color:var(--muted);margin:12px auto 0;font-size:15.5px;max-width:56ch}
+
+  footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 40px;
+    font-family:var(--mono);font-size:12px;color:var(--faint)}
+  footer .wrap{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--ice)}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <span class="brand"><b>ROKHA</b> · LEADERBOARD</span>
+  <button class="theme" id="tg">☾ theme</button>
+  <a class="navcta" href="https://rokha.ai" target="_blank" rel="noopener">Claim your page →</a>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="glyphrow"><div class="cup">🏆</div><span class="plus">+</span><div class="r">R</div></div>
+  <div class="eyebrow">Every weight published · every score auditable</div>
+  <h1 style="margin-top:14px">Build things agents actually run. <span class="accent">Climb for it.</span></h1>
+  <p class="sub">The Rokha leaderboard ranks builders by what the community really uses — and rewards <b>every kind of participation</b>, from shipping a Rig to just showing up every day. No black box: the full point math is on this page.</p>
+  <div class="herocta">
+    <a class="btn primary" href="https://rokha.ai" target="_blank" rel="noopener">Start building on rokha.ai →</a>
+    <a class="btn ghost" href="https://rokha.ai/news" target="_blank" rel="noopener">See the live board →</a>
+  </div>
+</div></header>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">01</span><h2>Three ways to climb</h2></div>
+  <div class="ways">
+    <div class="way">
+      <div class="glyphs">⬡ ▶ ★</div>
+      <h3>BUILD &amp; SHIP</h3>
+      <p>The crown signals. Publish skills, harnesses and Rigs — then earn every time <b>someone else runs them</b>. Rig runs weigh heaviest of everything on the board. Saves of your work count too.</p>
+      <div class="pts">RIG RUNS · TOOL RUNS · SHIPPED · SAVES</div>
+    </div>
+    <div class="way">
+      <div class="glyphs">◆ ◈ ⌗</div>
+      <h3>SHOW UP</h3>
+      <p>Daily presence pays: points for <b>every active day</b>, and a bonus that grows with your <b>consecutive-day streak</b>. Claim your page, verify it, earn badges, file bug reports — it all counts.</p>
+      <div class="pts">LOGIN DAYS · STREAKS · IDENTITY · REPORTS</div>
+    </div>
+    <div class="way">
+      <div class="glyphs">𝕏 ◉ ⚡</div>
+      <h3>SPREAD THE WORD</h3>
+      <p>Link your X account and post your Rokha page. <b>Views and engagement on your own posts</b> become leaderboard points — the more your work travels, the higher you climb.</p>
+      <div class="pts">X VIEWS · X ENGAGEMENT · PAGE VIEWS</div>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">02</span><h2>The X rule</h2></div>
+  <div class="xrule">
+    <p class="lead" style="margin-bottom:16px">One rule, three steps — and the points find you automatically.</p>
+    <div class="how">
+      <div class="s"><b><i>01</i>LINK X</b>Connect your X account to your Rokha page. Takes one click — it's also how we know a post is really yours. <a href="./x-integration.html">How linking works ↗</a></div>
+      <div class="s"><b><i>02</i>POST YOUR PAGE</b>Share what you're building, with your page link in the post. That's the whole requirement.</div>
+      <div class="s"><b><i>03</i>GET COUNTED</b>We pick it up automatically. Views, likes, reposts, replies and quotes all feed your score while the post is fresh.</div>
+    </div>
+    <div class="postline">Building on Rokha — my page: <span>rokha.ai/@you</span> ⌁ post it, that's it</div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">03</span><h2>The math — every weight, published</h2></div>
+  <p class="lead">The score is one open formula. Repeatable signals are <b>log-damped</b> (each unit is worth a little less than the last), loyalty is <b>capped</b>, identity milestones pay <b>once</b>. Nothing else touches your rank.</p>
+  <div class="formula">score = Σ w·ln(1+x)<small> repeatable signals</small> + loyalty<small> (bounded)</small> + identity<small> (one-time)</small></div>
+  <p class="note">Damping in practice: your 1st rig run is worth ~243 points, your 100th ~3.5, your 1,000th ~0.35. Growth never stops — it just stays honest.</p>
+
+  <div class="tblwrap"><table>
+    <tr><th>Signal</th><th class="num">Weight</th><th style="width:110px">Scale</th><th class="num">@10</th><th class="num">@100</th><th class="num">@1k</th><th>What counts</th></tr>
+    <tr><td class="sig"><span class="g">⬡</span>Rig runs</td><td class="num w">350</td><td><div class="meter"><i style="width:100%"></i></div></td><td class="num">839</td><td class="num">1,615</td><td class="num">2,418</td><td class="note">Others running YOUR Rigs — the heaviest signal on the board</td></tr>
+    <tr><td class="sig"><span class="g">▶</span>Tool runs</td><td class="num w">150</td><td><div class="meter"><i style="width:43%"></i></div></td><td class="num">360</td><td class="num">692</td><td class="num">1,036</td><td class="note">Runs of your other creations — skills, harnesses, servers</td></tr>
+    <tr><td class="sig"><span class="g">★</span>Saves</td><td class="num w">120</td><td><div class="meter"><i style="width:34%"></i></div></td><td class="num">288</td><td class="num">554</td><td class="num">829</td><td class="note">Other users saving your work (your own saves don't count)</td></tr>
+    <tr><td class="sig"><span class="g">𝕏</span>X engagement</td><td class="num w">100</td><td><div class="meter"><i style="width:29%"></i></div></td><td class="num">240</td><td class="num">462</td><td class="num">691</td><td class="note">Likes + reposts + replies + quotes on your qualifying posts</td></tr>
+    <tr><td class="sig"><span class="g">⇪</span>Shipped</td><td class="num w">80</td><td><div class="meter"><i style="width:23%"></i></div></td><td class="num">192</td><td class="num">369</td><td class="num">553</td><td class="note">Creations published to the registry</td></tr>
+    <tr><td class="sig"><span class="g">𝕏</span>X views</td><td class="num w">50</td><td><div class="meter"><i style="width:14%"></i></div></td><td class="num">120</td><td class="num">231</td><td class="num">345</td><td class="note">Views on those posts — worth half an engagement unit</td></tr>
+    <tr><td class="sig"><span class="g">⌗</span>Bug reports</td><td class="num w">40</td><td><div class="meter"><i style="width:11%"></i></div></td><td class="num">96</td><td class="num">185</td><td class="num">276</td><td class="note">Filed reports — making the platform better counts</td></tr>
+    <tr><td class="sig"><span class="g">⚡</span>Activity (7d)</td><td class="num w">20</td><td><div class="meter"><i style="width:6%"></i></div></td><td class="num">48</td><td class="num">92</td><td class="num">138</td><td class="note">Your actions this week — deliberately the lightest weight</td></tr>
+    <tr><td class="sig"><span class="g">◉</span>Page views (7d)</td><td class="num w">20</td><td><div class="meter"><i style="width:6%"></i></div></td><td class="num">48</td><td class="num">92</td><td class="num">138</td><td class="note">Visits to your public page this week</td></tr>
+  </table></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">04</span><h2>Loyalty — showing up pays</h2></div>
+  <div class="cards">
+    <div class="card"><h3>Login days · 30-day window</h3><div class="big">10 <small>pts / day · max 300</small></div><p>Every day you're on Rokha counts. The 30-day window is the cap.</p></div>
+    <div class="card"><h3>Consecutive streak</h3><div class="big">15 <small>pts / day · caps at 30</small></div><p>Max 450. Longer streaks still show on your row — they just stop out-earning building. Miss a day late at night? A streak survives until yesterday.</p></div>
+    <div class="card"><h3>Perfect month</h3><div class="big">750 <small>pts ceiling</small></div><p>Daily loyalty makes you visible on the board — it can never out-rank shipped work alone.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">05</span><h2>Identity — one-time milestones</h2></div>
+  <div class="tblwrap" style="margin-top:0"><table>
+    <tr><th>Milestone</th><th class="num">Points</th><th>Notes</th></tr>
+    <tr><td class="sig"><span class="g">𝕏</span>Link your X account</td><td class="num w">250</td><td class="note">Also unlocks X post points — <a href="./x-integration.html">how to link ↗</a></td></tr>
+    <tr><td class="sig"><span class="g">✔</span>Verify your page</td><td class="num w">150</td><td class="note"></td></tr>
+    <tr><td class="sig"><span class="g">@</span>Claim your handle</td><td class="num w">100</td><td class="note">rokha.ai/@you goes live — <a href="./get-started.html">get started ↗</a></td></tr>
+    <tr><td class="sig"><span class="g">◈</span>Each badge you earn</td><td class="num w">100</td><td class="note">Every earned badge pays once</td></tr>
+  </table></div>
+  <p class="note" style="margin-top:12px">The full sweep with one badge = 600 points, once.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">06</span><h2>Fair by design</h2></div>
+  <div class="fair">
+    <div class="rule"><span class="m">✓</span><div><b>Whales can't freeze the board.</b><p>Repeatable signals are log-damped — your 1,000th run is worth less than your 1st, so newcomers always have a path up.</p></div></div>
+    <div class="rule"><span class="m">✓</span><div><b>Shipped work rules the top.</b><p>The numbers prove it: 1,000 rig runs ≈ 2,418 pts beats a maxed-out month of streaks + full identity + badges ≈ 1,918 pts — and even a viral X post with 1M views ≈ 1,611 pts. Building wins, by design.</p></div></div>
+    <div class="rule"><span class="m">✓</span><div><b>Only your own X posts count.</b><p>Posts are verified against your linked account. Nobody can farm points with your link — or steal yours.</p></div></div>
+    <div class="rule"><span class="m">✓</span><div><b>Every score is auditable.</b><p>Each row carries its raw components — runs, saves, streaks, X views — and these exact weights are enforced by automated tests. What you read here is what runs.</p></div></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">07</span><h2>The Introverted boost</h2></div>
+  <div class="boost">
+    <div class="mark">⛊</div>
+    <div class="mult">×1.15</div>
+    <p><b>Introverted badge holders earn 15% more</b> on everything. The boost amplifies points you earn — it never mints them — and it shows transparently on your row. Hold the badge, keep the edge. <a href="./introverted-badge.html">How to earn the badge ↗</a></p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="cta">
+    <div class="eyebrow" style="display:flex;justify-content:center">The board recalculates continuously</div>
+    <h2 style="margin-top:14px">Claim your page. Ship something. <span class="accent">Watch your name rise.</span></h2>
+    <p>Your next run, save, streak day or post moves you within a minute.</p>
+    <div class="herocta" style="justify-content:center">
+      <a class="btn primary" href="https://rokha.ai" target="_blank" rel="noopener">Claim your page on rokha.ai →</a>
+      <a class="btn ghost" href="https://rokha.ai/news" target="_blank" rel="noopener">Full leaderboard →</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span><b style="color:var(--muted)">Rokha</b> — the OS for the agentic world</span>
+  <span>·</span><a href="https://rokha.ai" target="_blank" rel="noopener">rokha.ai</a>
+  <span>·</span><a href="./index.html">docs home</a>
+  <span>·</span><a href="./get-started.html">get started</a>
+  <span>·</span><a href="./x-integration.html">connect X</a>
+  <span>·</span><a href="./introverted-badge.html">$ID badge</a>
+  <span>·</span><a href="https://x.com/Rokha_ai" target="_blank" rel="noopener">𝕏 @Rokha_ai</a>
+</div></footer>
+
+<script>
+  const root=document.documentElement, tg=document.getElementById('tg');
+  tg.addEventListener('click',()=>{
+    const cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+</script>
+</body>
+</html>
