@@ -6,6 +6,29 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The board goes to Telegram — live leaderboard + community raids (unreleased)
+
+**The top-builders leaderboard now lives in Telegram too.** Message
+[@RokhaLBBot](https://t.me/RokhaLBBot) (or add it to a group) and
+`/leaderboard` answers with the live board; `/earn` shows the complete point
+table as a card, plus exactly how to qualify. Same numbers as
+[rokha.ai/news/top_builders](https://rokha.ai/news/top_builders) — one board,
+every door.
+
+**⚔️ Raids.** A group admin picks a builder's qualifying X post, sets
+like/repost/reply goals with tap buttons, and the chat watches a live
+progress card update in real time — 20-minute sprints that repost themselves
+so the raid stays in view. When the goals land: a celebration, the **top
+raiders named** (with their Rokha pages if linked), the **points banked**
+stated outright, and the leaderboard reflecting it instantly.
+
+**Freshness, stated honestly:** a new qualifying post (linked X account +
+tagging @IntrovertedDevs) lands on the board within a minute. Its view and
+engagement numbers then re-check on a ladder matched to when they actually
+move — every few minutes while the post is hot, tapering to daily, frozen
+after a week — and live during any raid. Existing builders keep their
+history: login streaks and recent X posts are credited retroactively.
+
 ## Your page, your brand — style knobs + the Rokha-designed cover (unreleased)
 
 **Builder pages got personal.** rokha.ai/@you now opens with a branded hero
