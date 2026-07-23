@@ -6,6 +6,23 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The trust model, documented — identity, consent & credentials (unreleased)
+
+**New public page:
+[identity.html](https://aetherbytes.github.io/rokha-sdk/identity.html)** — how
+Rokha models identity and consent for agents acting inside real apps with real
+credentials, with diagrams for each flow. The three rules: **identity is
+derived, never asserted** (one gateway stamps the owner from the verified
+token and discards anything a caller claims about itself); **consent is a
+mandate, not a session** (Signet's scoped, expiring, revocable grants —
+in-scope actions auto-approve, everything else escalates to you); and
+**credentials never travel with the agent** (connect an app once, the token
+lives in the broker, attached server-side and domain-locked to its own
+provider's hosts). Also covered: how an agent bootstraps a first-class
+identity entirely over MCP (`auth_wallet_challenge` → `auth_wallet_verify` →
+JWT), the personal MCP gateway that injects upstream credentials so your
+client only ever holds a Rokha token, and runner-pays attribution.
+
 ## The board goes to Telegram — live leaderboard + community raids (unreleased)
 
 **The top-builders leaderboard now lives in Telegram too.** Message

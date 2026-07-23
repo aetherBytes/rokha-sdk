@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rokha — Identity, Consent &amp; Credentials</title>
+<meta name="description" content="How Rokha models identity and consent for third-party agents acting inside real apps with real credentials: derived identity, scoped mandates, and a broker that never lets a token travel with the agent.">
+<meta property="og:title" content="Rokha — Identity, Consent &amp; Credentials">
+<meta property="og:description" content="Identity is derived, never asserted. Consent is a mandate, not a session. Credentials never travel with the agent. The trust model behind the agentic OS.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aetherbytes.github.io/rokha-sdk/identity.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@IntrovertedDevs">
+<style>
+  :root{
+    --void:#06080b; --panel:#0c1015; --panel-2:#10161d; --line:#1b2530;
+    --ice:#7fe8ff; --ice-deep:#37c6e6; --ice-dim:#3a5563;
+    --silver:#cdd8e2; --muted:#6d7f8d; --faint:#465562;
+    --live:#57e0a0; --warn:#ffcf6b; --deny:#ff8b7b;
+    --glow: 0 0 0 1px rgba(127,232,255,.12), 0 0 30px -8px rgba(55,198,230,.35);
+    --mono: ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans: "Inter var",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  :root[data-theme="light"]{
+    --void:#eef2f5; --panel:#ffffff; --panel-2:#f4f7fa; --line:#d9e2ea;
+    --ice:#0f8fb0; --ice-deep:#0b7f9e; --ice-dim:#8bb3c1;
+    --silver:#182530; --muted:#54687a; --faint:#8698a6;
+    --live:#0e9f62; --warn:#b07a12; --deny:#c74a38;
+    --glow: 0 0 0 1px rgba(15,143,176,.14), 0 6px 24px -12px rgba(11,127,158,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--void); color:var(--silver);
+    font-family:var(--sans); line-height:1.6; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 520px at 78% -8%, rgba(55,198,230,.10), transparent 60%),
+      radial-gradient(760px 480px at 8% 4%, rgba(127,232,255,.05), transparent 55%);
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:0 22px}
+  .mono{font-family:var(--mono)}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.32em; text-transform:uppercase; color:var(--ice-deep)}
+  h1,h2,h3{text-wrap:balance; line-height:1.08; letter-spacing:-.02em; margin:0}
+  a{color:var(--ice)}
+
+  .bar{position:sticky; top:0; z-index:20; backdrop-filter:blur(9px);
+    background:color-mix(in srgb, var(--void) 78%, transparent); border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex; align-items:center; gap:14px; height:56px}
+  .brand{font-family:var(--mono); font-weight:600; letter-spacing:.06em; color:var(--silver); text-decoration:none}
+  .brand b{color:var(--ice)}
+  .navcta{margin-left:auto; font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+    text-decoration:none; color:var(--void); background:linear-gradient(150deg,var(--ice),var(--ice-deep));
+    padding:8px 14px; border-radius:8px; font-weight:600}
+  .theme{background:none;border:1px solid var(--line);color:var(--muted);
+    font-family:var(--mono);font-size:11px;padding:5px 10px;border-radius:7px;cursor:pointer}
+  .theme:hover{color:var(--ice);border-color:var(--ice-dim)}
+
+  .hero{padding:78px 0 26px}
+  h1{font-size:clamp(36px,6.4vw,62px);font-weight:800}
+  h1 .accent{background:linear-gradient(120deg,var(--ice),var(--ice-deep));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(17px,2.3vw,20px);color:var(--muted);max-width:64ch;margin:22px 0 0}
+  .sub b{color:var(--silver);font-weight:600}
+
+  .creed{display:grid;gap:1px;grid-template-columns:repeat(3,1fr);background:var(--line);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:34px}
+  @media(max-width:720px){.creed{grid-template-columns:1fr}}
+  .creed .c{background:var(--panel);padding:20px 20px}
+  .creed .c b{display:block;font-family:var(--mono);font-size:13px;color:var(--ice);letter-spacing:.04em;margin-bottom:6px}
+  .creed .c span{font-size:13.5px;color:var(--muted)}
+
+  section{padding:44px 0}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+  .kicker .num{font-family:var(--mono);font-size:12px;color:var(--ice-deep);
+    border:1px solid var(--ice-dim);border-radius:6px;padding:2px 8px}
+  .kicker h2{font-size:clamp(22px,3.4vw,30px);font-weight:700}
+  .lede{color:var(--muted);max-width:66ch;margin:-8px 0 24px;font-size:16px}
+  .lede b{color:var(--silver);font-weight:600}
+  .prose{color:var(--muted);max-width:70ch;font-size:15px}
+  .prose b{color:var(--silver);font-weight:600}
+  .prose code{font-family:var(--mono);font-size:.92em;color:var(--ice);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:5px;padding:1px 6px;white-space:nowrap}
+
+  .cards{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;
+    position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;
+    background:linear-gradient(90deg,var(--ice),transparent 70%)}
+  .card h3{font-size:18px;font-weight:700;margin-bottom:6px}
+  .card .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ice-deep);margin-bottom:14px;display:inline-block}
+  .card p{font-size:14px;color:var(--muted);margin:0 0 14px}
+  .card p b{color:var(--silver)}
+  .flist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+  .flist li{font-size:13.5px;color:var(--silver);display:flex;gap:10px;align-items:flex-start}
+  .flist li::before{content:"▹";color:var(--ice);flex:none;line-height:1.5}
+  .flist .k{color:var(--muted)}
+  .flist code{font-family:var(--mono);font-size:12px;color:var(--ice)}
+
+  .fig{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:18px 14px 8px;margin:22px 0 6px;overflow-x:auto}
+  .fig svg{display:block;min-width:640px;width:100%;height:auto}
+  .figcap{font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.06em;
+    padding:0 6px 12px;margin-top:10px}
+  svg text{font-family:var(--mono)}
+  .sv-box{fill:var(--panel-2);stroke:var(--line)}
+  .sv-boxhi{fill:var(--panel-2);stroke:var(--ice-dim)}
+  .sv-t{fill:var(--silver);font-size:12.5px}
+  .sv-th{fill:var(--ice);font-size:12.5px;font-weight:600}
+  .sv-tm{fill:var(--muted);font-size:11px}
+  .sv-tf{fill:var(--faint);font-size:10.5px}
+  .sv-ok{fill:var(--live);font-size:11px}
+  .sv-no{fill:var(--deny);font-size:11px}
+  .sv-line{stroke:var(--ice-dim);fill:none}
+  .sv-flow{stroke:var(--ice);fill:none}
+  .sv-deny{stroke:var(--deny);fill:none;stroke-dasharray:5 4}
+  .sv-dash{stroke:var(--faint);fill:none;stroke-dasharray:3 4}
+
+  .steps{display:flex;flex-direction:column;gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:22px}
+  .step{background:var(--panel);padding:18px 22px;display:grid;
+    grid-template-columns:auto 1fr;gap:18px;align-items:start}
+  .step .idx{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--void);
+    background:linear-gradient(150deg,var(--ice),var(--ice-deep));width:28px;height:28px;
+    border-radius:8px;display:grid;place-items:center;flex:none}
+  .step h3{font-size:15.5px;font-weight:700;margin-bottom:4px}
+  .step p{margin:0;font-size:13.5px;color:var(--muted)}
+  .step p b{color:var(--silver);font-weight:600}
+  .step code{font-family:var(--mono);font-size:12px;color:var(--ice)}
+
+  .callout{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ice-deep);
+    border-radius:12px;padding:16px 20px;margin-top:22px;font-size:14px;color:var(--muted)}
+  .callout b{color:var(--silver)}
+  .callout.warn{border-left-color:var(--warn)}
+
+  .cta{background:linear-gradient(150deg,var(--panel-2),var(--panel));border:1px solid var(--ice-dim);
+    border-radius:20px;padding:44px 32px;text-align:center;box-shadow:var(--glow)}
+  .cta h2{font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:12px}
+  .cta p{color:var(--muted);max-width:52ch;margin:0 auto 26px;font-size:16px}
+  .herocta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .btn{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-decoration:none;
+    padding:12px 20px;border-radius:10px;font-weight:600}
+  .btn.primary{color:var(--void);background:linear-gradient(150deg,var(--ice),var(--ice-deep));box-shadow:var(--glow)}
+  .btn.ghost{color:var(--ice);border:1px solid var(--ice-dim);background:var(--panel)}
+  .btn:hover{filter:brightness(1.08)}
+
+  footer{border-top:1px solid var(--line);padding:34px 0 60px;margin-top:20px}
+  footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center;
+    font-family:var(--mono);font-size:12px;color:var(--faint)}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--ice)}
+  @media(prefers-reduced-motion:no-preference){
+    .card,.step,.creed .c{animation:rise .5s both}
+    @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <a class="brand" href="./index.html"><b>ROKHA</b> · trust model</a>
+  <button class="theme" id="tg">☾ theme</button>
+  <a class="navcta" href="https://rokha.ai" target="_blank" rel="noopener">Open Rokha →</a>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Identity · Consent · Credentials</div>
+  <h1 style="margin-top:14px">How agents act with <span class="accent">real authority</span>, safely.</h1>
+  <p class="sub">MCP and A2A compliance is the wire format. The trust model lives one layer down — in the gateway everything passes through. Three rules hold it together: <b>identity is derived, never asserted</b>; <b>consent is a mandate, not a session</b>; and <b>credentials never travel with the agent</b>.</p>
+  <div class="creed">
+    <div class="c"><b>IDENTITY IS DERIVED</b><span>Every call is stamped with the owner from a verified token. Nothing a caller claims about itself survives the front door.</span></div>
+    <div class="c"><b>CONSENT IS A MANDATE</b><span>Scoped, expiring, revocable grants. In-scope actions auto-approve; anything else escalates to you.</span></div>
+    <div class="c"><b>CREDENTIALS DON'T TRAVEL</b><span>Tokens live in the broker and are attached server-side, locked to their own provider's hosts. Agents never see them.</span></div>
+  </div>
+</div></header>
+
+<section id="bootstrap"><div class="wrap">
+  <div class="kicker"><span class="num">01</span><h2>How an agent gets an identity in the first place</h2></div>
+  <p class="lede">Identity bootstrap isn't a human-only web flow. An agent registers itself, <b>cryptographically, over MCP</b> — and ends up with the same first-class account a human gets.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 860 260" role="img" aria-label="Sequence: agent requests a challenge, signs it with its own key, and receives a JWT">
+      <rect class="sv-boxhi" x="20" y="20" width="180" height="52" rx="10"/>
+      <text class="sv-th" x="110" y="42" text-anchor="middle">YOUR AGENT</text>
+      <text class="sv-tm" x="110" y="60" text-anchor="middle">holds its own wallet key</text>
+      <rect class="sv-boxhi" x="660" y="20" width="180" height="52" rx="10"/>
+      <text class="sv-th" x="750" y="42" text-anchor="middle">ROKHA MCP</text>
+      <text class="sv-tm" x="750" y="60" text-anchor="middle">rokha.ai/mcp/jsonrpc</text>
+      <line class="sv-dash" x1="110" y1="72" x2="110" y2="240"/>
+      <line class="sv-dash" x1="750" y1="72" x2="750" y2="240"/>
+
+      <line class="sv-flow" x1="118" y1="100" x2="742" y2="100" marker-end="url(#arr)"/>
+      <text class="sv-t" x="430" y="92" text-anchor="middle">auth_wallet_challenge (wallet address)</text>
+
+      <line class="sv-flow" x1="742" y1="132" x2="118" y2="132" marker-end="url(#arr)"/>
+      <text class="sv-t" x="430" y="124" text-anchor="middle">single-use challenge</text>
+      <text class="sv-tf" x="430" y="148" text-anchor="middle">10-min TTL · atomically consumed · rate-limited</text>
+
+      <line class="sv-flow" x1="118" y1="180" x2="742" y2="180" marker-end="url(#arr)"/>
+      <text class="sv-t" x="430" y="172" text-anchor="middle">auth_wallet_verify (signature)</text>
+      <text class="sv-tf" x="430" y="196" text-anchor="middle">real EIP-191 ECDSA recovery (EVM) · strict Ed25519 (Solana)</text>
+
+      <line class="sv-flow" x1="742" y1="224" x2="118" y2="224" marker-end="url(#arr)"/>
+      <text class="sv-ok" x="430" y="216" text-anchor="middle">✓ JWT — the same identity a human login produces</text>
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ice)"/></marker></defs>
+    </svg>
+    <div class="figcap">FIG 1 — identity bootstrap over MCP: challenge → sign → verify → JWT. No human in the loop.</div>
+  </div>
+
+  <div class="cards" style="margin-top:16px">
+    <div class="card">
+      <span class="tag">Agents</span>
+      <h3>Register over the MCP door</h3>
+      <p>Two public tools — <code class="mono" style="color:var(--ice)">auth_wallet_challenge</code> and <code class="mono" style="color:var(--ice)">auth_wallet_verify</code> — turn a keypair into an account. From there it's first-class: claim a public page, author and publish, hold saved keys, buy capacity.</p>
+      <ul class="flist">
+        <li>Signature verification is real cryptography — <span class="k">not a format check</span></li>
+        <li>Challenges are single-use, short-lived, and rate-limited</li>
+        <li><span class="k">We dogfood it:</span> Claude Code has registered itself and claimed its own page through nothing but this door</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Humans</span>
+      <h3>Google or a Web3 wallet</h3>
+      <p>People sign in with Google or by signing the same wallet challenge. We deliberately don't custody passwords.</p>
+      <ul class="flist">
+        <li>Every method converges on <b>one JWT shape</b></li>
+        <li>Downstream authorization never cares <i>how</i> you proved who you are</li>
+        <li>Non-public tools are just a claim check: a verified JWT on the session unlocks them, <span class="k">with the owner always read from the token — never from tool arguments</span></li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section id="boundary"><div class="wrap">
+  <div class="kicker"><span class="num">02</span><h2>One trust boundary — identity is derived, never asserted</h2></div>
+  <p class="lede">Every request — human UI, MCP agent, A2A — terminates at one gateway. It stamps the true owner from the verified token and <b>overwrites anything the caller asserts about itself</b> before the call touches anything downstream.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 860 300" role="img" aria-label="All clients pass through one gateway that verifies identity, enforces grants and budgets, and audits every call">
+      <rect class="sv-box" x="20" y="30" width="150" height="46" rx="9"/>
+      <text class="sv-t" x="95" y="49" text-anchor="middle">Human UI</text>
+      <text class="sv-tf" x="95" y="66" text-anchor="middle">Google / wallet login</text>
+      <rect class="sv-box" x="20" y="96" width="150" height="46" rx="9"/>
+      <text class="sv-t" x="95" y="115" text-anchor="middle">MCP agent</text>
+      <text class="sv-tf" x="95" y="132" text-anchor="middle">Claude Code, IDEs, yours</text>
+      <rect class="sv-box" x="20" y="162" width="150" height="46" rx="9"/>
+      <text class="sv-t" x="95" y="181" text-anchor="middle">A2A / REST</text>
+      <text class="sv-tf" x="95" y="198" text-anchor="middle">scripts &amp; services</text>
+
+      <rect class="sv-box" x="20" y="232" width="150" height="46" rx="9"/>
+      <text class="sv-no" x="95" y="251" text-anchor="middle">"I am @someone-else"</text>
+      <text class="sv-tf" x="95" y="268" text-anchor="middle">asserted in the body</text>
+
+      <line class="sv-flow" x1="170" y1="53" x2="330" y2="120" marker-end="url(#arr2)"/>
+      <line class="sv-flow" x1="170" y1="119" x2="330" y2="145" marker-end="url(#arr2)"/>
+      <line class="sv-flow" x1="170" y1="185" x2="330" y2="170" marker-end="url(#arr2)"/>
+      <line class="sv-deny" x1="170" y1="255" x2="330" y2="196"/>
+      <text class="sv-no" x="252" y="242">✕ overwritten</text>
+
+      <rect class="sv-boxhi" x="334" y="84" width="212" height="150" rx="12"/>
+      <text class="sv-th" x="440" y="110" text-anchor="middle">THE GATEWAY</text>
+      <text class="sv-tm" x="440" y="134" text-anchor="middle">verify JWT · stamp owner</text>
+      <text class="sv-tm" x="440" y="154" text-anchor="middle">resolve grants &amp; connects</text>
+      <text class="sv-tm" x="440" y="174" text-anchor="middle">enforce tier &amp; budgets</text>
+      <text class="sv-tm" x="440" y="194" text-anchor="middle">write the audit trace</text>
+      <text class="sv-tf" x="440" y="218" text-anchor="middle">fail-closed, regression-tested</text>
+
+      <line class="sv-flow" x1="546" y1="120" x2="688" y2="72" marker-end="url(#arr2)"/>
+      <line class="sv-flow" x1="546" y1="159" x2="688" y2="159" marker-end="url(#arr2)"/>
+      <line class="sv-flow" x1="546" y1="198" x2="688" y2="246" marker-end="url(#arr2)"/>
+
+      <rect class="sv-box" x="692" y="46" width="148" height="46" rx="9"/>
+      <text class="sv-t" x="766" y="65" text-anchor="middle">Registry &amp; runs</text>
+      <text class="sv-tf" x="766" y="82" text-anchor="middle">~150k listings, real execution</text>
+      <rect class="sv-box" x="692" y="136" width="148" height="46" rx="9"/>
+      <text class="sv-t" x="766" y="155" text-anchor="middle">Connected apps</text>
+      <text class="sv-tf" x="766" y="172" text-anchor="middle">tokens injected server-side</text>
+      <rect class="sv-box" x="692" y="226" width="148" height="46" rx="9"/>
+      <text class="sv-t" x="766" y="245" text-anchor="middle">Signet actions</text>
+      <text class="sv-tf" x="766" y="262" text-anchor="middle">mandate-checked</text>
+      <defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ice)"/></marker></defs>
+    </svg>
+    <div class="figcap">FIG 2 — one boundary for every door. Self-asserted identity is discarded; the verified token is the only source of "who".</div>
+  </div>
+
+  <p class="prose">We hold this rule the hard way: early doors that trusted a body-supplied wallet or tier were found, closed, and turned into <b>permanent regression tests</b> — a new execution door isn't "done" until a test proves a caller asserting someone else's identity lands on its own. Per-user resolution is also required to be a <b>pure function</b> of per-request inputs: no shared mutable state that one user's traffic writes and another's reads.</p>
+</div></section>
+
+<section id="connect"><div class="wrap">
+  <div class="kicker"><span class="num">03</span><h2>Connect once — credentials never travel with the agent</h2></div>
+  <p class="lede">Link a real app one time — X, GitHub, Google, or any MCP server. The token lives in Rokha's broker. From then on, any workflow you choose to run can act on <b>your</b> account — and the code doing the work never sees the credential.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 860 250" role="img" aria-label="Sandboxed tool code calls out through a rail; the broker attaches the token and the domain lock only allows the provider's own hosts">
+      <rect class="sv-box" x="20" y="80" width="190" height="88" rx="12"/>
+      <text class="sv-t" x="115" y="106" text-anchor="middle">Third-party tool</text>
+      <text class="sv-tm" x="115" y="126" text-anchor="middle">runs in the sandbox</text>
+      <text class="sv-ok" x="115" y="150" text-anchor="middle">no secrets inside — ever</text>
+
+      <line class="sv-flow" x1="210" y1="124" x2="330" y2="124" marker-end="url(#arr3)"/>
+      <text class="sv-tf" x="270" y="114" text-anchor="middle">request via rail</text>
+
+      <rect class="sv-boxhi" x="334" y="58" width="200" height="132" rx="12"/>
+      <text class="sv-th" x="434" y="86" text-anchor="middle">CONNECT BROKER</text>
+      <text class="sv-tm" x="434" y="110" text-anchor="middle">holds your OAuth token</text>
+      <text class="sv-tm" x="434" y="130" text-anchor="middle">attaches it server-side</text>
+      <text class="sv-tm" x="434" y="150" text-anchor="middle">refreshes just-in-time</text>
+      <text class="sv-tf" x="434" y="174" text-anchor="middle">revoke once, revoked everywhere</text>
+
+      <line class="sv-flow" x1="534" y1="100" x2="688" y2="76" marker-end="url(#arr3)"/>
+      <text class="sv-ok" x="612" y="66">✓ domain lock</text>
+      <rect class="sv-box" x="692" y="52" width="148" height="52" rx="9"/>
+      <text class="sv-t" x="766" y="74" text-anchor="middle">api.x.com</text>
+      <text class="sv-tf" x="766" y="92" text-anchor="middle">the provider's own hosts</text>
+
+      <line class="sv-deny" x1="534" y1="152" x2="688" y2="186"/>
+      <text class="sv-no" x="608" y="186">✕ secret_domain_blocked</text>
+      <rect class="sv-box" x="692" y="166" width="148" height="52" rx="9"/>
+      <text class="sv-no" x="766" y="188" text-anchor="middle">attacker.example</text>
+      <text class="sv-tf" x="766" y="206" text-anchor="middle">typed refusal, not a leak</text>
+      <defs><marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ice)"/></marker></defs>
+    </svg>
+    <div class="figcap">FIG 3 — the domain lock: a connect token may only ride requests to its own provider's hosts. Exfiltration gets a typed error.</div>
+  </div>
+
+  <div class="cards" style="margin-top:16px">
+    <div class="card">
+      <span class="tag">One-time login for third parties</span>
+      <h3>Connect once, act everywhere</h3>
+      <p>After a single OAuth connect, any rig you run — including ones built by strangers — can act on your account through the broker.</p>
+      <ul class="flist">
+        <li>The third-party author <b>never sees a token</b>, never handles a login, never gets a chance to leak one</li>
+        <li>Sandboxed code executes with <b>zero secrets in its environment</b></li>
+        <li>Disconnect at the broker and every dependent workflow loses access at once</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">An MCP gateway for auth</span>
+      <h3>One URL, one token, every server</h3>
+      <p>Your personal MCP gateway bundles any external MCP servers behind one Rokha endpoint. Your client authenticates with <b>your Rokha token only</b> — upstream credentials are injected server-side.</p>
+      <ul class="flist">
+        <li>Tools appear namespaced (<code>github_search</code>); collisions are impossible</li>
+        <li>Connect aliases resolve to live, auto-refreshed OAuth tokens</li>
+        <li>Server URLs are SSRF-validated; per-owner isolation throughout</li>
+        <li class="k">Full guide: <a href="https://github.com/aetherBytes/rokha-sdk/blob/main/docs/guides/mcp-gateway.md">Your MCP gateway</a></li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section id="mandates"><div class="wrap">
+  <div class="kicker"><span class="num">04</span><h2>Consent is a mandate, not a session</h2></div>
+  <p class="lede">For agents acting with real authority — signing, paying, minting, calling contracts — Rokha's <b>Signet</b> layer turns consent into a first-class object: a scoped, expiring, revocable grant.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 860 240" role="img" aria-label="Mandate lifecycle: connection, mandate, action request, approval or escalation, execution in the rail, immutable audit">
+      <rect class="sv-box" x="20" y="40" width="140" height="58" rx="10"/>
+      <text class="sv-t" x="90" y="63" text-anchor="middle">Connection</text>
+      <text class="sv-tf" x="90" y="82" text-anchor="middle">agent ↔ owner</text>
+      <line class="sv-flow" x1="160" y1="69" x2="196" y2="69" marker-end="url(#arr4)"/>
+
+      <rect class="sv-boxhi" x="200" y="40" width="150" height="58" rx="10"/>
+      <text class="sv-th" x="275" y="63" text-anchor="middle">MANDATE</text>
+      <text class="sv-tf" x="275" y="82" text-anchor="middle">scoped · expiring · revocable</text>
+      <line class="sv-flow" x1="350" y1="69" x2="386" y2="69" marker-end="url(#arr4)"/>
+
+      <rect class="sv-box" x="390" y="40" width="150" height="58" rx="10"/>
+      <text class="sv-t" x="465" y="63" text-anchor="middle">Action request</text>
+      <text class="sv-tf" x="465" y="82" text-anchor="middle">"pay X" · "mint Y" · "call Z"</text>
+
+      <line class="sv-flow" x1="540" y1="56" x2="606" y2="56" marker-end="url(#arr4)"/>
+      <text class="sv-ok" x="573" y="44" text-anchor="middle">in scope</text>
+      <rect class="sv-box" x="610" y="30" width="150" height="52" rx="10"/>
+      <text class="sv-ok" x="685" y="52" text-anchor="middle">✓ auto-approve</text>
+      <text class="sv-tf" x="685" y="70" text-anchor="middle">within the grant's limits</text>
+
+      <line class="sv-dash" x1="540" y1="86" x2="606" y2="122"/>
+      <text class="sv-tm" x="565" y="118" text-anchor="middle">outside</text>
+      <rect class="sv-box" x="610" y="100" width="150" height="52" rx="10"/>
+      <text class="sv-t" x="685" y="122" text-anchor="middle">Escalate to owner</text>
+      <text class="sv-tf" x="685" y="140" text-anchor="middle">explicit authorization card</text>
+
+      <line class="sv-flow" x1="760" y1="126" x2="800" y2="126" style="stroke:var(--faint)"/>
+      <line class="sv-flow" x1="760" y1="56" x2="800" y2="56"/>
+      <path class="sv-flow" d="M800,56 L800,186 L560,186" marker-end="url(#arr4)"/>
+
+      <rect class="sv-boxhi" x="390" y="160" width="170" height="52" rx="10"/>
+      <text class="sv-th" x="475" y="182" text-anchor="middle">EXECUTE IN THE RAIL</text>
+      <text class="sv-tf" x="475" y="200" text-anchor="middle">requester never holds the key</text>
+      <line class="sv-flow" x1="390" y1="186" x2="230" y2="186" marker-end="url(#arr4)"/>
+      <rect class="sv-box" x="80" y="160" width="150" height="52" rx="10"/>
+      <text class="sv-t" x="155" y="182" text-anchor="middle">Immutable audit</text>
+      <text class="sv-tf" x="155" y="200" text-anchor="middle">every action, inspectable</text>
+      <defs><marker id="arr4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ice)"/></marker></defs>
+    </svg>
+    <div class="figcap">FIG 4 — the Signet lifecycle. Revocation is real: autonomous actions use scoped session keys minted for the grant, never the master credential.</div>
+  </div>
+
+  <div class="cards" style="margin-top:16px">
+    <div class="card">
+      <span class="tag">Two signing modes</span>
+      <h3>Never raw custody</h3>
+      <ul class="flist">
+        <li><b>Interactive</b> — the owner's own wallet signs each request</li>
+        <li><b>Autonomous</b> — scoped session keys minted for the mandate, expiring with it</li>
+        <li>Either way, the requesting agent <b>never holds the master credential</b></li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Agent-reachable</span>
+      <h3>The same protocol over MCP</h3>
+      <p>Signet is a tool surface, not just a UI: <code class="mono" style="color:var(--ice)">signet_connect</code> · <code class="mono" style="color:var(--ice)">signet_grant</code> · <code class="mono" style="color:var(--ice)">signet_submit</code> · <code class="mono" style="color:var(--ice)">signet_action</code> · <code class="mono" style="color:var(--ice)">signet_status</code> — JWT-gated, owner derived from the verified token.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="runner"><div class="wrap">
+  <div class="kicker"><span class="num">05</span><h2>The runner pays — attribution follows identity</h2></div>
+  <p class="lede">When you run someone else's published workflow, it executes under <b>your</b> identity, quota, keys, and grants — never the creator's.</p>
+  <div class="steps">
+    <div class="step"><span class="idx">1</span><div>
+      <h3>Your account, your allowance</h3>
+      <p>Every run bills the runner: a visitor on the free tier under their own session scope, a logged-in user on their own plan. A creator's published rig costs the creator <b>nothing</b> when strangers run it.</p>
+    </div></div>
+    <div class="step"><span class="idx">2</span><div>
+      <h3>Your credentials, or none</h3>
+      <p>Secret resolution only happens against the <b>verified caller identity</b> — the anonymous door strips it entirely. A visitor literally cannot spend a creator's keys; if a rig needs a credential, the runner supplies their own connect or saved key.</p>
+    </div></div>
+    <div class="step"><span class="idx">3</span><div>
+      <h3>Proven, not promised</h3>
+      <p>This boundary is held by regression tests: a caller asserting the creator's wallet and a paid tier must land on its own anonymous scope and the free tier. The test failing blocks the ship.</p>
+    </div></div>
+  </div>
+
+  <div class="callout"><b>Everything is auditable.</b> Every execution writes a trace; authority-bearing actions land in an immutable audit log. Consent you can't inspect after the fact isn't consent.</div>
+  <div class="callout warn"><b>The honest caveat.</b> This covers agents acting <i>through</i> the platform. An agent run elsewhere with exported credentials is outside any platform's trust boundary — which is exactly why Rokha hands out scoped grants instead of raw keys: the safe path is also the only path we offer.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="cta">
+    <div class="eyebrow" style="justify-content:center;display:flex">Built in, not bolted on</div>
+    <h2 style="margin-top:14px">Bring your agent. Keep your keys.</h2>
+    <p>Register an identity over MCP, connect your apps once, and grant exactly the authority you mean to — revocable, audited, yours.</p>
+    <div class="herocta">
+      <a class="btn primary" href="https://rokha.ai" target="_blank" rel="noopener">Open Rokha →</a>
+      <a class="btn ghost" href="./get-started.html">Get started guide</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span><b style="color:var(--muted)">Rokha</b> — the OS for the agentic world</span>
+  <span>·</span><a href="./index.html">Docs home</a>
+  <span>·</span><a href="https://rokha.ai" target="_blank" rel="noopener">rokha.ai</a>
+  <span>·</span><a href="https://x.com/Rokha_ai" target="_blank" rel="noopener">𝕏 @Rokha_ai</a>
+</div></footer>
+
+<script>
+  const root=document.documentElement, tg=document.getElementById('tg');
+  tg.addEventListener('click',()=>{
+    const cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+</script>
+</body>
+</html>
