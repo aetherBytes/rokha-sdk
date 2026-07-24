@@ -6,6 +6,15 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Wallet in-app browsers fit right (unreleased)
+
+Opening rokha.ai inside a wallet's built-in browser (MetaMask, Phantom,
+Bitget) used to leave dead bands at the top and bottom of the screen — the
+wallet's own chrome and the phone's status bar were being accounted for
+twice. The app now detects wallet browsers and sizes itself to the real
+visible area, so logging in from your wallet looks the same as any mobile
+browser.
+
 ## The trust model, documented — identity, consent & credentials (unreleased)
 
 **New public page:
