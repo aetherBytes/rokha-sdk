@@ -203,7 +203,7 @@
     <div class="how">
       <div class="s"><b><i>01</i>LINK X</b>Connect your X account to your Rokha page. Takes one click — it's also how we know a post is really yours. <a href="./x-integration.html">How linking works ↗</a></div>
       <div class="s"><b><i>02</i>TAG @IntrovertedDevs</b>Share what you're building and tag <b style="color:var(--silver)">@IntrovertedDevs</b>. That's the whole requirement — we find you by your linked account. Adding your page link is optional, but it sends readers to your page.</div>
-      <div class="s"><b><i>03</i>GET COUNTED</b>Picked up within a minute. Views, likes, reposts, replies and quotes all feed your score while the post is fresh.</div>
+      <div class="s"><b><i>03</i>GET COUNTED</b>Picked up within a minute. Views, likes, reposts, replies, quotes and bookmarks all feed your score while the post is fresh.</div>
     </div>
     <div class="postline">Building on Rokha — @IntrovertedDevs ⌁ rokha.ai/@you ⌁ post it, that's it</div>
     <div class="tblwrap" style="margin-top:18px"><table>
@@ -217,12 +217,12 @@
         <td class="note">✗ Plain retweets and replies — conversation isn't promotion</td>
       </tr>
       <tr>
-        <td class="note">✓ Stats counted while the post is fresh — <b style="color:var(--silver)">every ~15 min in its first hour</b>, hourly to 48h, daily to day 7, then frozen. During a community raid: live, whatever the post's age</td>
+        <td class="note">✓ Stats counted while the post is fresh — <b style="color:var(--silver)">every ~15 min in its first hour</b>, ~30 min while hot to 6h, ~2h to 48h, daily to day 7, then frozen. During a community raid: live, whatever the post's age</td>
         <td class="note">✗ Posts without the tag, or from an unlinked account — link first, then post</td>
       </tr>
     </table></div>
-    <p class="note" style="margin-top:14px; color:var(--muted)">Full transparency on freshness: X charges us per read, so we re-check a post's numbers on a ladder that matches when they actually move — <span class="mono">every ~15 min</span> for its first hour, <span class="mono">hourly</span> to 48h, <span class="mono">daily</span> to day 7, then the totals freeze into your score forever. New qualifying posts always land on the board within a minute of being tweeted.</p>
-    <p class="note" style="margin-top:8px; color:var(--muted)">⚔️ <b style="color:var(--silver)">Raids</b> — in the community Telegram (<a href="https://t.me/RokhaLBBot">@RokhaLBBot</a>), a group admin can <span class="mono">/raid</span> any post by an X-linked builder (no tag needed): set like/repost/reply goals, and the bot renders a live progress card that tracks the push LIVE — updating every few seconds until the goals land (20-minute sprints) — and every gain banks straight into the author's leaderboard points — while raiders who reply, repost or like from their own linked account bank <b style="color:var(--silver)">participation points of their own</b>.</p>
+    <p class="note" style="margin-top:14px; color:var(--muted)">Full transparency on freshness: X charges us per read, so we re-check a post's numbers on a ladder tuned to the engagement decay curve — <span class="mono">every ~15 min</span> for its first hour, <span class="mono">~30 min</span> while it's hot to 6h, <span class="mono">~2h</span> to 48h, <span class="mono">daily</span> to day 7, then the totals freeze into your score forever. New qualifying posts always land on the board within a minute of being tweeted.</p>
+    <p class="note" style="margin-top:8px; color:var(--muted)">⚔️ <b style="color:var(--silver)">Raids</b> — in the community Telegram (<a href="https://t.me/RokhaLBBot">@RokhaLBBot</a>), a group admin can <span class="mono">/raid</span> any post by an X-linked builder (no tag needed): set like/repost/reply goals, and the bot renders a live progress card that tracks the push LIVE — updating every few seconds until the goals land (20-minute sprints) — and every gain banks straight into the author's leaderboard points — while raiders who reply, repost or like from their own linked account bank <b style="color:var(--silver)">participation points of their own</b>. Anyone on X moves the goal counters — but the settle's 🏅 TOP RAIDERS podium (and the points) belong to raiders whose X is linked on Rokha. Link once, place forever.</p>
   </div>
 </div></section>
 
@@ -248,15 +248,16 @@
 
 <section><div class="wrap">
   <div class="kicker"><span class="num">04</span><h2>X engagement — weighted like X weighs it</h2></div>
-  <p class="lead">We use <b>everything we collect</b> from your posts — views, likes, reposts, quotes and replies — and we don't treat them as equal. <b>X open-sourced its ranking algorithm</b>, so our engagement mix uses the same ratios its ranker uses to value interactions: a reply is a conversation, a like is a nod. Your "X engagement" number is the weighted sum below (then log-damped like every repeatable signal). Views are scored separately at weight 50.</p>
+  <p class="lead">We use <b>everything we collect</b> from your posts — views, likes, reposts, quotes, replies and bookmarks — and we don't treat them as equal. <b>X open-sourced its ranking algorithm</b>, so our engagement mix uses the same ratios its ranker uses to value interactions: a reply is a conversation, a like is a nod. Your "X engagement" number is the weighted sum below (then log-damped like every repeatable signal). Views are scored separately at weight 50.</p>
   <div class="tblwrap" style="margin-top:0"><table>
     <tr><th>Interaction</th><th class="num">Units each</th><th style="width:110px">Scale</th><th>Why (per the open-source X algorithm)</th></tr>
     <tr><td class="sig"><span class="g">↳</span>Reply</td><td class="num w">13.5</td><td><div class="meter"><i style="width:100%"></i></div></td><td class="note">X's ranker scores a reply at 13.5 — conversation is the strongest signal there, so it is here. One reply = 27 likes.</td></tr>
+    <tr><td class="sig"><span class="g">⛉</span>Bookmark</td><td class="num w">10.0</td><td><div class="meter"><i style="width:74%"></i></div></td><td class="note">Not in X's 2023 table (bookmarks came later) — weighted as its "Good Click V2" (10.0): the save-to-read-later, high-intent signal</td></tr>
     <tr><td class="sig"><span class="g">❝</span>Quote post</td><td class="num w">1.5</td><td><div class="meter"><i style="width:11%"></i></div></td><td class="note">A repost plus commentary — carries your work further than a bare repost</td></tr>
     <tr><td class="sig"><span class="g">⇄</span>Repost</td><td class="num w">1.0</td><td><div class="meter"><i style="width:7%"></i></div></td><td class="note">X's ranker baseline: retweet = 1.0</td></tr>
     <tr><td class="sig"><span class="g">♥</span>Like</td><td class="num w">0.5</td><td><div class="meter"><i style="width:4%"></i></div></td><td class="note">X's ranker values a fav at 0.5 — half a repost</td></tr>
   </table></div>
-  <p class="note" style="margin-top:12px">Example: a post with 40 likes, 12 reposts, 2 quotes and 9 replies = 20 + 12 + 3 + 121.5 = <b style="color:var(--silver)">156.5 engagement units</b>. Want to climb? Start conversations, not just impressions.</p>
+  <p class="note" style="margin-top:12px">Example: a post with 40 likes, 12 reposts, 2 quotes, 9 replies and 6 bookmarks = 20 + 12 + 3 + 121.5 + 60 = <b style="color:var(--silver)">216.5 engagement units</b>. Want to climb? Start conversations, not just impressions.</p>
 </div></section>
 
 <section><div class="wrap">
