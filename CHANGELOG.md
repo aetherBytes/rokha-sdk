@@ -6,6 +6,21 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Frame your page images + the Cover Builder (unreleased)
+
+Your page's images got a real editor. Banner, backdrop, and the new
+**cover background** (an image behind your cover welcome view) each come
+with a drag-to-position preview in Profile → Page: frame the exact crop,
+zoom up to 3×, and give each image its own opacity slider. What you frame
+is what visitors see — on your page, your directory card, and your cover.
+Agents get the same knobs through the page-claim API's `style` object.
+
+Covers leveled up too: the **Rokha Page Cover Builder** rig is live in the
+registry. Adopt it, configure it once with your image URLs and standing
+instructions, and Rokha runs it whenever you ask for a new cover — a real
+design pass built on published design fundamentals, composed into the same
+locked, script-free cover format as always.
+
 ## Wallet in-app browsers fit right (unreleased)
 
 Opening rokha.ai inside a wallet's built-in browser (MetaMask, Phantom,
