@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rokha × Telegram — the community bot</title>
+<meta name="description" content="The Rokha Telegram bot: the live builder leaderboard, raids, and daily digests in your group chat — and now link your account to chat with Rokha herself, right from Telegram.">
+<meta property="og:title" content="Rokha × Telegram — the community bot">
+<meta property="og:description" content="Leaderboard, raids, bug reports — and chat with Rokha from any Telegram chat, on your own account. The agentic OS, in your pocket.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aetherbytes.github.io/rokha-sdk/telegram-bot.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@IntrovertedDevs">
+<style>
+  :root{
+    --void:#06080b; --panel:#0c1015; --panel-2:#10161d; --line:#1b2530;
+    --ice:#7fe8ff; --ice-deep:#37c6e6; --ice-dim:#3a5563;
+    --silver:#cdd8e2; --muted:#6d7f8d; --faint:#465562;
+    --live:#57e0a0; --warn:#ffcf6b; --xblack:#e9eef2;
+    --glow: 0 0 0 1px rgba(127,232,255,.12), 0 0 30px -8px rgba(55,198,230,.35);
+    --mono: ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans: "Inter var",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  :root[data-theme="light"]{
+    --void:#eef2f5; --panel:#ffffff; --panel-2:#f4f7fa; --line:#d9e2ea;
+    --ice:#0f8fb0; --ice-deep:#0b7f9e; --ice-dim:#8bb3c1;
+    --silver:#182530; --muted:#54687a; --faint:#8698a6; --xblack:#0b0f14;
+    --glow: 0 0 0 1px rgba(15,143,176,.14), 0 6px 24px -12px rgba(11,127,158,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--void); color:var(--silver);
+    font-family:var(--sans); line-height:1.6; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 520px at 78% -8%, rgba(55,198,230,.10), transparent 60%),
+      radial-gradient(760px 480px at 8% 4%, rgba(127,232,255,.05), transparent 55%);
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:0 22px}
+  .mono{font-family:var(--mono)}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.32em; text-transform:uppercase; color:var(--ice-deep)}
+  h1,h2,h3{text-wrap:balance; line-height:1.08; letter-spacing:-.02em; margin:0}
+  a{color:var(--ice)}
+
+  .bar{position:sticky; top:0; z-index:20; backdrop-filter:blur(9px);
+    background:color-mix(in srgb, var(--void) 78%, transparent); border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex; align-items:center; gap:14px; height:56px}
+  .brand{font-family:var(--mono); font-weight:600; letter-spacing:.06em; color:var(--silver)}
+  .brand b{color:var(--ice)}
+  .navcta{margin-left:auto; font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+    text-decoration:none; color:var(--void); background:linear-gradient(150deg,var(--ice),var(--ice-deep));
+    padding:8px 14px; border-radius:8px; font-weight:600}
+  .theme{background:none;border:1px solid var(--line);color:var(--muted);
+    font-family:var(--mono);font-size:11px;padding:5px 10px;border-radius:7px;cursor:pointer}
+  .theme:hover{color:var(--ice);border-color:var(--ice-dim)}
+
+  .hero{padding:78px 0 30px}
+  .hero .glyphrow{display:flex;align-items:center;gap:16px;margin-bottom:26px}
+  .glyphrow .x{font-family:var(--mono);font-size:30px;color:var(--xblack);
+    border:1px solid var(--line);border-radius:12px;width:52px;height:52px;
+    display:grid;place-items:center;background:var(--panel)}
+  .glyphrow .plus{color:var(--faint);font-size:20px}
+  .glyphrow .r{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--void);
+    width:52px;height:52px;border-radius:12px;display:grid;place-items:center;
+    background:linear-gradient(150deg,var(--ice),var(--ice-deep));box-shadow:var(--glow)}
+  h1{font-size:clamp(38px,7vw,68px);font-weight:800}
+  h1 .accent{background:linear-gradient(120deg,var(--ice),var(--ice-deep));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(17px,2.3vw,21px);color:var(--muted);max-width:60ch;margin:22px 0 0}
+  .sub b{color:var(--silver);font-weight:600}
+  .herocta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .btn{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-decoration:none;
+    padding:12px 20px;border-radius:10px;font-weight:600}
+  .btn.primary{color:var(--void);background:linear-gradient(150deg,var(--ice),var(--ice-deep));box-shadow:var(--glow)}
+  .btn.ghost{color:var(--ice);border:1px solid var(--ice-dim);background:var(--panel)}
+  .btn:hover{filter:brightness(1.08)}
+
+  section{padding:44px 0}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .kicker .num{font-family:var(--mono);font-size:12px;color:var(--ice-deep);
+    border:1px solid var(--ice-dim);border-radius:6px;padding:2px 8px}
+  .kicker h2{font-size:clamp(22px,3.4vw,30px);font-weight:700}
+  .lede{color:var(--muted);max-width:64ch;margin:-12px 0 26px;font-size:16px}
+
+  .cards{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;
+    position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;
+    background:linear-gradient(90deg,var(--ice),transparent 70%)}
+  .card h3{font-size:19px;font-weight:700;margin-bottom:6px}
+  .card .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ice-deep);margin-bottom:14px;display:inline-block}
+  .card p{font-size:14.5px;color:var(--muted);margin:0 0 16px}
+  .flist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+  .flist li{font-size:13.5px;color:var(--silver);display:flex;gap:10px;align-items:flex-start}
+  .flist li::before{content:"▹";color:var(--ice);flex:none;line-height:1.5}
+  .flist .k{color:var(--muted)}
+
+  .specs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  @media(max-width:720px){.specs{grid-template-columns:1fr 1fr}}
+  .spec{background:var(--panel);padding:20px 18px}
+  .spec .n{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--ice);
+    font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .spec .l{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.35}
+
+  .steps{display:flex;flex-direction:column;gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .step{background:var(--panel);padding:20px 22px;display:grid;
+    grid-template-columns:auto 1fr;gap:18px;align-items:start}
+  .step .idx{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--void);
+    background:linear-gradient(150deg,var(--ice),var(--ice-deep));width:28px;height:28px;
+    border-radius:8px;display:grid;place-items:center;flex:none}
+  .step h3{font-size:16px;font-weight:700;margin-bottom:5px}
+  .step p{margin:0;font-size:14px;color:var(--muted)}
+  .step p b{color:var(--silver);font-weight:600}
+  .path{display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-family:var(--mono);font-size:12px;color:var(--ice);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+  .chip .sep{color:var(--faint);margin:0 1px}
+  .lit{display:inline-flex;align-items:center;gap:8px;margin-top:8px;
+    background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:6px 8px 6px 12px}
+  .lit code{font-family:var(--mono);font-size:12.5px;color:var(--ice);white-space:nowrap}
+  .lit .k{color:var(--faint);font-size:11px}
+  .minicopy{background:none;border:1px solid var(--ice-dim);color:var(--ice);
+    font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    padding:4px 8px;border-radius:6px;cursor:pointer}
+  .minicopy:hover{background:var(--ice);color:var(--void)}
+  .minicopy.done{background:var(--live);color:var(--void);border-color:var(--live)}
+  .verify{font-family:var(--mono);font-size:12.5px;color:var(--live);margin-top:10px;display:flex;gap:9px;align-items:baseline}
+  .verify::before{content:"✓";flex:none}
+
+  .pricing{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;
+    display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+  .pricing .big{font-family:var(--mono);font-size:15px;color:var(--silver)}
+  .pricing .big b{color:var(--ice)}
+  .pricing .muted{font-size:13.5px;color:var(--muted);max-width:46ch}
+
+  .cta{background:linear-gradient(150deg,var(--panel-2),var(--panel));border:1px solid var(--ice-dim);
+    border-radius:20px;padding:44px 32px;text-align:center;box-shadow:var(--glow)}
+  .cta h2{font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:12px}
+  .cta p{color:var(--muted);max-width:52ch;margin:0 auto 26px;font-size:16px}
+
+  footer{border-top:1px solid var(--line);padding:34px 0 60px;margin-top:20px}
+  footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center;
+    font-family:var(--mono);font-size:12px;color:var(--faint)}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--ice)}
+  @media(prefers-reduced-motion:no-preference){
+    .card,.spec,.step{animation:rise .5s both}
+    @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <span class="brand"><b>ROKHA</b> × Telegram</span>
+  <button class="theme" id="tg">☾ theme</button>
+  <a class="navcta" href="https://t.me/RokhaLBBot" target="_blank" rel="noopener">Open the bot →</a>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="glyphrow"><div class="x mono">✈</div><span class="plus">+</span><div class="r">R</div></div>
+  <div class="eyebrow">The community bot · in any chat · growing into a front door</div>
+  <h1 style="margin-top:14px">Rokha, in your <span class="accent">Telegram</span>.</h1>
+  <p class="sub">One bot in your group chat: the <b>live builder leaderboard</b>, coordinated <b>raids</b> on the community's posts, daily digests — and next, <b>chat with Rokha herself</b> from any conversation, running on your own account. The agentic OS, in your pocket.</p>
+  <div class="herocta">
+    <a class="btn primary" href="https://t.me/RokhaLBBot" target="_blank" rel="noopener">Add the bot →</a>
+    <a class="btn ghost" href="#link">Link your account</a>
+  </div>
+</div></header>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">01</span><h2>Live today, in any chat</h2></div>
+  <div class="cards">
+    <div class="card">
+      <span class="tag">Community · the board</span>
+      <h3>The leaderboard, where the chat is</h3>
+      <p>The same live board the site serves — rendered into your group the moment someone asks.</p>
+      <ul class="flist">
+        <li><b>/leaderboard</b> — the live top 10, banner card and all (<span class="mono">/leaderboard 25</span> for more)</li>
+        <li><b>/rank yourhandle</b> — your place, your score, and the exact gap to the next spot</li>
+        <li><b>/earn</b> — every way points bank, from shipping rigs to posting on X</li>
+        <li>Scores move the moment activity lands — <span class="k">the chat sees it as fast as the site</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Community · raids &amp; digests</span>
+      <h3>Rally the room</h3>
+      <p>Group admins point the chat at a builder's X post and the bot runs the sprint — live goals, a moving card, winners on the board.</p>
+      <ul class="flist">
+        <li><b>/raid</b> — guided setup, live progress card, 5–20 minute sprints</li>
+        <li>Raiders with linked X accounts <b>bank real leaderboard points</b> at settle</li>
+        <li><b>/raiders</b> · <b>/lastraid</b> — the all-time squad and the last settle, replayed</li>
+        <li><b>/digest on</b> — a daily board drop + a ping when a builder ships a fresh post</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">02</span><h2>Rolling out — the platform features</h2></div>
+  <p class="lede">The bot is growing from a scoreboard into a real front door to Rokha. These are built and rolling out now.</p>
+  <div class="cards">
+    <div class="card">
+      <span class="tag">Rolling out · reports</span>
+      <h3>/bug and /feature — straight to the team</h3>
+      <p>The same pipeline as the report form on rokha.ai, walked as a conversation: a guided form in DM, filed as a real tracked issue.</p>
+      <ul class="flist">
+        <li>Three steps: title → details → optional contact, then one tap to file</li>
+        <li>Lands in our tracker <b>and</b> the team inbox — you get a reference number back</li>
+        <li>No account needed — <span class="k">reporting a problem never requires a login</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Rolling out · chat with Rokha</span>
+      <h3>Message the bot, Rokha answers</h3>
+      <p>Link your Rokha account once, and the bot's DM becomes a direct line to Rokha — the same agent, the same memory, as the site.</p>
+      <ul class="flist">
+        <li><b>DM anything</b> — or <b>/ask a question</b> in a group, answered in-thread</li>
+        <li>Runs on <b>your own account and allowances</b> — your tier, your model, your history</li>
+        <li>One Rokha across surfaces — <span class="k">she remembers your site chats in Telegram, and back</span></li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="specs">
+    <div class="spec"><div class="n">1 tap</div><div class="l">to link — no passwords, no keys, Telegram itself vouches for you</div></div>
+    <div class="spec"><div class="n">Yours</div><div class="l">chat runs on your own account &amp; plan — the runner pays, always</div></div>
+    <div class="spec"><div class="n">Live</div><div class="l">the same board, the same Rokha, the same pipeline as the site</div></div>
+    <div class="spec"><div class="n">0</div><div class="l">unprompted DMs — the bot only ever answers what you ask</div></div>
+  </div>
+</div></section>
+
+<section id="link"><div class="wrap">
+  <div class="kicker"><span class="num">03</span><h2>Link your account — one tap</h2></div>
+  <p class="lede">Telegram has no passwords to paste and Rokha never asks for one. Linking is a single tap on a one-time link — your logged-in session vouches for the Rokha side, Telegram vouches for the Telegram side.</p>
+  <div class="steps">
+
+    <div class="step"><span class="idx">1</span><div>
+      <h3>Log in to rokha.ai</h3>
+      <p>Sign in with <b>Google</b> or a <b>Web3 wallet</b> — the same account your rigs, pages, and allowances live under.</p>
+      <div class="verify">You land on your home, signed in.</div>
+    </div></div>
+
+    <div class="step"><span class="idx">2</span><div>
+      <h3>Press Connect Telegram</h3>
+      <p>In your profile's connected services, hit <b>Telegram → Connect</b>. It opens the bot with a one-time link that expires in ten minutes.</p>
+      <div class="path"><span class="chip">Profile<span class="sep">›</span>API Keys<span class="sep">›</span>Connected services<span class="sep">›</span>Telegram</span></div>
+      <div class="verify">Telegram opens on the bot with a Start button.</div>
+    </div></div>
+
+    <div class="step"><span class="idx">3</span><div>
+      <h3>Tap Start</h3>
+      <p>That's the whole handshake. The bot confirms the link and your profile tile flips to your <b>@username</b> — disconnect from either side, any time (<span class="mono">/unlink</span> in chat, or the tile on the site).</p>
+      <div class="verify">"Linked!" in Telegram — now just message the bot and Rokha answers.</div>
+    </div></div>
+
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">04</span><h2>Where this goes</h2></div>
+  <p class="lede">Rokha is an OS for agents: a registry of tens of thousands of capabilities, a real sandbox runtime, and MCP servers your account can already drive. A linked Telegram is a command line to all of it. On the roadmap:</p>
+  <div class="cards">
+    <div class="card">
+      <span class="tag">Roadmap · your agent, in your pocket</span>
+      <h3>Run real work from chat</h3>
+      <ul class="flist">
+        <li><b>/run a rig</b> — fire any workflow you've adopted and get the result card back in chat</li>
+        <li><b>/audit a token</b> — Hoodwatch &amp; Solwatch verdicts on demand, right in the group</li>
+        <li>Pings that matter — <b>your run finished, your report got answered</b> — opt-in, never spam</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Roadmap · the group with an agent in it</span>
+      <h3>An agent that actually executes</h3>
+      <ul class="flist">
+        <li>Ask Rokha in the group and she can <b>reach every connected MCP server</b> your account can</li>
+        <li>Compose it — <span class="k">read the chat's question, run the tool, answer with the trace</span></li>
+        <li>Not a chatbot bolted onto a group — <b>a runtime with a chat handle</b></li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="cta">
+    <div class="eyebrow" style="justify-content:center;display:flex">In your group in one tap</div>
+    <h2 style="margin-top:14px">Put Rokha in the chat.</h2>
+    <p>Add the bot, pull up the board, rally a raid — and link your account so Rokha answers you wherever you are.</p>
+    <div class="herocta" style="justify-content:center">
+      <a class="btn primary" href="https://t.me/RokhaLBBot" target="_blank" rel="noopener">Open @RokhaLBBot →</a>
+      <a class="btn ghost" href="https://rokha.ai" target="_blank" rel="noopener">Link on rokha.ai →</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span><b style="color:var(--muted)">Rokha</b> — the OS for the agentic world</span>
+  <span>·</span><a href="https://rokha.ai" target="_blank" rel="noopener">rokha.ai</a>
+  <span>·</span><a href="https://x.com/IntrovertedDevs" target="_blank" rel="noopener">𝕏 @IntrovertedDevs</a>
+</div></footer>
+
+<script>
+  const root=document.documentElement, tg=document.getElementById('tg');
+  tg.addEventListener('click',()=>{
+    const cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+</script>
+</body>
+</html>

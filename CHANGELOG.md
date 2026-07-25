@@ -6,6 +6,29 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha, in your Telegram (bot live · new features unreleased)
+
+The community Telegram bot (**t.me/RokhaLBBot**) is live in group chats
+today: **/leaderboard** renders the same live board the site serves,
+**/rank** shows your place and the gap to the next spot, **/earn** explains
+every point source, group admins can **/raid** a builder's X post with live
+goal cards (raiders with linked X bank real points at settle), and
+**/digest on** drops the daily board plus fresh-post pings.
+
+**Rolling out next (unreleased):** the bot becomes a real front door to the
+platform. **/bug and /feature** walk you through a guided report in DM and
+file it on the same pipeline as the site's report form — a real tracked
+issue, a reference number back, no account needed. And **account linking**:
+press Connect Telegram in your profile's connected services, tap Start in
+Telegram, and the bot's DM becomes a direct line to **Rokha herself** —
+same agent, same memory as the site, running on your own account and
+allowances (**/ask** works in groups too, answered in-thread). One tap, no
+passwords; disconnect from either side any time.
+
+For anyone building against us: linking adds `POST /api/telegram/link/start`
+(mints the one-time deep link), `GET /api/telegram/link` (status), and
+`DELETE /api/telegram/link` (disconnect), all JWT-scoped to the caller.
+
 ## Frame your page images + the Cover Builder (unreleased)
 
 Your page's images got a real editor. Banner, backdrop, and the new
