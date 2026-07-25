@@ -6,6 +6,25 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Your style, everywhere — and Rokha designs with her eyes open (2026-07-25)
+
+Builder pages became a full brand surface. Every section of your page can
+now carry its own accent — it colors the section's frame, washes a gradient
+through it, and flows into the cards inside — plus its own solidity, from
+glass to solid. Tint the whole backdrop your color with a veil slider that
+dials how much of your art shows through, frame every image with a
+drag-to-position editor that tells you the perfect pixel size, and keep a
+floating save button beside you the whole time. Your rig product pages get
+the same complete styling suite, and the leaderboards now dress your row in
+your banner and accent — top of the board, in your colors.
+
+Rokha the design partner leveled up too: she reads your live cover before
+editing it, designs over your background image instead of covering it, and
+measures her own render — "centered" now means measured, not guessed. She
+also gained real control of your workspace: open any saved rig by name
+without touching it, edit single blocks, clear your in-progress builds, and
+switch her voice — all from chat.
+
 ## Rokha, in your Telegram (bot live · new features unreleased)
 
 The community Telegram bot (**t.me/RokhaLBBot**) is live in group chats
