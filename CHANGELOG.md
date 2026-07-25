@@ -6,6 +6,13 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Bitget wallets log in on Solana again (2026-07-25)
+
+Solana login now works with Bitget Wallet as well as Phantom — pick your
+chain in the login window and sign as usual. Phantom remains the smoothest
+Solana path (including on phones), but Bitget holders no longer need a
+second wallet to sign in.
+
 ## Your style, everywhere — and Rokha designs with her eyes open (2026-07-25)
 
 Builder pages became a full brand surface. Every section of your page can
