@@ -6,6 +6,32 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha now lives in YOUR group — meet @RokhaAIBot (2026-07-26)
+
+Rokha is no longer just in our community's Telegram — she's available to
+any group. Add **@RokhaAIBot** and the whole platform comes with her.
+
+**Ask her anything.** `/ask` (or `/ro`) works with no account at all — she
+answers on the spot under free-tier limits. Link your Rokha account and the
+same command answers on *your* plan instead: your tier, your chosen model,
+your own API keys, and a conversation history shared with your chats on the
+site. You always pay for your own activity and nobody else's.
+
+**Your group gets its own raid board.** `/raid` any qualifying X post and
+the chat watches a live card fill toward its goals; `/leaderboard` shows
+your chat's raiders, with `/topraid` and `/lastraid` for the highlights.
+The ecosystem commands live under one namespace — `/rokha top`, `/rokha
+rank`, `/rokha earn` for the point table, and `/rokha allowance` to see
+exactly what you have left today.
+
+**Autopilot hosts the room.** Switch it on and Rokha starts conversations
+when the chat goes quiet, offers raids sized to what your crew has actually
+pulled off before — realistic goals, not optimistic ones — congratulates
+winners, and answers anyone who replies to her. Admins control every lever,
+and she stays deliberately occasional: a welcome surprise, not a chatterbox.
+
+Start with `/help`. → [t.me/RokhaAIBot](https://t.me/RokhaAIBot)
+
 ## Bitget wallets log in on Solana again (2026-07-25)
 
 Solana login now works with Bitget Wallet as well as Phantom — pick your
