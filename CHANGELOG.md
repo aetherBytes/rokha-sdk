@@ -6,6 +6,48 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha learned to read the room (2026-07-26)
+
+A week of real use in a live community, and the fixes it earned.
+
+**She reads properly now.** Her answers were showing raw formatting —
+asterisks around bold text, links as bracketed clutter. Fixed: bold is bold,
+links are links.
+
+**She knows when not to talk.** Saying "thanks" or "👍" to something she
+posted used to start a whole new conversation — and spend a turn of your
+allowance on it. Now a pleasantry is just a pleasantry. But **say gm and she
+says it back**, and if someone asks what this is all about, she'll tell them.
+
+**New things to try:**
+
+- **`/catchup`** — scrolled past 200 messages? She'll summarise what the room
+  has been talking about.
+- **`/stopraid`** — admins can stop a running raid. Previously there was no
+  way to end one early.
+- **`/filters`** — the full command list, sent to your DM instead of dumped in
+  the group.
+- **`/ro raid this`** — reply to any X post and say it in plain words. No
+  command to remember.
+
+**Admins get privacy.** Tuning the bot's settings used to happen in front of
+everyone. `/manage` and `/autopilot` now open in your DMs, and the command
+disappears from the room.
+
+**One dial instead of three.** How often she starts conversations, drops into
+one, or calls a raid are all set the same way now — *per hour*, one number
+each. And you choose what she does when posts arrive faster than she can raid
+them: take the newest and skip the rest, or work through them in order.
+
+**The weekly purse counts down.** It shows exactly how long until Friday's
+payout, and who's in line for it.
+
+**One correction worth calling out:** the earn card said you needed to hold
+the community token to qualify for airdrops. That was wrong. **Raid payouts
+need no token** — a free account signed in with a Solana wallet is the whole
+requirement. The token is only for the weekly purse. If you raided and thought
+you weren't eligible, you were.
+
 ## Rokha now lives in YOUR group — meet @RokhaAIBot (2026-07-26)
 
 Rokha is no longer just in our community's Telegram — she's available to
