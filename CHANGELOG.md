@@ -6,6 +6,41 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The bot got a treasury — and learned to run the whole raid (2026-07-28)
+
+The Telegram bot stopped being a scoreboard with opinions. It is now an agent
+that plans, launches, and **funds** community raids on its own.
+
+**Tell her to raid, and she raids.** Drop an X link in the chat and say "raid
+this." She sizes the goals from what your room has actually achieved before —
+never a bar nobody's cleared — launches the raid, and tracks it live. The
+config screens only appear if an admin explicitly asks for them with /raid.
+Auto mode goes further: connect an X watch and she finds the posts, calls the
+raids, and celebrates the winners herself, within hourly limits admins set.
+
+**Bounties in three coins.** A raid can carry a real prize — **USDC, SOL, or
+$ID** — escrowed on-chain before the raid starts (you pay from your own
+wallet; the deposit is the proof). Pick how many winners and whether the pot
+splits evenly or by contribution. When the raid settles, **winners are paid
+automatically, on-chain, each payment with a transaction link** anyone can
+verify. Replies count most — the people doing the real work earn the most.
+
+**Give Rokha a purse.** The new one: load her a budget — say, a pot of $ID
+for the next 12 hours — and she attaches a bounty to every raid she calls
+until it's spent or the clock runs out. Whatever's left comes straight back
+to your wallet, automatically, with the receipt posted in the room. Fund an
+agent once; it runs your community's incentives for you.
+
+**Quality of life:** raids are free to start and need no account · the raid
+board no longer lists the same raider twice · a funded prize is the first
+line of the raid card · /rally hoard pings your recent talkers that a raid is
+coming · admins pick bounty coins from buttons instead of typing syntax.
+
+**The honest part:** getting paid needs a free rokha.ai account with your X
+connected (that's how a settle knows which raider is you) and a Solana wallet
+login (that's where the money lands). Community perks around $ID remain
+discretionary and may change — nothing here is a promise of value.
+
 ## Rokha learned to read the room (2026-07-26)
 
 A week of real use in a live community, and the fixes it earned.
