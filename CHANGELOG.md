@@ -53,7 +53,7 @@ agent once; it runs your community's incentives for you.
 
 **Quality of life:** raids are free to start and need no account · the raid
 board no longer lists the same raider twice · a funded prize is the first
-line of the raid card · /rally hoard pings your recent talkers that a raid is
+line of the raid card · /rally horde pings your recent talkers that a raid is
 coming · admins pick bounty coins from buttons instead of typing syntax.
 
 **The honest part:** getting paid needs a free rokha.ai account with your X
