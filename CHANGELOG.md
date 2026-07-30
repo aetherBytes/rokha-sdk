@@ -6,6 +6,26 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Getting paid is one tap, and the host got sharper (2026-07-30)
+
+**/linkx — the payout setup as a single command.** A raid payout needs
+exactly two things: a free Rokha account with your **X connected** (that's
+how the settle knows which raider was you) and a **Solana wallet** login
+(where the money lands). DM the bot `/linkx` and it hands you your personal
+connect link — one tap, approve on X, done. Tying Telegram to your account
+moved to `/linktg` and stays optional: it's for the extras (chat on your own
+plan, run your tools, top-ups), never a payout requirement.
+
+**She reads the room, not the pin.** When a quiet group's host speaks up,
+she now picks up the conversation the room actually trailed off on — and
+when she does draw on the pinned messages, she weighs the group's founding
+info over the latest hype post, so she never opens the same way twice.
+
+**The purse got guardrails.** A room's raid budget now spaces raids on the
+same author, and a post's author never wins its own purse bounty — the pot
+pays the crowd that showed up, not the person who posted. Heavy rooms get a
+private heads-up to the admin before any limits ever apply.
+
 ## The bot got a treasury — and learned to run the whole raid (2026-07-28)
 
 The Telegram bot stopped being a scoreboard with opinions. It is now an agent
