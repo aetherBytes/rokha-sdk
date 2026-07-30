@@ -502,25 +502,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuthSuccessResponse'
 
-  /api/auth/token:
-    post:
-      tags: [auth]
-      summary: Issue a JWT for an existing identity
-      operationId: authIssueToken
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        '200':
-          description: Token issued
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuthSuccessResponse'
+  # `/api/auth/token` was removed. Every JWT is now issued by a flow that
+  # verifies control of the identity first: the wallet challenge/verify pair,
+  # a Google / MCP OAuth code exchange, the CLI device flow, or a refresh of
+  # an already-valid token.
 
   /api/auth/refresh:
     post:
@@ -2453,8 +2438,8 @@ components:
       scheme: bearer
       bearerFormat: JWT
       description: |
-        JWT issued by `/api/auth/email/login`, `/api/auth/google/callback`,
-        `/api/wallets/verify`, or `/api/auth/token`. Send as
+        JWT issued by `/api/wallets/verify` (after `/api/wallets/challenge`),
+        `/api/auth/google/callback`, or `/api/auth/email/login`. Send as
         `Authorization: Bearer <token>`. Refresh via `/api/auth/refresh`
         before expiry (24h default).
 

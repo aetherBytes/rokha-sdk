@@ -6,6 +6,18 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Tokens are only issued to someone who proved who they are (2026-07-30)
+
+**`POST /api/auth/token` is removed.** Every JWT now comes from a flow that
+verifies control of the identity first: `/api/wallets/challenge` →
+`/api/wallets/verify` for a wallet, a Google or MCP OAuth code exchange, the
+CLI device flow, or `/api/auth/refresh` on a token you already hold.
+
+If you were calling `/api/auth/token`, switch to the wallet challenge/verify
+pair — two requests instead of one, returning the same `AuthSuccessResponse`.
+Headless agents get the same thing over MCP as the `auth_wallet_challenge` and
+`auth_wallet_verify` tools.
+
 ## Getting paid is one tap, and the host got sharper (2026-07-30)
 
 **/linkx — the payout setup as a single command.** A raid payout needs
