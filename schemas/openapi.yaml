@@ -507,6 +507,26 @@ paths:
   # a Google / MCP OAuth code exchange, the CLI device flow, or a refresh of
   # an already-valid token.
 
+  /api/auth/logout:
+    post:
+      tags: [auth]
+      summary: Revoke the presented token
+      description: |
+        Revokes the bearer token you send, server-side. Idempotent — always
+        answers 200, whether or not the token was already revoked or expired.
+      operationId: authLogout
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Token revoked (or already was)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+
   /api/auth/refresh:
     post:
       tags: [auth]

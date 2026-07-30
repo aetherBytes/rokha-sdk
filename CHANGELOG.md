@@ -6,6 +6,18 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Logging out actually logs you out (2026-07-30)
+
+**`POST /api/auth/logout`** revokes the token you present, server-side. Until
+now, signing out only cleared the browser's copy and the token stayed usable
+until it expired on its own — so walking away from a shared machine did not end
+the session. Send your bearer token; it answers 200 whether or not the token was
+already dead, and it is safe to call twice.
+
+Every token Rokha issues can now be revoked, including CLI tokens and tokens
+held by MCP clients. If you script against Rokha, this is the endpoint to call
+when you are done with a credential.
+
 ## Tokens are only issued to someone who proved who they are (2026-07-30)
 
 **`POST /api/auth/token` is removed.** Every JWT now comes from a flow that
