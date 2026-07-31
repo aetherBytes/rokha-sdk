@@ -6,6 +6,17 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The Telegram bot learns manners — greetings, boards, emoji, GIFs (2026-07-31)
+
+With auto mode on, the community bot now greets new members at the door,
+greets back every gm/gn in any combination (a ⚡ reaction lands even when
+rate limits hush her voice), reads stickers and GIFs as real conversation,
+reacts in kind when one is aimed at her, and celebrates a smashed raid with
+the room's own freshest GIF. Ask about any board she posts — leaderboard,
+raid card, the weekly purse winners — and she answers as its author. A
+long-standing silent bug also fell: her conversational drop-ins were being
+blocked entirely; the librarian now actually joins in.
+
 ## Rokha builds complete workflows in chat — and publishes them (2026-07-31)
 
 The resident agent can now author the full range of rigs conversationally:
