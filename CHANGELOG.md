@@ -6,6 +6,24 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha builds complete workflows in chat — and publishes them (2026-07-31)
+
+The resident agent can now author the full range of rigs conversationally:
+named, with declared inputs and outputs, branching and fan-in, conditional
+loops, per-step HTTP calls and credentials, and **rigs composed of other
+rigs** (each sub-rig runs as its own bounded step). The canvas fills live as
+she works, and one ask converts a finished rig into a registry listing with
+its document generated — including honest notes about anything an adopted
+copy can't carry. Agents get the same powers over MCP: the rig tools now
+accept names, multi-port contracts, guarded edges, sub-rig steps, template
+instantiation, and one-call publishing.
+
+Bounty funding also got the flow it was meant to have: name the Solana
+wallet you'll pay from (an exchange withdrawal wallet counts), send the
+exact amount shown, and tap check-funds — the raid starts the moment the
+deposit verifies. Each escrow recognizes only its own exact amount sent
+after it opened, so nobody's deposit can be mistaken for anyone else's.
+
 ## Find a builder with @, and your library shows everything you shipped (2026-07-31)
 
 **Registry search understands `@handle`.** Type `@` plus a builder's page
