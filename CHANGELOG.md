@@ -6,6 +6,22 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Find a builder with @, and your library shows everything you shipped (2026-07-31)
+
+**Registry search understands `@handle`.** Type `@` plus a builder's page
+handle into any registry search — the site, the API `search` parameter, or the
+MCP `registry_search` tool — and you get everything that builder has
+published, nothing else. `@sage` returns the platform's own first-party
+listings, including the full set of official X MCP tools ready to wire into a
+workflow. An unknown handle returns zero results rather than guessing.
+
+**Your library now lists every publication you own.** Listings published
+programmatically — over MCP or by a script — used to be visible to everyone
+*except* their owner, because the profile library only showed work saved in
+the builder. It now shows everything published under your account, with the
+same controls: unpublish it, or put it on your public page. Big libraries got
+collapsible sections with counts and in-place scrolling while we were at it.
+
 ## Logging out actually logs you out (2026-07-30)
 
 **`POST /api/auth/logout`** revokes the token you present, server-side. Until
