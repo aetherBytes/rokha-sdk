@@ -6,6 +6,20 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Everything you've shipped is editable — and Explore rigs run end-to-end (2026-08-02)
+
+Your library is now a workshop. Every creation on your profile — rigs,
+skills, harnesses, including ones published straight through the API with
+no local copy — carries an edit button that opens it in its builder under
+the same name. Asking the resident agent to "open my … rig" brings up the
+exact rig you named, never a renamed copy; a rig that exists only as a
+published listing is materialized in place, and republishing under the
+same name updates the listing. Explore rigs also run end-to-end now: a
+step whose skill ships real code dispatches automatically to a warm cloud
+sandbox (typically starting in seconds) and is billed as one of your daily
+runs — no switches, no setup. When a step genuinely can't run, the error
+now says exactly why and names the fix, in order.
+
 ## The Telegram bot learns manners — greetings, boards, emoji, GIFs (2026-07-31)
 
 With auto mode on, the community bot now greets new members at the door,
