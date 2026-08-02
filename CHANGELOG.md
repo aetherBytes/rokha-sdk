@@ -6,6 +6,20 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Connect X once — every X tool just runs (2026-08-02)
+
+One connection now powers the whole X toolchain. Link your X account and
+all 120 official X MCP tools — post, search, timelines, bookmarks,
+trends, DMs — run on your own account with zero further setup: adopted
+rigs arrive pre-wired, and asking the resident agent to "post this to X"
+uses your own rigs first, stages the draft for review, and sends on your
+go. The safety line is precise: platform connections may travel with a
+published rig because they resolve against each runner's own account and
+are locked to their provider's hosts (they can never be sent anywhere
+else); private pasted keys never travel, at any layer. This also closes
+the bug where the flagship X-reading rig failed with a 401 — its steps
+now ride the official X MCP with the connection attached automatically.
+
 ## Everything you've shipped is editable — and Explore rigs run end-to-end (2026-08-02)
 
 Your library is now a workshop. Every creation on your profile — rigs,
