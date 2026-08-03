@@ -6,6 +6,19 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Bounties pay the full pot — and the network opened up (2026-08-02)
+
+The community bot's money rules got simple and stayed that way. Name a
+bounty pot in USDC, SOL, or $ID and the raiders split every last unit —
+all fees are charged on top of your number, never carved out of it, and
+your own Top-N and split settings decide who gets paid, even when the
+raid goes out network-wide. Calling the whole network is open to every
+linked account now: free accounts call as often as they like with a
+small per-call surcharge (a plan removes it), Builder gets 48
+surcharge-free calls a day, Pro calls without limit. Rooms that receive
+a call see the pot, the goals, and live progress as the raid runs —
+one raid, every room watching, paid on-chain with receipts.
+
 ## Connect X once — every X tool just runs (2026-08-02)
 
 One connection now powers the whole X toolchain. Link your X account and
