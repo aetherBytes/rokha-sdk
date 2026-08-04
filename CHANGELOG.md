@@ -6,6 +6,19 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The community token program is retired (2026-08-03)
+
+Rokha no longer relates to any token. The Introverted community program —
+the $ID coin, the hooded badge and its perks (the 2× allowance boost, the
+×1.15 leaderboard multiplier, the badge-gated weekly purse) — is retired.
+Existing badge holders keep it as a cosmetic **OG Beta** marker, and
+for-life beta access already granted stays granted; nothing else attaches
+to it. Bounty pots are **USDC or SOL** (already-funded $ID escrows still
+settle and pay normally). Leaderboard X points now come from tagging
+**@Rokha_ai**. Earlier entries below describe the program as it was when
+they were written — this entry supersedes them.
+
+
 ## Bounties pay the full pot — and the network opened up (2026-08-02)
 
 The community bot's money rules got simple and stayed that way. Name a
@@ -422,7 +435,8 @@ a for-life access flag, deliberately separate from the display badges.
 
 *The honest line:* $ID stays a meme coin, and these perks are discretionary
 community gifts — they may change or end at any time and are not a promise
-of utility or value. Full story: [the Introverted badge page](https://aetherbytes.github.io/rokha-sdk/introverted-badge.html).
+of utility or value. *(2026-08-03: this program is now retired — see the
+entry at the top.)*
 
 
 ## Link your X to your builder page (unreleased)
