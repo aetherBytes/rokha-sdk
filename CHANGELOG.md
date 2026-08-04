@@ -8,6 +8,11 @@ face of Rokha; the wire contract it depends on is
 
 ## The community token program is retired (2026-08-03)
 
+**The Telegram bot is on pause** as part of the same reset: both bots are
+offline while we rework what the community bot should be, and the Telegram
+connect option is hidden in Profile → API Keys for now. Raids, boards and
+in-chat Rokha will return; existing account links are kept.
+
 Rokha no longer relates to any token. The Introverted community program —
 the $ID coin, the hooded badge and its perks (the 2× allowance boost, the
 ×1.15 leaderboard multiplier, the badge-gated weekly purse) — is retired.
