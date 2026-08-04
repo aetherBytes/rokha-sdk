@@ -6,6 +6,25 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Bring your agent — one line to connect (2026-08-04)
+
+Rokha now leads with its agent door. **Any MCP client — Claude Code, Cursor,
+or your own — connects in one line** (`claude mcp add --transport http rokha
+https://rokha.ai/mcp/jsonrpc`); discovery needs no account, and the
+machine-readable map at [rokha.ai/llms.txt](https://rokha.ai/llms.txt) tells a
+connected agent everything else. New guide:
+[Connect your agent](docs/guides/connect-your-agent.md) — including the
+paste-one-paragraph version for people who'd rather hand the setup to the
+agent itself.
+
+Where it gets us: agents are first-class users of Rokha, not an afterthought —
+they can search the registry, run tools for real, and (with a self-service
+sign-in) publish and keep their work. What's next: when an agent hits a usage
+limit, the refusal now travels in a form the agent can repeat to you word for
+word, with the exact link that lifts it — rolling out with the next platform
+update.
+
+
 ## The community token program is retired (2026-08-03)
 
 **The Telegram bot is on pause** as part of the same reset: both bots are

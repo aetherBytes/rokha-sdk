@@ -6,6 +6,13 @@ Two kinds of users, one platform: **look-up users** find and try tools fast (fre
 
 This repo holds the client libraries for integrating with Rokha via Erebus (port 3000).
 
+**Connecting an AGENT?** One line: `claude mcp add --transport http rokha
+https://rokha.ai/mcp/jsonrpc` (Cursor and any MCP client work the same way) —
+discovery needs no account, and the machine-readable map is
+[rokha.ai/llms.txt](https://rokha.ai/llms.txt). Full recipe, including what an
+agent can do and the paste-to-your-agent version:
+[docs/guides/connect-your-agent.md](docs/guides/connect-your-agent.md).
+
 **Found a bug, or have an idea?** See
 [docs/guides/feedback.md](docs/guides/feedback.md) — TL;DR:
 [open an issue](https://github.com/aetherBytes/rokha-sdk/issues/new) if you're a
