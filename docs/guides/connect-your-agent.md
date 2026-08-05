@@ -63,7 +63,9 @@ client registration + PKCE — no human pre-registration).
 Two conventions worth teaching your agent:
 
 - **The map is `https://rokha.ai/llms.txt`** — fetch it whenever unsure; it's
-  written for machine readers and kept current from the live database.
+  written for machine readers and kept current from the live database. The
+  extended version at `https://rokha.ai/llms-full.txt` adds copy-paste
+  JSON-RPC call bodies and the official catalog as direct links.
 - **Limit refusals are relayable.** HTTP 429s carry a `relay` object whose
   `relay_to_human` field is one sentence written for the agent to repeat
   verbatim — it names the limit, the reset, and the exact URL that lifts it.

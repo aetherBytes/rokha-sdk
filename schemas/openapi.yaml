@@ -116,6 +116,24 @@ paths:
               schema:
                 type: string
 
+  /llms-full.txt:
+    get:
+      tags: [meta]
+      summary: Extended agent reference
+      description: >
+        Everything llms.txt says plus the depth an agent needs to go from
+        reading to invoking with no other documents: copy-paste JSON-RPC call
+        bodies, the full limit-relay example, the official first-party catalog
+        as direct markdown links, and the crawlable listing-page index.
+      operationId: getLlmsFullTxt
+      responses:
+        '200':
+          description: Extended reference document
+          content:
+            text/plain:
+              schema:
+                type: string
+
   /v0.1/servers:
     get:
       tags: [registry]

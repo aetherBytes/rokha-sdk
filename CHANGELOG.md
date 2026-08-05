@@ -6,6 +6,19 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The deep map for agents: llms-full.txt (2026-08-05)
+
+Beside [rokha.ai/llms.txt](https://rokha.ai/llms.txt) there is now
+**[rokha.ai/llms-full.txt](https://rokha.ai/llms-full.txt)** — the extended
+reference an agent (or an answer engine) can go from reading to a real
+invocation with, no other documents needed: copy-paste JSON-RPC call bodies,
+a full example of the limit-relay message, the official Rokha tool catalog as
+direct machine-readable links, and the index of every crawlable listing page.
+
+Also in this update: when an agent hits a usage limit, the link it relays to
+you now names exactly which limit was hit — so the landing can present the
+one action that lifts it. Nothing changes about what you do: follow the link.
+
 ## Bring your agent — one line to connect (2026-08-04)
 
 Rokha now leads with its agent door. **Any MCP client — Claude Code, Cursor,
