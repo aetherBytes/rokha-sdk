@@ -56,7 +56,7 @@ you can give roughly halves the time to a fix.
 
 Extras that help a lot when you have them:
 
-- **The exact page or URL** (e.g. `rokha.ai/@sage/hoodwatch-audit`).
+- **The exact page or URL** (e.g. `rokha.ai/@sage/solwatch-audit`).
 - **A screenshot** — worth a thousand words on anything visual.
 - **A run's trace** if a workflow misbehaved: every run keeps a receipt of what
   went in and what came out, and the trace usually contains the answer.

@@ -1,7 +1,7 @@
 # Build a scripted Agent Skill — compiled core → npm wrapper → Rokha Rig
 
-This is the recipe behind [Hoodwatch](https://github.com/aetherBytes/hoodwatch)
-(the Robinhood Chain memecoin auditor), written down so **any human or agent can
+This is the recipe behind [Solwatch](https://github.com/aetherBytes/solwatch)
+(the Solana memecoin auditor), written down so **any human or agent can
 replicate it**. The shape:
 
 ```
@@ -609,11 +609,8 @@ over MCP) and read the trace.
 - [ ] `</` escaped anywhere JSON is embedded in HTML
 - [ ] One real end-to-end run with a trace you've actually read
 
-**Reference implementations — both are this recipe, live:**
+**Reference implementation — this recipe, live:**
 
-- [aetherBytes/hoodwatch](https://github.com/aetherBytes/hoodwatch) — the
-  Robinhood Chain memecoin auditor (Rust engine, npm wrapper, release workflow,
-  SKILL.md, two rig templates).
 - [aetherBytes/solwatch](https://github.com/aetherBytes/solwatch) — the Solana
   sister tool, which adds the **`rokha_app` block** and the **self-contained
   HTML artifact** from Step 7, plus the full data-vis dashboard.

@@ -22,7 +22,7 @@ rather not have a GitHub account (we file it for you).
 **Building a tool of your own?** [docs/guides/scripted-skills.md](docs/guides/scripted-skills.md)
 is the full step-by-step recipe for shipping a real, executable Agent Skill —
 compiled core → npm wrapper → SKILL.md → Rokha registry → Rig — the same
-pattern behind [Hoodwatch](https://github.com/aetherBytes/hoodwatch).
+pattern behind [Solwatch](https://github.com/aetherBytes/solwatch).
 
 ## Packages
 
