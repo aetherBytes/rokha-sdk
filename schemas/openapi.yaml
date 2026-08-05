@@ -2646,6 +2646,46 @@ components:
                   hint: { type: string, maxLength: 200 }
             required: [id, label]
 
+    RokhaStageConfig:
+      type: object
+      description: >-
+        A rig's DESIGNED STAGE — a stored, self-contained HTML dashboard
+        template carried as `content.stage` on the rig (and as `stage` in a
+        published listing's `metadata.rig`, where it rides adoption). At run
+        completion the runtime serializes the chosen step's JSON output,
+        escapes it for script context (every `<` becomes `\u003c`), replaces
+        every occurrence of the literal `__ROKHA_DATA__` slot with it, and
+        ships the result as the run's `app_html` — rendered in the hostile
+        sandboxed app frame (opaque origin, CSP `default-src 'none'`: inline
+        everything; external script/link/img URLs are refused at save because
+        they can never load). A run that emits its own `rokha_app` block or
+        `rokha-app.html` artifact WINS over the template. Set it over MCP with
+        `rig_stage_set`, read it back with `rig_stage_get`, or edit it in the
+        STAGE CONFIG panel — all three fill exactly this shape.
+      properties:
+        template_html:
+          type: string
+          maxLength: 400000
+          description: >-
+            The self-contained HTML document. Must contain the literal
+            `__ROKHA_DATA__` slot (e.g.
+            `<script>const DATA = __ROKHA_DATA__;</script>`), inline all
+            CSS/JS, and embed images as data: URIs. The injected document is
+            capped at 600k characters — over the cap the dashboard is dropped
+            (loudly), never truncated.
+        data_source:
+          type: string
+          description: >-
+            Which step's output feeds the template — `last_step` (default) or
+            `step:<tag>` (the step's tag/skill name, case-insensitive). Use
+            the named form when the rig's final step is a data-persist
+            receipt but the dashboard should show the analysis step's output.
+        title:
+          type: string
+          maxLength: 120
+          description: Optional dashboard title (named by the run epilogue).
+      required: [template_html]
+
     # --- Skills ---
 
     SkillFrontmatterMetadata:
