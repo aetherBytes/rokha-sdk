@@ -82,7 +82,9 @@ jobs:
           set -euo pipefail
           mkdir -p vendor-libs/${{ matrix.target }}
           cp -L /usr/lib/*-linux-gnu/libasound.so.2 vendor-libs/${{ matrix.target }}/libasound.so.2
-          cp /usr/share/doc/libasound2*/copyright vendor-libs/${{ matrix.target }}/LICENSE-libasound
+          # libasound2* matches several doc dirs (t64/-dev/-data) — take one
+          # copyright file, not a multi-source cp.
+          cp "$(ls /usr/share/doc/libasound2*/copyright | head -1)" vendor-libs/${{ matrix.target }}/LICENSE-libasound
 
       - name: Upload vendor libs (linux only)
         if: runner.os == 'Linux'
