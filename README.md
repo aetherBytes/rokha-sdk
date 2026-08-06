@@ -50,9 +50,17 @@ ro status                 # remote reachability + schema match + login state
 ro login                  # browser device-flow sign-in (RFC 8628)
 ro tools list <query>     # search the live Rokha Registry (~54k listings)
 ro chat "<message>"       # one-shot chat with the Rokha agent
+ro run <slug>             # run a registry skill FOR REAL in the platform sandbox
 ro tui                    # live heads-up monitor (status / registry / agent)
 ro mcp serve              # expose the FULL platform tool suite to any MCP host
+ro mcp install            # hook the bridge into Claude Code / Claude Desktop
 ```
+
+**`ro run` is the product thesis from the terminal:** the skill executes on a
+throwaway, isolated cloud sandbox (nothing installs locally, no secrets
+travel), progress streams live, and the trace is the receipt. Anonymous runs
+ride the free daily taste; logged in, runs draw from your plan's quota — the
+runner pays, always.
 
 **`ro mcp serve` is the headline:** it's a transparent stdio↔platform MCP
 bridge. Point Claude Desktop, Claude Code, or any MCP client at it and you get

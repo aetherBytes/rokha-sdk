@@ -78,7 +78,10 @@ pub async fn stream_chat<F: FnMut(ChatEvent)>(
         req = req.bearer_auth(token);
     }
 
-    let resp = req.send().await.map_err(|e| format!("request failed: {e}"))?;
+    let resp = req
+        .send()
+        .await
+        .map_err(|e| format!("request failed: {e}"))?;
     let status = resp.status();
     if !status.is_success() {
         // Read the body for a server message (limit err), then surface it.
@@ -140,18 +143,37 @@ fn parse_record(record: &str) -> Option<ChatEvent> {
     match name {
         "content_start" => Some(ChatEvent::ContentStart),
         "content_delta" => Some(ChatEvent::ContentDelta {
-            text: val.get("text").and_then(|v| v.as_str()).unwrap_or("").to_string(),
+            text: val
+                .get("text")
+                .and_then(|v| v.as_str())
+                .unwrap_or("")
+                .to_string(),
         }),
         "tool_start" => Some(ChatEvent::ToolStart {
-            tool: val.get("tool").and_then(|v| v.as_str()).unwrap_or("?").to_string(),
+            tool: val
+                .get("tool")
+                .and_then(|v| v.as_str())
+                .unwrap_or("?")
+                .to_string(),
         }),
         "tool_result" => Some(ChatEvent::ToolResult {
-            tool: val.get("tool").and_then(|v| v.as_str()).unwrap_or("?").to_string(),
-            error: val.get("error").and_then(|v| v.as_str()).map(str::to_string),
+            tool: val
+                .get("tool")
+                .and_then(|v| v.as_str())
+                .unwrap_or("?")
+                .to_string(),
+            error: val
+                .get("error")
+                .and_then(|v| v.as_str())
+                .map(str::to_string),
         }),
         "content" => Some(ChatEvent::Content { json: val }),
         "error" => Some(ChatEvent::Error {
-            message: val.get("message").and_then(|v| v.as_str()).unwrap_or("stream error").to_string(),
+            message: val
+                .get("message")
+                .and_then(|v| v.as_str())
+                .unwrap_or("stream error")
+                .to_string(),
             status: val.get("status").and_then(|v| v.as_u64()).unwrap_or(0),
         }),
         "done" => Some(ChatEvent::Done),

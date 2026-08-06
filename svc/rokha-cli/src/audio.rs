@@ -143,8 +143,7 @@ pub fn record_utterance() -> Result<Vec<u8>, AudioError> {
 pub fn play_mp3(bytes: Vec<u8>) -> Result<(), AudioError> {
     let (_stream, handle) = rodio::OutputStream::try_default()
         .map_err(|e| AudioError(format!("no audio output device: {e}")))?;
-    let sink =
-        rodio::Sink::try_new(&handle).map_err(|e| AudioError(format!("audio sink: {e}")))?;
+    let sink = rodio::Sink::try_new(&handle).map_err(|e| AudioError(format!("audio sink: {e}")))?;
     let decoder = rodio::Decoder::new(Cursor::new(bytes))
         .map_err(|e| AudioError(format!("could not decode audio: {e}")))?;
     sink.append(decoder);

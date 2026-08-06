@@ -51,6 +51,20 @@ enum Commands {
     },
     /// Send a one-shot message to the Rokha agent
     Chat { message: String },
+    /// Run a registry skill for real in the platform sandbox
+    Run {
+        /// Listing name or id (see `ro tools list`)
+        slug: String,
+        /// Disambiguate by provider (e.g. rokha, clawhub)
+        #[arg(long)]
+        provider: Option<String>,
+        /// Instruction text for the run
+        #[arg(long, short)]
+        instruction: Option<String>,
+        /// Run parameter as key=value (repeatable)
+        #[arg(long = "param", short)]
+        param: Vec<String>,
+    },
     /// Interactive REPL with the Rokha agent (paid feature)
     Agent {
         /// Also drive a local browser at rokha.ai — Rokha steers its views
@@ -93,6 +107,12 @@ enum ToolsAction {
 #[derive(Subcommand)]
 enum McpAction {
     Serve,
+    /// Hook the Rokha MCP bridge into a local MCP host (Claude Code/Desktop)
+    Install {
+        /// Which host to configure: claude-code | claude-desktop | print
+        #[arg(default_value = "print")]
+        host: String,
+    },
 }
 
 #[derive(Subcommand)]
@@ -126,6 +146,21 @@ async fn main() {
             0
         }
         Commands::Chat { message } => cli::agents::chat(&client, &message).await,
+        Commands::Run {
+            slug,
+            provider,
+            instruction,
+            param,
+        } => {
+            cli::run::run(
+                &client,
+                &slug,
+                provider.as_deref(),
+                instruction.as_deref(),
+                &param,
+            )
+            .await
+        }
         Commands::Agent { browser } => cli::agent::repl(&client, browser).await,
         Commands::Voice { browser } => {
             #[cfg(feature = "voice")]
@@ -169,12 +204,13 @@ async fn main() {
             tui::dashboard::run(&client).await;
             0
         }
-        Commands::Mcp { action } => {
-            match action {
-                McpAction::Serve => mcp::server::serve(&client).await,
+        Commands::Mcp { action } => match action {
+            McpAction::Serve => {
+                mcp::server::serve(&client).await;
+                0
             }
-            0
-        }
+            McpAction::Install { host } => mcp::install::install(&host),
+        },
     };
 
     if exit_code != 0 {

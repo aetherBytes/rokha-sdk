@@ -6,6 +6,27 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## ro grows its "do it" verb — and a face (2026-08-06)
+
+The CLI wave ahead of the package publishes:
+
+- **`ro run <slug>`** — run any registry skill FOR REAL in the platform's
+  isolated cloud sandbox, straight from the terminal: resolve the listing,
+  dispatch, stream the live stage events, and read the receipt back. Anonymous
+  runs ride the free daily taste (log in to run on your own plan's quota — the
+  runner pays, always), and every limit denial names the ladder up.
+- **`ro mcp install`** — one command to hook the Rokha MCP bridge into Claude
+  Code (`ro mcp install claude-code`) or Claude Desktop
+  (`ro mcp install claude-desktop`; merges the config safely, backup kept), or
+  print the stanza for any other MCP host.
+- **The seeds-on-the-wind theme** — launching `ro agent` / `ro voice` now
+  breathes: a dandelion-seed banner in the platform's ice-cyan, drifting seeds
+  and all. Honest degradation everywhere (`NO_COLOR`, dumb terminals, pipes,
+  non-UTF-8 locales, `RO_NO_ANIM=1`), and scriptable commands stay byte-clean.
+- **Self-sufficient installs** — TLS moved to rustls with bundled roots and the
+  npm package now carries its one system library, so `npx @rokha/cli` starts on
+  minimal containers with zero extra installs.
+
 ## The deep map for agents: llms-full.txt (2026-08-05)
 
 Beside [rokha.ai/llms.txt](https://rokha.ai/llms.txt) there is now

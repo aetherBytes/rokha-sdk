@@ -61,7 +61,9 @@ impl Browser {
 
     /// Navigate the controlled page to `url`.
     pub async fn navigate(&mut self, url: &str) -> Result<(), String> {
-        self.call("Page.navigate", json!({ "url": url })).await.map(|_| ())
+        self.call("Page.navigate", json!({ "url": url }))
+            .await
+            .map(|_| ())
     }
 
     /// Forward the agent's `ui_directives` into the page as a single

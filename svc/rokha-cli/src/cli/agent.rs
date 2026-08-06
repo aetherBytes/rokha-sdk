@@ -15,7 +15,7 @@ use std::io::Write;
 use tokio::io::{AsyncBufReadExt, BufReader};
 
 pub async fn repl(client: &RokhaClient, use_browser: bool) -> i32 {
-    theme::banner("the local agent");
+    theme::banner("your local librarian");
     let t = Theme::detect();
     let creds = match gate::require_paid("ro agent") {
         Ok(c) => c,
