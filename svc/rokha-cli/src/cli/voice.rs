@@ -15,6 +15,7 @@ use std::io::Write;
 use tokio::io::{AsyncBufReadExt, BufReader};
 
 pub async fn convo(client: &RokhaClient, use_browser: bool) -> i32 {
+    crate::theme::banner("voice");
     let creds = match gate::require_paid("ro voice") {
         Ok(c) => c,
         Err(code) => return code,
@@ -54,13 +55,16 @@ pub async fn convo(client: &RokhaClient, use_browser: bool) -> i32 {
         }
     }
 
-    println!();
+    let t = crate::theme::Theme::detect();
     println!(
-        "\x1b[1m◉ LIVE VOICE\x1b[0m — connected as \x1b[1m{}\x1b[0m ({}).",
-        creds.identity.identity, creds.identity.tier
+        "{} {} — connected as {} {}",
+        t.ok("\u{25c9}"),
+        t.ice("LIVE VOICE"),
+        t.ice_bold(&creds.identity.identity),
+        t.dim(&format!("({})", creds.identity.tier))
     );
     println!("Press \x1b[1mEnter\x1b[0m to talk; pause when you're done and Rokha replies aloud.");
-    println!("\x1b[2mCtrl-C to end.\x1b[0m");
+    println!("{}", t.faint("Ctrl-C to end."));
     println!();
 
     let mut lines = BufReader::new(tokio::io::stdin()).lines();
@@ -150,7 +154,14 @@ pub async fn convo(client: &RokhaClient, use_browser: bool) -> i32 {
             }
             _ => {}
         };
-        let res = stream::stream_chat(&http, client.base_url(), Some(&creds.jwt), &transcript, render).await;
+        let res = stream::stream_chat(
+            &http,
+            client.base_url(),
+            Some(&creds.jwt),
+            &transcript,
+            render,
+        )
+        .await;
         println!();
         if let Err(e) = res {
             eprintln!("\x1b[31m⚠ {e}\x1b[0m");
@@ -205,7 +216,10 @@ async fn speak(client: &RokhaClient, jwt: &str, text: &str) {
 /// Print a voice-door error, upselling loudly when it's a tier/allowance limit.
 fn report_voice_err(e: &VoiceError) {
     if e.is_unconfigured() {
-        eprintln!("\x1b[2m(voice not configured on the server: {})\x1b[0m", e.message);
+        eprintln!(
+            "\x1b[2m(voice not configured on the server: {})\x1b[0m",
+            e.message
+        );
         return;
     }
     eprintln!("\x1b[31m⚠ {}\x1b[0m", e.message);

@@ -96,6 +96,14 @@ pub async fn run(client: &RokhaClient) {
 }
 
 fn run_ui(data: &Dash) -> io::Result<Action> {
+    // The brand ice-cyan — truecolor where the terminal has it, the closest
+    // xterm index elsewhere (ratatui degrades Rgb poorly on 256-color terms).
+    let (truecolor, (r, g, b), idx) = crate::theme::Theme::detect().tui_accent();
+    let accent = if truecolor {
+        Color::Rgb(r, g, b)
+    } else {
+        Color::Indexed(idx)
+    };
     enable_raw_mode()?;
     io::stdout().execute(EnterAlternateScreen)?;
     let mut terminal = Terminal::new(CrosstermBackend::new(io::stdout()))?;
@@ -113,13 +121,14 @@ fn run_ui(data: &Dash) -> io::Result<Action> {
                 .split(frame.area());
 
             let tabs = Tabs::new(Tab::titles())
-                .block(Block::default().borders(Borders::ALL).title(" Rokha "))
+                .block(
+                    Block::default()
+                        .borders(Borders::ALL)
+                        .title(" \u{2741} Rokha ")
+                        .title_style(Style::default().fg(accent).add_modifier(Modifier::BOLD)),
+                )
                 .select(active_tab.index())
-                .highlight_style(
-                    Style::default()
-                        .fg(Color::Cyan)
-                        .add_modifier(Modifier::BOLD),
-                );
+                .highlight_style(Style::default().fg(accent).add_modifier(Modifier::BOLD));
             frame.render_widget(tabs, chunks[0]);
 
             let body = match active_tab {

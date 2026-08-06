@@ -1,6 +1,6 @@
+mod api_client;
 #[cfg(feature = "voice")]
 mod audio;
-mod api_client;
 mod browser;
 mod cli;
 mod config;
@@ -8,6 +8,7 @@ mod credentials;
 mod gate;
 mod mcp;
 mod stream;
+mod theme;
 mod tui;
 
 use clap::{Parser, Subcommand};
@@ -141,20 +142,22 @@ async fn main() {
                 1
             }
         }
-        Commands::Browser { url } => match browser::Browser::launch_or_attach(&url).await {
-            Ok(mut b) => {
-                if let Err(e) = b.navigate(&url).await {
-                    eprintln!("ro browser: navigate failed: {e}");
+        Commands::Browser { url } => {
+            match browser::Browser::launch_or_attach(&url).await {
+                Ok(mut b) => {
+                    if let Err(e) = b.navigate(&url).await {
+                        eprintln!("ro browser: navigate failed: {e}");
+                    }
+                    println!("✓ {url} is open in your browser and remote-controllable.");
+                    println!("  Run `ro agent --browser` (or `ro voice --browser`) — Rokha can steer it.");
+                    0
                 }
-                println!("✓ {url} is open in your browser and remote-controllable.");
-                println!("  Run `ro agent --browser` (or `ro voice --browser`) — Rokha can steer it.");
-                0
+                Err(e) => {
+                    eprintln!("ro browser: {e}");
+                    1
+                }
             }
-            Err(e) => {
-                eprintln!("ro browser: {e}");
-                1
-            }
-        },
+        }
         Commands::Login => cli::auth::login(client.base_url()).await,
         Commands::Whoami => cli::auth::whoami().await,
         Commands::Logout => cli::auth::logout().await,

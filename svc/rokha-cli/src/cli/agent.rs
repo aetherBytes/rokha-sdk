@@ -9,11 +9,14 @@
 use crate::api_client::RokhaClient;
 use crate::gate;
 use crate::stream::{self, ChatEvent};
+use crate::theme::{self, Theme};
 use std::cell::Cell;
 use std::io::Write;
 use tokio::io::{AsyncBufReadExt, BufReader};
 
 pub async fn repl(client: &RokhaClient, use_browser: bool) -> i32 {
+    theme::banner("the local agent");
+    let t = Theme::detect();
     let creds = match gate::require_paid("ro agent") {
         Ok(c) => c,
         Err(code) => return code,
@@ -37,17 +40,20 @@ pub async fn repl(client: &RokhaClient, use_browser: bool) -> i32 {
         None
     };
 
-    println!();
     println!(
-        "\x1b[1mRokha\x1b[0m — local agent. Connected as \x1b[1m{}\x1b[0m ({}).",
-        creds.identity.identity, creds.identity.tier
+        "Connected as {} {}",
+        t.ice_bold(&creds.identity.identity),
+        t.dim(&format!("({})", creds.identity.tier))
     );
-    println!("Type a message and press enter. \x1b[2m/exit to quit · /help for commands\x1b[0m");
+    println!(
+        "{}",
+        t.faint("Type a message and press enter · /exit to quit · /help for commands")
+    );
     println!();
 
     let mut lines = BufReader::new(tokio::io::stdin()).lines();
     loop {
-        print!("\x1b[1m› \x1b[0m");
+        print!("{}", t.prompt());
         let _ = std::io::stdout().flush();
 
         let line = match lines.next_line().await {
@@ -65,14 +71,22 @@ pub async fn repl(client: &RokhaClient, use_browser: bool) -> i32 {
         match msg {
             "/exit" | "/quit" | ":q" => break,
             "/help" => {
-                print_help();
+                print_help(&t);
                 continue;
             }
             _ => {}
         }
-        run_turn(&http, client.base_url(), &creds.jwt, msg, browser.as_mut()).await;
+        run_turn(
+            &http,
+            client.base_url(),
+            &creds.jwt,
+            msg,
+            browser.as_mut(),
+            t,
+        )
+        .await;
     }
-    println!("bye.");
+    println!("{}", t.dim("seeds away."));
     0
 }
 
@@ -84,6 +98,7 @@ async fn run_turn(
     jwt: &str,
     message: &str,
     browser: Option<&mut crate::browser::Browser>,
+    t: Theme,
 ) {
     // `Cell` so the FnMut render closure can mutate render state without an
     // exclusive borrow leaking past the await.
@@ -92,11 +107,13 @@ async fn run_turn(
     // HUD directives collected from the turn's canonical `content` event.
     let directives: std::cell::RefCell<Option<serde_json::Value>> = std::cell::RefCell::new(None);
 
+    let seed = if t.unicode { "\u{273f}" } else { "*" }; // ✿ — Rokha's speaking mark
+    let arrow = if t.unicode { "\u{25b8}" } else { ">" };
     let render = |evt: ChatEvent| match evt {
         ChatEvent::ContentStart => {}
         ChatEvent::ContentDelta { text } => {
             if !header_shown.get() {
-                print!("\x1b[1mRo\x1b[0m  ");
+                print!("{}  ", t.ice_bold(seed));
                 header_shown.set(true);
             }
             print!("{text}");
@@ -108,12 +125,12 @@ async fn run_turn(
             if header_shown.get() {
                 println!();
             }
-            println!("\x1b[2m▸ {tool}…\x1b[0m");
+            println!("{}", t.dim(&format!("{arrow} {tool}\u{2026}")));
             header_shown.set(false); // the post-tool answer re-prints the prefix
         }
         ChatEvent::ToolResult { tool, error } => {
             if let Some(err) = error {
-                println!("\x1b[2m  ↳ {tool} failed: {err}\x1b[0m");
+                println!("{}", t.dim(&format!("  \u{21b3} {tool} failed: {err}")));
             }
         }
         ChatEvent::Content { json } => {
@@ -122,7 +139,7 @@ async fn run_turn(
             if !streamed.get() {
                 let text = stream::content_text(&json);
                 if !text.is_empty() {
-                    print!("\x1b[1mRo\x1b[0m  {text}");
+                    print!("{}  {text}", t.ice_bold(seed));
                 }
             }
             // Capture any HUD steering to forward to the browser after the turn.
@@ -133,7 +150,7 @@ async fn run_turn(
         ChatEvent::Error { message, status } => {
             println!();
             eprintln!("\x1b[31m⚠ {message}\x1b[0m");
-            maybe_upsell(status, &message);
+            maybe_upsell(status, &message, t);
         }
         ChatEvent::Done => {}
     };
@@ -158,13 +175,13 @@ async fn run_turn(
         } else {
             0
         };
-        maybe_upsell(status, &e);
+        maybe_upsell(status, &e, t);
     }
 }
 
 /// Loud, honest upsell when a turn is denied on a tier/allowance limit — the
 /// terminal twin of the in-app allowance banner.
-fn maybe_upsell(status: u64, message: &str) {
+fn maybe_upsell(status: u64, message: &str, t: Theme) {
     let m = message.to_lowercase();
     let limit_shaped = status == 402
         || status == 429
@@ -174,13 +191,17 @@ fn maybe_upsell(status: u64, message: &str) {
         || m.contains("allowance")
         || m.contains("upgrade");
     if limit_shaped {
-        eprintln!("\x1b[1m  You hit a plan limit.\x1b[0m Resets on your daily cycle, or:");
+        eprintln!(
+            "{} Resets on your daily cycle, or:",
+            t.amber("  You hit a plan limit.")
+        );
         eprintln!("    • upgrade / top up → https://rokha.ai/?plan=1");
     }
 }
 
-fn print_help() {
-    println!("\x1b[2m  /exit, /quit   end the session");
-    println!("  /help          this list");
-    println!("  (anything else is sent to Rokha)\x1b[0m");
+fn print_help(t: &Theme) {
+    println!(
+        "{}",
+        t.faint("  /exit, /quit   end the session\n  /help          this list\n  (anything else is sent to Rokha)")
+    );
 }
