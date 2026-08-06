@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Postinstall: downloads the matching `ro` binary from the GitHub
-// release for this @rokha/cli version, verifies sha256, and places
+// release for this @rokha_ai/cli version, verifies sha256, and places
 // it at `vendor/ro` so the `bin/ro` shim can exec it.
 
 'use strict';
@@ -28,7 +28,7 @@ function targetTriple() {
   return null;
 }
 
-function log(msg) { process.stderr.write(`@rokha/cli: ${msg}\n`); }
+function log(msg) { process.stderr.write(`@rokha_ai/cli: ${msg}\n`); }
 
 function download(url, dest) {
   return new Promise((resolve, reject) => {

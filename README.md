@@ -28,13 +28,13 @@ pattern behind [Solwatch](https://github.com/aetherBytes/solwatch).
 
 | Package | Language | Path | What it is |
 |---------|----------|------|------------|
-| `@rokha/sdk` | TypeScript | `sdk/typescript/` | Typed HTTP client |
+| `@rokha_ai/sdk` | TypeScript | `sdk/typescript/` | Typed HTTP client |
 | `rokha-sdk` | Python | `sdk/python/` | Typed HTTP client |
 | `ro` | Rust (CLI) | `svc/rokha-cli/` | The local terminal agent |
 
 > **Distribution status:** the `ro` CLI ships as a prebuilt binary via
 > [`scripts/install.sh`](scripts/install.sh) and the GitHub Releases. The
-> language packages (`@rokha/sdk` on npm, `rokha-sdk` on PyPI, `rokha-cli` on
+> language packages (`@rokha_ai/sdk` on npm, `rokha-sdk` on PyPI, `rokha-cli` on
 > crates.io) and the Homebrew tap are **not published yet** — until then, use
 > the CLI installer or build from source in this repo.
 
@@ -91,7 +91,7 @@ local dev stack. No direct service connections.
 ## Quick Start (TypeScript)
 
 ```typescript
-import { RokhaClient } from '@rokha/sdk';
+import { RokhaClient } from '@rokha_ai/sdk';
 
 const nb = new RokhaClient({ baseUrl: 'https://api.rokha.ai' });
 

@@ -24,7 +24,7 @@ The CLI wave ahead of the package publishes:
   and all. Honest degradation everywhere (`NO_COLOR`, dumb terminals, pipes,
   non-UTF-8 locales, `RO_NO_ANIM=1`), and scriptable commands stay byte-clean.
 - **Self-sufficient installs** — TLS moved to rustls with bundled roots and the
-  npm package now carries its one system library, so `npx @rokha/cli` starts on
+  npm package now carries its one system library, so `npx @rokha_ai/cli` starts on
   minimal containers with zero extra installs.
 
 ## The deep map for agents: llms-full.txt (2026-08-05)
@@ -2643,7 +2643,7 @@ What this means for you:
   `"rig"` everywhere it appears — in the Registry, in search filters,
   and in the schema's `listing_type` enum. Code that sends
   `listing_type: "cow"` or branches on it must switch to `"rig"`.
-- **SDKs updated in lockstep.** `@rokha/sdk` and `rokha-sdk` (Python)
+- **SDKs updated in lockstep.** `@rokha_ai/sdk` and `rokha-sdk` (Python)
   both ship `0.6.0` with the new type and a bumped `SCHEMA_VERSION`
   (`4.0.0`). `ro status` and the SDK drift check expect the server to
   serve `4.0.0`.

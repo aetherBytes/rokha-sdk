@@ -34,7 +34,7 @@ export class MCPClient {
     return this.jsonrpc('initialize', {
       protocolVersion: '2025-11-25',
       capabilities: {},
-      clientInfo: { name: '@rokha/sdk', version: '1.0.0' },
+      clientInfo: { name: '@rokha_ai/sdk', version: '1.0.0' },
     });
   }
 

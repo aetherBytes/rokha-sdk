@@ -51,7 +51,7 @@ compose.
 brew install aetherBytes/tap/rokha               # macOS
 curl -fsSL https://get.rokha.ai/install.sh | sh  # Linux
 cargo install rokha-cli                          # any platform with cargo
-npm install -g @rokha/cli                        # any platform with npm
+npm install -g @rokha_ai/cli                        # any platform with npm
 ```
 
 ## Commands

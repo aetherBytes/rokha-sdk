@@ -18,8 +18,8 @@ const pkgRoot = path.join(__dirname, '..');
 const bin = path.join(pkgRoot, 'vendor', process.platform === 'win32' ? 'ro.exe' : 'ro');
 
 if (!fs.existsSync(bin)) {
-  console.error(`@rokha/cli: binary not found at ${bin}`);
-  console.error('Reinstall: npm install -g @rokha/cli');
+  console.error(`@rokha_ai/cli: binary not found at ${bin}`);
+  console.error('Reinstall: npm install -g @rokha_ai/cli');
   console.error('Or install via Homebrew / cargo / the curl installer (see https://github.com/aetherBytes/rokha-sdk).');
   process.exit(127);
 }
@@ -65,7 +65,7 @@ function run(useFallback, canRetry) {
     }
   });
   child.on('error', (err) => {
-    console.error(`@rokha/cli: failed to exec ${bin}: ${err.message}`);
+    console.error(`@rokha_ai/cli: failed to exec ${bin}: ${err.message}`);
     process.exit(1);
   });
 }

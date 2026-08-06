@@ -190,7 +190,7 @@ export class RokhaClient {
         level: 'major-drift',
         client,
         server,
-        message: `Incompatible: server ${server}, SDK ${client}. Upgrade @rokha/sdk.`,
+        message: `Incompatible: server ${server}, SDK ${client}. Upgrade @rokha_ai/sdk.`,
       };
     }
     return {
