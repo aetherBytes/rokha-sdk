@@ -191,6 +191,12 @@ jobs:
           fi
       - uses: dtolnay/rust-toolchain@stable
         if: steps.guard.outputs.go == 'true'
+      # cargo publish runs a full verification build, so it needs the same
+      # system deps as the Linux build job: libasound2-dev for alsa-sys (the
+      # default-on `voice` feature) and OpenSSL for reqwest native-tls.
+      - name: Install OpenSSL + ALSA (verify build deps)
+        if: steps.guard.outputs.go == 'true'
+        run: sudo apt-get update && sudo apt-get install -y pkg-config libssl-dev libasound2-dev
       - name: cargo publish
         if: steps.guard.outputs.go == 'true'
         working-directory: svc/rokha-cli
