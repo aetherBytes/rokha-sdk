@@ -175,13 +175,14 @@ fn frame(t: &Theme, breath: f32, drift: usize, tagline: &str) -> Vec<String> {
     let rays = "\u{2014}".repeat(1 + b); // — —— ———
     let pad = " ".repeat(2usize.saturating_sub(b));
 
-    // The head: five rows, ❁ pinned so the stem never moves.
+    // The head: five rows sharing one vertical axis — ✦, |, ❁, |, ' and the
+    // stem all sit on column 10, so nothing wobbles as the breath resizes.
     let head: [String; 5] = [
-        "        .  \u{2726}  .".to_string(),      //     .  ✦  .
+        "       .  \u{2726}  .".to_string(),       //    .  ✦  .
         "     \u{b7}  \\ | /  \u{b7}".to_string(), //  ·  \ | /  ·
         format!("    {pad}\u{b7} {rays} \u{2741} {rays} \u{b7}"), // · —— ❁ —— ·
         "     \u{b7}  / | \\  \u{b7}".to_string(), //  ·  / | \  ·
-        "        '  |  '".to_string(),
+        "       '  |  '".to_string(),
     ];
 
     let mut rows: Vec<String> = Vec::with_capacity(BANNER_ROWS);
@@ -254,7 +255,7 @@ fn frame(t: &Theme, breath: f32, drift: usize, tagline: &str) -> Vec<String> {
     // The stem + wordmark row.
     let mark = format!("{}{}r o k h a{}", t.bold(), t.fg(ICE, glow), t.reset());
     let mut last = format!(
-        "           {}|{}     {mark}  {}\u{b7}  {tagline}{}",
+        "          {}|{}     {mark}  {}\u{b7}  {tagline}{}",
         t.fg(ICE_DIM, glow),
         t.reset(),
         t.fg(FAINT, 1.0),
@@ -269,12 +270,12 @@ fn frame(t: &Theme, breath: f32, drift: usize, tagline: &str) -> Vec<String> {
 
 fn frame_ascii(tagline: &str) -> Vec<String> {
     vec![
-        "        .  *  .".into(),
+        "       .  *  .".into(),
         "     .  \\ | /  .".into(),
-        "    . -- * --  .        .       .".into(),
+        "     . -- * -- .        .       .".into(),
         "     .  / | \\  .    .        .".into(),
-        "        '  |  '".into(),
-        format!("           |     r o k h a  .  {tagline}"),
+        "       '  |  '".into(),
+        format!("          |     r o k h a  .  {tagline}"),
     ]
 }
 
@@ -336,19 +337,38 @@ mod tests {
         }
     }
 
+    /// Char column of the axis glyph on one row (None = row has no axis glyph).
+    fn axis(row: &str, glyph: char) -> usize {
+        row.chars().position(|c| c == glyph).unwrap()
+    }
+
     #[test]
     fn frames_hold_shape_across_the_breath() {
-        // Every frame has the same row count and the stem never moves —
-        // redraw-in-place depends on both.
+        // Every frame has the same row count and every axis glyph — crown,
+        // rays' center, head, base, stem — sits on column 10, at every breath
+        // size. Redraw-in-place and the vertical alignment both depend on it.
         for (i, b) in [0.0f32, 0.25, 0.5, 0.75, 1.0].iter().enumerate() {
             let rows = frame(&plain(), *b, i * 3, "the local agent");
             assert_eq!(rows.len(), BANNER_ROWS);
             assert!(rows[5].contains("r o k h a"));
-            let stem_col = rows[4].chars().position(|c| c == '|').unwrap();
-            assert_eq!(stem_col, 11, "stem drifted at breath {b}");
-            let head_col = rows[2].chars().position(|c| c == '\u{2741}').unwrap();
-            assert_eq!(head_col, 10, "head drifted at breath {b}");
+            assert_eq!(axis(&rows[0], '\u{2726}'), 10, "crown off-axis at {b}");
+            assert_eq!(axis(&rows[1], '|'), 10, "upper rays off-axis at {b}");
+            assert_eq!(axis(&rows[2], '\u{2741}'), 10, "head off-axis at {b}");
+            assert_eq!(axis(&rows[3], '|'), 10, "lower rays off-axis at {b}");
+            assert_eq!(axis(&rows[4], '|'), 10, "base off-axis at {b}");
+            assert_eq!(axis(&rows[5], '|'), 10, "stem off-axis at {b}");
         }
+    }
+
+    #[test]
+    fn ascii_fallback_shares_the_axis() {
+        let rows = frame_ascii("the local agent");
+        assert_eq!(axis(&rows[0], '*'), 10);
+        assert_eq!(axis(&rows[1], '|'), 10);
+        assert_eq!(axis(&rows[2], '*'), 10);
+        assert_eq!(axis(&rows[3], '|'), 10);
+        assert_eq!(axis(&rows[4], '|'), 10);
+        assert_eq!(axis(&rows[5], '|'), 10);
     }
 
     #[test]
