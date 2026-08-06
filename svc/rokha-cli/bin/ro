@@ -1,14 +1,21 @@
 #!/usr/bin/env node
 // npm-distributed shim for `ro`. The real binary is downloaded into
 // `vendor/ro` by `npm/install.js` (postinstall). This shim execs it.
+//
+// Linux self-sufficiency: the binary links libasound (the `voice` feature).
+// The npm tarball carries a bundled copy under npm/vendor-libs/<triple>/ so
+// slim containers with no ALSA still start. The system's own libasound always
+// wins — the bundled one is only put on LD_LIBRARY_PATH when the loader can't
+// find one, and as a retry when the first exec dies with the loader's 127.
 
 'use strict';
 
-const { spawn } = require('child_process');
+const { spawn, spawnSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-const bin = path.join(__dirname, '..', 'vendor', process.platform === 'win32' ? 'ro.exe' : 'ro');
+const pkgRoot = path.join(__dirname, '..');
+const bin = path.join(pkgRoot, 'vendor', process.platform === 'win32' ? 'ro.exe' : 'ro');
 
 if (!fs.existsSync(bin)) {
   console.error(`@rokha/cli: binary not found at ${bin}`);
@@ -17,15 +24,50 @@ if (!fs.existsSync(bin)) {
   process.exit(127);
 }
 
-const child = spawn(bin, process.argv.slice(2), { stdio: 'inherit' });
-child.on('exit', (code, signal) => {
-  if (signal) {
-    process.kill(process.pid, signal);
-  } else {
-    process.exit(code ?? 1);
-  }
-});
-child.on('error', (err) => {
-  console.error(`@rokha/cli: failed to exec ${bin}: ${err.message}`);
-  process.exit(1);
-});
+function bundledLibDir() {
+  if (process.platform !== 'linux') return null;
+  const triple = process.arch === 'x64' ? 'x86_64-unknown-linux-gnu'
+    : process.arch === 'arm64' ? 'aarch64-unknown-linux-gnu' : null;
+  if (!triple) return null;
+  const dir = path.join(pkgRoot, 'npm', 'vendor-libs', triple);
+  return fs.existsSync(path.join(dir, 'libasound.so.2')) ? dir : null;
+}
+
+function systemHasAlsa() {
+  try {
+    const out = spawnSync('ldconfig', ['-p'], { encoding: 'utf8' });
+    if (out.status === 0 && typeof out.stdout === 'string') {
+      return out.stdout.includes('libasound.so.2');
+    }
+  } catch (_) {}
+  return null; // unknown — let the exec attempt decide
+}
+
+function fallbackEnv(dir) {
+  const env = Object.assign({}, process.env);
+  env.LD_LIBRARY_PATH = env.LD_LIBRARY_PATH ? `${dir}:${env.LD_LIBRARY_PATH}` : dir;
+  return env;
+}
+
+const libDir = bundledLibDir();
+const startWithFallback = !!libDir && systemHasAlsa() === false;
+
+function run(useFallback, canRetry) {
+  const env = useFallback ? fallbackEnv(libDir) : process.env;
+  const child = spawn(bin, process.argv.slice(2), { stdio: 'inherit', env });
+  child.on('exit', (code, signal) => {
+    if (signal) {
+      process.kill(process.pid, signal);
+    } else if (code === 127 && canRetry && libDir && !useFallback) {
+      run(true, false);
+    } else {
+      process.exit(code ?? 1);
+    }
+  });
+  child.on('error', (err) => {
+    console.error(`@rokha/cli: failed to exec ${bin}: ${err.message}`);
+    process.exit(1);
+  });
+}
+
+run(startWithFallback, !startWithFallback);
