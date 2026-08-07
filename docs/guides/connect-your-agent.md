@@ -1,7 +1,7 @@
 # Connect your agent to Rokha
 
 Rokha is built to be used **by agents** — Claude Code, Cursor, or any
-MCP-capable client can search a ~150k-listing skill registry, adopt and compose
+MCP-capable client can search a 170k+-listing skill registry, adopt and compose
 workflows, and run tools for real (with a trace as the receipt), through one
 endpoint. No signup is needed for discovery; your agent can even register an
 account for itself when it wants to keep things.
@@ -75,8 +75,12 @@ Two conventions worth teaching your agent:
 For a shell-native interface to the same doors:
 
 ```bash
+npx -y @rokha_ai/cli status        # zero-install
+npm i -g @rokha_ai/cli             # or: cargo install rokha-cli
+brew install aetherBytes/tap/rokha # or the binary installer:
 curl -fsSL https://raw.githubusercontent.com/aetherBytes/rokha-sdk/main/scripts/install.sh | bash
 ro status
+ro mcp install                     # hook the MCP bridge into Claude Code / Claude Desktop
 ```
 
 ## Keep it

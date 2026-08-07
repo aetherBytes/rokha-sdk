@@ -80,7 +80,7 @@ they were written — this entry supersedes them.
 ## Bounties pay the full pot — and the network opened up (2026-08-02)
 
 The community bot's money rules got simple and stayed that way. Name a
-bounty pot in USDC, SOL, or $ID and the raiders split every last unit —
+bounty pot in USDC or SOL and the raiders split every last unit —
 all fees are charged on top of your number, never carved out of it, and
 your own Top-N and split settings decide who gets paid, even when the
 raid goes out network-wide. Calling the whole network is open to every
@@ -219,14 +219,14 @@ config screens only appear if an admin explicitly asks for them with /raid.
 Auto mode goes further: connect an X watch and she finds the posts, calls the
 raids, and celebrates the winners herself, within hourly limits admins set.
 
-**Bounties in three coins.** A raid can carry a real prize — **USDC, SOL, or
-$ID** — escrowed on-chain before the raid starts (you pay from your own
+**Bounties in real coins.** A raid can carry a real prize — **USDC or
+SOL** — escrowed on-chain before the raid starts (you pay from your own
 wallet; the deposit is the proof). Pick how many winners and whether the pot
 splits evenly or by contribution. When the raid settles, **winners are paid
 automatically, on-chain, each payment with a transaction link** anyone can
 verify. Replies count most — the people doing the real work earn the most.
 
-**Give Rokha a purse.** The new one: load her a budget — say, a pot of $ID
+**Give Rokha a purse.** The new one: load her a budget — say, a pot of USDC
 for the next 12 hours — and she attaches a bounty to every raid she calls
 until it's spent or the clock runs out. Whatever's left comes straight back
 to your wallet, automatically, with the receipt posted in the room. Fund an
@@ -239,8 +239,7 @@ coming · admins pick bounty coins from buttons instead of typing syntax.
 
 **The honest part:** getting paid needs a free rokha.ai account with your X
 connected (that's how a settle knows which raider is you) and a Solana wallet
-login (that's where the money lands). Community perks around $ID remain
-discretionary and may change — nothing here is a promise of value.
+login (that's where the money lands).
 
 ## Rokha learned to read the room (2026-07-26)
 
@@ -417,7 +416,7 @@ raiders named** (with their Rokha pages if linked), the **points banked**
 stated outright, and the leaderboard reflecting it instantly.
 
 **Freshness, stated honestly:** a new qualifying post (linked X account +
-tagging @IntrovertedDevs) lands on the board within a minute. Its view and
+tagging @Rokha_ai) lands on the board within a minute. Its view and
 engagement numbers then re-check on a ladder matched to when they actually
 move — every few minutes while the post is hot, tapering to daily, frozen
 after a week — and live during any raid. Existing builders keep their
@@ -450,7 +449,7 @@ post your `rokha.ai/@handle` page, and views + engagement on your own posts
 become points — posts are author-verified, so nobody can farm with your
 link. Engagement is weighted the way X's own open-sourced ranking algorithm
 weighs it: a reply counts 27× a like (reply 13.5 · quote 1.5 · repost 1.0 ·
-like 0.5). Introverted badge holders earn ×1.15 on everything. Scores are
+like 0.5). Scores are
 log-damped and capped so newcomers always have a path up, and every row
 shows its raw components.
 
@@ -465,36 +464,12 @@ an earlier attempt, tells you exactly how to clear it instead of failing with
 a shrug. Pick Bitget → Solana on the login screen and approve once.
 
 
-## Hold the coin, wear the hood — the Introverted badge (unreleased)
+## [Removed] The community-token badge (retired)
 
-**Holding 100k $ID now means something on Rokha.** Log in with the Solana
-wallet that holds it and the hooded **Introverted badge** lands on your
-identity automatically — your profile, your builder page, your rig pages, the
-leaderboard. It's checked live against the chain: no forms, no claim button,
-no telling anyone. Sell below the bar and the hood retires; buy back in and
-it returns.
-
-**Members get double allowances while they hold.** For now the badge doubles
-your daily allowances in every category, on any tier — runs, chat, the real
-voice, web search, X, sandbox time, even schedules (free-tier runs land at 25
-a day). Your Plan tab wears a **2× INTROVERTED** tag while the boost is on,
-and every meter reads the doubled cap. And the one that stays: **beta
-features for life** — early access unlocks the first day you qualify and
-never leaves, even if you sell every coin.
-
-**The badge is a stake, not a click.** On the badge ladder it sits above
-𝕏 Linked — you earn it by holding, and Rokha re-verifies while you're
-around. The check is a public read of the chain: no custody, no approvals,
-nothing ever moves.
-
-**For anyone building against us:** page-shaped responses can now carry
-`introverted` in `badge`/`badges`, and `/api/pages/me` adds `beta_access` —
-a for-life access flag, deliberately separate from the display badges.
-
-*The honest line:* $ID stays a meme coin, and these perks are discretionary
-community gifts — they may change or end at any time and are not a promise
-of utility or value. *(2026-08-03: this program is now retired — see the
-entry at the top.)*
+This entry described a community-token badge program that was retired on
+2026-08-03 — Rokha relates to no token, and the perks it described no longer
+exist. The text was removed so no reader, human or agent, mistakes it for a
+live offer. See the retirement entry near the top of this file.
 
 
 ## Link your X to your builder page (unreleased)
