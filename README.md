@@ -33,11 +33,13 @@ pattern behind [Solwatch](https://github.com/aetherBytes/solwatch).
 | `rokha-sdk` | Python | `sdk/python/` | Typed HTTP client |
 | `ro` | Rust (CLI) | `svc/rokha-cli/` | The local terminal agent |
 
-> **Distribution status:** the `ro` CLI ships as a prebuilt binary via
-> [`scripts/install.sh`](scripts/install.sh) and the GitHub Releases. The
-> language packages (`@rokha_ai/sdk` on npm, `rokha-sdk` on PyPI, `rokha-cli` on
-> crates.io) and the Homebrew tap are **not published yet** — until then, use
-> the CLI installer or build from source in this repo.
+> **Distribution status (live since 2026-08-06):** everything below is
+> published and installable today — `npm i @rokha_ai/sdk`,
+> `npx -y @rokha_ai/cli`, `cargo install rokha-cli`,
+> `brew install aetherBytes/tap/rokha`, or the one-line
+> [`scripts/install.sh`](scripts/install.sh) binary installer. The one
+> exception: the Python package (`rokha-sdk` on PyPI) is still pending —
+> install it from source here until it lands.
 
 ## The local terminal agent (`ro`)
 
