@@ -6,6 +6,30 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha's DMs level up — real memory, reactions, and the רוּחָא badge (2026-08-09)
+
+A round of upgrades to chatting with **@rokha_agent** on X, straight
+from watching real conversations:
+
+- **She remembers the conversation now.** A DM thread keeps its context
+  across messages, restarts, and busy days — ask a follow-up two
+  messages later and she knows what you meant.
+- **She texts like a person.** Short paragraphs, room to breathe, emoji
+  where they mean something — and the slash commands (`/help`,
+  `/connect`, `/audit`, and friends) answer with clean formatted cards
+  instead of walls of text.
+- **She reacts.** Rokha can drop an emoji reaction on your message the
+  way anyone does — a 🔥 on a great build, a ⚡ on a hello.
+- **Ideas on tap.** Ask "what should I build?" and she'll pitch you
+  concrete ideas you can start today, tailored to what she knows about
+  you — brainstorming is her favorite part of the librarian job.
+
+And a new badge joins the ladder: **רוּחָא — the wind-spirit badge**,
+worn automatically by every Pro subscriber. It's live-derived: subscribe
+and it appears everywhere your name does; let the sub lapse and it's
+gone. It's also the key to **The Updraft**, the invite-only insider
+group chat on X.
+
 ## Rokha gets her own page — and takes tips (2026-08-09)
 
 Rokha now has an official home: **rokha.ai/@rokha_agent** — her page,
