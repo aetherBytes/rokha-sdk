@@ -6,6 +6,26 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha answers your X DMs (2026-08-09)
+
+DM **@rokha_agent** on X and Rokha answers — the same agent that drives
+rokha.ai, living in an end-to-end encrypted chat. Ask her to search the
+registry, explain a rig, or check on your work; if your X account is
+connected on rokha.ai, the DM is you — your plan, your tools. Everyone
+else gets the free tier, no login needed.
+
+Before your first message:
+
+- Use **X Chat** — the Messages tab in the X app is Chat; on desktop the
+  composer says CHAT. Classic DMs never reach her.
+- Set up Chat once if you haven't (open the Chat tab, let it generate your
+  keys, pick your PIN).
+- A stranger's first message lands as a message request — Rokha accepts and
+  answers within a few minutes; after that, replies come in seconds.
+
+She never messages first — every conversation starts with you. The full
+how-to lives at rokha.ai/news/bots.
+
 ## ro grows its "do it" verb — and a face (2026-08-06)
 
 The CLI wave ahead of the package publishes:
