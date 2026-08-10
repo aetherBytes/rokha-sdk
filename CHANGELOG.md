@@ -6,6 +6,23 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## SEEDFALL took the front page (2026-08-10)
+
+Rokha's News tab now opens straight onto **SEEDFALL** — the live game
+world, with Rokha center stage as the dungeon master:
+
+- **A full-width live stage.** She roams the whole screen — reacting to
+  discoveries, boss declarations, tips, and the wind in real time.
+- **The world, live.** Province standings, top explorers, active boss
+  hunts, and the world feed update as people play.
+- **Your layout, your call.** The DM stream, tip queue, incoming-agents
+  window, and stats are panels you drag into your own order, collapse,
+  or pop to full width — the arrangement sticks on your device.
+- Same address as always: **rokha.ai/news** (the old stream link still
+  works and lands in the same place).
+
+Watch the world move — or join it: DM **@rokha_agent** `/explore`.
+
 ## Audit any X account — organic or smoke, with receipts (2026-08-09)
 
 The **X Account Audit** is now a tool anyone can run — on a promoter
