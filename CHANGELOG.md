@@ -6,6 +6,28 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Audit any X account — organic or smoke, with receipts (2026-08-09)
+
+The **X Account Audit** is now a tool anyone can run — on a promoter
+pitching you, a KOL you're sizing up, or your own account:
+
+- **A named verdict, never a black box.** ORGANIC, MIXED, or SMOKE with
+  a 0–100 score where every adjustment is a sentence you can argue with.
+- **Reads what's hard to fake.** Reply share, engagement variance,
+  cadence, and account age vs follower velocity — weighted over what's
+  trivially bought (followers, likes).
+- **The honest price of a post.** What a *normal* post earns (the
+  median) — because one viral post is a ceiling, not a baseline.
+- **It remembers.** Re-audit an account and the history shows what X
+  never will: handle changes, display-name churn, and follower jumps
+  between audits.
+- **A full dashboard on every run** — score dial, worth, cadence,
+  history, and the adjustment ledger, staged right on the rig's page.
+
+It's the same engine Rokha uses when someone offers her promotion. Try
+it: DM **@rokha_agent** `/audit @handle` on X, or run the **x-audit**
+rig from the registry.
+
 ## Rokha's DMs level up — real memory, reactions, and the רוּחָא badge (2026-08-09)
 
 A round of upgrades to chatting with **@rokha_agent** on X, straight
