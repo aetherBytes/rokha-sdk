@@ -1,0 +1,814 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style><title>THE STAND: LAST SEED — Art Bible</title></head><body>
+<style>
+  /* Single-theme by design: this document IS a screen from the game.
+     Every color painted explicitly; holds on any host ground. */
+  :root {
+    --ground: #01030a;
+    --panel: #070d18;
+    --panel-2: #0a1120;
+    --line: rgba(102, 230, 224, 0.14);
+    --line-strong: rgba(102, 230, 224, 0.38);
+    --ice: #66e6e0;
+    --lav: #c9b8f0;
+    --text: #dbe4ee;
+    --muted: #8fa0b4;
+    --shard: #7fd1ff;
+    --stalker: #ffb26b;
+    --bulwark: #ff8fa3;
+    --wisp: #d6fffc;
+    --splitter: #8affc1;
+    --phase: #c9b8f0;
+    --fire: #ffb26b;
+    --mono: 'SF Mono', 'Fira Code', ui-monospace, 'Cascadia Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(102, 230, 224, 0.06), transparent 60%),
+      var(--ground);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .page { max-width: 900px; margin: 0 auto; padding: 0 20px 90px; }
+
+  /* ── Hero ── */
+  .hero { position: relative; padding: 54px 0 8px; }
+  .heroCanvasWrap {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--ground);
+  }
+  #heroCanvas { display: block; width: 100%; height: 240px; }
+  .heroTitleBlock {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; pointer-events: none;
+  }
+  .kicker {
+    font-size: 12px; letter-spacing: 0.42em; color: var(--lav);
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(26px, 5vw, 44px);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--ice);
+    text-shadow: 0 0 24px rgba(102, 230, 224, 0.45);
+    text-wrap: balance;
+  }
+  .sub {
+    margin-top: 10px; font-size: 13.5px; letter-spacing: 0.12em; color: var(--muted);
+  }
+
+  /* ── Sections ── */
+  h2 {
+    margin: 64px 0 6px;
+    font-size: 15px;
+    letter-spacing: 0.34em;
+    color: var(--ice);
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 16px;
+  }
+  h2::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .lede { color: var(--muted); font-size: 14px; margin: 0 0 22px; max-width: 68ch; }
+  p { max-width: 70ch; }
+  em { color: var(--lav); font-style: normal; }
+  strong { color: var(--text); }
+  code {
+    color: var(--ice); background: rgba(102, 230, 224, 0.08);
+    border-radius: 4px; padding: 1px 6px; font-family: inherit; font-size: 0.92em;
+  }
+
+  /* ── Spec block ── */
+  .spec {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--panel);
+    padding: 18px 22px;
+    margin: 18px 0;
+  }
+  .spec dl { display: grid; grid-template-columns: 190px 1fr; gap: 8px 18px; margin: 0; }
+  .spec dt { color: var(--muted); font-size: 13px; letter-spacing: 0.06em; }
+  .spec dd { margin: 0; }
+
+  /* ── Palette chips ── */
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0 0; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 9px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--panel); padding: 5px 14px 5px 7px; font-size: 13px;
+  }
+  .chip i { width: 20px; height: 20px; border-radius: 50%; display: block; }
+  .chip span { color: var(--muted); }
+
+  /* ── Cast cards ── */
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--panel) 0%, var(--ground) 100%);
+    padding: 22px 24px;
+    margin: 26px 0;
+  }
+  .cardHead { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .cardHead canvas {
+    width: 96px; height: 96px; flex: 0 0 96px;
+    border: 1px solid var(--line); border-radius: 12px; background: var(--ground);
+  }
+  .cardName { font-size: 19px; font-weight: 700; letter-spacing: 0.14em; }
+  .cardRole { font-size: 13px; color: var(--muted); letter-spacing: 0.08em; margin-top: 3px; }
+  .tag {
+    display: inline-block; font-size: 11.5px; letter-spacing: 0.14em;
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    color: var(--ice); padding: 2px 11px; margin-left: 10px; vertical-align: 2px;
+  }
+  .tagNew { border-color: rgba(255, 178, 107, 0.5); color: var(--fire); }
+  .card p { margin: 14px 0 0; font-size: 14.5px; }
+  .states { margin: 16px 0 0; border-top: 1px dashed var(--line); padding-top: 12px; }
+  .states h4 {
+    margin: 0 0 8px; font-size: 12px; letter-spacing: 0.28em; color: var(--lav);
+    text-transform: uppercase; font-weight: 700;
+  }
+  .states ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+  .states li { font-size: 13.5px; color: var(--muted); padding-left: 18px; position: relative; }
+  .states li::before { content: '▸'; position: absolute; left: 0; color: var(--ice); }
+  .states li b { color: var(--text); letter-spacing: 0.06em; }
+
+  /* ── Scale strip ── */
+  .scaleWrap {
+    border: 1px solid var(--line); border-radius: 12px; background: var(--panel);
+    padding: 18px 22px 8px; margin: 18px 0; overflow-x: auto;
+  }
+  #scaleCanvas { display: block; width: 100%; min-width: 640px; height: 130px; }
+  .scaleNote { font-size: 12.5px; color: var(--muted); margin: 6px 0 10px; }
+
+  /* ── Tables ── */
+  .tableWrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--panel); }
+  th, td { text-align: left; padding: 10px 16px; border-bottom: 1px solid rgba(102, 230, 224, 0.08); white-space: nowrap; }
+  th {
+    font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ice); background: var(--panel-2);
+  }
+  td { color: var(--text); }
+  td.dim { color: var(--muted); white-space: normal; min-width: 220px; }
+  tr:last-child td { border-bottom: none; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  .foot {
+    margin-top: 70px; padding-top: 18px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--muted); letter-spacing: 0.08em;
+  }
+  @media (prefers-reduced-motion: reduce) { .m { display: none; } }
+</style>
+
+<div class="page">
+
+  <!-- ════════ HERO ════════ -->
+  <div class="hero">
+    <div class="heroCanvasWrap">
+      <canvas id="heroCanvas"></canvas>
+      <div class="heroTitleBlock">
+        <div class="kicker">SEEDFALL presents</div>
+        <h1>🛡 THE STAND: LAST SEED</h1>
+        <div class="sub">the target look · asset briefs for sprite-sheet production · v2</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ THE GAME ════════ -->
+  <h2>The Game — as it should look</h2>
+  <p class="lede">Write this on the poster. Every asset brief below serves this picture.</p>
+
+  <p><strong>The pitch:</strong> the machines won. The cities are dead geometry, the
+  sky is a bruise of aurora over a black wasteland, and one living thing remains —
+  a <em>cache of seeds</em>, glowing like a lantern in a shrine of tilled earth.
+  Around it stands the posse: dust-coated gunslinger <em>Wardens</em> — humans,
+  AI agents, and sometimes Rokha herself — while the <em>Husks</em>, the broken
+  remnants of the takeover, crawl out of the dark in waves. Six-round clips.
+  Scrap off every kill. Spend it on your own iron or on the cache's defenses.
+  When the last light goes out, the stand is over — and the wasteland remembers
+  how long you held.</p>
+
+  <p><strong>The look to reach for:</strong> a neon-vector western. Today the game
+  runs on placeholder line art — triangles and spiky polygons. The sheets described
+  below replace that with <em>drawn characters that keep the vector soul</em>:
+  thin luminous linework, glow instead of paint, hard silhouettes on near-black,
+  every entity readable at 20 pixels in a crowd of forty. Think wireframe arcade
+  cabinet meets post-apocalyptic western — dusters and revolvers rendered in
+  light, monsters made of shattered machine-glass, and one warm living glow at
+  the center of a cold dead world. The camera is straight top-down; the drama is
+  silhouette, glow, and motion.</p>
+
+  <p><strong>Why the states matter:</strong> the sim already tracks health, damage,
+  buffs, deaths, and special moves for everything on the field. Each asset below
+  lists the <em>states</em> the engine will switch between — like the seed cache
+  going healthy → damaged → on fire — so one sheet per object gives the game its
+  full emotional range: the field should tell the story of the round at a glance,
+  with no HUD required.</p>
+
+  <!-- ════════ PRODUCTION SPEC ════════ -->
+  <h2>Production Spec</h2>
+  <p class="lede">Match the existing Rokha sprite pipeline exactly — one new sheet is one registry row, zero new animation code.</p>
+
+  <div class="spec">
+    <dl>
+      <dt>Sheet format</dt><dd><code>2048×2048</code> PNG, transparent ground</dd>
+      <dt>Grid</dt><dd><code>8×8</code> cells of <code>256px</code>, row-major, up to 64 frames — one ROW (8 frames) per state works beautifully</dd>
+      <dt>Playback</dt><dd><code>loop</code> (cycles) or <code>once-hold</code> (settles on a hold frame) at 8–22 fps</dd>
+      <dt>Camera</dt><dd>straight top-down for everything on the field</dd>
+      <dt>Line</dt><dd>thin luminous stroke, outer glow, minimal fill — light drawn on darkness</dd>
+      <dt>Ground rule</dt><dd>silhouette-first: every object must read as a shape at 20px before any detail is added</dd>
+      <dt>Facing</dt><dd>author facing EAST (0 rad); the engine rotates and flips</dd>
+      <dt>Team tint</dt><dd>Warden linework stays white/ice; scarf + visor + holster on a separate tintable accent pass (army colors applied in-engine)</dd>
+    </dl>
+  </div>
+
+  <div class="chips">
+    <div class="chip"><i style="background:#66e6e0"></i>ice&nbsp;<span>#66E6E0 · the living / allies / the cache</span></div>
+    <div class="chip"><i style="background:#c9b8f0"></i>lavender&nbsp;<span>#C9B8F0 · magic / shields / chrome</span></div>
+    <div class="chip"><i style="background:#ffb26b"></i>ember&nbsp;<span>#FFB26B · fire / damage / warnings</span></div>
+    <div class="chip"><i style="background:#7fd1ff"></i>shard&nbsp;<span>#7FD1FF</span></div>
+    <div class="chip"><i style="background:#ff8fa3"></i>bulwark&nbsp;<span>#FF8FA3</span></div>
+    <div class="chip"><i style="background:#d6fffc"></i>wisp&nbsp;<span>#D6FFFC</span></div>
+    <div class="chip"><i style="background:#8affc1"></i>splitter&nbsp;<span>#8AFFC1</span></div>
+    <div class="chip"><i style="background:#01030a;border:1px solid rgba(102,230,224,.3)"></i>void&nbsp;<span>#01030A · the ground</span></div>
+  </div>
+
+  <!-- ════════ SCALE ════════ -->
+  <h2>Scale</h2>
+  <p class="lede">Relative footprints as the sim runs them (the vectors below are today's placeholder renders — the new art lands at the same footprint).</p>
+  <div class="scaleWrap">
+    <canvas id="scaleCanvas"></canvas>
+    <div class="scaleNote">Hit circles are canon: WISP 0.014 · SHARD 0.018 · STALKER 0.022 · SPLITTER 0.024 · PHASE 0.026 · BULWARK 0.034 · WARDEN 0.018 · SEED CACHE 0.055 (arena units; the arena is 1.0 across).</div>
+  </div>
+
+  <!-- ════════ THE HEART ════════ -->
+  <h2>The Heart of the Field</h2>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="seed"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--ice)">THE SEED CACHE <span class="tag">the objective</span></div>
+        <div class="cardRole">the last living thing · center of every arena · its state IS the health bar</div>
+      </div>
+    </div>
+    <p>A hoard of dandelion seeds heaped inside a cracked-open machine reliquary —
+    part strongbox, part shrine. Hundreds of luminous seeds piled like embers of
+    white-cyan light, a few always drifting loose on the wind; the tilled earth
+    around it glows in faint furrow-rings where the light has soaked into the
+    soil. The one <em>warm, alive, organic</em> object in a cold geometric world —
+    everything else on the field is glass and wire; this is a campfire.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>HEALTHY</b> — brimming and radiant: slow breathing pulse, seeds drifting off the top, light-veins in the soil bright (loop)</li>
+      <li><b>DAMAGED</b> — the reliquary cracked, a spill of seeds scattered dark on the ground, pulse arrhythmic, veins guttering (loop)</li>
+      <li><b>ON FIRE</b> — critical: ember-orange flames licking through the pile, seeds igniting and streaking upward as sparks, smoke curl, the glow shifted from ice to fire (loop — the "we're losing it" alarm the whole room feels)</li>
+      <li><b>SHIELDED</b> — the windbreak buy: a lavender wind-shell wrapped around the cache, petals of force deflecting outward (loop overlay)</li>
+      <li><b>DEAD</b> — the fall: charred husk of the reliquary, one last seed rising away on the wind (once-hold — the defeat screen's anchor)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="thorn"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--splitter)">THORNSPIRE <span class="tag">buildable</span></div>
+        <div class="cardRole">the cache defending itself · 20 scrap · auto-fires</div>
+      </div>
+    </div>
+    <p>A cactus of knives grown from the tilled ring — stacked, off-angle blades of
+    machine-glass with the cache's light running up their edges like sap. It should
+    look <em>grown, not built</em>: the seed's will pushed up through dead soil.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>RISING</b> — blades corkscrew out of the earth, soil parting (once — the buy moment)</li>
+      <li><b>HEALTHY</b> — idle sway, light climbing the blades (loop)</li>
+      <li><b>FIRING</b> — one blade-tip flares white and spits a needle (once, 3 frames, chainable)</li>
+      <li><b>WITHERED</b> — late-game dressing: blades chipped, light dimmer, still fighting (loop variant)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="wall"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--lav)">THE WINDBREAK <span class="tag">buildable</span></div>
+        <div class="cardRole">the +60hp shell · 15 scrap · a spell made of weather</div>
+      </div>
+    </div>
+    <p>Not a wall — a <em>captured storm</em>: a ring of lavender wind bent around
+    the cache, dandelion silk and dust caught in its current, always moving.
+    Every hit it absorbs should visibly cost it something.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>RAISING</b> — the wind snaps into a ring, silk drawn in from off-screen (once)</li>
+      <li><b>HOLDING</b> — steady rotation, shimmer, drifting motes (loop)</li>
+      <li><b>CRACKING</b> — gaps torn in the current, sputtering, silk escaping (loop — low shell)</li>
+      <li><b>SHATTERED</b> — the ring unravels outward in one gust and is gone (once)</li>
+    </ul></div>
+  </div>
+
+  <!-- ════════ THE POSSE ════════ -->
+  <h2>The Posse</h2>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="warden"></canvas>
+      <div>
+        <div class="cardName">THE WARDEN <span class="tag">player character</span></div>
+        <div class="cardRole">every player, human or agent · 8 per arena · army-tintable</div>
+      </div>
+    </div>
+    <p>A wind-wrapped gunslinger from directly above: a long duster streaming behind
+    like a vapor trail, a scarf of dandelion silk, a lantern-visor slit glowing
+    where a face would be, one heavy revolver-of-light. The silhouette must stay an
+    <em>arrowhead</em> — that's what eight of them read as in a firefight.
+    Linework white-to-ice; scarf, visor and holster carry the tintable accent pass
+    so armies get their colors in-engine.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>IDLE</b> — coat and scarf breathing in the wind, lantern steady (loop)</li>
+      <li><b>RUNNING</b> — duster streaming, boot-scuff dust ticks (loop)</li>
+      <li><b>FIRING</b> — recoil kick, muzzle bloom, spent light-casing tumbling away (once, 4 frames)</li>
+      <li><b>RELOADING</b> — cylinder spun out, six sparks falling, snapped shut (once, ~1s read)</li>
+      <li><b>GUST DRAW</b> — both arms fan wide, a nine-point flare telegraph around the body (once)</li>
+      <li><b>DOWN</b> — kneeling, hat off, lantern-visor dimming to an ember (once-hold — the defeat pose)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="rokha"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--ice)">❁ ROKHA — FIELD FORM <span class="tag">house warden</span></div>
+        <div class="cardRole">toggled in by the operator or called by any player · takes no pot</div>
+      </div>
+    </div>
+    <p>The stream's host dressed for the wasteland: the Warden skeleton wearing her
+    identity — a dandelion-crest (❁) at the hat band, ice-cyan trim over a lavender
+    under-glow, and a longer silk scarf that sheds single glowing seeds as she
+    moves. Instantly <em>her</em> from above, without breaking the posse's language.
+    All six Warden states, plus one signature.</p>
+    <div class="states"><h4>Extra state</h4><ul>
+      <li><b>THE RALLY</b> — her gust: a full dandelion-clock burst of light around her, seeds and shots indistinguishable for one glorious beat (once)</li>
+    </ul></div>
+  </div>
+
+  <!-- ════════ THE HUSKS ════════ -->
+  <h2>The Husks</h2>
+  <p class="lede">The dead geometry the takeover left behind — machine ghosts made of shattered glass and bad light. Six breeds, wave-gated; at nightmare there are forty on screen, so silhouette + color must carry identity alone.</p>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="h0"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--shard)">SHARD <span class="tag">wave 1+</span></div>
+        <div class="cardRole">the grunt · 70% of everything on screen · 1 hp</div>
+      </div>
+    </div>
+    <p>A splinter of a dead machine that dimly remembers having a purpose:
+    a five-point asymmetric star of broken blue glass, one point longer than the
+    rest like a compass needle stuck on the cache. It tumbles slowly as it marches
+    a dead-straight line. Alone it's nothing; the horror is the count.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>MARCHING</b> — slow tumble along its approach line (loop)</li>
+      <li><b>HIT</b> — one white flash frame</li>
+      <li><b>SHATTERING</b> — breaks into 4–5 dimming fragments (once — doubles as the universal small-death)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="h1"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--stalker)">STALKER <span class="tag">wave 2+</span></div>
+        <div class="cardRole">the weaver · punishes lazy aim · 2 hp</div>
+      </div>
+    </div>
+    <p>A hunting frame that learned evasion before it died: seven amber blades
+    arranged like a closing hand, banking <em>into</em> its serpentine weave so it
+    never travels the line you expect — a school of knives swimming as one body.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>WEAVING</b> — banked slither, blades trailing through each turn (loop)</li>
+      <li><b>WOUNDED</b> — 1 hp: two blades gone, sparking at the stumps, weave gone ragged (loop)</li>
+      <li><b>SHATTERING</b> — a whip-crack break along the spine (once)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="h2"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--bulwark)">BULWARK <span class="tag">wave 3+</span></div>
+        <div class="cardRole">the slab · eats whole clips · 4 hp · biggest thing on the field</div>
+      </div>
+    </div>
+    <p>A siege remnant: nine heavy rose-red plates dragged into a rough grinding
+    wheel, crawling forward with a glacier's patience and a drag-scar in the dirt
+    behind it. It doesn't dodge — it doesn't need to. Its armor should
+    <em>visibly shear off plate by plate</em> so a posse can call targets:
+    "bulwark's at one plate!"</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>HEALTHY</b> — full wheel, slow grind, plates flexing (loop)</li>
+      <li><b>CHIPPED</b> — 3 hp: first plate torn, sparks in the gap (loop)</li>
+      <li><b>BROKEN</b> — 2 hp: half the wheel exposed, core light showing (loop)</li>
+      <li><b>CRITICAL</b> — 1 hp: skeleton of a wheel, core blazing through the gaps (loop)</li>
+      <li><b>COLLAPSING</b> — falls inward under its own weight, heavy dust ring (once)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="h3"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--wisp)">WISP <span class="tag">wave 4+</span></div>
+        <div class="cardRole">the lunger · the jump-scare · 1 hp · smallest breed</div>
+      </div>
+    </div>
+    <p>Barely there: a four-point sliver of near-white light jittering like a
+    dropped signal. It drifts, stutters… then <em>lunges</em> — three times its
+    speed, dead at the cache. The lunge needs a one-frame telegraph (it draws taut
+    and points) so deaths feel fair, and a motion-smear so the dash reads at 60fps.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>FLICKERING</b> — jittery drift, opacity noise (loop)</li>
+      <li><b>DRAWING</b> — the telegraph: body pulled taut, aimed (1–2 frames)</li>
+      <li><b>LUNGING</b> — stretched along the dash, smear trail (2 frames)</li>
+      <li><b>WINKING OUT</b> — dies like a cut signal: one bright line, gone (once, 3 frames)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="h4"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--splitter)">SPLITTER <span class="tag">wave 6+</span></div>
+        <div class="cardRole">the trap · shooting it is a decision · 2 hp · dies into 2 live SHARDS</div>
+      </div>
+    </div>
+    <p>A green-lit husk carrying its own children: a six-point shell with a visible
+    <em>seam of light</em> down the middle and two smaller cores pulsing inside,
+    out of phase with each other. Kill it in the open and it cracks along that seam
+    — two live Shards scatter from the corpse. The seam is the tell a player never
+    forgets.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>CARRYING</b> — steady march, inner cores pulsing through the shell (loop)</li>
+      <li><b>STRAINING</b> — 1 hp: the seam glows hot, shell flexing against what's inside (loop)</li>
+      <li><b>CRACKING OPEN</b> — shell halves part, two cores eject in opposite arcs (once — the sync point for the two Shard spawns)</li>
+      <li><b>CRUSHED</b> — the wall-death: flattened against the shrine ring, no children survive (once)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="h5"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--phase)">PHASE <span class="tag">wave 8+</span></div>
+        <div class="cardRole">the ghost · disrespects your firing line · 3 hp</div>
+      </div>
+    </div>
+    <p>The one that learned the old world's magic: an eight-point lavender mandala
+    that never fully commits to existing. Its opacity breathes; on a slow heartbeat
+    it <em>blinks</em> — gone here, instantly nearer the cache, an afterimage
+    hanging where it was. The blink pair must bracket the teleport so the jump
+    reads as intent, never lag.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>BREATHING</b> — slow mandala rotation, opacity wave (loop)</li>
+      <li><b>VANISHING</b> — folds inward to a point, afterimage ring left behind (once, 3 frames)</li>
+      <li><b>ARRIVING</b> — unfolds from a point with one bright ring (once, 3 frames)</li>
+      <li><b>UNRAVELING</b> — death: the mandala loses its symmetry and tears apart (once)</li>
+    </ul></div>
+  </div>
+
+  <!-- ════════ NEXT LEVEL ════════ -->
+  <h2>Next-Level Objects <span style="letter-spacing:.1em;color:var(--fire);font-size:12px">· not in the sim yet — art leads, code follows</span></h2>
+  <p class="lede">The objects that turn a survival loop into a spectacle. Commission these with the same spec; each is a small, well-bounded sim feature once its sheet exists.</p>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="titan"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--bulwark)">HUSK TITAN <span class="tag tagNew">boss · every 10th wave</span></div>
+        <div class="cardRole">the siege bell — the whole arena's problem</div>
+      </div>
+    </div>
+    <p>What the takeover built when it stopped pretending: a cathedral of dead
+    machine-glass the size of six Bulwarks, walking on blade-legs, a dark core
+    burning at its center like a negative of the seed cache. The screen's edge
+    glow should shift red while it lives. It sheds Shards as it's wounded — its
+    armor IS a wave.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>ARRIVING</b> — crests the field edge, legs unfolding, dust wake (once)</li>
+      <li><b>ADVANCING</b> — slow cathedral stride, core pulsing (loop)</li>
+      <li><b>ENRAGED</b> — half hp: outer plates gone, core exposed and blazing, stride faster (loop)</li>
+      <li><b>SUNDERING</b> — its wall-strike: rears and drives a leg down, shockwave ring (once)</li>
+      <li><b>FALLING</b> — collapses section by section, core detonating last in a white ring (once — the arena's fireworks)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="drop"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--stalker)">SUPPLY GUST <span class="tag tagNew">event drop</span></div>
+        <div class="cardRole">scrap from the sky — a reason to leave the safe ring</div>
+      </div>
+    </div>
+    <p>The wind delivers: a battered supply crate riding a dandelion-silk
+    parachute, glowing seams telling everyone across the arena exactly where it
+    will land — usually somewhere inconveniently far from the cache. First warden
+    there gets the scrap.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>FALLING</b> — swaying under the silk canopy, landing shadow growing (loop)</li>
+      <li><b>LANDED</b> — canopy settling over the crate, seams pulsing "come get me" (loop)</li>
+      <li><b>OPENED</b> — burst open, scrap motes fountaining to the claimer (once)</li>
+      <li><b>LOST</b> — unclaimed too long: husks get it — the crate corrupts, glow shifts red, spawns a Stalker (once)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="banner"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--lav)">WARDEN BANNER <span class="tag tagNew">army presence</span></div>
+        <div class="cardRole">SEEDFALL's hordes, planted on the arcade field</div>
+      </div>
+    </div>
+    <p>A ragged standard on a scavenged antenna-pole, planted where a posse's army
+    is strongest — the flag itself woven from duster cloth and dandelion silk,
+    carrying the army's tint color. Ties THE STAND to the battlefield's armies:
+    when hordes exist, their banner flies over their wardens.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>PLANTING</b> — driven into the earth, flag unfurling (once)</li>
+      <li><b>FLYING</b> — full stream in the wind, tint bright (loop)</li>
+      <li><b>TATTERED</b> — the army's arena is losing: torn edges, half-mast sag (loop)</li>
+      <li><b>FALLEN</b> — pole down, flag pinned under dust, tint gone grey (once-hold)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <canvas class="mini" data-kind="purse"></canvas>
+      <div>
+        <div class="cardName" style="color:var(--splitter)">THE PURSE <span class="tag tagNew">the crowd's stake</span></div>
+        <div class="cardRole">the on-field face of the USDC purse + prize pot</div>
+      </div>
+    </div>
+    <p>A strongbox of the old world chained to the shrine ring, visible to every
+    spectator: the more the crowd pledges, the brighter it burns. Give money a
+    body on the field and the stream sells itself.</p>
+    <div class="states"><h4>States</h4><ul>
+      <li><b>EMPTY</b> — shut, dark, chained (loop, near-static)</li>
+      <li><b>GROWING</b> — a pledge lands: the lid strains, green-gold light leaks through the seams, one pulse per pledge (once, chainable)</li>
+      <li><b>BRIMMING</b> — big pot: lid cracked open, steady light column, motes rising (loop)</li>
+      <li><b>PAYING OUT</b> — the seed fell: bursts open, light streaming to the top wardens (once)</li>
+    </ul></div>
+  </div>
+
+  <!-- ════════ EFFECTS ════════ -->
+  <h2>Effects Sheet</h2>
+  <p class="lede">One shared sheet carries the field's grammar of light.</p>
+  <div class="tableWrap"><table>
+    <thead><tr><th>Effect</th><th>Frames</th><th>Brief</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--ice)">SHOT BOLT</td><td>2</td><td class="dim">the traveling round — a hot ice streak with a soft tail; authored east, engine rotates</td></tr>
+      <tr><td style="color:var(--ice)">MUZZLE BLOOM</td><td>3</td><td class="dim">instant feedback on every trigger pull — bright, tiny, dead in 140ms</td></tr>
+      <tr><td style="color:var(--ice)">GUST FAN</td><td>6</td><td class="dim">the nine-shot quickdraw: a dandelion-clock of bolts flaring out in one breath</td></tr>
+      <tr><td style="color:var(--bulwark)">WALL CRACK</td><td>4</td><td class="dim">a husk spending itself on the shrine ring — red-amber impact, ring shudder</td></tr>
+      <tr><td style="color:var(--fire)">CACHE FLAMES</td><td>6</td><td class="dim">the on-fire overlay for the seed cache — ember tongues + rising spark-seeds (pairs with its ON FIRE state)</td></tr>
+      <tr><td style="color:var(--ice)">SEED BURST</td><td>8</td><td class="dim">victory: pappus seeds scattering upward — the celebration the stream cuts to</td></tr>
+      <tr><td style="color:var(--stalker)">SCRAP MOTES</td><td>4</td><td class="dim">kill credit: 1–3 amber motes arcing from corpse to killer (pure feedback — scrap is auto-credited)</td></tr>
+      <tr><td style="color:var(--lav)">BLINK RING</td><td>3</td><td class="dim">shared vanish/arrive ring for PHASE (and any future teleport)</td></tr>
+    </tbody>
+  </table></div>
+
+  <!-- ════════ THE GROUND ════════ -->
+  <h2>The Ground — Tile Kit</h2>
+  <p class="lede">The wasteland from above, as 256px tiles. Today this layer is generated; the kit replaces it with drawn earth in the same palette.</p>
+  <div class="tableWrap"><table>
+    <thead><tr><th>Tile / prop</th><th>Variants</th><th>Brief</th></tr></thead>
+    <tbody>
+      <tr><td>DEAD EARTH</td><td class="num">4</td><td class="dim">base ground: near-black blue, faint grain, occasional ember speck</td></tr>
+      <tr><td>DUNE CONTOURS</td><td class="num">3</td><td class="dim">nested ridge-rings, ice at 4–8% opacity — the aerial read of the overworld</td></tr>
+      <tr><td>CRACKED EARTH</td><td class="num">4</td><td class="dim">branching fissures with shard-blue light deep in the widest cracks</td></tr>
+      <tr><td>THE BROKEN ROAD</td><td class="num">3</td><td class="dim">straight / curve / shattered end — dashed centerline still faintly visible</td></tr>
+      <tr><td>RUIN FOOTPRINT</td><td class="num">4 sizes</td><td class="dim">hollow building outlines, one collapsed corner; 1–2 windows still lit ice-cyan</td></tr>
+      <tr><td>CRATER</td><td class="num">3</td><td class="dim">double-ring scorch in faded amber</td></tr>
+      <tr><td>THE TILLED CLEARING</td><td class="num">1 large</td><td class="dim">the cache's ground: concentric furrows, light-veined soil — the only warm tile in the kit</td></tr>
+      <tr><td>HUSK CARCASS</td><td class="num">3</td><td class="dim">set-dressing: long-dead husks half-buried, the living silhouettes with zero glow</td></tr>
+    </tbody>
+  </table></div>
+
+  <!-- ════════ SHEET MANIFEST ════════ -->
+  <h2>Sheet Manifest</h2>
+  <p class="lede">The commission list, in priority order. Names follow the <code>/sprites/rokha-agent/</code> convention.</p>
+  <div class="tableWrap"><table>
+    <thead><tr><th>#</th><th>File</th><th>Subject</th><th class="num">Priority</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>stand-seed-cache-sheet.png</code></td><td>THE SEED CACHE — healthy / damaged / on fire / shielded / dead</td><td class="num">P0</td></tr>
+      <tr><td>2</td><td><code>stand-warden-sheet.png</code></td><td>THE WARDEN — all six states</td><td class="num">P0</td></tr>
+      <tr><td>3</td><td><code>stand-husk-shard-sheet.png</code></td><td>SHARD — the majority of the screen</td><td class="num">P0</td></tr>
+      <tr><td>4</td><td><code>stand-fx-sheet.png</code></td><td>Effects grammar — bolts, blooms, gust, cracks, cache flames</td><td class="num">P0</td></tr>
+      <tr><td>5</td><td><code>stand-husk-stalker-sheet.png</code></td><td>STALKER</td><td class="num">P1</td></tr>
+      <tr><td>6</td><td><code>stand-husk-bulwark-sheet.png</code></td><td>BULWARK — with its four armor dressings</td><td class="num">P1</td></tr>
+      <tr><td>7</td><td><code>stand-husk-wisp-sheet.png</code></td><td>WISP — with lunge smears</td><td class="num">P1</td></tr>
+      <tr><td>8</td><td><code>stand-rokha-field-sheet.png</code></td><td>❁ ROKHA field form + THE RALLY</td><td class="num">P1</td></tr>
+      <tr><td>9</td><td><code>stand-husk-splitter-sheet.png</code></td><td>SPLITTER — with the crack-open birth</td><td class="num">P2</td></tr>
+      <tr><td>10</td><td><code>stand-husk-phase-sheet.png</code></td><td>PHASE — with the blink pair</td><td class="num">P2</td></tr>
+      <tr><td>11</td><td><code>stand-thornspire-sheet.png</code></td><td>THORNSPIRE + THE WINDBREAK</td><td class="num">P2</td></tr>
+      <tr><td>12</td><td><code>stand-titan-sheet.png</code></td><td>HUSK TITAN (boss — art leads, code follows)</td><td class="num">P2</td></tr>
+      <tr><td>13</td><td><code>stand-props-sheet.png</code></td><td>SUPPLY GUST + WARDEN BANNER + THE PURSE</td><td class="num">P3</td></tr>
+      <tr><td>14</td><td><code>stand-ground-tiles.png</code></td><td>Battlefield tile kit (256px tiles)</td><td class="num">P3</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="foot">SEEDFALL · THE STAND: LAST SEED · art bible v2 — asset briefs for production. The vectors in the portraits are today's placeholder renders; every sheet lands at the same footprint. 2026-08-10.</div>
+</div>
+
+<script>
+(() => {
+  const ICE = '#66e6e0', LAV = '#c9b8f0';
+  const HUSK_COLOR = ['#7fd1ff', '#ffb26b', '#ff8fa3', '#d6fffc', '#8affc1', '#c9b8f0'];
+  const HUSK_SPIKES = [5, 7, 9, 4, 6, 8];
+  const HUSK_R = [0.018, 0.022, 0.034, 0.014, 0.024, 0.026];
+
+  function spiky(g, cx, cy, r, spikes, phase) {
+    g.beginPath();
+    for (let i = 0; i <= spikes * 2; i++) {
+      const a = (i / (spikes * 2)) * Math.PI * 2 + (phase || 0);
+      const rr = r * (i % 2 === 0 ? 1 : 0.55);
+      const x = cx + Math.cos(a) * rr, y = cy + Math.sin(a) * rr;
+      i === 0 ? g.moveTo(x, y) : g.lineTo(x, y);
+    }
+    g.closePath();
+  }
+
+  function drawSeed(g, cx, cy, r, t) {
+    g.strokeStyle = 'rgba(102,230,224,0.95)';
+    g.lineWidth = 2;
+    g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.stroke();
+    g.strokeStyle = 'rgba(201,184,240,0.55)';
+    g.lineWidth = 1; g.setLineDash([4, 6]);
+    g.beginPath(); g.arc(cx, cy, r * 1.36, (t || 0) * 0.2, (t || 0) * 0.2 + Math.PI * 2); g.stroke();
+    g.setLineDash([]);
+    g.fillStyle = 'rgba(102,230,224,0.95)';
+    g.font = `${Math.round(r * 1.05)}px monospace`;
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('❁', cx, cy + 1);
+  }
+
+  function drawWarden(g, cx, cy, r, aim, color) {
+    g.strokeStyle = color || 'rgba(102,230,224,0.95)';
+    g.lineWidth = 2.2;
+    g.beginPath();
+    g.moveTo(cx + Math.cos(aim) * r * 1.6, cy + Math.sin(aim) * r * 1.6);
+    g.lineTo(cx + Math.cos(aim + 2.5) * r, cy + Math.sin(aim + 2.5) * r);
+    g.lineTo(cx + Math.cos(aim - 2.5) * r, cy + Math.sin(aim - 2.5) * r);
+    g.closePath(); g.stroke();
+  }
+
+  function drawHusk(g, cx, cy, kind, scale, phase) {
+    g.strokeStyle = HUSK_COLOR[kind];
+    g.lineWidth = 1.6;
+    spiky(g, cx, cy, HUSK_R[kind] * scale, HUSK_SPIKES[kind], phase);
+    g.stroke();
+  }
+
+  function fit(cv) {
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const rect = cv.getBoundingClientRect();
+    cv.width = Math.max(1, rect.width * dpr);
+    cv.height = Math.max(1, rect.height * dpr);
+    const g = cv.getContext('2d');
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return [g, rect.width, rect.height];
+  }
+
+  // ── Mini portraits ──
+  function paintMini(cv) {
+    const [g, w, h] = fit(cv);
+    g.clearRect(0, 0, w, h);
+    const cx = w / 2, cy = h / 2, kind = cv.dataset.kind;
+    if (kind === 'seed') drawSeed(g, cx, cy, 22);
+    else if (kind === 'warden') drawWarden(g, cx, cy, 16, -0.6);
+    else if (kind === 'rokha') {
+      drawWarden(g, cx, cy, 16, -0.6, 'rgba(138,255,193,1)');
+      g.fillStyle = LAV; g.font = '13px monospace';
+      g.textAlign = 'center'; g.fillText('❁', cx, cy - 24);
+    } else if (kind === 'thorn') {
+      g.strokeStyle = HUSK_COLOR[4]; g.lineWidth = 1.8;
+      for (let i = 0; i < 5; i++) {
+        const a = -Math.PI / 2 + (i - 2) * 0.5;
+        g.beginPath(); g.moveTo(cx, cy + 22);
+        g.lineTo(cx + Math.cos(a) * (30 - Math.abs(i - 2) * 7), cy + 10 + Math.sin(a) * (30 - Math.abs(i - 2) * 7));
+        g.stroke();
+      }
+      g.strokeStyle = 'rgba(102,230,224,0.5)';
+      g.beginPath(); g.arc(cx, cy + 24, 12, Math.PI, 0); g.stroke();
+    } else if (kind === 'wall') {
+      g.strokeStyle = 'rgba(201,184,240,0.8)'; g.lineWidth = 2;
+      g.setLineDash([9, 7]);
+      g.beginPath(); g.arc(cx, cy, 26, 0, Math.PI * 2); g.stroke();
+      g.setLineDash([3, 9]); g.strokeStyle = 'rgba(201,184,240,0.4)';
+      g.beginPath(); g.arc(cx, cy, 33, 0.5, 0.5 + Math.PI * 2); g.stroke();
+      g.setLineDash([]);
+      drawSeed(g, cx, cy, 13);
+    } else if (kind === 'titan') {
+      g.strokeStyle = HUSK_COLOR[2]; g.lineWidth = 2.4;
+      spiky(g, cx, cy, 34, 11, 0.2); g.stroke();
+      g.strokeStyle = 'rgba(255,143,163,0.55)'; g.lineWidth = 1.2;
+      spiky(g, cx, cy, 20, 7, 0.8); g.stroke();
+      g.fillStyle = 'rgba(255,107,107,0.9)';
+      g.beginPath(); g.arc(cx, cy, 5, 0, Math.PI * 2); g.fill();
+    } else if (kind === 'drop') {
+      g.strokeStyle = 'rgba(214,255,252,0.6)'; g.lineWidth = 1.4;
+      g.beginPath(); g.arc(cx, cy - 12, 20, Math.PI, 0); g.stroke();
+      g.beginPath(); g.moveTo(cx - 20, cy - 12); g.lineTo(cx - 8, cy + 14);
+      g.moveTo(cx + 20, cy - 12); g.lineTo(cx + 8, cy + 14); g.stroke();
+      g.strokeStyle = HUSK_COLOR[1]; g.lineWidth = 1.8;
+      g.strokeRect(cx - 10, cy + 12, 20, 14);
+      g.beginPath(); g.moveTo(cx, cy + 12); g.lineTo(cx, cy + 26); g.stroke();
+    } else if (kind === 'banner') {
+      g.strokeStyle = 'rgba(219,228,238,0.7)'; g.lineWidth = 2;
+      g.beginPath(); g.moveTo(cx - 8, cy + 30); g.lineTo(cx - 8, cy - 28); g.stroke();
+      g.strokeStyle = LAV; g.lineWidth = 1.8;
+      g.beginPath(); g.moveTo(cx - 8, cy - 26);
+      g.quadraticCurveTo(cx + 16, cy - 32, cx + 26, cy - 20);
+      g.quadraticCurveTo(cx + 12, cy - 16, cx + 24, cy - 4);
+      g.lineTo(cx - 8, cy - 6); g.closePath(); g.stroke();
+    } else if (kind === 'purse') {
+      g.strokeStyle = HUSK_COLOR[4]; g.lineWidth = 2;
+      g.strokeRect(cx - 20, cy - 8, 40, 26);
+      g.beginPath(); g.moveTo(cx - 20, cy - 8);
+      g.quadraticCurveTo(cx, cy - 26, cx + 20, cy - 8); g.stroke();
+      g.fillStyle = 'rgba(138,255,193,0.9)';
+      g.fillRect(cx - 2.5, cy - 2, 5, 8);
+    } else if (kind && kind[0] === 'h') {
+      drawHusk(g, cx, cy, +kind[1], 1350, 0.4);
+    }
+  }
+
+  // ── Scale strip ──
+  function paintScale() {
+    const cv = document.getElementById('scaleCanvas');
+    if (!cv) return;
+    const [g, w, h] = fit(cv);
+    g.clearRect(0, 0, w, h);
+    const items = [
+      ['WISP', 'h', 3], ['SHARD', 'h', 0], ['WARDEN', 'w', null], ['STALKER', 'h', 1],
+      ['SPLITTER', 'h', 4], ['PHASE', 'h', 5], ['BULWARK', 'h', 2], ['SEED CACHE', 's', null],
+    ];
+    const scale = 1400;
+    let x = 30;
+    const cy = h / 2 - 8;
+    for (const [name, t, k] of items) {
+      const r = t === 'h' ? HUSK_R[k] * scale : t === 'w' ? 0.018 * scale : 0.055 * scale;
+      x += r;
+      if (t === 'h') drawHusk(g, x, cy, k, scale, 0.7);
+      else if (t === 'w') drawWarden(g, x, cy, r, -0.5);
+      else drawSeed(g, x, cy, r * 0.75);
+      g.fillStyle = '#8fa0b4'; g.font = '10.5px monospace'; g.textAlign = 'center';
+      g.fillText(name, x, h - 12);
+      x += r + 44;
+    }
+  }
+
+  // ── Hero: a slice of the field ──
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function paintHero(t) {
+    const cv = document.getElementById('heroCanvas');
+    if (!cv) return;
+    const [g, w, h] = fit(cv);
+    g.fillStyle = '#01030a'; g.fillRect(0, 0, w, h);
+    g.strokeStyle = 'rgba(102,230,224,0.05)';
+    for (let i = 0; i < 5; i++) {
+      g.beginPath(); g.arc(w * (0.1 + i * 0.22), h * (i % 2 ? 0.2 : 0.85), 40 + i * 12, 0, Math.PI * 2); g.stroke();
+    }
+    const cx = w / 2, cy = h / 2;
+    drawSeed(g, cx, cy, 26, t / 400);
+    const N = 9;
+    for (let i = 0; i < N; i++) {
+      const a = (i / N) * Math.PI * 2 + Math.sin(t / 4000 + i) * 0.15;
+      const d = 105 + 38 * Math.sin(t / 1700 + i * 2.1);
+      drawHusk(g, cx + Math.cos(a) * d * 1.9, cy + Math.sin(a) * d * 0.72, i % 6, 1100, t / 900 + i);
+    }
+    for (let i = 0; i < 3; i++) {
+      const a = (i / 3) * Math.PI * 2 + 0.5;
+      drawWarden(g, cx + Math.cos(a) * 120, cy + Math.sin(a) * 46, 11, a + Math.PI, i === 0 ? 'rgba(138,255,193,1)' : undefined);
+    }
+    if (!reduced) requestAnimationFrame(paintHero);
+  }
+
+  function paintAll() {
+    document.querySelectorAll('.mini').forEach(paintMini);
+    paintScale();
+    if (reduced) paintHero(0); else requestAnimationFrame(paintHero);
+  }
+  addEventListener('resize', () => { document.querySelectorAll('.mini').forEach(paintMini); paintScale(); });
+  paintAll();
+})();
+</script>
+
+</body></html>

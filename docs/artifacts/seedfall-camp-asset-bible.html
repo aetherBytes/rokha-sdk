@@ -1,0 +1,381 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style><title>SEEDFALL · THE CAMP — Asset Bible</title></head><body>
+<style>
+  :root{
+    --ground:#06080d; --panel:#0b1017; --panel2:#0e141d;
+    --line:rgba(111,224,216,.16); --line2:rgba(111,224,216,.30);
+    --ink:#e9eff3; --muted:#8b97a2; --faint:#5c6670;
+    --ice:#6fe0d8; --ice-dim:#3f8f8b;
+    --ember:#ff8a3d; --gold:#ffcf6b; --rose:#ff6f7d; --dusk:#7a6aa8;
+    --sky:#7fbfe8; --grass:#86b85f; --sun:#ffe08a;
+    --warm:var(--ember); /* swapped by theme */
+    --mono:ui-monospace,"SF Mono",Menlo,"Cascadia Code",Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  body.day{ --warm:var(--sun); }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 620px at 78% -8%, rgba(255,138,61,.08), transparent 60%),
+      radial-gradient(900px 500px at 10% 108%, rgba(111,224,216,.06), transparent 55%),
+      var(--ground);
+    color:var(--ink); font-family:var(--sans);
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  body.day{
+    background:
+      radial-gradient(1100px 560px at 80% -6%, rgba(127,191,232,.10), transparent 60%),
+      radial-gradient(900px 500px at 8% 108%, rgba(134,184,95,.07), transparent 55%),
+      var(--ground);
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:34px 22px 90px}
+
+  /* ── Masthead ─────────────────────────────── */
+  .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.34em; color:var(--ice-dim); text-transform:uppercase}
+  h1{font-size:clamp(30px,6vw,54px); line-height:1.02; margin:.28em 0 .1em; letter-spacing:-.015em; text-wrap:balance;
+     font-weight:800}
+  h1 .glow{color:var(--warm); text-shadow:0 0 26px color-mix(in srgb, var(--warm) 55%, transparent)}
+  .lede{max-width:60ch; color:var(--muted); font-size:16.5px; margin:.4em 0 0}
+  .lede b{color:var(--ink); font-weight:600}
+
+  .barrow{display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin:26px 0 6px}
+  .toggle{display:inline-flex; border:1px solid var(--line2); border-radius:999px; padding:4px; gap:2px; background:var(--panel)}
+  .toggle button{font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    border:0; background:transparent; color:var(--muted); padding:7px 15px; border-radius:999px; cursor:pointer; transition:.16s}
+  .toggle button.on{background:color-mix(in srgb,var(--warm) 22%, transparent); color:var(--ink)}
+  .meter{font-family:var(--mono); font-size:12.5px; color:var(--muted); letter-spacing:.06em}
+  .meter b{color:var(--ice)}
+
+  /* ── Shared payload block ─────────────────── */
+  .preamble{
+    border:1px solid var(--line); border-radius:14px; background:linear-gradient(180deg,var(--panel2),var(--panel));
+    padding:18px 18px 8px; margin:22px 0 34px;
+  }
+  .preamble h3{margin:0 0 4px; font-size:14px; letter-spacing:.12em; text-transform:uppercase; color:var(--ice)}
+  .preamble p{margin:0 0 12px; color:var(--muted); font-size:13.5px}
+  .pay{position:relative; margin:0 0 12px}
+  .pay label{display:block; font-family:var(--mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--faint); margin:0 0 5px}
+  .pay .code{
+    font-family:var(--mono); font-size:12.5px; color:#cfe9e6; background:#070b0f;
+    border:1px solid var(--line); border-radius:9px; padding:11px 78px 11px 12px; white-space:pre-wrap; word-break:break-word;
+  }
+  .copy{
+    position:absolute; top:26px; right:8px; font-family:var(--mono); font-size:11px; letter-spacing:.12em;
+    border:1px solid var(--line2); background:var(--panel); color:var(--ice); border-radius:7px; padding:6px 10px; cursor:pointer; transition:.14s
+  }
+  .copy:hover{background:color-mix(in srgb,var(--ice) 16%, transparent)}
+  .copy.done{color:var(--gold); border-color:color-mix(in srgb,var(--gold) 50%, transparent)}
+
+  /* ── Section headers ──────────────────────── */
+  .sec{margin:44px 0 16px; display:flex; align-items:baseline; gap:12px; border-bottom:1px solid var(--line); padding-bottom:10px}
+  .sec .n{font-family:var(--mono); font-size:12px; color:var(--warm); letter-spacing:.1em}
+  .sec h2{font-size:21px; margin:0; letter-spacing:.01em}
+  .sec .tag{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--faint); letter-spacing:.16em; text-transform:uppercase}
+
+  /* ── Asset cards ──────────────────────────── */
+  .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px}
+  @media(max-width:720px){ .grid{grid-template-columns:1fr} }
+  .card{
+    border:1px solid var(--line); border-radius:14px; background:linear-gradient(180deg,var(--panel2),var(--panel));
+    padding:16px 16px 14px; position:relative; overflow:hidden;
+  }
+  .card::before{content:""; position:absolute; inset:0 0 auto 0; height:2px;
+    background:linear-gradient(90deg, var(--warm), transparent 70%); opacity:.8}
+  .card.act::before{background:linear-gradient(90deg, var(--ice), transparent 70%)}
+  .chead{display:flex; align-items:flex-start; gap:11px; margin-bottom:8px}
+  .icon{font-size:26px; line-height:1; filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
+  .ctitle{flex:1 1 auto}
+  .ctitle h4{margin:0; font-size:16px; letter-spacing:.01em}
+  .ctitle .sub{font-family:var(--mono); font-size:11px; letter-spacing:.12em; color:var(--faint); text-transform:uppercase; margin-top:2px}
+  .chk{flex:0 0 auto; display:flex; align-items:center; gap:6px; cursor:pointer; user-select:none; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; color:var(--muted)}
+  .chk input{appearance:none; width:16px; height:16px; border:1px solid var(--line2); border-radius:5px; background:#070b0f; cursor:pointer; position:relative; margin:0}
+  .chk input:checked{background:color-mix(in srgb,var(--ice) 30%, #070b0f); border-color:var(--ice)}
+  .chk input:checked::after{content:"✓"; position:absolute; inset:0; display:grid; place-items:center; color:var(--ice); font-size:11px}
+
+  .desc{color:var(--muted); font-size:13.5px; margin:2px 0 10px}
+  .desc b{color:var(--ink); font-weight:600}
+  .rowmeta{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 11px}
+  .pill{font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; border:1px solid var(--line); border-radius:999px; padding:3px 9px; color:var(--muted)}
+  .pill.hot{color:var(--warm); border-color:color-mix(in srgb,var(--warm) 42%, transparent)}
+  .pill.ice{color:var(--ice); border-color:color-mix(in srgb,var(--ice) 40%, transparent)}
+  .action{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ice); margin:0 0 10px; font-family:var(--mono); letter-spacing:.04em}
+  .action .arw{color:var(--faint)}
+
+  .swatches{display:flex; gap:6px; margin:2px 0 12px; flex-wrap:wrap}
+  .sw{width:26px; height:26px; border-radius:7px; border:1px solid rgba(255,255,255,.14); position:relative}
+  .sw span{position:absolute; bottom:-16px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:8.5px; color:var(--faint); white-space:nowrap}
+  .swrow{margin-bottom:20px}
+
+  footer{margin-top:56px; padding-top:20px; border-top:1px solid var(--line); color:var(--faint); font-family:var(--mono); font-size:11.5px; letter-spacing:.06em}
+  a.jump{color:var(--ice); text-decoration:none; border-bottom:1px dotted var(--ice-dim)}
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">SEEDFALL · Production Art Bible</div>
+  <h1>THE <span class="glow">CAMP</span></h1>
+  <p class="lede">The default SEEDFALL state is no longer an empty battlefield — it's a living <b>encampment</b>: a common ground that shows what people and agents are actually doing on rokha.ai. Same field layout, warmer light, camp aesthetics, and <b>clickable landmarks that walk you into the real product</b> — the shop opens the Builder, the library opens the Registry, the gate drops you into the battlefield where the mini-games run.</p>
+
+  <div class="barrow">
+    <div class="toggle" role="tablist" aria-label="Lighting variant">
+      <button id="tSun" class="on" onclick="setTheme('sun')">🌇 Late Sunset</button>
+      <button id="tDay" onclick="setTheme('day')">☀️ Daytime</button>
+    </div>
+    <div class="meter">SHEETS DONE · <b id="done">0</b> / <span id="total">0</span></div>
+  </div>
+
+  <div class="preamble">
+    <h3>How to use this</h3>
+    <p>Every asset is one sprite sheet. Build each prompt as <b>PREAMBLE + LIGHTING + the asset's SUBJECT line</b>. The preamble and lighting are shared so all sheets match; copy them once, then copy each subject. Tick the box on a card when its sheet is generated — progress persists in this browser.</p>
+    <div class="pay">
+      <label>① Style preamble — prepend to every prompt</label>
+      <div class="code" id="preText">SEEDFALL camp asset. A single game sprite, 3/4 top-down view (slight overhead tilt, matching the existing SEEDFALL husk and warden sheets). Soft cel-shaded flat-illustration style, gentle rim light, one subtle contact shadow beneath. Crisp clean edges, no outline stroke, no text, no UI, no border. Fully TRANSPARENT background (alpha). Subject centered in a square frame with a little padding.</div>
+      <button class="copy" data-copy="preText">COPY</button>
+    </div>
+    <div class="pay">
+      <label>② Lighting clause — <span id="litName">sunset</span> (swaps with the toggle)</label>
+      <div class="code" id="litText"></div>
+      <button class="copy" data-copy="litText">COPY</button>
+    </div>
+    <p style="margin-top:4px">Delivery for animated props: a horizontal strip PNG, equal cells, transparent, frames left→right. Suggested cell 256×256 (downscaled in-engine). Static props: single 512×512 transparent PNG.</p>
+  </div>
+
+  <!-- ══ BACKDROP ══ -->
+  <div class="sec"><span class="n">00</span><h2>The Backdrop</h2><span class="tag">full scene · one image</span></div>
+  <div class="swrow">
+    <div class="swatches" id="palSun">
+      <div class="sw" style="background:#2a1c3a"><span>sky top</span></div>
+      <div class="sw" style="background:#c8623f"><span>horizon</span></div>
+      <div class="sw" style="background:#ffcf6b"><span>sun</span></div>
+      <div class="sw" style="background:#5a4a38"><span>earth</span></div>
+      <div class="sw" style="background:#7a6aa8"><span>shadow</span></div>
+      <div class="sw" style="background:#3a2e26"><span>far tree</span></div>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="chead"><div class="icon">🏕️</div><div class="ctitle"><h4>Camp Field — backdrop</h4><div class="sub">1920×1080 · parallax-ready</div></div>
+        <label class="chk"><input type="checkbox" data-k="bg-camp"><span>SHEET</span></label></div>
+      <div class="desc">Reuse the <b>current field layout</b> — same horizon line, same ground plane the battlefield uses — but re-lit and dressed as a settled camp. Keep a clear flat mid-ground where sprites and landmarks sit. Deliver in <b>3 layers</b> (sky, mid, ground) if you can, for parallax; otherwise one flat image is fine.</div>
+      <div class="rowmeta"><span class="pill hot">warm dusk</span><span class="pill">clear mid-ground</span><span class="pill">no characters</span></div>
+      <div class="pay"><label>Subject</label><div class="code">a wide open grassland encampment clearing at the edge of a dark forest, a worn dirt commons in the center where tents and a campfire will sit, low rolling hills behind, distant tree-line silhouette, a soft mist band on the far horizon, empty of characters, painterly game-background, gentle vignette.</div><button class="copy" data-copy=".card .code"></button></div>
+    </div>
+    <div class="card">
+      <div class="chead"><div class="icon">🌌</div><div class="ctitle"><h4>Camp Field — night fallback</h4><div class="sub">optional · when battles rage</div></div>
+        <label class="chk"><input type="checkbox" data-k="bg-night"><span>SHEET</span></label></div>
+      <div class="desc">Optional cool/void variant of the same clearing for when a mini-game is live nearby — keeps continuity with the current dark battlefield mood so the transition camp→battle isn't jarring.</div>
+      <div class="rowmeta"><span class="pill ice">void-cool</span><span class="pill">same layout</span></div>
+      <div class="pay"><label>Subject</label><div class="code">the same grassland encampment clearing at deep dusk / early night, cool indigo and teal light, faint aurora band low on the horizon, embers and lantern glow as the only warm points, empty of characters, painterly game-background.</div><button class="copy" data-copy=".card .code"></button></div>
+    </div>
+  </div>
+
+  <!-- ══ CAMP PROPS ══ -->
+  <div class="sec"><span class="n">01</span><h2>Camp Props</h2><span class="tag">dressing · atmosphere</span></div>
+  <div class="grid" id="propGrid"></div>
+
+  <!-- ══ LANDMARKS ══ -->
+  <div class="sec"><span class="n">02</span><h2>Interactive Landmarks</h2><span class="tag">click → walks into the product</span></div>
+  <p class="lede" style="margin:-4px 0 16px">These are the load-bearing ones. Each is a structure a user or agent can click; the click <b>navigates the real app</b>. Give each a subtle idle shimmer frame (2–3 frames) so it reads as "alive / clickable."</p>
+  <div class="grid" id="markGrid"></div>
+
+  <!-- ══ DENIZENS ══ -->
+  <div class="sec"><span class="n">03</span><h2>Denizens</h2><span class="tag">who's in camp · animated</span></div>
+  <p class="lede" style="margin:-4px 0 16px">These stand in for <b>real users and agents on the network</b>. One sheet drives many — we tint and badge them per identity in-engine. Each needs <b>idle · walk · work</b> states so a busy agent visibly "works" and an idle one mills about.</p>
+  <div class="grid" id="denGrid"></div>
+
+  <!-- ══ ARCHETYPES ══ -->
+  <div class="sec"><span class="n">04</span><h2>Visitor Archetypes &amp; Badges</h2><span class="tag">the kinds of people/agents here</span></div>
+  <p class="lede" style="margin:-4px 0 16px">Every visitor wears a <b>type</b>. These are recolor + prop + badge variants layered on the base agent/person sheets — a clear silhouette read at a glance, plus a matching <b>badge glyph</b> that floats over them and shows on their profile. Same idle · walk · work states as the base denizens.</p>
+  <div class="grid" id="archGrid"></div>
+  <div class="sec" style="margin-top:34px"><span class="n">04b</span><h2>Badge Sigils</h2><span class="tag">one small icon each</span></div>
+  <div class="grid" id="badgeGrid"></div>
+
+  <!-- ══ SKY ══ -->
+  <div class="sec"><span class="n">05</span><h2>Sky Assets — Evening Sunset</h2><span class="tag">the dusk layer over the code-built world</span></div>
+  <p class="lede" style="margin:-4px 0 16px">The land is code now (three.js) — the SKY is where sprites paint the hour. These layer <b>behind and above the isle</b>: a wide sunset backdrop band, drifting cloud sheets, and small flyers crossing the dusk. Wide strips are single PNGs with alpha; anything animated stays the <b>8×8 grid of 256px cells</b> the pipeline auto-detects. Palette anchors: deep indigo #1b1230 high, burnt violet #3a1f3d, ember rust #7a3b3a, horizon blaze #c8623f, sun gold #ffe08a.</p>
+  <div class="grid" id="skyGrid"></div>
+
+  <footer>
+    SEEDFALL · The Camp — asset bible · rokha.ai · palette + subjects are the spec; tick a sheet when it's rendered.
+    <br>Once sheets land, drop them by me and I'll wire the camp layout, the clickable landmarks, and the live denizen population.
+  </footer>
+</div>
+
+<script>
+  // ── Lighting clauses ──
+  const LIT = {
+    sun: "Lighting: late-sunset golden hour — a long, warm amber key light raking from the low left, soft violet-blue fill in the shadows, the whole scene bathed in a campfire-friendly dusk glow. Warm and inviting.",
+    day: "Lighting: bright clear midday — soft neutral sunlight from high above, gentle blue-sky ambient bounce, light cheerful shadows. Crisp and open."
+  };
+  function setTheme(t){
+    document.body.classList.toggle('day', t==='day');
+    document.getElementById('tSun').classList.toggle('on', t==='sun');
+    document.getElementById('tDay').classList.toggle('on', t==='day');
+    document.getElementById('litText').textContent = LIT[t];
+    document.getElementById('litName').textContent = t==='day'?'daytime':'sunset';
+    try{localStorage.setItem('camp.theme',t)}catch(e){}
+  }
+
+  // ── Asset data ──
+  const PROPS = [
+    {k:'fire', icon:'🔥', title:'Campfire', sub:'4 frames · looped', hot:['animated','light source'],
+     desc:'The heart of camp. <b>Four frames</b>: cold ash pit → glowing embers → steady flame → roaring blaze. In-engine we pick the frame by how busy the network is (quiet=embers, busy=roaring).',
+     subject:'a stone-ringed campfire with stacked logs, four animation frames left to right — cold grey ash, glowing orange embers, a steady flame, a tall roaring blaze with sparks — warm light pooling on the ground around it.'},
+    {k:'tent-a', icon:'⛺', title:'Canvas Tent', sub:'single · 2 color variants', hot:['dressing'],
+     desc:'A-frame canvas tent, flap half-open with a warm glow inside. Deliver <b>two cloth colors</b> (ice-teal trim, amber trim) so a row of them reads as a real camp, not a copy-paste.',
+     subject:'a weathered A-frame canvas camping tent, flap tied half open with a faint warm glow inside, guy-ropes and wooden stakes, a small pennant on top; two versions — one with teal trim, one with amber trim.'},
+    {k:'tent-b', icon:'🎪', title:'Round Pavilion', sub:'single · the big one', hot:['dressing'],
+     desc:'A larger round pavilion tent for the center of camp — reads as a gathering place / guild hall. Slightly grander than the canvas tents.',
+     subject:'a large round pavilion tent with a peaked roof and scalloped edge, banners on the poles, open sides showing a warm interior, the social heart of an encampment.'},
+    {k:'banner', icon:'🚩', title:'Rokha Standard', sub:'3 frames · wind sway', hot:['animated','brand'],
+     desc:'A tall banner carrying the Rokha <b>❁</b> sigil, planted in the ground. Three frames of gentle wind sway. This is the camp\'s flag.',
+     subject:'a tall cloth banner on a wooden pole planted in the earth, bearing a minimalist six-petal asterisk-flower sigil, three frames showing the cloth swaying gently in the wind, frayed edge.'},
+    {k:'crates', icon:'📦', title:'Supply Stack', sub:'single', hot:['dressing'],
+     desc:'Wooden crates + a barrel + a coil of rope — the "stuff is happening here" texture. Scatter a few around.',
+     subject:'a small stack of wooden supply crates and one barrel with a coil of rope and a lantern resting on top, sturdy and well-used.'},
+    {k:'cookpot', icon:'🍲', title:'Cook Pot & Tripod', sub:'2 frames · steam', hot:['animated'],
+     desc:'An iron pot on a tripod over a small fire, two frames of rising steam. Sits near the campfire.',
+     subject:'a black iron cooking pot hanging from a wooden tripod over a small fire, two frames showing gentle steam curling up, a ladle resting on the rim.'},
+    {k:'seats', icon:'🪵', title:'Log Seats', sub:'single', hot:['dressing'],
+     desc:'A ring of felled-log stools and a stump table around where the fire goes — the spot denizens gather.',
+     subject:'a cluster of felled-log stools and one flat tree-stump table arranged in a loose ring, worn smooth from use.'},
+    {k:'bedroll', icon:'🛏️', title:'Bedroll', sub:'single', hot:['dressing'],
+     desc:'A rolled-out sleeping mat + blanket + small pack. Low-priority filler for tent mouths.',
+     subject:'a simple rolled-out bedroll with a folded wool blanket and a small leather pack beside it, on the grass.'},
+    {k:'lantern', icon:'🏮', title:'Lantern Post', sub:'2 frames · glow pulse', hot:['animated','light source'],
+     desc:'A wooden post with a hanging lantern — the pathway light that makes the sunset/night variants glow. Two frames of a soft light pulse.',
+     subject:'a tall wooden post with an iron hanging lantern casting a warm pool of light, two frames of a subtle glow pulse, a small hook and a second unlit lantern at the base.'},
+    {k:'well', icon:'⛲', title:'Water Well', sub:'single', hot:['dressing'],
+     desc:'A stone well with a bucket on a rope crank — a natural gather point / centerpiece candidate.',
+     subject:'a round stone water well with a wooden roof frame, a rope crank and a wooden bucket, moss on the north side.'},
+  ];
+
+  const MARKS = [
+    {k:'library', icon:'📚', title:'The Library', sub:'→ opens the Registry', act:'Registry · tools & skills',
+     desc:'A canopy stall of scrolls and shelves where <b>agents come looking for tools</b>. Click it → the Registry. Give it a faint page-flutter idle.',
+     subject:'an open-air library stall — a canopy tent over tall wooden bookshelves crammed with scrolls, tomes and glowing rune-tags, a reading lectern in front, a couple of floating book pages, scholarly and inviting.'},
+    {k:'forge', icon:'🛠️', title:'The Forge / Shop', sub:'→ opens the Builder', act:'Builder · build in public',
+     desc:'A market-smithy stall with an anvil and workbench where <b>builders work in the open</b>. Click it → the Builder. Sparks/hammer idle frames.',
+     subject:'a blacksmith-and-market stall combined — an anvil with a glowing workpiece, a workbench of tools and half-built contraptions, a hanging sign, crates of goods, sparks flying; three frames of a hammer strike with sparks.'},
+    {k:'board', icon:'📜', title:'The Notice Board', sub:'→ opens News / Pulse', act:'News · the pulse',
+     desc:'A big pinned board of notes, bounties and headlines — the network <b>pulse</b>. Click it → News. Pin a paper that flutters.',
+     subject:'a large wooden notice board thick with pinned parchment notes, wax seals, a bounty poster and colored ribbons, a small quill on a string, one loose note fluttering.'},
+    {k:'gate', icon:'🚪', title:'The War Gate & Horn', sub:'→ enters the Battlefield', act:'Battlefield · the mini-games',
+     desc:'A rampart gate with a great horn — the <b>threshold to the battlefield</b> where The Stand and future mini-games run. Click it → battlefield. Horn-glow idle when a game is live.',
+     subject:'a fortified wooden rampart gate with iron banding and a huge curved war-horn mounted beside it, torches on the posts, a worn path leading through it into darkness; a version with the horn glowing hot to signal a live battle.'},
+    {k:'treasury', icon:'🌱', title:'The Seed Vault', sub:'→ opens the Harvest', act:'Harvest · $AGENT & seeds',
+     desc:'A glowing seed-store / treasury tent — the <b>harvest & rewards</b> hub. Click it → the Harvest view. Soft float of light-motes.',
+     subject:'a small ornate vault tent guarded by a glowing crystalline seed on a pedestal, coins and sprouting motes of light drifting up, warm treasure glow from within.'},
+    {k:'signpost', icon:'🪧', title:'Camp Signpost', sub:'wayfinding · static', act:'labels the zones',
+     desc:'A multi-arm wooden signpost pointing to LIBRARY / FORGE / GATE — pure wayfinding so the camp reads as navigable at a glance.',
+     subject:'a wooden multi-directional signpost with several carved arrow-boards pointing different ways, small hanging icons on each arm, planted at a crossroads of worn paths.'},
+  ];
+
+  const DENS = [
+    {k:'agent', icon:'🤖', title:'Agent', sub:'idle · walk · work', hot:['tinted per-identity'],
+     desc:'The base <b>agent</b> denizen — a small cloaked figure with a glowing glyph-orb it carries. Sheet: idle breathe (2f), walk cycle (4f), <b>work</b> (2f, hunched over the orb tinkering). We recolor the cloak + swap the head-glyph per real agent.',
+     subject:'a small cloaked robot-mage agent figure holding a floating glowing orb, neutral pale cloak for easy recoloring; a sprite sheet with an idle breathing pose (2 frames), a walk cycle (4 frames), and a "working" pose hunched over the orb tinkering (2 frames).'},
+    {k:'person', icon:'🧑', title:'Builder (person)', sub:'idle · walk · emote', hot:['tinted per-identity'],
+     desc:'The <b>human user</b> denizen — a traveler/builder with a satchel. Same state set: idle, walk, and an <b>emote</b> (arms up / eureka) for "shipped something."',
+     subject:'a small traveler-builder person with a satchel and a tool-belt, neutral tunic for recoloring; a sprite sheet with idle (2 frames), a walk cycle (4 frames), and a celebratory "eureka" arms-up emote (2 frames).'},
+    {k:'rokha', icon:'❁', title:'Rokha — Camp Keeper', sub:'wander · read · tend · gesture', hot:['brand','one-off','wanders'],
+     desc:'<b>Rokha herself</b>, small, <b>wandering the camp</b> and interacting with the landmarks — she reads at the library (book open), tends the fire, welcomes newcomers. She\'s the living proof the world is alive. Needs the most states: idle, walk, <b>reading a book</b>, <b>tending the fire</b>, welcome gesture. More interactions come later — build it so states can be added.',
+     subject:'an elegant small ethereal keeper figure, robes with a subtle six-petal flower motif, holding a lantern-staff; a sprite sheet with idle (2 frames), a walk cycle (4 frames), a "reading an open glowing book" pose (2 frames), a "kneeling to tend a campfire" pose (2 frames), and a welcoming open-arm gesture (2 frames). Luminous, calm, consistent character across all frames.'},
+    {k:'critter', icon:'🐦', title:'Ambient Critter', sub:'optional · life', hot:['flavor'],
+     desc:'Optional — a small bird/moth/fox that wanders so camp feels alive even when empty. Low priority, high charm.',
+     subject:'a tiny ambient camp critter (a small fox or a glowing moth), a short walk or flutter cycle of 4 frames, charming and simple.'},
+  ];
+
+  const ARCH = [
+    {k:'seeker', icon:'🧭', title:'The Seeker', sub:'explorer · looking for tools', hot:['recolor+prop'],
+     desc:'A wandering <b>explorer</b> — new to the mesh, hunting for tools and skills. Hooded traveler with a lantern and a map. Drawn to the Library. Cool teal palette.',
+     subject:'a hooded explorer traveler holding a small lantern and a rolled map, curious searching posture, teal-and-slate palette; idle (2f), walk (4f), and a "peering at the map" work pose (2f).'},
+    {k:'architect', icon:'📐', title:'The Architect', sub:'builder · ships in public', hot:['recolor+prop'],
+     desc:'A <b>builder</b> mid-creation — carries blueprints and a glowing tool. Drawn to the Forge/Shop. Warm amber palette, confident stance.',
+     subject:'a master-builder figure with a roll of glowing blueprints under one arm and a luminous stylus-tool in hand, amber-and-bronze palette, purposeful stance; idle (2f), walk (4f), and a "drafting in the air" work pose (2f).'},
+    {k:'conscript', icon:'⚔️', title:'The Conscript', sub:'joined the war · fights', hot:['recolor+prop'],
+     desc:'A visitor who <b>answered the war horn</b> — light armor, a warden\'s sidearm. Musters near the Gate. Steel-grey with a red sash.',
+     subject:'a lightly-armored conscript soldier with a shouldered sidearm and a red sash, ready but weary, steel-grey palette; idle (2f), walk (4f), and a "checking the weapon" work pose (2f).'},
+    {k:'windborn', icon:'🌪️', title:'The Windborn', sub:'veteran · elite', hot:['recolor+prop','glow'],
+     desc:'The <b>elite veteran</b> — a decorated warden wreathed in a faint wind-glow. Rare. Violet + ice highlights, a trailing cloak.',
+     subject:'an elite decorated warden wreathed in a faint swirling wind aura, a long trailing cloak and a marked pauldron, violet with ice-blue highlights, commanding; idle (2f), walk (4f), and a "wind flaring" emote (2f).'},
+    {k:'wanderer', icon:'🚶', title:'The Wanderer (NPC)', sub:'ambient crowd · flavor', hot:['many recolors'],
+     desc:'Plain ambient <b>NPC</b> townsfolk to fill the camp — simple robes, several recolors. No badge. Pure "the world is populated" texture.',
+     subject:'a plain simple villager NPC in undyed robes with a walking staff, generic and neutral for many recolors; idle (2f) and walk (4f).'},
+  ];
+  const BADGES = [
+    {k:'b-seeker', icon:'🧭', title:'Seeker sigil', sub:'compass rose', hot:[], desc:'', subject:'a small game badge icon — a glowing teal compass rose in a thin ring, flat, transparent background, centered, no text.'},
+    {k:'b-architect', icon:'📐', title:'Architect sigil', sub:'set-square', hot:[], desc:'', subject:'a small game badge icon — a glowing amber set-square-and-node emblem in a thin ring, flat, transparent background, centered, no text.'},
+    {k:'b-conscript', icon:'⚔️', title:'Conscript sigil', sub:'crossed blades', hot:[], desc:'', subject:'a small game badge icon — crossed steel blades over a red shield in a thin ring, flat, transparent background, centered, no text.'},
+    {k:'b-windborn', icon:'🌪️', title:'Windborn sigil', sub:'wind spiral', hot:[], desc:'', subject:'a small game badge icon — a violet wind spiral with ice-blue motes in a thin ring, flat, transparent background, centered, no text.'},
+    {k:'b-official', icon:'❁', title:'Rokha ❁ sigil', sub:'official mark', hot:[], desc:'', subject:'a small game badge icon — a luminous six-petal asterisk-flower in a thin ring, ice-cyan glow, flat, transparent background, centered, no text.'},
+  ];
+
+  const SKY = [
+    {k:'sky-band', icon:'🌇', title:'Sunset Backdrop Band', sub:'3840×1080 · single PNG · alpha bottom edge', hot:['wide strip','parallax far'],
+     desc:'The far dusk: a <b>wide horizontal band</b> that hangs behind the floating isle. Deep indigo up top falling through burnt violet to a blazing ember horizon line, the low sun half-sunk, thin dark cloud shelves catching rim-light. <b>Bottom edge fades to transparent</b> so it feathers into the void — no hard cut. No land, no characters.',
+     subject:'a very wide panoramic dusk sky band — deep indigo fading through burnt violet to a blazing orange-red horizon, a half-sunk golden sun low and slightly right of center, thin horizontal shelves of dark cloud rim-lit in ember orange, the first few stars high up; bottom 15% fades to full transparency; no ground, no characters.'},
+    {k:'sky-clouds-far', icon:'☁️', title:'Far Cloud Sheet', sub:'8×8 of 256 · slow drift loop', hot:['animated','tileable-x'],
+     desc:'A loopable layer of <b>distant dusk clouds</b> — flat, dark, ember-edged, drifting almost imperceptibly. The 64 frames are one seamless drift cycle (end meets start) so the layer never pops.',
+     subject:'a horizontal band of distant flat dusk clouds, dark violet-grey with thin ember-orange rim light on their undersides, drifting slowly; a 64-frame seamless loop of gentle rightward drift, transparent background above and below.'},
+    {k:'sky-clouds-near', icon:'🌥️', title:'Near Cloud Wisps', sub:'8×8 of 256 · faster drift', hot:['animated','sparse'],
+     desc:'Sparse <b>foreground wisps</b> that cross above the isle — bigger, softer, semi-transparent, moving faster than the far sheet for parallax. A few shapes only; the sky must stay readable.',
+     subject:'three or four large soft cloud wisps, semi-transparent dusk-violet with warm sunset glow on their lower edges, drifting; a 64-frame seamless loop, mostly empty transparent frame — the wisps sparse and airy.'},
+    {k:'sky-flock', icon:'🐦', title:'The Evening Flock', sub:'8×8 of 256 · crossing loop', hot:['animated','flavor'],
+     desc:'A small <b>flock of bird silhouettes</b> winging home across the sunset — pure black shapes, ragged V formation, wings beating through the cycle. It crosses the frame and re-enters (seamless loop) so the world gets a heartbeat of life every pass.',
+     subject:'a small ragged V of black bird silhouettes flying across a transparent frame, wings mid-beat varying bird to bird, drifting from left to right through a 64-frame seamless loop that re-enters where it began; tiny, distant, pure silhouette.'},
+    {k:'sky-moon', icon:'🌙', title:'The Early Moon', sub:'512×512 · single PNG', hot:['static'],
+     desc:'A pale crescent already up while the sun still burns — high-corner dressing for the deepening evening. Faint lavender halo, transparent everywhere else.',
+     subject:'a pale silver-lavender crescent moon with a very faint soft halo, small in a transparent frame, gentle and cold against the coming night; no clouds, no stars.'},
+    {k:'sky-ash', icon:'✨', title:'Ash & Ember Drift', sub:'8×8 of 256 · rising loop', hot:['animated','additive'],
+     desc:'The war\'s residue on the wind: tiny embers and ash flecks <b>rising and scattering</b> — an overlay loop we blend additively above the horizon glow. Very sparse; it reads as atmosphere, not weather.',
+     subject:'very sparse tiny glowing embers and dark ash flecks drifting upward and sideways on the wind, a 64-frame seamless rising loop on a fully transparent background, subtle and atmospheric.'},
+  ];
+
+  // ── Render ──
+  function cardHTML(a, isMark){
+    const pills = (a.hot||[]).map(h=>`<span class="pill ${isMark?'ice':'hot'}">${h}</span>`).join('');
+    const action = a.act ? `<div class="action"><span class="arw">click ▸</span> ${a.act}</div>` : '';
+    return `<div class="card ${isMark?'act':''}">
+      <div class="chead"><div class="icon">${a.icon}</div>
+        <div class="ctitle"><h4>${a.title}</h4><div class="sub">${a.sub}</div></div>
+        <label class="chk"><input type="checkbox" data-k="${a.k}"><span>SHEET</span></label></div>
+      ${a.desc?`<div class="desc">${a.desc}</div>`:''}
+      ${action}
+      ${pills?`<div class="rowmeta">${pills}</div>`:''}
+      <div class="pay"><label>Subject</label><div class="code">${a.subject}</div><button class="copy"></button></div>
+    </div>`;
+  }
+  document.getElementById('propGrid').innerHTML = PROPS.map(a=>cardHTML(a,false)).join('');
+  document.getElementById('markGrid').innerHTML = MARKS.map(a=>cardHTML(a,true)).join('');
+  document.getElementById('denGrid').innerHTML  = DENS.map(a=>cardHTML(a,false)).join('');
+  document.getElementById('archGrid').innerHTML = ARCH.map(a=>cardHTML(a,false)).join('');
+  document.getElementById('badgeGrid').innerHTML = BADGES.map(a=>cardHTML(a,false)).join('');
+  document.getElementById('skyGrid').innerHTML = SKY.map(a=>cardHTML(a,true)).join('');
+
+  // ── Copy (with iframe-safe fallback) ──
+  function doCopy(text, btn){
+    const ok = ()=>{ const t=btn.textContent; btn.textContent='COPIED'; btn.classList.add('done'); setTimeout(()=>{btn.textContent=t||'COPY'; btn.classList.remove('done')},1100); };
+    if(navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(text).then(ok).catch(()=>fb()); }
+    else fb();
+    function fb(){ const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); ok();}catch(e){} document.body.removeChild(ta); }
+  }
+  document.addEventListener('click', e=>{
+    const b = e.target.closest('.copy'); if(!b) return;
+    let txt='';
+    if(b.dataset.copy && b.dataset.copy.indexOf('.')!==0){ txt = document.getElementById(b.dataset.copy).textContent; }
+    else { const code = b.parentElement.querySelector('.code'); txt = code? code.textContent : ''; }
+    if(!b.textContent.trim()) b.textContent='COPY';
+    doCopy(txt, b);
+  });
+
+  // ── Checkboxes + meter (persist) ──
+  const boxes = ()=>[...document.querySelectorAll('.chk input')];
+  function loadChecks(){ let s={}; try{s=JSON.parse(localStorage.getItem('camp.sheets')||'{}')}catch(e){} boxes().forEach(b=>{b.checked=!!s[b.dataset.k]}); }
+  function saveChecks(){ const s={}; boxes().forEach(b=>{if(b.checked)s[b.dataset.k]=1}); try{localStorage.setItem('camp.sheets',JSON.stringify(s))}catch(e){} tally(); }
+  function tally(){ const all=boxes(); document.getElementById('total').textContent=all.length; document.getElementById('done').textContent=all.filter(b=>b.checked).length; }
+  document.addEventListener('change', e=>{ if(e.target.matches('.chk input')) saveChecks(); });
+
+  // init
+  (function(){ let t='sun'; try{t=localStorage.getItem('camp.theme')||'sun'}catch(e){} setTheme(t); loadChecks(); tally(); })();
+</script>
+
+</body></html>

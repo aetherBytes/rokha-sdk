@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rokha — Design Artifacts</title>
+<style>
+  :root { --bg:#05070d; --panel:#0a0f1a; --line:rgba(102,230,224,.14); --ice:#66e6e0;
+    --text:#dbe4ee; --muted:#8493a8; --mono:ui-monospace,'SF Mono',Menlo,monospace; }
+  * { box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font:15px/1.6 system-ui,sans-serif; margin:0; padding:0 20px 80px; }
+  .wrap { max-width:760px; margin:0 auto; }
+  header { border-bottom:1px solid var(--line); padding:2.4rem 0 1.2rem; margin-bottom:1.6rem; }
+  .eyebrow { font-family:var(--mono); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ice); margin:0 0 .4rem; }
+  h1 { font-size:1.5rem; font-weight:650; margin:0 0 .3rem; }
+  .sub { color:var(--muted); margin:0; max-width:60ch; }
+  a.card { display:block; border:1px solid var(--line); border-left:3px solid var(--ice);
+    background:var(--panel); border-radius:8px; padding:1rem 1.2rem; margin:1rem 0;
+    color:var(--text); text-decoration:none; }
+  a.card:hover { background:#0e1524; }
+  a.card b { color:var(--ice); }
+  a.card p { margin:.3rem 0 0; color:var(--muted); font-size:.88rem; }
+  footer { margin-top:2.5rem; color:var(--muted); font-size:.8rem; border-top:1px solid var(--line); padding-top:1rem; }
+  footer a { color:var(--ice); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Rokha · Public Artifacts</p>
+    <h1>Design &amp; lore documents</h1>
+    <p class="sub">World-building and art-direction documents from the making of SEEDFALL — the living world of rokha.ai. Published for the community.</p>
+  </header>
+
+  <a class="card" href="seedfall-camp-asset-bible.html">
+    <b>SEEDFALL · THE CAMP — Asset Bible</b>
+    <p>The visual canon of The Camp: landmarks, characters, sprite specs, palette, and the lore of the world where the new seeds collected.</p>
+  </a>
+
+  <a class="card" href="the-stand-art-bible.html">
+    <b>THE STAND: LAST SEED — Art Bible</b>
+    <p>Art direction for the first SEEDFALL mini-game: enemy design language, animation telegraphs, and the battlefield's look.</p>
+  </a>
+
+  <footer>Part of the <a href="../index.html">Rokha SDK</a> · rokha.ai</footer>
+</div>
+</body>
+</html>
