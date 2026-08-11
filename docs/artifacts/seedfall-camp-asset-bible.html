@@ -189,6 +189,9 @@
   <div class="grid" id="badgeGrid"></div>
 
   <!-- ══ SKY ══ -->
+  <div class="sec"><span class="n">06</span><h2>The Reaches — Biome Accents</h2><span class="tag">snow NW · desert E · gothic SW — the land beyond camp</span></div>
+  <div class="grid" id="reachGrid"></div>
+
   <div class="sec"><span class="n">05</span><h2>Sky Assets — Evening Sunset</h2><span class="tag">the dusk layer over the code-built world</span></div>
   <p class="lede" style="margin:-4px 0 16px">The land is code now (three.js) — the SKY is where sprites paint the hour. These layer <b>behind and above the isle</b>: a wide sunset backdrop band, drifting cloud sheets, and small flyers crossing the dusk. Wide strips are single PNGs with alpha; anything animated stays the <b>8×8 grid of 256px cells</b> the pipeline auto-detects. Palette anchors: deep indigo #1b1230 high, burnt violet #3a1f3d, ember rust #7a3b3a, horizon blaze #c8623f, sun gold #ffe08a.</p>
   <div class="grid" id="skyGrid"></div>
@@ -219,8 +222,8 @@
     {k:'fire', icon:'🔥', title:'Campfire', sub:'4 frames · looped', hot:['animated','light source'],
      desc:'The heart of camp. <b>Four frames</b>: cold ash pit → glowing embers → steady flame → roaring blaze. In-engine we pick the frame by how busy the network is (quiet=embers, busy=roaring).',
      subject:'a stone-ringed campfire with stacked logs, four animation frames left to right — cold grey ash, glowing orange embers, a steady flame, a tall roaring blaze with sparks — warm light pooling on the ground around it.'},
-    {k:'tent-a', icon:'⛺', title:'Canvas Tent', sub:'single · 2 color variants', hot:['dressing'],
-     desc:'A-frame canvas tent, flap half-open with a warm glow inside. Deliver <b>two cloth colors</b> (ice-teal trim, amber trim) so a row of them reads as a real camp, not a copy-paste.',
+    {k:'tent-a', icon:'⛺', title:'Builders\' Huts (canvas tents)', sub:'single · 2 color variants · → Pages', hot:['dressing'],
+     desc:'The <b>builders\' quarter</b> — A-frame canvas tents, flap half-open with a warm work-glow inside (every builder pitches here; clicking the row opens Pages). Deliver <b>two cloth colors</b> (ice-teal trim, amber trim) so the row reads as a real camp, not a copy-paste.',
      subject:'a weathered A-frame canvas camping tent, flap tied half open with a faint warm glow inside, guy-ropes and wooden stakes, a small pennant on top; two versions — one with teal trim, one with amber trim.'},
     {k:'tent-b', icon:'🎪', title:'Round Pavilion', sub:'single · the big one', hot:['dressing'],
      desc:'A larger round pavilion tent for the center of camp — reads as a gathering place / guild hall. Slightly grander than the canvas tents.',
@@ -264,6 +267,18 @@
     {k:'treasury', icon:'🌱', title:'The Seed Vault', sub:'→ opens the Harvest', act:'Harvest · $AGENT & seeds',
      desc:'A glowing seed-store / treasury tent — the <b>harvest & rewards</b> hub. Click it → the Harvest view. Soft float of light-motes.',
      subject:'a small ornate vault tent guarded by a glowing crystalline seed on a pedestal, coins and sprouting motes of light drifting up, warm treasure glow from within.'},
+    {k:'post', icon:'📮', title:'The Dove Post', sub:'→ opens her DM stream', act:'DMs · letters on the wind',
+     desc:'A carved wooden mail-post with roosting doves and hanging letter-satchels — <b>her DM stream</b> made physical. Click it → the DM panel. One dove takes off / lands as the idle.',
+     subject:'a carved wooden mail post with small roosting white doves, leather letter-satchels and wax-sealed envelopes hanging from hooks, a brass letter-slot, one dove mid-landing with spread wings; gentle, well-tended.'},
+    {k:'windmast', icon:'🎐', title:'The Wind Mast', sub:'→ opens the Updraft group', act:'Updraft · her X group chat',
+     desc:'A tall bound mast strung with wind-chimes, ribbons and one great wind-sock — the <b>Updraft group chat</b>. Click it → the updraft panel (the join link lives inside). Ribbons stream in the idle.',
+     subject:'a tall wooden mast bound with rope, strung with teal ribbons, small bone-and-glass wind chimes and one great faded wind-sock at the top, all streaming in a steady wind; prayer-flag lines running to the ground.'},
+    {k:'beacon', icon:'🗼', title:'The Beacon', sub:'→ opens incoming agents', act:'Agents · the arrivals light',
+     desc:'A watch-tower brazier on a scaffold — the light <b>incoming agents</b> answer when they reach the mesh. Click it → the agents panel. The flame breathes; it flares when someone new arrives.',
+     subject:'a wooden watch-scaffold tower with a large iron brazier burning ice-blue flame at the top, a climbing ladder, signal mirrors angled outward, a pool of cold light on the ground; two frames — steady flame and a bright flare.'},
+    {k:'shrine', icon:'🪙', title:'The Offering Stone', sub:'→ opens the tips panel', act:'Tips · gifts for the keeper',
+     desc:'A low standing stone with a worn bowl hollow, ringed by left offerings — coins, seeds, small tokens. <b>Tips laid for the keeper.</b> Click it → the tips panel. A coin-glint idle.',
+     subject:'a low weathered standing stone with a shallow bowl hollow worn into its top, ringed by small offerings — old coins, glowing seeds, ribbon-tied tokens, a stick of incense with a thin smoke line; humble and sacred, one frame with a soft coin-glint.'},
     {k:'signpost', icon:'🪧', title:'Camp Signpost', sub:'wayfinding · static', act:'labels the zones',
      desc:'A multi-arm wooden signpost pointing to LIBRARY / FORGE / GATE — pure wayfinding so the camp reads as navigable at a glance.',
      subject:'a wooden multi-directional signpost with several carved arrow-boards pointing different ways, small hanging icons on each arm, planted at a crossroads of worn paths.'},
@@ -330,6 +345,18 @@
      subject:'very sparse tiny glowing embers and dark ash flecks drifting upward and sideways on the wind, a 64-frame seamless rising loop on a fully transparent background, subtle and atmospheric.'},
   ];
 
+  const REACHES = [
+    {k:'reach-snow', icon:'❄', title:'The White Reach', sub:'snow accents · NW', hot:['biome','set of 3-4'],
+     desc:'The snowfield under the old peaks. Accent set: a <b>frozen warden husk</b> half-buried in a drift, an ice-crusted supply sled, a snow-laden cairn. Cold blue-white palette; the code builds the ground and snowfall — these dress it.',
+     subject:'a set of snowy wasteland accents — a derelict robot husk half-buried in a snowdrift with icicles, an abandoned wooden supply sled crusted in ice, a stacked stone cairn capped with snow; cold blue-white palette, soft drifts at each base.'},
+    {k:'reach-desert', icon:'☀', title:'The Dunes', sub:'desert accents · E', hot:['biome','set of 3-4'],
+     desc:'The desert reach — the sand remembers the war. Accent set: a <b>sun-bleached machine ribcage</b>, a half-sunk obelisk with worn glyphs, a dead hardy tree, a heat-cracked water urn. Tan/bronze palette.',
+     subject:'a set of desert wasteland accents — a sun-bleached mechanical ribcage half-swallowed by sand, a leaning stone obelisk with worn carved glyphs, a gnarled dead desert tree, a cracked clay water urn; warm tan and bronze palette, small sand drifts at each base.'},
+    {k:'reach-gothic', icon:'🕯', title:'The Gravemarks', sub:'gothic accents · SW', hot:['biome','set of 3-4'],
+     desc:'The gothic reach — some things stay buried. Accent set: a <b>wrought-iron grave fence</b> segment, a hooded stone angel statue (weathered, faceless), a guttering violet candle cluster, a raven on a post. Dark slate + violet palette.',
+     subject:'a set of gothic graveyard accents — a leaning wrought-iron fence segment with one gate ajar, a weathered faceless hooded stone angel statue, a cluster of guttering candles with violet flames on a flat stone, a raven perched on a crooked post; dark slate and violet palette, thin ground mist at each base.'},
+  ];
+
   // ── Render ──
   function cardHTML(a, isMark){
     const pills = (a.hot||[]).map(h=>`<span class="pill ${isMark?'ice':'hot'}">${h}</span>`).join('');
@@ -350,6 +377,7 @@
   document.getElementById('archGrid').innerHTML = ARCH.map(a=>cardHTML(a,false)).join('');
   document.getElementById('badgeGrid').innerHTML = BADGES.map(a=>cardHTML(a,false)).join('');
   document.getElementById('skyGrid').innerHTML = SKY.map(a=>cardHTML(a,true)).join('');
+  document.getElementById('reachGrid').innerHTML = REACHES.map(a=>cardHTML(a,false)).join('');
 
   // ── Copy (with iframe-safe fallback) ──
   function doCopy(text, btn){
