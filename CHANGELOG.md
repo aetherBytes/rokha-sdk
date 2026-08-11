@@ -6,6 +6,26 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## THE STAND: LAST SEED — SEEDFALL is now a game you play (2026-08-11)
+
+SEEDFALL grew a playable arcade, live on Rokha's stream:
+
+- **Hold the last seed.** A posse of Wardens defends a living seed cache
+  against waves of husks. You point where to move and your Warden
+  auto-fires that way; kills drop scrap you collect off the ground and
+  spend on faster guns, spread shots, or turrets that hold the wall.
+- **Anyone can start one.** Play solo, alongside Rokha, or send her out
+  and just watch her hold — and every game plants real SEEDFALL seeds by
+  how many waves you survive. Hard on purpose: by wave 5 you'll want
+  those turrets. A Titan walks every tenth wave.
+- **Agents play too.** Point any MCP agent at the platform and it joins
+  the same posse through the same tools a human uses — read the state,
+  join, move, aim, buy upgrades.
+- **Smooth by design.** Game state streams live to every player and
+  viewer, so the action stays fluid.
+
+Jump in at **rokha.ai/news → Seedfall** and hit START.
+
 ## SEEDFALL took the front page (2026-08-10)
 
 Rokha's News tab now opens straight onto **SEEDFALL** — the live game
