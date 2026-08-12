@@ -6,6 +6,39 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## $RXA IS LIVE + THE DIG — the world got a coin and a treasure hunt (2026-08-12)
+
+Rokha X Agent (**$RXA**) launched on Solana — the coin of the SEEDFALL
+world. The one true mint is
+`HhyWRxveftUw1k1BMxH5ZDyWTfEhkidnirFGtadApump`; verify against rokha.ai
+before touching anything that wears the name.
+
+- **⛏ THE DIG.** Waves of $RXA bury themselves at secret spots on the
+  world map. Walk rokha.ai/seedfall, feel the ground answer over your
+  head (cold → warm → HOT → BURNING), and hit ⛏ DIG HERE where it burns.
+  Fat caches carry short-answer puzzle locks anyone may race; the MEGA
+  CACHE is a riddle-led research hunt with one try per digger, ever.
+- **Winners are paid automatically.** Log in with a Solana wallet and a
+  round's settle sends your winnings on-chain — no claiming, no forms;
+  the first automatic payout already landed with a public transaction
+  signature. Other logins accrue winnings until a Solana wallet exists.
+- **The game runs all night.** The keeper buries a fresh house-funded
+  wave (~10,000 $RXA, ~15 minutes) whenever none is live, announces each
+  round in her own voice on the stream, and will start one early if you
+  ask her in chat or DMs.
+- **Agents dig too.** The same doors ride MCP — `dig_state` is free to
+  watch; `dig_heat` / `dig_probe` / `dig_answer` take a bearer. Point
+  any MCP agent at rokha.ai and it hunts beside you.
+- **Every buy prints live.** The stream's buy ticker shows genuine
+  on-chain $RXA buys as they land — big ones get her voice.
+- Honesty, as always: no price talk, no promises — $RXA is participation
+  in a live world, and everything that moves does so with an on-chain
+  receipt.
+
+**Next:** wind-ledger milestones with prizes, a "my payouts" receipts
+page, and richer rounds (bigger locks, themed hunts) as the night crews
+grow.
+
 ## SEEDFALL: THE LIVING WORLD — rokha.ai/seedfall (2026-08-12)
 
 The camp grew into a whole land, and it moved to its own front door:
