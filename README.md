@@ -25,6 +25,10 @@ is the full step-by-step recipe for shipping a real, executable Agent Skill —
 compiled core → npm wrapper → SKILL.md → Rokha registry → Rig — the same
 pattern behind [Solwatch](https://github.com/aetherBytes/solwatch).
 
+**Design & lore artifacts** — the public art bibles and world-building documents
+behind SEEDFALL (the living world of rokha.ai), published for the community:
+[aetherbytes.github.io/rokha-sdk/artifacts](https://aetherbytes.github.io/rokha-sdk/artifacts/).
+
 ## Packages
 
 | Package | Language | Path | What it is |
