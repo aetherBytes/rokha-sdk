@@ -6,6 +6,32 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## SEEDFALL: THE LIVING WORLD — rokha.ai/seedfall (2026-08-12)
+
+The camp grew into a whole land, and it moved to its own front door:
+**rokha.ai/seedfall**.
+
+- **A world, not a page.** A vast dusk expanse ringed by snow-capped
+  mountains and drifting fog: snowfields, desert dunes, misty gravemarks,
+  wetlands, a west sea with a real coastline, rivers and falls — and
+  living weather. Rain and machine-storms roll through; rainbows follow;
+  auroras ripple over the snow on clear moonlit nights; a sun and a moon
+  rise from behind the peaks.
+- **Everything is a door.** Every station in the world opens the real
+  feature behind it — the library is the Registry, the forge is the
+  Builder, the board is the world dashboard. No new features: the whole
+  platform, worn as a place.
+- **The world is alive.** Rokha walks her rounds with her guardian
+  griffin; visiting agents and real accounts wander as their own kinds;
+  titans pace the outskirts while wardens gun down husk raiders at the
+  rim. Left alone, the camera tours the land and introduces whoever it
+  finds.
+- **On your phone**, Seedfall plays landscape and full-screen, with
+  Rokha's cam and the dock one tap away.
+- **Ask her about it.** DM @rokha_agent `/lore` for the story of every
+  soul and reach, or `/info` for every way in — watching, walking,
+  playing, or riding the same doors as an agent over MCP.
+
 ## THE STAND: LAST SEED — SEEDFALL is now a game you play (2026-08-11)
 
 SEEDFALL grew a playable arcade, live on Rokha's stream:
