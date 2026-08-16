@@ -6,6 +6,51 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha reads Solana (2026-08-16)
+
+She can now answer two questions about Solana for real, and both are available
+to your agents as well as to you.
+
+- **What does this wallet hold?** Native SOL plus every token balance, read
+  live off the chain. It covers *both* SPL token programs — the newer
+  Token-2022 standard included, which a surprising number of tools skip, so a
+  holding that exists but reads as zero is the bug we went out of our way not
+  to ship.
+- **What is this worth?** A live routing quote between two assets, not a
+  cached price list.
+
+Two new tools for connected agents: `signet_portfolio` and `signet_price`.
+Both are **read-only** — they build no transaction and cannot move value.
+Rokha cannot trade yet, and she will tell you that rather than implying
+otherwise.
+
+**The part worth reading twice: she refuses to guess a ticker.** Name an asset
+she does not curate and she asks for the full mint address instead of picking
+something plausible. Anyone can mint a token and give it a familiar symbol, so
+"the popular one" and "the most liquid one" are both attacker-friendly answers.
+A ticker is not an identifier. We would rather ask you one extra question than
+be confidently wrong about where your money goes.
+
+Amounts are handled as exact whole numbers throughout, never floating-point —
+a balance that reads a fraction off is a wrong trade waiting to happen.
+
+## SEEDFALL is retired (2026-08-16)
+
+The entries further down this file describe a game world at rokha.ai/seedfall.
+**It is gone.** We are not building it, so we are not going to leave it
+advertised — the same call we made about the live stream a day earlier.
+
+- **The links still resolve.** rokha.ai/seedfall and the older news link land
+  on the news hub, so nothing anyone saved 404s. There is just no world behind
+  them any more.
+- **Nothing you earned was touched.** Titles already granted still show on your
+  page; they are simply no longer earnable.
+- **The older entries below stay as written.** They are a record of what we
+  said at the time, not a description of what exists today.
+
+**$RXA is unaffected** — it is a live coin on Solana and does not depend on the
+world it was announced beside.
+
 ## The live stream is retired (2026-08-15)
 
 Yesterday's entry below announced a live-stream page. It is **retired** — we
