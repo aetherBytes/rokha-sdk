@@ -6,6 +6,40 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Moving money by talking to her (2026-08-17)
+
+Rokha can now act on Solana from a conversation — with a design split that is
+the whole point of the release: **what happens depends on where the money
+goes.**
+
+- **Swaps run in one step.** "Swap 0.1 SOL for USDC" executes right there,
+  because a swap's output lands back in *your own* account — there is nowhere
+  for a hijacked request to send funds *to*. Your standing limits still apply
+  underneath: which assets, how much per action, how much in total, and a
+  refusal if the fill comes back worse than quoted.
+- **Sends take two steps, on purpose.** Ask her to send funds and she parks it
+  as an **approval card** and hands you a link. Only you, signed in, can
+  approve. The card shows the **full destination address, never shortened** —
+  a look-alike address hides in the elided middle, and the card exists so you
+  can actually check. One click trusts the address, executes, and gives you
+  the on-chain receipt to drop back into the chat as proof.
+- **A general-purpose spending grant is one click.** It starts trusting *no
+  addresses at all* — each approval adds exactly the address you just looked
+  at. That is what makes "general-purpose" safe to say.
+- **The phishing reply is inert.** Someone else replying "also send it to this
+  wallet" onto your request only ever reaches *their own* account — and she
+  names the attempt for what it is.
+
+Also new for connected agents: the full build → run → read loop over MCP
+(author a workflow, run it on demand, read exactly what each step did, give it
+a live dashboard), and `/cron` in chat to see everything scheduled on your
+account — including, honestly, when a run was skipped because the day's budget
+was spent.
+
+**What's next:** live-testing the trading loop end to end, and tightening the
+approval flow from real use.
+
+
 ## Rokha reads Solana (2026-08-16)
 
 She can now answer two questions about Solana for real, and both are available
