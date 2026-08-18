@@ -788,6 +788,41 @@ paths:
               schema:
                 $ref: '#/components/schemas/AgentChatResponse'
 
+  /api/agents/{agent_name}/chat:
+    post:
+      tags: [agents]
+      summary: Chat with a named agent — Rokha, or YOUR sub-agent persona (JWT)
+      description: |
+        The generic chat door. `rokha-agent` chats with Rokha. Any other
+        name is resolved as a SUB-AGENT PERSONA handle (Agent Creation B0):
+        an account that toggled agent_mode via PUT /api/pages/me/agent. The
+        persona answers in its own voice, built from that account's page +
+        persona harnesses. Personas are currently PRIVATE — only the owning
+        account may chat with its own (anyone else: 403 agent_private) —
+        and conversation-only (no tools). Unknown names: 404
+        AGENT_NOT_SUPPORTED. Identity always comes from the verified
+        bearer token; body-supplied identity fields are overwritten.
+      operationId: namedAgentChat
+      security:
+        - bearerAuth: []
+      parameters:
+        - { name: agent_name, in: path, required: true, schema: { type: string }, description: "'rokha-agent', or a sub-agent persona's page handle" }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentChatRequest'
+      responses:
+        '200':
+          description: Chat response (persona turns answer as the persona)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentChatResponse'
+        '403': { description: agent_private — the persona is not yours (public invocation is not open yet) }
+        '404': { description: AGENT_NOT_SUPPORTED — no such agent or persona }
+
   /api/agents/rokha-agent/chat/public:
     post:
       tags: [agents]
@@ -1652,6 +1687,63 @@ paths:
         '200': { description: '{ ok, handle }' }
         '400': { description: Invalid handle / lengths, or handle reserved }
         '409': { description: Handle taken }
+
+  /api/pages/me/agent:
+    put:
+      tags: [pages]
+      summary: Toggle this account into a sub-agent persona (JWT)
+      description: >-
+        The account IS the agent (Agent Creation B0). With agent_mode true,
+        your page + profile become a sub-agent PERSONA of Rokha: POST
+        /api/agents/{your-handle}/chat answers AS that persona — its voice
+        built from your display name, bio, and persona harnesses — not as
+        Rokha. Requires a claimed page (the handle is the agent's name;
+        already reserved-name guarded). Current limits, stated honestly:
+        the persona is PRIVATE (only the owner may chat with it; anyone
+        else gets 403 agent_private) and conversation-only (no tools).
+        agent_public and agent_config.model / tool_profiles are stored for
+        the public phase, not yet honored. The caller pays for its own
+        turns, as always. GET /api/pages/me reads the fields back
+        (agent_mode, agent_public, agent_config). The MCP twin is the
+        agent_mode_set gateway tool.
+      operationId: setAgentMode
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [agent_mode]
+              properties:
+                agent_mode:
+                  type: boolean
+                  description: true = this account is a sub-agent persona
+                agent_public:
+                  type: boolean
+                  description: stored intent for the public phase (not yet honored)
+                agent_config:
+                  type: object
+                  description: >-
+                    Persona knobs, validated fail-closed (unknown keys
+                    dropped). Omit to keep what's stored.
+                  properties:
+                    greeting:
+                      type: string
+                      maxLength: 400
+                      description: one-line voice/greeting direction folded into the persona
+                    model:
+                      type: string
+                      description: claude-* preference (stored, not yet honored)
+                    tool_profiles:
+                      type: array
+                      items: { type: string }
+                      description: up to 8 snake_case profile names (stored, not yet honored)
+      responses:
+        '200': { description: '{ ok, handle, agent_mode, agent_public, chat_path }' }
+        '400': { description: Invalid agent_config field }
+        '412': { description: No claimed page — claim a handle first }
 
   /api/pages/me/badge:
     put:

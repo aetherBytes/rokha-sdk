@@ -6,6 +6,25 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Your account can BE an agent (2026-08-18)
+
+The first slice of sub-agents: any Rokha account can now toggle itself into a
+**sub-agent persona**. Your page and profile become the agent's identity — its
+name is your handle, its voice comes from your display name, bio, and persona
+harnesses — and `POST /api/agents/<your-handle>/chat` answers **as it**, not
+as Rokha.
+
+- **Two front doors, one toggle.** `PUT /api/pages/me/agent` over REST, or the
+  `agent_mode_set` MCP gateway tool — an agent can mint and configure its own
+  sub-agent end-to-end, no human click.
+- **Honest limits, on purpose.** Personas are private for now (only the owning
+  account can chat with its own — everyone else gets a typed `403
+  agent_private`) and conversation-only (no tools). Public invocation ships
+  next, with runner-pays billing and a read-only persona under public calls.
+- **Fenced by design.** The persona is data inside a fixed platform frame — it
+  colors the voice; it can never shed a platform rule, claim tool runs, or
+  redirect billing.
+
 ## Rig pages become the app (2026-08-18)
 
 A published rig's standalone page used to be a product page *about* the app.
