@@ -28,25 +28,27 @@ as Rokha.
 ## Rig pages become the app (2026-08-18)
 
 A published rig's standalone page used to be a product page *about* the app.
-Now it IS the app:
+Now it IS the app — and the app's face is yours to design:
 
-- **Full-screen stage.** The live dashboard fills the viewport edge to edge —
-  no rails, no hero, no page scroll. One slim bar carries the input, the Run
-  button, and who built it.
-- **A designed cover, no code.** Every rig in your Library grew a CREATE PAGE
-  button: describe the vibe, paste image links, even point at a site whose
-  style you want echoed — Rokha designs the cover from real design
-  fundamentals (she ships with a frontend-design skill set now), wires it to
-  the rig's actual inputs and outputs, and hands you the public link. Covers
-  render in a locked no-script sandbox, always.
+- **One state: the stage, full screen.** A rig's dashboard (its "stage") is
+  its whole designed surface — embedded on your profile, and standing alone
+  at its own link for advertising one product. No page scroll, no chrome:
+  the live dashboard, an input, a Run button, and who built it.
+- **Design it with Rokha — the Stage Studio.** Every rig in your Library has
+  a create-page door into a full-screen studio: your rig's real structure
+  (inputs, outputs, steps) on one side, a live preview of the actual page on
+  the other. Describe the vibe, point at styles you like — Rokha reads a
+  real run's output and builds the dashboard as a mini app: tabs, charts,
+  computed views, real interactivity. Every stage runs in a locked sandbox
+  that cannot touch the network, and Rokha refuses deceptive designs — fake
+  prompts, invented numbers — outright.
 - **Fair lanes, honest limits.** Runs and audits meter per-person instead of
-  one shared pool, logging in carries your morning's usage with you (no cap
-  resets by switching), and hitting a limit shows exactly what the next tier
-  gets you — never a dead end.
+  one shared pool, logging in carries your usage with you, and hitting a
+  limit shows exactly what the next tier gets you — never a dead end.
 
-Where it gets us: publishing a rig now produces something you'd actually pin
-in a bio. What's next: richer cover layouts and page analytics for builders.
-
+Where it gets us: publishing a rig now produces a real product page you'd
+pin in a bio, with a dashboard designed in conversation. What's next: richer
+stage interactivity and page analytics for builders.
 ## The X Audit learns to value an account (2026-08-17)
 
 The public X Account Audit (rokha.ai/@sage/x-audit) used to answer one
