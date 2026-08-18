@@ -823,10 +823,15 @@ paths:
         RUNNER pays for their own turns and can never write into the
         persona owner's memory. A LOCKED persona config forces its model:
         a runner whose tier can't run it gets a 400 naming the model —
-        never a silent downgrade. Personas are conversation-only for now
-        (no tools). Unknown names: 404 AGENT_NOT_SUPPORTED. Identity
-        always comes from the verified bearer token; body-supplied
-        identity fields are overwritten. The streaming twin is
+        never a silent downgrade. A persona carries its OWNER's toolkit
+        loadout (agent-toolkit prefs, optionally narrowed by
+        agent_config.tool_profiles); tools execute with the CALLER's
+        authority, and a visiting caller's turn keeps only READ-ONLY
+        tools (nothing that writes, posts, or spends is reachable off
+        owner-authored persona text with a runner's authority). Unknown
+        names: 404 AGENT_NOT_SUPPORTED. Identity always comes from the
+        verified bearer token; body-supplied identity fields are
+        overwritten. The streaming twin is
         /api/agents/{agent_name}/chat/stream.
       operationId: namedAgentChat
       security:
@@ -1731,10 +1736,11 @@ paths:
         true FORCES agent_config.model on every runner — a runner's own
         preference never overrides a locked config, and a runner whose
         tier can't run the locked model is refused loudly, never silently
-        downgraded. Personas are conversation-only for now (no tools;
-        tool_profiles is stored for the coming phase). GET /api/pages/me
-        reads the fields back. The MCP twin is the agent_mode_set gateway
-        tool.
+        downgraded. The persona's TOOLKIT is your loadout: your
+        agent-toolkit prefs, optionally narrowed by
+        agent_config.tool_profiles; tools run with the caller's authority,
+        and visitors always get read-only tools. GET /api/pages/me reads
+        the fields back. The MCP twin is the agent_mode_set gateway tool.
       operationId: setAgentMode
       security:
         - bearerAuth: []
@@ -1777,7 +1783,11 @@ paths:
                     tool_profiles:
                       type: array
                       items: { type: string }
-                      description: up to 8 snake_case profile names (stored, not yet honored)
+                      description: >-
+                        the LOADOUT — up to 8 profile names narrowing which
+                        tools the agent carries (unknown names resolve to
+                        nothing — a typo narrows, never widens); empty = the
+                        standard toolkit
       responses:
         '200': { description: '{ ok, handle, agent_mode, agent_public, chat_path }' }
         '400': { description: Invalid agent_config field }
