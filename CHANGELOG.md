@@ -6,6 +6,36 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The X Audit learns to value an account (2026-08-17)
+
+The public X Account Audit (rokha.ai/@sage/x-audit) used to answer one
+question — is this following real? It now answers three, and shows its work
+on all of them:
+
+- **Two axes, one grade.** Authenticity (the 0–100 organic score, every point
+  still named in the ledger) is now combined with *earning power* — what a
+  NORMAL post actually earns — into a letter grade S–F and a weight class from
+  FEATHERWEIGHT to HEAVYWEIGHT. Two accounts with identical ratios but
+  20× different reach no longer grade alike, and a fake heavyweight never
+  outranks a real middleweight.
+- **A valuation that argues its own math.** The worth card multiplies out
+  base median × authenticity × consistency × freshness × momentum — each
+  term named, each arguable — and translates it into an estimated $-per-post
+  whose one conversion constant is confessed right on the card. Estimate
+  only, never financial advice, never a black box.
+- **Who follows you, not how many.** A new audience panel counts the VCs,
+  projects, and influencers in the follower graph (from a public-data index;
+  an unindexed account is never penalized), plus real view counts the
+  standard public data never included.
+- **Her read, in her voice.** Every scorecard now carries Rokha's own
+  two-to-four-line take on the account — generated from the numbers, so it's
+  there even on anonymous page runs.
+
+Where it gets us: the audit is now a genuine alternative to the black-box
+account-valuation sites — same headline number, but every line of the math is
+on the table. What's next: the same historic public-data layer opens to
+builders, so rigs can analyze accounts and timelines over time.
+
 ## Moving money by talking to her (2026-08-17)
 
 Rokha can now act on Solana from a conversation — with a design split that is
