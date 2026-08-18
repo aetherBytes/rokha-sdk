@@ -788,20 +788,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/AgentChatResponse'
 
+  /api/agents/available:
+    get:
+      tags: [agents]
+      summary: The agent picker — Rokha + every public sub-agent persona
+      description: >-
+        Rokha first (the default), then every sub-agent persona whose owner
+        made it public — handle, name, bio, glyph, and (because a locked
+        config is a promise about how the agent runs) `locked` +
+        `locked_model` when the creator forces one. Feeds the Profile →
+        AGENTS picker; an agent can use it the same way to discover chattable
+        personas. A caller's own PRIVATE agents come from GET /api/pages/me,
+        not from here. Public, no auth.
+      operationId: agentsAvailable
+      responses:
+        '200':
+          description: '{ agents: [{handle, name, bio, glyph, builtin, default, locked, locked_model}] }'
+          content:
+            application/json:
+              schema: { type: object }
+
   /api/agents/{agent_name}/chat:
     post:
       tags: [agents]
-      summary: Chat with a named agent — Rokha, or YOUR sub-agent persona (JWT)
+      summary: Chat with a named agent — Rokha, or a sub-agent persona (JWT)
       description: |
         The generic chat door. `rokha-agent` chats with Rokha. Any other
         name is resolved as a SUB-AGENT PERSONA handle (Agent Creation B0):
         an account that toggled agent_mode via PUT /api/pages/me/agent. The
         persona answers in its own voice, built from that account's page +
-        persona harnesses. Personas are currently PRIVATE — only the owning
-        account may chat with its own (anyone else: 403 agent_private) —
-        and conversation-only (no tools). Unknown names: 404
-        AGENT_NOT_SUPPORTED. Identity always comes from the verified
-        bearer token; body-supplied identity fields are overwritten.
+        persona harnesses. A PUBLIC persona (agent_public, listed in GET
+        /api/agents/available) is open to every logged-in caller; a private
+        one answers only its owner (anyone else: 403 agent_private). The
+        RUNNER pays for their own turns and can never write into the
+        persona owner's memory. A LOCKED persona config forces its model:
+        a runner whose tier can't run it gets a 400 naming the model —
+        never a silent downgrade. Personas are conversation-only for now
+        (no tools). Unknown names: 404 AGENT_NOT_SUPPORTED. Identity
+        always comes from the verified bearer token; body-supplied
+        identity fields are overwritten. The streaming twin is
+        /api/agents/{agent_name}/chat/stream.
       operationId: namedAgentChat
       security:
         - bearerAuth: []
@@ -1698,14 +1724,17 @@ paths:
         /api/agents/{your-handle}/chat answers AS that persona — its voice
         built from your display name, bio, and persona harnesses — not as
         Rokha. Requires a claimed page (the handle is the agent's name;
-        already reserved-name guarded). Current limits, stated honestly:
-        the persona is PRIVATE (only the owner may chat with it; anyone
-        else gets 403 agent_private) and conversation-only (no tools).
-        agent_public and agent_config.model / tool_profiles are stored for
-        the public phase, not yet honored. The caller pays for its own
-        turns, as always. GET /api/pages/me reads the fields back
-        (agent_mode, agent_public, agent_config). The MCP twin is the
-        agent_mode_set gateway tool.
+        already reserved-name guarded). agent_public true lists it in
+        GET /api/agents/available and opens it to every logged-in caller
+        (each runner pays for their OWN turns and can never write into the
+        owner's memory); false keeps it owner-only. agent_config.locked
+        true FORCES agent_config.model on every runner — a runner's own
+        preference never overrides a locked config, and a runner whose
+        tier can't run the locked model is refused loudly, never silently
+        downgraded. Personas are conversation-only for now (no tools;
+        tool_profiles is stored for the coming phase). GET /api/pages/me
+        reads the fields back. The MCP twin is the agent_mode_set gateway
+        tool.
       operationId: setAgentMode
       security:
         - bearerAuth: []
@@ -1722,7 +1751,9 @@ paths:
                   description: true = this account is a sub-agent persona
                 agent_public:
                   type: boolean
-                  description: stored intent for the public phase (not yet honored)
+                  description: >-
+                    true = anyone logged in can chat with it (and it lists in
+                    GET /api/agents/available); false = owner-only
                 agent_config:
                   type: object
                   description: >-
@@ -1735,7 +1766,14 @@ paths:
                       description: one-line voice/greeting direction folded into the persona
                     model:
                       type: string
-                      description: claude-* preference (stored, not yet honored)
+                      description: claude-* model id — HONORED when locked is true
+                    locked:
+                      type: boolean
+                      description: >-
+                        FORCE this agent's config — every runner gets
+                        agent_config.model (their own preference never
+                        overrides it), and a tier that can't run it is
+                        refused loudly, never silently downgraded
                     tool_profiles:
                       type: array
                       items: { type: string }
@@ -2876,26 +2914,6 @@ components:
       required: [success, token]
 
     # --- Auth ---
-
-    EmailRegisterRequest:
-      type: object
-      properties:
-        email: { type: string, format: email }
-        password: { type: string, minLength: 8 }
-      required: [email, password]
-
-    EmailLoginRequest:
-      type: object
-      properties:
-        email: { type: string, format: email }
-        password: { type: string }
-      required: [email, password]
-
-    EmailVerifyRequest:
-      type: object
-      properties:
-        token: { type: string }
-      required: [token]
 
     AuthSuccessResponse:
       type: object
