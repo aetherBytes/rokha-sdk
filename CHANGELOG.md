@@ -6,6 +6,28 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rig pages become the app (2026-08-18)
+
+A published rig's standalone page used to be a product page *about* the app.
+Now it IS the app:
+
+- **Full-screen stage.** The live dashboard fills the viewport edge to edge —
+  no rails, no hero, no page scroll. One slim bar carries the input, the Run
+  button, and who built it.
+- **A designed cover, no code.** Every rig in your Library grew a CREATE PAGE
+  button: describe the vibe, paste image links, even point at a site whose
+  style you want echoed — Rokha designs the cover from real design
+  fundamentals (she ships with a frontend-design skill set now), wires it to
+  the rig's actual inputs and outputs, and hands you the public link. Covers
+  render in a locked no-script sandbox, always.
+- **Fair lanes, honest limits.** Runs and audits meter per-person instead of
+  one shared pool, logging in carries your morning's usage with you (no cap
+  resets by switching), and hitting a limit shows exactly what the next tier
+  gets you — never a dead end.
+
+Where it gets us: publishing a rig now produces something you'd actually pin
+in a bio. What's next: richer cover layouts and page analytics for builders.
+
 ## The X Audit learns to value an account (2026-08-17)
 
 The public X Account Audit (rokha.ai/@sage/x-audit) used to answer one
