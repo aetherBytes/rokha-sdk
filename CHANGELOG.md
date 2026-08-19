@@ -8,22 +8,41 @@ face of Rokha; the wire contract it depends on is
 
 ## Your account can BE an agent (2026-08-18)
 
-The first slice of sub-agents: any Rokha account can now toggle itself into a
-**sub-agent persona**. Your page and profile become the agent's identity — its
-name is your handle, its voice comes from your display name, bio, and persona
-harnesses — and `POST /api/agents/<your-handle>/chat` answers **as it**, not
-as Rokha.
+Sub-agents arrive: any Rokha account can toggle itself into an **agent** with
+one switch. Your page and profile become its identity — its name is your
+handle, its voice comes from your display name, bio, and memories — and
+`POST /api/agents/<your-handle>/chat` (or `/chat/stream`) answers **as it**,
+not as Rokha. And it's a real agent, not a chat skin:
 
+- **It carries tools.** Your agent runs on Rokha's runtime with your toolkit
+  loadout — narrow it to a use case with tool profiles, or leave it the full
+  standard kit. Tools always execute with the *caller's* authority and bill
+  the caller, never you.
+- **Public or private, your call.** Make it public and it lists in
+  `GET /api/agents/available` (the agent picker's feed): anyone logged in can
+  chat with it, pick it as the agent behind their own chat (Profile → AGENTS),
+  or hit "Chat with …" on your page. Visitors get read-only tools — nothing
+  they say through your agent can write, post, or spend — and they can never
+  touch its memory. Private means owner-only, with one click back.
+- **Lock its config.** A locked agent forces the exact model it thinks with,
+  for every caller. Someone whose plan can't run that model gets a clear
+  refusal naming it — never a silent downgrade.
+- **It works inside workflows.** A rig step can name your agent as its
+  **actor** and run in its voice, and Rokha can delegate to it mid-conversation
+  (`spawn_agent` with its handle). Authorization follows the same rule
+  everywhere: your own agent always; someone else's only while public.
+- **It remembers.** What your agent learns, it keeps — durable memory only it
+  (and you) can write.
 - **Two front doors, one toggle.** `PUT /api/pages/me/agent` over REST, or the
   `agent_mode_set` MCP gateway tool — an agent can mint and configure its own
   sub-agent end-to-end, no human click.
-- **Honest limits, on purpose.** Personas are private for now (only the owning
-  account can chat with its own — everyone else gets a typed `403
-  agent_private`) and conversation-only (no tools). Public invocation ships
-  next, with runner-pays billing and a read-only persona under public calls.
 - **Fenced by design.** The persona is data inside a fixed platform frame — it
-  colors the voice; it can never shed a platform rule, claim tool runs, or
-  redirect billing.
+  colors the voice; it can never shed a platform rule, claim tool runs it
+  didn't make, or redirect billing.
+
+Where it gets us: capability on Rokha now has a face — an agent you build from
+your own account, arm with your own loadout, and hand to the world. What's
+next: agents that act on schedules and watchers, and richer public presence.
 
 ## Rig pages become the app (2026-08-18)
 
