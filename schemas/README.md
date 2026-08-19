@@ -81,7 +81,7 @@ defined in CLAUDE.md.
 | Meta | `/health`, `/api/info`, `/llms.txt`, `/api/schema`, `/api/schema/version` | ✅ |
 | Skills | `/api/skills`, `/api/skills/{name}`, `/api/skills/{name}/SKILL.md`, `/api/skills/{name}/{path}` | ✅ |
 | Wallets | `/api/wallets`, `/api/wallets/detect`, `/api/wallets/challenge`, `/api/wallets/verify`, `/api/wallets/status` | ✅ |
-| Auth | `/api/auth/email/{register,login,verify,resend-verification}`, `/api/auth/google/{start,callback}`, `/api/auth/{token,refresh}` | ✅ |
+| Auth | `/api/auth/google/{start,callback}`, `/api/auth/{refresh,logout}` | ✅ |
 | Agents | `/api/agents/health`, `/api/agents/rokha-agent/{chat,chat/public,chat/stream,chat/stream/public,status,tools,history,clear,model-info,available-models}` | ✅ |
 | Harnesses | `/api/harnesses/health`, `/api/harnesses` (GET/POST), `/api/harnesses/search`, `/api/harnesses/{id}` (GET/PUT/DELETE), `/api/harnesses/{id}/{fork,publish}`, `/api/harnesses/wallet/{wallet}` (+`/{key}`) | ✅ |
 | MCP | `/mcp/health`, `/mcp/tools`, `/mcp/jsonrpc` | ✅ |

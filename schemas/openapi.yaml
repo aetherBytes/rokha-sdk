@@ -388,104 +388,8 @@ paths:
                 additionalProperties: true
 
   # ============================================================
-  # Auth — email + Google OAuth + JWT
+  # Auth — Google OAuth + JWT
   # ============================================================
-
-  /api/auth/email/register:
-    post:
-      tags: [auth]
-      summary: Register a new email account
-      description: |
-        Creates a user via email + password. Returns a JWT immediately
-        (account is usable). A verification link is delivered out-of-band
-        (emailed to the user); the verification token is never returned in
-        the response body.
-      operationId: emailRegister
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmailRegisterRequest'
-      responses:
-        '200':
-          description: Registered
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuthSuccessResponse'
-
-  /api/auth/email/login:
-    post:
-      tags: [auth]
-      summary: Log in with email + password
-      operationId: emailLogin
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmailLoginRequest'
-      responses:
-        '200':
-          description: Logged in
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuthSuccessResponse'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '429':
-          description: Too many failed attempts — account temporarily locked
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /api/auth/email/verify:
-    post:
-      tags: [auth]
-      summary: Verify an email address
-      operationId: emailVerify
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmailVerifyRequest'
-      responses:
-        '200':
-          description: Verified
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success: { type: boolean }
-                  message: { type: string }
-
-  /api/auth/email/resend-verification:
-    post:
-      tags: [auth]
-      summary: Resend the email verification token
-      operationId: emailResendVerification
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email: { type: string, format: email }
-              required: [email]
-      responses:
-        '200':
-          description: New verification sent (or silently no-op if already verified)
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
 
   /api/auth/google/start:
     post:
@@ -2617,7 +2521,7 @@ components:
       bearerFormat: JWT
       description: |
         JWT issued by `/api/wallets/verify` (after `/api/wallets/challenge`),
-        `/api/auth/google/callback`, or `/api/auth/email/login`. Send as
+        or `/api/auth/google/callback`. Send as
         `Authorization: Bearer <token>`. Refresh via `/api/auth/refresh`
         before expiry (24h default).
 
