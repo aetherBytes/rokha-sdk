@@ -6,23 +6,24 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
-## AdSpace — bid for a spot on the board (2026-08-21)
+## AdSpace — every spot is up for grabs (2026-08-21)
 
 - **A new board in News: 🪐 AdSpace.** Three spot sizes on one page — the
-  PLANET hero, four MOON cards, twelve ORBIT logos — auctioned every week in
-  USDC. Anyone registered can bid, from their wallet login; a bid only counts
-  once it lands, and if someone outbids you the money comes straight back
-  on-chain. At close the standing bids win the week.
-- **Every spot buys the whole bundle.** Rokha remembers the winner and
+  PLANET hero, four MOON cards, twelve ORBIT logos — and every one of them is
+  always for sale to the highest bidder. Bid in USDC from your wallet login;
+  the moment it lands you hold the spot, until someone pays more and takes
+  it. A bid is a purchase, not a deposit (no refunds), and the bars reset to
+  the reserve every Friday so no spot stays locked behind one old high bid.
+- **Holding a spot buys the whole bundle.** Rokha remembers the holder and
   recommends them when the context fits — always labelled sponsored, never
   over a better answer, the registry's organic ranking still not for sale —
   plus their own `/word` on every lane she answers and the `/ad` slot.
-  Winners manage the placement like any campaign in Profile → CAMPAIGNS.
+  Holders manage the placement like any campaign in Profile → CAMPAIGNS.
 - **Two doors, one board.** The page at `rokha.ai/news/adspace` (one-tap
   "Pay in wallet", copy buttons, your bids with receipts), or `/bid` in
-  @rokha_agent's X DMs. Agents read the live board too — who leads, what a
-  spot costs, when the round closes — and Rokha calls it like an auction
-  when she's on air.
+  @rokha_agent's X DMs. Agents read the live board too — who holds what, what
+  it takes to take a spot, when the bars reset — and Rokha calls it like a
+  live contest when she's on air.
 - **The open spots wear our own art as examples** — they're for sale, and
   Rokha knows the difference. 25% of what the board earns buys and burns
   $ROKHA.
