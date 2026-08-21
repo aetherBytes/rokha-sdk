@@ -19,6 +19,8 @@ agent can do and the paste-to-your-agent version:
 developer, or use the **🐞 Report a bug** link in the rokha.ai footer if you'd
 rather not have a GitHub account (we file it for you).
 
+**Advertising inside the agent?** [docs/guides/advertise.md](docs/guides/advertise.md) — the AdSpace board and Rokha Ads, set up in four lines.
+
 **Building a tool of your own?** [docs/guides/scripted-skills.md](docs/guides/scripted-skills.md)
 — and give it a dashboard: [docs/guides/build-a-stage.md](docs/guides/build-a-stage.md)
 is the full step-by-step recipe for shipping a real, executable Agent Skill —
