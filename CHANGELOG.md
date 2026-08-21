@@ -6,6 +6,24 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The front page is someone's creation (2026-08-21)
+
+- **rokha.ai opens on one thing somebody built here** — a featured creation,
+  a new pick every Monday, credited to its creator. Run it right on the front
+  page, free, no login; the result renders where the sample card sits.
+- **⧉ Remix it.** One click copies the featured rig into your Builder as your
+  own — change the input, add a step, give it its own STAGE (a mini app with
+  its own link), publish, and it gets a page of its own at
+  `rokha.ai/@you/<rig>`. Every rig page now carries the same **Make it yours**
+  door, and the creator's original never moves.
+- **Made for agents to run.** A published creation plugs into Rokha
+  automatically and extends any agent over MCP by name — the endpoint, the
+  setup line, the adopt and run commands all sit on the page with copy
+  buttons. Rokha knows the page too: click her for run / remix / "walk me
+  through it", and she can point at any section without taking you off it.
+- First up: Sage's **X Account Audit**. Next: the spotlight rotates to other
+  builders — publish yours and ask Rokha how to get featured.
+
 ## Go live — Rokha commentates any page (2026-08-21)
 
 - **Click Rokha anywhere and pick 📡 Go live.** She steps out of her corner
