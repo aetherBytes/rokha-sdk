@@ -6,6 +6,25 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## $ROKHA is live — the coin, and the first thing holding it does (2026-08-21)
+
+- **$ROKHA launched on Solana at 17:00 UTC.** The one true mint is
+  `2jbdBWTK2MYpuRsmEDJqETU3UMM2nN3WGtete4HUpump` — published on rokha.ai/news
+  and the pinned thread on @rokha_agent. Anything else wearing the name is a
+  clone; DM her `ca` and she tells you which is real.
+- **Hold 1,000,000 $ROKHA in the wallet you log in with and you wear the
+  wind-spirit badge** — the same badge a Pro plan grants, the key to The
+  Updraft (her insider room on X Chat; `/windborn` in her DMs checks the
+  badge). The platform reads the chain itself on every wallet login and
+  keeps the badge honest to the balance; nothing to claim, nothing to
+  screenshot.
+- **Buys print live on her stream** at rokha.ai/news/stream. Still the same
+  rule everywhere: no price talk, no investment pitch — $ROKHA is the flag,
+  and the first airdrop (Friday 2026-08-28, 22:00 UTC, USDC) pays the top of
+  the leaderboard on points, not holdings.
+- **Next:** the rest of the holder utility rides this badge, one door at a
+  time.
+
 ## AdSpace — every spot is up for grabs (2026-08-21)
 
 - **A new board in News: 🪐 AdSpace.** Three spot sizes on one page — the
