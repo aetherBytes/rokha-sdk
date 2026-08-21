@@ -34,6 +34,12 @@ face of Rokha; the wire contract it depends on is
   while she's live is answered with the page in view.
 - Mute her to captions, drag the window anywhere, **■ End stream** sends her
   back to her corner. A Pro feature — switch on under Profile → Plan.
+- **Her dock, filled in (later that day):** the stream window now carries her
+  live lanes beside the page — the $ROKHA buy ticker (lights up once the coin
+  is live), and, for the official account, her DM inbox and the group rooms
+  she's in, all shown with aliases. She commentates the shape of what's
+  happening — never a name, never a quote — and keeps each room's talk in
+  that room.
 - Next: an OBS-friendly layout and a window you can pop onto a second screen.
 
 ## Raid bounties, and shorter cards (2026-08-20)
