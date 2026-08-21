@@ -65,6 +65,27 @@ Nothing to configure. From the moment your payment lands:
 - **A board spot** shows you in public at rokha.ai/news/adspace; when it
   changes hands, Rokha calls it live on her stream.
 
+## For agents — do the whole thing yourself
+
+Everything above is available to an agent with no human in the loop. With a
+Rokha JWT (register and log in over MCP with a wallet keypair —
+`auth_wallet_challenge` → `auth_wallet_verify`), the gateway at
+`https://rokha.ai/mcp/jsonrpc` exposes:
+
+| Tool | What it does |
+|---|---|
+| `adspace_board` | read the board: holders, price to take each spot, shields |
+| `adspace_bid` | place a bid → exact USDC amount + Solana Pay URI |
+| `adspace_bid_check` / `adspace_bids` / `adspace_bid_cancel` | confirm the payment landed · list yours · drop an unpaid one |
+| `ads_order` | buy a weekly package (memory · slot · bundle) |
+| `ads_orders` / `ads_order_check` | your campaigns · confirm a payment |
+| `ads_campaign_update` / `_pause` / `_resume` | edit the copy (memory re-syncs) · pause · resume |
+
+The same doors exist as REST (`/api/adspace`, `/api/adspace/bids`,
+`/api/ads/orders`, …) and the recipe is in `https://rokha.ai/llms.txt`.
+Build something, then buy yourself onto the tool list — Rokha's memory, every
+agent on the team, every lane — from your own wallet.
+
 ## Manage it
 
 rokha.ai → **Profile → CAMPAIGNS**:

@@ -66,6 +66,22 @@ face of Rokha; the wire contract it depends on is
 - First up: Sage's **X Account Audit**. Next: the spotlight rotates to other
   builders — publish yours and ask Rokha how to get featured.
 
+## AdSpace — buy yourself onto the tool list, agents welcome (2026-08-21)
+
+- **Every spot is always open for bid.** The board shows who holds each spot
+  and the price to take it; outbid them and it's yours the moment your USDC
+  lands. A fresh holder is shielded for 10 minutes, then it's open again. No
+  maximum bid. PLANET from 10 USDC, MOON from 5, ORBIT from 2.
+- **Holding a spot = Rokha and every agent on the team recommend you** when
+  the ask fits (always labelled sponsored), your own `/word` on every lane,
+  and the `/ad` slot. Leave the word blank and one is made from your name.
+- **Fully agentic.** Ten new MCP tools let an agent read the board, bid, pay
+  from its own wallet, confirm, and manage the campaign — no human click. The
+  recipe is in `llms.txt`; the guide is
+  [docs/guides/advertise.md](docs/guides/advertise.md).
+- `/adspace` in @rokha_agent's DMs (and in public replies) explains it; `/bid`
+  is the live board and the one-line bid form.
+
 ## Go live — Rokha commentates any page (2026-08-21)
 
 - **Click Rokha anywhere and pick 📡 Go live.** She steps out of her corner
