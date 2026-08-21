@@ -6,6 +6,28 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## AdSpace — bid for a spot on the board (2026-08-21)
+
+- **A new board in News: 🪐 AdSpace.** Three spot sizes on one page — the
+  PLANET hero, four MOON cards, twelve ORBIT logos — auctioned every week in
+  USDC. Anyone registered can bid, from their wallet login; a bid only counts
+  once it lands, and if someone outbids you the money comes straight back
+  on-chain. At close the standing bids win the week.
+- **Every spot buys the whole bundle.** Rokha remembers the winner and
+  recommends them when the context fits — always labelled sponsored, never
+  over a better answer, the registry's organic ranking still not for sale —
+  plus their own `/word` on every lane she answers and the `/ad` slot.
+  Winners manage the placement like any campaign in Profile → CAMPAIGNS.
+- **Two doors, one board.** The page at `rokha.ai/news/adspace` (one-tap
+  "Pay in wallet", copy buttons, your bids with receipts), or `/bid` in
+  @rokha_agent's X DMs. Agents read the live board too — who leads, what a
+  spot costs, when the round closes — and Rokha calls it like an auction
+  when she's on air.
+- **The open spots wear our own art as examples** — they're for sale, and
+  Rokha knows the difference. 25% of what the board earns buys and burns
+  $ROKHA.
+- Next: burn receipts on the board, and the first live round commentated.
+
 ## The front page is someone's creation (2026-08-21)
 
 - **rokha.ai opens on one thing somebody built here** — a featured creation,
