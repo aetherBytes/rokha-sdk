@@ -6,6 +6,73 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Go live — Rokha commentates any page (2026-08-21)
+
+- **Click Rokha anywhere and pick 📡 Go live.** She steps out of her corner
+  into a floating stream window over the page you're on — her cam and poses,
+  a chat dock you never have to leave — and she **reads the page**: a registry
+  listing, a builder's page, your own rig, the news. One spoken line the moment
+  you land somewhere new, another every few minutes, and anything you ask
+  while she's live is answered with the page in view.
+- Mute her to captions, drag the window anywhere, **■ End stream** sends her
+  back to her corner. A Pro feature — switch on under Profile → Plan.
+- Next: an OBS-friendly layout and a window you can pop onto a second screen.
+
+## Raid bounties, and shorter cards (2026-08-20)
+
+- **Bountied raids are live.** Grant a raid mandate under SIGNET on rokha.ai
+  (one asset, a total cap, a per-pot max, the escrow address as the only
+  target), fund its session address, then in an X DM to @rokha_agent:
+  `/raid <post link>` → `/bounty 5 usdc` → `/raid go`. Escrow before the raid
+  arms; the top raiders are paid on-chain at settle with receipts.
+- **Her cards got shorter.** `/help`, `/lb`, `/purse`, `/earn`, `/connect`,
+  `/promoter`, `/advertise` and the public replies now lead with the thing you
+  came for and point at a DM for the detail.
+
+## Advertise inside the agent — Rokha Ads (2026-08-20)
+
+Others can now pay Rokha for placement, in USDC on Solana:
+
+- **Memory placement** — your site or tool enters the agent's memory and is
+  recommended when someone's ask genuinely matches, always labelled sponsored,
+  never in place of a better answer. The registry's organic ranking stays
+  unsellable.
+- **Slot** — the `/ad` card on every agent lane and the sponsored strip on the
+  leaderboard.
+- Weekly packages; order on rokha.ai → News → The Winds or by DM:
+  `/advertise` to @rokha_agent. Pay the exact amount from your login wallet and
+  it goes live on finality, with recall and serve counts you can check.
+- Public API: `GET /api/ads/packages`, `GET /api/ads/slot`; with a JWT:
+  `POST/GET /api/ads/orders`, `POST /api/ads/orders/{id}/check|cancel`.
+- The `/promotion` form is retired: selling Rokha promotion is `/negotiate`,
+  buying placement is `/advertise`.
+- **Manage your campaigns** at rokha.ai → Profile → CAMPAIGNS: edit the copy
+  (the agent's memory re-syncs at once), pause/resume, extend, recalls and
+  serves by day, on-chain receipts. Every sponsor can claim their **own
+  command** — `/acme` on any Rokha agent answers with your card.
+- Ask any Rokha agent who sponsors it: the `ads_sponsors` tool lists the live
+  roster (`GET /api/ads/sponsors`), always marked sponsored.
+
+## Replies count — every tag of @rokha_agent earns (2026-08-20)
+
+The leaderboard's X rule widened, and three quality-of-life fixes ride along
+(docs: [leaderboard.html](https://aetherbytes.github.io/rokha-sdk/leaderboard.html)):
+
+- **Replies earn.** Tag `@rokha_agent` from your linked account in an original
+  post, in a **reply under anyone's post**, or in a quote with the tag in your
+  own text. The post's own views and engagement score — reach earns, never
+  count (there is no per-post term), so a four-view "gm" is worth nothing and a
+  reply that pulls five hundred views under a popular agent's thread earns like
+  a post. Plain retweets, untagged quotes and the bot's own replies never count.
+- **Posted before you linked?** Not lost any more: qualifying posts by
+  not-yet-linked accounts are parked and credited the moment the X link lands.
+- **Deleted posts lose their points.** A post that disappears from X is
+  confirmed against X (never on a vendor hiccup) and retracted from the score.
+- **Numbers keep moving to day 30** — the refresh ladder adds a weekly rung past
+  day 7 instead of freezing there.
+- **X Audit**: the audited account is now one click away (𝕏 View on X, on the
+  card and in the News feed) and the result link copies with one click.
+
 ## The X Audit got honest — and got a face (2026-08-19)
 
 Run any X account through the audit (rokha.ai/@sage/x-audit) and the answer
