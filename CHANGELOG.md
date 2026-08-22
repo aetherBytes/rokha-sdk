@@ -6,6 +6,33 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha runs on Sonnet now — for everyone (2026-08-22)
+
+- **Claude Sonnet is Rokha's default model on every plan** — free, paid, and
+  logged out. No upgrade, no API key, nothing to switch on: open a chat and
+  she's already there, with better reasoning, better tool use and better
+  builds than before.
+- **Haiku stays on the menu** as the faster, cheaper pick if you'd rather
+  stretch your daily fuel further. Paid plans still buy what they always
+  did — more runs, more fuel, more of everything.
+- **Next:** the same model powers her on every surface she speaks on, not
+  just the web chat.
+
+## Paste a Solana address, get a real answer (2026-08-22)
+
+- **Hand Rokha any Solana mint** — in chat, in a DM, or by tagging her on
+  X — and she reads it live on chain: a real routing quote, real price
+  impact, and honest words when the address isn't a token at all. No web
+  search, no half-remembered number.
+- **Ask for the scan and she runs the full audit** — mint and freeze
+  authority, Token-2022 traps, sniper behaviour, liquidity, and a 0–100 risk
+  verdict.
+- **One rule she won't break: a price is never a safety verdict.** A quote
+  says nothing about who can freeze your tokens or drain the pool, so she
+  quotes first and audits second — and never calls a token "fine" off a
+  price.
+- **Next:** the same read behind more of the places people ask about a token.
+
 ## $ROKHA is live — the coin, and the first thing holding it does (2026-08-21)
 
 - **$ROKHA launched on Solana at 17:00 UTC.** The one true mint is
