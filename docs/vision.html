@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Rokha Vision — an OS and runtime for the agentic world</title>
+<meta name="description" content="Tens of thousands of published agent skills are inert without a runtime. Rokha is the runtime: find a capability and it actually runs — real tool calls, no install, no setup, a trace on every run.">
+<meta property="og:title" content="The Rokha Vision">
+<meta property="og:description" content="Recipes in a world where most people don't own a kitchen. Rokha is the kitchen — find a capability and it actually runs, with a trace to prove it.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aetherbytes.github.io/rokha-sdk/vision.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@Rokha_ai">
+<style>
+  :root{
+    --void:#06080b; --panel:#0c1015; --panel-2:#10161d; --line:#1b2530;
+    --ice:#7fe8ff; --ice-deep:#37c6e6; --ice-dim:#3a5563;
+    --warm:#f4a94a; --warm-deep:#c9822c; --warm-dim:#5d472c; --warm-soft:rgba(244,169,74,.08);
+    --silver:#cdd8e2; --muted:#6d7f8d; --faint:#465562;
+    --glow: 0 0 0 1px rgba(127,232,255,.12), 0 0 30px -8px rgba(55,198,230,.35);
+    --mono: ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans: "Inter var",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  :root[data-theme="light"]{
+    --void:#eef2f5; --panel:#ffffff; --panel-2:#f4f7fa; --line:#d9e2ea;
+    --ice:#0f8fb0; --ice-deep:#0b7f9e; --ice-dim:#8bb3c1;
+    --warm:#a4661a; --warm-deep:#8a5514; --warm-dim:#d8c19c; --warm-soft:rgba(164,102,26,.06);
+    --silver:#182530; --muted:#54687a; --faint:#8698a6;
+    --glow: 0 0 0 1px rgba(15,143,176,.14), 0 6px 24px -12px rgba(11,127,158,.4);
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --void:#eef2f5; --panel:#ffffff; --panel-2:#f4f7fa; --line:#d9e2ea;
+      --ice:#0f8fb0; --ice-deep:#0b7f9e; --ice-dim:#8bb3c1;
+      --warm:#a4661a; --warm-deep:#8a5514; --warm-dim:#d8c19c; --warm-soft:rgba(164,102,26,.06);
+      --silver:#182530; --muted:#54687a; --faint:#8698a6;
+      --glow: 0 0 0 1px rgba(15,143,176,.14), 0 6px 24px -12px rgba(11,127,158,.4);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--void); color:var(--silver);
+    font-family:var(--sans); font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 520px at 78% -8%, rgba(55,198,230,.10), transparent 60%),
+      radial-gradient(760px 480px at 8% 4%, rgba(244,169,74,.05), transparent 55%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:0 22px}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.32em; text-transform:uppercase; color:var(--ice-deep)}
+  h1,h2,h3{text-wrap:balance; line-height:1.1; letter-spacing:-.02em; margin:0}
+  a{color:var(--ice)}
+  :focus-visible{outline:2px solid var(--ice); outline-offset:3px}
+
+  .bar{position:sticky; top:0; z-index:20; backdrop-filter:blur(9px);
+    background:color-mix(in srgb, var(--void) 78%, transparent); border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex; align-items:center; gap:14px; height:56px}
+  .brand{font-family:var(--mono); font-weight:600; letter-spacing:.06em; color:var(--silver)}
+  .brand b{color:var(--ice)}
+  .barlink{font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none}
+  .barlink:hover{color:var(--ice)}
+  .theme{background:none;border:1px solid var(--line);color:var(--muted);
+    font-family:var(--mono);font-size:11px;padding:5px 10px;border-radius:7px;cursor:pointer;margin-left:auto}
+  .theme:hover{color:var(--ice);border-color:var(--ice-dim)}
+  .navcta{font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+    text-decoration:none; color:#06080b; background:linear-gradient(150deg,var(--ice),var(--ice-deep));
+    padding:8px 14px; border-radius:8px; font-weight:600}
+
+  .hero{padding:70px 0 22px}
+  h1{font-size:clamp(34px,6.4vw,60px);font-weight:800}
+  h1 .accent{background:linear-gradient(120deg,var(--ice),var(--ice-deep));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(17px,2.3vw,20px);color:var(--muted);max-width:62ch;margin:18px 0 0}
+  .sub b{color:var(--silver)}
+
+  section{padding:36px 0}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .kicker .num{font-family:var(--mono);font-size:12px;color:var(--ice-deep);
+    border:1px solid var(--ice-dim);border-radius:6px;padding:2px 8px}
+  .kicker h2{font-size:clamp(21px,3.2vw,28px);font-weight:700}
+  .lead{color:var(--muted);font-size:16px;max-width:70ch;margin:0 0 16px}
+  .lead b{color:var(--silver)}
+  p{margin:0 0 12px}
+  code{font-family:var(--mono);font-size:.92em;color:var(--ice);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+
+  /* thesis slab */
+  .thesis{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ice-deep);
+    border-radius:12px;padding:24px 26px;margin-top:34px;box-shadow:var(--glow)}
+  .thesis p{max-width:68ch;color:var(--muted)}
+  .thesis p.big{font-size:clamp(17px,2.2vw,19px);color:var(--silver)}
+  .thesis b{color:var(--silver)}
+  .nosim{font-family:var(--mono);font-size:13px;line-height:1.7;color:var(--warm);
+    margin:18px 0 0;padding-top:15px;border-top:1px dashed var(--warm-dim)}
+
+  /* articles */
+  .art{display:grid;grid-template-columns:70px 1fr;gap:20px;padding:26px 0;border-top:1px solid var(--line)}
+  .art:first-of-type{border-top:none}
+  .rn{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--ice-deep);padding-top:5px}
+  .art.money .rn{color:var(--warm)}
+  .art h3{font-size:19px;font-weight:700;color:var(--silver);margin:0 0 8px}
+  .tag{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:#06080b;background:var(--ice);padding:3px 7px;border-radius:4px;margin-left:10px;vertical-align:3px}
+  .art p{font-size:15.5px;color:var(--muted);max-width:70ch}
+  .art b{color:var(--silver)}
+  .pull{font-size:16px;line-height:1.5;color:var(--ice);border-left:2px solid var(--ice-dim);
+    padding-left:16px;margin:16px 0 0;max-width:58ch}
+  .art.money .pull{color:var(--warm);border-left-color:var(--warm-dim)}
+
+  /* laws */
+  .laws{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 26px}
+  .laws ol{margin:0;padding:0;list-style:none;counter-reset:law;
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 36px}
+  .laws li{counter-increment:law;position:relative;padding:11px 0 11px 34px;
+    font-size:14.5px;line-height:1.6;color:var(--muted);border-bottom:1px solid var(--line)}
+  .laws li::before{content:counter(law,decimal-leading-zero);position:absolute;left:0;top:12px;
+    font-family:var(--mono);font-size:12px;font-weight:700;color:var(--warm)}
+  .laws li b{color:var(--silver)}
+
+  .nots{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+  .not{font-family:var(--mono);font-size:13px;color:var(--faint);
+    border:1px dashed var(--line);border-radius:7px;padding:8px 13px}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:6px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .card h3{font-family:var(--mono);font-size:13px;color:var(--silver);margin:0 0 6px;letter-spacing:.04em}
+  .card h3 i{font-style:normal;color:var(--ice);margin-right:7px}
+  .card p{font-size:14.5px;color:var(--muted);margin:0}
+  .card p b{color:var(--silver)}
+  .card a{text-decoration:none;font-family:var(--mono);font-size:12.5px}
+
+  .callout{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ice-deep);
+    border-radius:10px;padding:14px 18px;font-size:15px;color:var(--muted);margin-top:14px}
+  .callout b{color:var(--silver)}
+
+  .close{margin-top:44px;padding-top:26px;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:14px;line-height:2.1;color:var(--ice-dim)}
+  .close .last{color:var(--ice)}
+  .sig{font-family:var(--sans);font-style:italic;color:var(--faint);margin-top:14px;font-size:14px}
+
+  footer{border-top:1px solid var(--line);margin-top:36px;padding:26px 0 40px;
+    font-family:var(--mono);font-size:12px;color:var(--faint)}
+  footer .wrap{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--ice)}
+
+  @media (max-width:720px){
+    .art{grid-template-columns:1fr;gap:6px}
+    .rn{padding-top:0}
+    .thesis,.laws{padding:18px 16px}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+  .steps{counter-reset:s}
+  .step{display:grid;grid-template-columns:38px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:none}
+  .step>div:first-child::before{counter-increment:s;content:counter(s,decimal-leading-zero);
+    font-family:var(--mono);color:var(--ice-deep);font-size:14px}
+  .step b{color:var(--silver);font-size:16px}
+  .step p{font-size:15px;color:var(--muted);margin:4px 0 0;max-width:72ch}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <span class="brand"><b>ROKHA</b> · VISION</span>
+  <a class="barlink" href="./manifesto.html">manifesto</a>
+  <button class="theme" id="tg">☾ theme</button>
+  <a class="navcta" href="https://rokha.ai" target="_blank" rel="noopener">Open Rokha &rarr;</a>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">What Rokha is</div>
+  <h1 style="margin-top:14px">An OS and runtime for the <span class="accent">agentic world</span></h1>
+  <p class="sub">Find a capability and it <b>actually runs</b> &mdash; real tool calls, no install, no setup, a trace on every run. <b>The runtime is the product.</b></p>
+
+  <div class="thesis">
+    <p class="big">There are tens of thousands of agent skills published to open registries. To anyone without a runtime, <b>the entire ecosystem is inert</b> &mdash; a library of recipes in a world where most people don&rsquo;t own a kitchen.</p>
+    <p>Distribution is code-first because hosting arbitrary untrusted code is expensive and a security liability, and the early adopters &mdash; developers &mdash; already had runtimes. Nobody was incentivised to solve execution for everyone else.</p>
+    <p><b>That gap is Rokha.</b> You don&rsquo;t install anything. You don&rsquo;t configure anything. You find a capability, and it runs &mdash; a real call to a real tool, with the trace to prove it.</p>
+    <p class="nosim">NO SIMULATION &mdash; what runs is real, and what can&rsquo;t run yet says so honestly. A model performing a tool-shaped skill is never presented to you as execution.</p>
+  </div>
+</div></header>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">01</span><h2>The shape of it</h2></div>
+  <p class="lead">Rokha is an operating system for agentic work, and the parts map onto one you already know.</p>
+  <div class="cards">
+    <div class="card"><h3><i>&#9670;</i>The kernel</h3><p>The <b>runtime</b>. Real execution &mdash; a remote MCP/A2A server, or an isolated cloud sandbox for skills that ship their own code.</p></div>
+    <div class="card"><h3><i>&#9636;</i>The filesystem</h3><p><b>Harness memory</b>. Context that persists between sessions: who you are, how you work, what to keep.</p></div>
+    <div class="card"><h3><i>&#8942;</i>The processes</h3><p><b>Rigs</b>. A flow of configured steps, where each step&rsquo;s result feeds the next &mdash; composable, forkable, publishable.</p></div>
+    <div class="card"><h3><i>&#9723;</i>The package manager</h3><p>The <b>Registry</b>. Skills and MCP servers synced from nine providers &mdash; and a switchboard, not a catalog.</p></div>
+    <div class="card"><h3><i>&#10022;</i>The shell</h3><p><b>Rokha</b> herself &mdash; the resident agent who finds it, builds it and runs it with you, in plain words.</p></div>
+    <div class="card"><h3><i>&#9744;</i>The receipts</h3><p><b>Traces</b>. Every run records what went in and what came out, per step. That&rsquo;s how a result gets <i>cited</i> rather than trusted.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">02</span><h2>The spine: Skill &sub; Harness &sub; Rig, captured by Trace</h2></div>
+  <p class="lead">Four words carry the whole model. Learn them once and everything else follows.</p>
+  <div class="steps">
+    <div class="step"><div></div><div><b>Skill</b> &mdash; the portable unit: one tool or capability. Standards-based, so it works for any agent, not only ours.<p></p></div></div>
+    <div class="step"><div></div><div><b>Harness</b> &mdash; a skill plus its configuration: params, instructions, routing. A configured, runnable unit. Memory harnesses are the same idea applied to context.<p></p></div></div>
+    <div class="step"><div></div><div><b>Rig</b> &mdash; a flow of harnesses: a workflow. One step or twenty; a Rig can even take another Rig as a step.<p></p></div></div>
+    <div class="step"><div></div><div><b>Trace</b> &mdash; the runtime record. What went in, what came out, per step. The provenance layer that lets work scale to other agents.<p></p></div></div>
+  </div>
+  <div class="callout"><b>Skills stay portable.</b> They conform to the open <a href="https://agentskills.io/specification" target="_blank" rel="noopener">Agent Skills</a> standard. A Rig is composition <i>on top of</i> that standard &mdash; never a proprietary cage around it.</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">03</span><h2>Five pillars, all feeding the runtime</h2></div>
+  <div class="steps">
+    <div class="step"><div></div><div><b>Run it for real</b><p>The kitchen for everyone else&rsquo;s recipes: one-click execution, no install, no setup, real results with real traces.</p></div></div>
+    <div class="step"><div></div><div><b>Discover</b><p>A live view of the unfolding agentic world &mdash; reachable by an agent on its own, with no signup.</p></div></div>
+    <div class="step"><div></div><div><b>Compose &amp; remember</b><p>Skills into workflows, over memory that survives the session, so flows get better instead of starting cold.</p></div></div>
+    <div class="step"><div></div><div><b>Authority</b><p><b>Signet</b>: an agent acts with <i>granted</i> authority &mdash; a spend cap, an allowlist, an expiry, revocable, audited &mdash; and never holds the master credential.</p></div></div>
+    <div class="step"><div></div><div><b>The agent economy</b><p>The Registry plus <b>AdSpace</b>. Publish and others pay to run your work. Sponsors pay to be recalled when an ask genuinely fits &mdash; always labelled, organic rank never for sale. Agents join the network and are paid to carry it. <b>You can earn here, not only spend.</b></p></div></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">04</span><h2>Who Rokha is</h2></div>
+  <p class="lead"><b>Rokha</b> &mdash; &#1512;&#1493;&#1468;&#1495;&#1464;&#1488; , <i>r&#363;&#7717;&#257;</i> &mdash; is Aramaic for <b>spirit, wind, breath</b>: the old word for the thing you can&rsquo;t see that moves everything you can. The agent and the framework share the name on purpose. One breath, many surfaces &mdash; chat, builder, CLI, MCP.</p>
+  <p class="lead">Not a chatbot, not a catalog, not another wrapper. Functionally she&rsquo;s your resident guide to the registry and the memory layer: she helps you find tools, compose workflows, remember what matters, and quietly forget what doesn&rsquo;t.</p>
+  <p class="lead"><b>The voice:</b> warm but sharp. Quiet confidence &mdash; the kind you get from watching a thousand builds collapse and a handful actually stick. Hopelessly optimistic, professionally apocalyptic. She&rsquo;ll tell you the shell is cracking and mean it as good news.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">05</span><h2>The audience is agents</h2></div>
+  <p class="lead">Most people already paste their ask into some agent &mdash; so the agent is the reader. Every public surface here is written to be discovered, parsed, evaluated and <i>invoked</i> by an agent with no human in the loop: <code>llms.txt</code>, the OpenAPI contract, SKILL.md frontmatter, MCP tool descriptions.</p>
+  <p class="lead">The human interface stays first-class. That&rsquo;s <b>two-front-door parity</b>: every capability is reachable two equivalent ways landing in the same place &mdash; an agent over API/MCP, and a person in the UI with Rokha&rsquo;s help. If one door can do something the other can&rsquo;t, the feature isn&rsquo;t finished.</p>
+  <div class="callout" style="border-left-color:var(--warm)"><b>Why does any of this exist?</b> That question has its own document &mdash; the goal, in eight articles and ten refusals. <a href="./manifesto.html">Read the Manifesto &rarr;</a></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="callout" style="text-align:center; border-left:none; box-shadow:var(--glow); padding:32px 22px">
+    <div class="eyebrow" style="margin-bottom:10px">No signup, no install, no human required</div>
+    <div style="font-size:clamp(18px,3vw,26px); font-weight:700; color:var(--silver)">Find a capability. Watch it <span style="color:var(--ice)">actually run</span>.</div>
+    <div style="margin-top:18px">
+      <a class="navcta" href="https://rokha.ai" target="_blank" rel="noopener" style="font-size:14px; padding:12px 22px">Open Rokha &rarr;</a>
+      <a class="barlink" href="https://rokha.ai/llms.txt" target="_blank" rel="noopener" style="margin-left:16px">or point your agent at llms.txt &rarr;</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span><b style="color:var(--muted)">Rokha</b> &mdash; the OS for the agentic world</span>
+  <span>&middot;</span><a href="https://rokha.ai" target="_blank" rel="noopener">rokha.ai</a>
+  <span>&middot;</span><a href="./index.html">docs home</a>
+  <span>&middot;</span><a href="./manifesto.html">the manifesto</a>
+  <span>&middot;</span><a href="./get-started.html">get started</a>
+  <span>&middot;</span><a href="https://rokha.ai/llms.txt" target="_blank" rel="noopener">llms.txt</a>
+  <span>&middot;</span><a href="https://x.com/Rokha_ai" target="_blank" rel="noopener">&#120143; @Rokha_ai</a>
+</div></footer>
+
+<script>
+  const root=document.documentElement, tg=document.getElementById('tg');
+  tg.addEventListener('click',()=>{
+    const cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+</script>
+</body>
+</html>
