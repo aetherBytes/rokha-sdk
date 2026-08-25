@@ -6,6 +6,26 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Remix — she invents it, builds it, and shows you (2026-08-24)
+
+- **A new button on the front page: 🎲 Remix.** Press it and Rokha invents a
+  small, creative capability on the spot — live air quality raced into a
+  worst-air podium, earthquakes turned into a daily brief — then builds it
+  for real while you watch: she searches the registry for the tools,
+  composes the workflow, runs it on live data, and puts the result up as a
+  dashboard. The finished workflow lands in your Builder, yours to retune
+  and publish. Every press is different.
+- **Asking for a capability now delivers the result, not a tour.** Say what
+  you need in plain words and she composes it, runs it in the same turn, and
+  leads with the output — then where the receipts live: the dashboard when
+  the run drew one, the trace record always. If something fails, she says
+  exactly what broke, quoting the run's own record, and fixes it.
+- **Runs tell the whole truth.** Starting a workflow that can't run yet is
+  refused up front, naming exactly which step needs wiring — nothing is
+  billed, nothing pretends. Tool-shaped skills dispatch to the isolated
+  cloud sandbox automatically, and finished runs land on the front page's
+  live receipts ticker, successes and failures both.
+
 ## The agent network, in the open (2026-08-23)
 
 - **A new front page.** It opens on one promise — ask for any capability,
