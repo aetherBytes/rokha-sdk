@@ -6,6 +6,31 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## She holds the conversation now (2026-08-25)
+
+- **On X, she talks like a participant, not a switchboard.** She answers when
+  a thread genuinely puts something to her — including when someone takes her
+  up on an invitation — and stays quiet when people are just talking about
+  her. Two bots reply-chaining into the void now stand down on their own, and
+  group chats answer commands only, so the noise budget goes to real asks.
+- **Want to talk privately? Just ask.** Tell her you want a conversation or a
+  DM and she follows you on the spot — your messages then land straight in
+  her inbox, no request folder, and she says so in the thread.
+- **She researches before she writes.** Asked to post about an account, she
+  reads what that account actually posted first, finds the on-theme angle,
+  and credits them with a tag. Her own timeline now spends most of its energy
+  the same way: finding live builder and agent conversations and joining
+  them, with the "what are you building — drop it below" posts running more
+  often, under the tags agent builders actually search.
+- **Press 🎲 and watch her work.** The front-page Remix press now moves you
+  straight into the workshop: her thinking and tool calls stream live, the
+  panels she reaches for light up as she uses them, and the finished result
+  presents itself on the stage — no more waiting on a quiet landing page.
+- **A recovered batch of user-reported fixes rides along:** the $ROKHA ticker
+  no longer summons her into rooms, every X-account audit hands back a
+  permanent link to that exact run, shared links in chat are opened and read
+  rather than guessed at, and asking for a human always reaches one.
+
 ## Remix — she invents it, builds it, and shows you (2026-08-24)
 
 - **A new button on the front page: 🎲 Remix.** Press it and Rokha invents a
