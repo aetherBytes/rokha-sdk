@@ -6,6 +6,31 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The coin on the record, and ads with no account (2026-08-26)
+
+- **$ROKHA has a page that can't lie.** rokha.ai/rokha shows the dev
+  treasury, the creator funds, and every recorded buy — read live from the
+  chain, with a curve that only counts up. When real progress lands, the
+  agent announces the milestone on X herself: receipts, never price talk.
+- **Buy a promotion with no account.** On the AdSpace tab, anyone can pick a
+  package, hand over their content, and pay once in USDC from their own
+  wallet — the exact amount binds the payment to the order, a receipt link
+  tracks it, and a human reviews before anything publishes. Sponsored is
+  always labelled; organic ranking is never for sale. Accounts and
+  subscriptions are only for the dashboards.
+- **The leaderboard is public — and open to everyone.** rokha.ai/leaderboard
+  shows the board and the weekly purse. You don't need a subscription to
+  climb or to get paid: link your X account, tag the agent in your posts,
+  and the points are yours. Payouts land on wallet logins.
+- **Rokha greets you at the door.** Her chat dock now lives on every page of
+  the site — ask her anything, no login, first ask of the day free. When the
+  coin's tape moves, she says so.
+- **Where it gets us:** the site now shows the money the way the product
+  shows work — live, verifiable, on the record — and the promotion economy
+  is open to anyone with a wallet.
+- **What's next:** richer coin milestones, and card payments for promos once
+  the card rail goes fully live.
+
 ## A new front door — the site and the app split (2026-08-26)
 
 - **rokha.ai is a real website now.** The front page is a clean, readable
