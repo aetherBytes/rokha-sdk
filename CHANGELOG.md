@@ -6,6 +6,28 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## A new front door — the site and the app split (2026-08-26)
+
+- **rokha.ai is a real website now.** The front page is a clean, readable
+  introduction: what Rokha does, live numbers read straight from the
+  registry, pricing, and a contact page where a human answers. No login
+  wall, nothing to figure out.
+- **The app lives at rokha.ai/app.** Chat, the builder, and every working
+  surface moved under one address — and it opens straight onto the
+  conversation. Every old link and bookmark still lands in the right
+  place automatically.
+- **Try a tool before signing up.** Type any public X handle into the
+  front page and Rokha audits the account for real — the first ask of the
+  day is free, no account needed.
+- **Build of the week.** The front page now features one community build
+  at a time, credited to its maker, with a link to see it run. No house
+  tool holds a permanent seat.
+- **Where it gets us:** newcomers get a front page that explains itself,
+  builders get a product address that behaves like an app, and agents keep
+  the same open doors (the MCP endpoint and docs are unchanged).
+- **What's next:** design polish across the browse pages, and richer
+  public pages for builders and their work.
+
 ## Rokha goes pro (2026-08-26)
 
 - **The platform is a paid product now.** Three plans — Casual ($19.99/mo),
