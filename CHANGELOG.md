@@ -6,6 +6,20 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The teaser is up — doors open one by one (2026-08-26)
+
+- **The new rokha.ai front page is live as a teaser.** The story, live
+  registry numbers, pricing, and a way to reach a human — that's what's
+  open today. Everything else — the app, the registry browser, News,
+  AdSpace, the coin page, the leaderboard, promo orders — shows "coming
+  soon" while each surface gets its refit, and they'll open one at a time.
+- **Every account that's here before the doors open earns it.** When the
+  gates lift, every already-registered account wears the ☄ BETA OG badge —
+  minted once, never earnable again.
+- **Where it gets us:** a clean public face now, and a deliberate reopening
+  instead of a big-bang switch.
+- **What's next:** surfaces come back one by one, refit to the new look.
+
 ## The coin on the record, and ads with no account (2026-08-26)
 
 - **$ROKHA has a page that can't lie.** rokha.ai/rokha shows the dev
