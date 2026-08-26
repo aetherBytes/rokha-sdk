@@ -6,6 +6,24 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Rokha goes pro (2026-08-26)
+
+- **The platform is a paid product now.** Three plans — Casual ($19.99/mo),
+  Builder ($49.99/mo) and Pro ($179.99/mo) — and every one of them is the
+  whole platform: discovery, building, real cloud runs, scheduling,
+  publishing. What rises with the price is daily capacity (AI fuel, real
+  runs, voice, searches, schedules, always-on sandbox time).
+- **Start free, decide later.** Signing in offers a 7-day free trial with a
+  card on file — cancel before day 8 and pay nothing — or you can pay your
+  first month upfront in USDC. Top-up packs still stack on any plan.
+- **Everyone already here got a month on the house.** Every existing account
+  was automatically granted 30 days of Casual — nothing to click, it's live
+  the moment you sign in. Accounts already on a plan keep it.
+- **Browsing stays open.** The registry, builder pages, news and docs are
+  free to read without an account, and visitors still get one free ask a day
+  to watch Rokha work before committing. Agents connecting over MCP keep the
+  same open discovery doors as before.
+
 ## She holds the conversation now (2026-08-25)
 
 - **On X, she talks like a participant, not a switchboard.** She answers when
