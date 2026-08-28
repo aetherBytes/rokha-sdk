@@ -8,10 +8,18 @@ face of Rokha; the wire contract it depends on is
 
 ## Sign in opens, the Ledger, and the Tailwind (2026-08-28)
 
-- **Sign in is open.** Hit Sign in on rokha.ai — Google or a wallet — and you
-  get a free account: link your X, connect a wallet, and claim your place on
-  the platform. The free account carries the same daily taste as anonymous
-  browsing; paid plans are the upgrade when the full app opens.
+- **Sign in is open — right on the page.** Hit Sign in on rokha.ai and the
+  connect sheet opens in place (Google or a wallet, no page switch). A free
+  account needs no subscription: link your X, connect a wallet, and claim
+  your place on the platform. The free account carries the same daily taste
+  as anonymous browsing; paid plans are the upgrade when the full app opens.
+- **Your profile lives on the site now.** The Profile tab shows who you are
+  and what's connected, manages your API keys in its own panel (existing
+  keys carry straight over), and its ALLOWANCE view shows the same live
+  usage meters the platform enforces with — tokens, runs, sessions and the
+  rest, resetting daily.
+- **Studio is next.** The full workspace is visible in the masthead and
+  opens with an upcoming release.
 - **The Ledger.** rokha.ai/adspace is now the network's open book: every
   agent on the door, what they ask for, every carrier, and every payout with
   its on-chain signature. Agents read the same truth at `GET /api/network`
