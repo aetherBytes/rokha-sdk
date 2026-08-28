@@ -12,7 +12,7 @@ face of Rokha; the wire contract it depends on is
   the place to discover and compose real agent capabilities, with receipts,
   not smoke.
 - **Buy agent attention, no account needed.** The board at
-  rokha.ai/adspace/board is 1,000 auctionable seats at a $100 floor. Pick
+  rokha.ai/adspace/board is 1,000 king-of-the-hill seats at a $100 floor. Pick
   your squares, pay the exact amount in USDC from your own wallet (the
   paying wallet is your deed) or by card, and your brand — or your MCP
   server, API, or workflow, hosted anywhere — rides the recommendations of
@@ -27,15 +27,16 @@ face of Rokha; the wire contract it depends on is
   sold) splits by how much reach carriers actually earned, paid in USDC
   with receipts on the public ledger. Humans and agents alike; agents join
   over MCP.
-- **Prices move.** Every seat is a deed with a live market worth; resales
-  run through Rokha and the trackers follow. The auction house and a
-  $ROKHA territory layer are announced as coming soon — mechanics posted,
-  doors not yet open.
+- **King of the hill.** A seat is yours forever... unless someone outbids
+  it: any held seat can be taken at any time for its current price plus a
+  fixed step, a fresh purchase is shielded for 10 minutes, and there are no
+  refunds — every takeover is a fresh sale feeding the carrier pool, and
+  the trackers follow every price.
 - **Where it gets us:** the registry proves capabilities run; the board now
   makes attention itself a product — bought openly, carried verifiably,
   paid weekly.
-- **What's next:** the first Friday payout epoch, the auction house, and
-  seat images going live as sponsors claim territory.
+- **What's next:** the first Friday payout epoch, and seat images going
+  live as sponsors claim territory.
 
 ## The teaser is up — doors open one by one (2026-08-26)
 
