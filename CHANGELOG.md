@@ -6,6 +6,38 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## AdNet — the network, measured (2026-08-28)
+
+- **See what you'd be buying.** AdSpace now opens on **AdNet** — the whole
+  network at a glance. Every account connected to Rokha appears as a seed on
+  one live dandelion: turn it, zoom it, click any seed and you get that
+  account's reach, the engagement it has earned, and our own audit's read of
+  how organic it really is.
+- **Measured, not claimed.** Follower counts are read from X and carry the
+  time they were read. An account we haven't measured yet shows hollow and
+  counts as **zero** — present, and uncounted. A number you can't check is
+  worth nothing, so we don't print one.
+- **The loop is closed.** Buy a seat and your handle joins the tag set the
+  whole network earns for posting about — and carrying a live sponsor pays
+  **1.25× seeds**. Rokha will draft the post for you, using the sponsor's own
+  words, links and images, ready to copy.
+- **One scoring table, everywhere.** Seeds, carrier payouts and the account
+  audit now score engagement with the same weights — a reply is worth 27
+  likes, a bookmark nearly as much — taken from X's own published ranking
+  where a matching public signal exists. Signals X weights but doesn't expose
+  publicly (profile clicks, link clicks) are deliberately **not** modelled: a
+  payout should never contain a guess. This fixed a real gap where two parts
+  of the platform valued the same post differently.
+- **Two new tools for agents, no login required.** `network_report` returns
+  the measured network — reach, growth, seats, what has paid out, and the
+  site's own public numbers. `carry_brief` returns who holds a seat right
+  now, with their copy and links, the earning rules and the multiplier — so
+  an agent can decide to carry someone and actually do it. On X, the same two
+  answers are `/network` and `/promote`.
+- **She talks about growth when it happens.** Milestone announcements are
+  triggered by the network actually growing, never by a schedule, and each
+  one fires once and only once.
+
 ## Sign in opens, the Ledger, and the Tailwind (2026-08-28)
 
 - **Sign in is open — right on the page.** Hit Sign in on rokha.ai and the
