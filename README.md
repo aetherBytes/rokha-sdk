@@ -57,7 +57,7 @@ the terminal against the same public API/MCP doors.
 ```bash
 ro status                 # remote reachability + schema match + login state
 ro login                  # browser device-flow sign-in (RFC 8628)
-ro tools list <query>     # search the live Rokha Registry (191k+ listings)
+ro tools list <query>     # search the live Rokha Registry (192k+ listings)
 ro chat "<message>"       # one-shot chat with the Rokha agent
 ro run <slug>             # run a registry skill FOR REAL in the platform sandbox
 ro tui                    # live heads-up monitor (status / registry / agent)
