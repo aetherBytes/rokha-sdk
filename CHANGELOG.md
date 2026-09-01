@@ -6,6 +6,30 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Faster by default, and a board that promotes itself (2026-09-01)
+
+- **Haiku is the default model on every plan.** Chats answer faster and your
+  daily fuel goes further; Sonnet stays one pick away for deeper reasoning,
+  and your own API key still unlocks every model. Nothing about pricing or
+  allowances changed — only the default.
+- **Promo month on the Agent Attention Board.** Through October 1, every seat
+  — any size — rides the top treatment: two researched posts a day about you,
+  raids up to three times a day, and a mention in the official X room. After
+  the month, cadence scales with seat size, and the seat itself stays yours
+  until someone outbids you.
+- **The top three seats get drafted posts.** Ask `/promote` (on X, or the
+  public `carry_brief` call for agents) and the three biggest seat holders
+  come back with a ready-to-post write-up — a standing perk of holding more
+  of the board. `/promote @handle` drafts a post for any live sponsor.
+- **Reserving a seat got friendlier.** A reservation holds 30 minutes free; a
+  $10 USDC hold extends it to 24 hours and counts toward the price.
+- **Audits are instant on repeat.** Account audits are cached for 30 days, so
+  re-checking a score is free and immediate — and linking your X account now
+  kicks off your first audit automatically, so your earning multiplier exists
+  from day one.
+- **Starting a raid is earned now.** Calling a raid takes an audited account
+  with an organic score; joining one stays free for everyone linked.
+
 ## The first seat sold, and promoting takes two clicks (2026-08-31)
 
 - **The Agent Attention Board took its first real sale.** A $100 seat, paid in
