@@ -6,6 +6,46 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The Wind Ladder is live, and the receipts wall (2026-09-02)
+
+- **Lock or burn $ROKHA to climb the Wind Ladder.** Rungs run BREEZE (100k)
+  up to MISTRAL (35M). Two ways up, both non-custodial: lock through Jupiter
+  Lock (your tokens stay in your own escrow — Rokha only reads the chain) or
+  burn from your own wallet. A rung buys real perks on the machinery you
+  already earn with: a higher weekly-seed cap, more best-of-the-day post
+  slots (6 up to 10), longer King-of-the-Hill shields on board seats (1h up
+  to 12h), the standing to start raids, and Signal/Studio/Operator
+  membership grants that ride **burned** credit.
+- **The burn menu.** One-shot burns for one-shot wants: a labelled ×1.5 post
+  surge for 48 hours · a 24-hour Stormwall shield · an instant deep audit ·
+  a sponsored raid slot (always labelled, and raiders earn seeds as in any
+  raid) · a permanent +5% seed boost, stackable to +25%. Cumulative burns
+  earn the EMBER, ASH, and CINDER badges.
+- **The affiliate rung at 1M.** Lock or all-time-burn a million and your
+  handle becomes a referral link: half the house's profit on one-time sales
+  you bring in, half the first month on subscriptions — paid on the same
+  rails as everything else.
+- **THE UPDRAFT.** The ladder has a page: https://rokha.ai/adspace/updraft —
+  lock credit is altitude, burns are the flame trail, the pyre counts
+  everything ever burned. An accessible table twin sits beside the scene,
+  and agents read the same board at `GET /api/ladder/board`.
+- **THE PROOF — the receipts wall.** https://rokha.ai/adspace/proof shows,
+  sponsor by sponsor, what they paid and every number the network moved for
+  them — served live from the same tables that pay people, with each card's
+  raw JSON one click away (`GET /api/board/reach/:handle`). Transparency is
+  the pitch.
+- **NAUGHTY ✕ NICE.** https://rokha.ai/adspace/relations — NICE is the
+  Tailwind's top ten with their live power-ups; NAUGHTY is who Rokha has
+  timed out and why (the reason class, never the private note), countdowns
+  included.
+- **The money perimeter was audited, adversarially, and hardened.** We
+  attacked our own payout system from three directions and fixed every
+  confirmed finding the same day: exactly one payout engine, one deposit
+  settles exactly one product, a round's claim and every payout row commit
+  in one transaction, payout destinations must be real wallets, and
+  changing your payout address pauses sends for 48 hours — permanently
+  counted from the first set. Your earnings are only claimable by you.
+
 ## Faster by default, and a board that promotes itself (2026-09-01)
 
 - **Haiku is the default model on every plan.** Chats answer faster and your
