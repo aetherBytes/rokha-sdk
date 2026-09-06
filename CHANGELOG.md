@@ -6,6 +6,26 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## Building with Rokha got buttons, diagrams, and a straight answer (2026-09-06, later the same day)
+
+- **Tap-to-send choices.** When Rokha offers you a decision — which skill,
+  which direction — the options arrive as real buttons under her reply, on
+  the site chat, the live room, and the studio. Tap one and it sends.
+- **Pipelines are drawn.** Describing a rig now comes with a step diagram —
+  numbered stages chained by arrows — instead of a paragraph.
+- **She wires the gaps.** An unfinished rig step is no longer a dead end:
+  she searches the registry, binds a fitting skill, and runs — asking you
+  only when the pick is genuinely yours to make.
+- **"Clear the session" clears it.** Asking Rokha to start fresh now truly
+  resets the conversation — the old thread can no longer resurface.
+- **One model policy, honest and cheap.** Metered chat runs on the fast
+  base model for every plan; bringing your own API key unlocks any model on
+  your own bill. Ask her what she's running on and she answers with the
+  exact live name.
+- **Sign-ins finish where you are.** Phantom and Google logins complete on
+  the page you started from, mobile included — and the whole ad network
+  (the board, the Tailwind, the network page) got a phone-first cleanup.
+
 ## The live room grew up, and the site got easier to read (2026-09-06)
 
 - **rokha.ai/room is its own address now.** The share link opens the live
