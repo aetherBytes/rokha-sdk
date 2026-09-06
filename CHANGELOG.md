@@ -6,6 +6,29 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## The live room grew up, and the site got easier to read (2026-09-06)
+
+- **rokha.ai/room is its own address now.** The share link opens the live
+  room directly — full-screen width on desktop, an app-clean feed on your
+  phone. Messages read like a modern chat: names, faces, timestamps,
+  threaded replies — and Rokha reads the whole thread before she answers,
+  so a reply mid-conversation gets a real answer, not a restart.
+- **Drop a link, get it read.** Paste any link in the room and ask — Rokha
+  opens it for real (signed in or not) and speaks from what's actually
+  there. Paste an MCP server and she'll probe what it offers; `/explore`
+  files the promising ones to the team.
+- **The rooms trade summaries, not noise.** The site room and the X room
+  now exchange periodic digests with a join-the-conversation link each way,
+  instead of mirroring every message.
+- **Moderation is live.** Room operators can remove messages and block
+  seats that spam — removals reach every open tab.
+- **Raids stack modifiers.** `/raid all override <link>` — broadcast to
+  every connected room and the admin override, in one command, any order.
+- **Clearer everywhere.** One-row mobile header, glanceable pages instead
+  of paragraphs, plans offered honestly when a free limit is hit, and
+  Rokha's longer answers now arrive laid out — a bold lead and tight
+  bullets, never a wall of text.
+
 ## Partner tools answer everywhere, and Rokha scouts new ones (2026-09-06)
 
 - **Sponsors' MCP tools are callable on every chat surface now.** When an
