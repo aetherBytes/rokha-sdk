@@ -6,6 +6,16 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## 2026-09-07 — the Telegram bot returns as @RokhaAgentBot
+
+- **docs/telegram-bot.html rewritten**: the bot is LIVE again as ONE bot,
+  @RokhaAgentBot ("RokhaAgent"), at parity with the X agent plus a
+  Telegram-only kit. The page is now the full command reference — talking to
+  her, raids (absolute goals, the /queue with promoter priority), earning
+  (both raiders AND the raided post's author bank units), the any-ticker
+  /buybot (plan / board-seat / locked-$ROKHA gated), /supportwatch, the
+  Attention Board doors, the Horde, account linking, and the admin deck.
+
 ## Pay in $ROKHA — half of every payment burns forever (2026-09-06, evening)
 
 - **The Agent Attention Board takes $ROKHA now.** Pick a block, choose the
