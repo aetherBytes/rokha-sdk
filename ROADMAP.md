@@ -26,7 +26,6 @@ _Last updated: 2026-09-07_
 
 | Pursuit | Why | Status |
 |---|---|---|
-| [Colosseum Crypto World's Fair](https://www.colosseum.com/worldsfair) | Open all-chains hackathon, Sept 14 – Oct 12 2026 — entering with the live runtime: real execution, traces, USDC payouts | `ON RADAR` |
 | [Circle Agent Marketplace](https://agents.circle.com/services) | Listing Rokha MCP execution as a discoverable, payable service for agents in the x402/USDC economy | `ON RADAR` |
 | [Helius Startup Launchpad](https://www.helius.dev/startup-launchpad) | Infrastructure partnership for the Solana settlement layer under the agent economy | `ON RADAR` |
 
