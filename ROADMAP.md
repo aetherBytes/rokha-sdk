@@ -15,7 +15,7 @@ _Last updated: 2026-09-07_
 
 - **Public trace schema + SDK docs** — the proof layer, opened: a documented schema for verifiable run traces, shipped through this SDK.
 - **x402 on the MCP front door** — machine-payable execution: agents discover and pay for Rokha runs over the x402 standard in USDC.
-- **More official partner MCP listings** — repeat the OrbitX pattern: live-fetched rosters, first-party placement, auto-linked ads and registry.
+- **More official partner MCP listings** — live-fetched rosters, first-party placement, auto-linked ads and registry.
 - **Open Signet / session-key docs** — public documentation of the authority layer: Connection → Mandate → Action → Approval, signer-held keys on Solana.
 
 ---
@@ -45,11 +45,10 @@ Milestone-based funding for the open-infrastructure half of the platform. The to
 
 ### ③ Partnerships
 
-The OrbitX pattern, repeated: official MCP listing + callable doors on a board seat + an optional skill in the partner's own catalog.
+One pattern for every partner: official MCP listing + callable doors on a board seat + an optional skill in the partner's own catalog.
 
 | Pursuit | Why | Status |
 |---|---|---|
-| OrbitX | The precedent — official 106-tool MCP listing with live-fetched roster and ads ↔ registry auto-linking | `LANDED` |
 | [Helius](https://helius.dev) | RPC + data infrastructure for every Solana-touching run on the platform | `ON RADAR` |
 | ElizaOS / SendAI | Agent frameworks whose agents gain a 196k-capability execution backend through one MCP connection | `ON RADAR` |
 | Solana Agent Skills catalog | Cross-listing: Rokha skills in their catalog, their skills executable on Rokha | `ON RADAR` |
