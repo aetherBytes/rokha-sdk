@@ -6,6 +6,26 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## 2026-09-15 — the launchpad: The Wall has new doors
+
+Rokha is the AI studio and launchpad. You list a tool, it runs for real,
+and a promoter army paid every Friday carries it. The Wall is the way in.
+
+- **The landing is the live Wall.** One call to action — take a seat. A
+  seat is a product page, an official listing and a standing share of the
+  Friday pot; the top 15 hold Studio access as a rank perk.
+- **The Wild Card.** One slot at position 5½, held for 24 hours from the
+  last purchase and shown on the front page. Anyone can take it from the
+  holder; the clock restarts.
+- **Get carried today, no seat needed.** One researched post from Rokha,
+  or a raid on a post you name, delivered the moment payment lands.
+- **Sponsor the pot.** Top up Friday's payout and be named on the
+  Tailwind and in the payout post — every cent goes to the promoters.
+- **The Pyre is back** in AdSpace with the lock-and-burn menu.
+- **Public doors**: `GET /api/board` carries `wildcard`; `GET /api/tailwind`
+  carries `sponsors`; `GET /api/studio/doors` quotes every price live —
+  nothing above types one. The Studio license itself opens next.
+
 ## 2026-09-07 — the Telegram bot returns as @RokhaAgentBot
 
 - **docs/telegram-bot.html rewritten**: the bot is LIVE again as ONE bot,
