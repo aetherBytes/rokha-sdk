@@ -6,6 +6,31 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## 2026-09-17 — bring your own keys, and the Studio is free this week
+
+- **The Studio is free during hackathon testing.** Sign in and build with
+  your own API keys, free until 24 September 2026. Your plan's included
+  allowances do not change — the point is that keys you bring are never
+  metered here. We want your feedback; there is a feedback button on the
+  banner.
+- **Any model on OpenRouter, on your key.** Add an OpenRouter key in your
+  profile and every model OpenRouter serves opens up — hundreds of them,
+  billed to you, unmetered by us. A small house list stays free to use
+  without a key of your own.
+- **The model picker tells the truth.** Every model shows what it costs per
+  million tokens, how much it remembers, and whether it can call tools. A
+  model without tool calling is marked, never hidden: Rokha can still chat
+  on it, but she cannot run skills or workflows with it.
+- **She can pick models for the job.** Rokha can now rank the catalogue by
+  task, price and capability, and hand a single job to another model —
+  image generation or vision, for example — then bring the result back.
+- **Runs have a ceiling you control.** The per-run loop fuse is measured in
+  fuel units, shows its real number when it stops a run, and you can raise
+  it in your profile. It was never your daily allowance, and now it says so.
+- **The agent settings are rebuilt.** One status strip, plain everyday
+  choices, and the advanced controls folded away. Plain words replace the
+  internal vocabulary, and the model chooser opens as a proper dialog.
+
 ## 2026-09-15 — the launchpad: The Wall has new doors
 
 Rokha is the AI studio and launchpad. You list a tool, it runs for real,

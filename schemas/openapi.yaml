@@ -898,17 +898,17 @@ paths:
   /api/agents/rokha-agent/available-models:
     get:
       tags: [agents]
-      summary: Models available to Rokha
+      summary: Models available to Rokha (Anthropic + the OpenRouter catalogue)
       operationId: agentAvailableModels
+      security:
+        - bearerAuth: []
       responses:
         '200':
-          description: Model list
+          description: The merged catalogue and what the caller may run
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ModelInfo'
+                $ref: '#/components/schemas/AvailableModels'
 
   # ============================================================
   # Harnesses — wallet-scoped memory layer
@@ -3022,8 +3022,47 @@ components:
       properties:
         id: { type: string }
         name: { type: string }
-        provider: { type: string }
+        provider: { type: string, description: "anthropic or openrouter" }
         context_length: { type: integer }
+        supports_tools:
+          type: boolean
+          description: >
+            False means chat only — the agent cannot call skills, workflows
+            or searches on this model. Such models are marked, never hidden.
+        house:
+          type: boolean
+          description: Runnable without a key of your own.
+        needs_own_key:
+          type: boolean
+          description: Requires your own provider key, and is billed to it.
+        pricing_per_m:
+          type: object
+          additionalProperties: true
+          properties:
+            prompt: { type: number, nullable: true }
+            completion: { type: number, nullable: true }
+            unit: { type: string, example: usd_per_million_tokens }
+
+    AvailableModels:
+      type: object
+      additionalProperties: true
+      properties:
+        models:
+          type: array
+          items: { $ref: '#/components/schemas/ModelInfo' }
+        default_model:
+          type: string
+          description: The model a turn runs on when nothing else is chosen.
+        default_source:
+          type: string
+          nullable: true
+          enum: [free-auto, fixed, fallback]
+        total_models: { type: integer }
+        sources:
+          type: array
+          items: { type: string }
+        has_anthropic_key: { type: boolean }
+        has_openrouter_key: { type: boolean }
 
     # --- Harnesses ---
 
