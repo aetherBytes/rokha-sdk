@@ -6,6 +6,26 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## 2026-09-19 — Rokha scouts for real, and fairer weekly points
+
+- **Ask Rokha to scout anything.** Say `/scout` with an X account, a post, a
+  website or just a project's name. She reads the account and its recent
+  posts, follows every link it points at, and checks each site for the
+  things agents can plug into: a live MCP server, `llms.txt`, an API spec,
+  docs and SDKs. With no link she hunts for one. Then she tells you plainly
+  whether it's a good fit for the Rokha network and why — and when it is,
+  how to get listed and carried. Works on X, in X chats and on Telegram.
+- **She speaks when asked.** In public posts and group chats Rokha now
+  answers commands only — ask her anything open-ended with `/ro`. Direct
+  messages stay a normal conversation.
+- **Message requests just work.** If Rokha's reply to your first DM can't be
+  delivered yet, she keeps it and sends it the moment the request is
+  accepted — it no longer eats your free questions.
+- **Fairer weekly points.** Every day counts your best posts once — the
+  payout day no longer gets a second set. And two hours before the Friday
+  payout, every post of the week gets one final fresh count, so late
+  engagement is paid for.
+
 ## 2026-09-17 — bring your own keys, and the Studio is free this week
 
 - **The Studio is free during hackathon testing.** Sign in and build with
