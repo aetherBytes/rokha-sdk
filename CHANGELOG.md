@@ -6,6 +6,24 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## 2026-09-19 (later) — the free week builds for real
+
+- **The free week now includes the building, not just the bench.** While the
+  hackathon window is open, every signed-in account gets a full day of
+  building on us: 100 sandbox runs a day, a Studio-sized model budget, web
+  search, an hour of sandbox time and room for scheduled runs. Before this
+  the Studio opened but execution stayed behind the old paywall, so people
+  hit an upsell on their first run. Bring your own key and nothing is metered
+  at all.
+- **Longer builds finish.** A single run can now spend more before its safety
+  fuse trips, so a multi-step build of an unfamiliar tool runs to the end.
+- **The "tested" shelf stays honest.** Rokha picks remix ideas from tools that
+  have actually run end to end. Until now a tool proved once stayed on that
+  shelf forever, even after its server started refusing — so picks could fail
+  for reasons that had nothing to do with you. A tool whose own endpoint fails
+  a live run now leaves the shelf, with the reason recorded. Failures on our
+  side — a spent allowance, a timeout — never punish the tool.
+
 ## 2026-09-19 — Rokha scouts for real, and fairer weekly points
 
 - **Ask Rokha to scout anything.** Say `/scout` with an X account, a post, a
