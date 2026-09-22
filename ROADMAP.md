@@ -71,18 +71,6 @@ Being findable where agents — and the people who run them — look.
 | Product Hunt — AI Agents | Launching the runtime: a registry where 196k agent skills actually execute | `ON RADAR` |
 | Show HN · Indie Hackers · BetaList | The builder-community story: runtime, traces, no simulation | `ON RADAR` |
 
-### ⑤ Token Listings — $ROKHA
-
-$ROKHA is a live payment rail: 50% of every $ROKHA payment is burned on-chain, verified; a 5% house buyback-and-burn runs on ad revenue. Token sales never fund contributor payouts — payouts are USDC, on purpose.
-Mint: `2jbdBWTK2MYpuRsmEDJqETU3UMM2nN3WGtete4HUpump` (Solana Token-2022) · [rokha.ai/rokha](https://rokha.ai/rokha)
-
-| Pursuit | Why | Status |
-|---|---|---|
-| DexScreener + Birdeye | Verified logo, socials, and token profile | `ON RADAR` |
-| Jupiter verified list | Clean Metaplex metadata, then the strict-list PR; Phantom recognition follows Jupiter | `ON RADAR` |
-| [CoinGecko](https://www.coingecko.com/en/coins/new) | New-coin application with live pool and holder data | `ON RADAR` |
-| [CoinMarketCap](https://coinmarketcap.com/request) | Listing request — the longer road, same facts | `ON RADAR` |
-
 ---
 
 ## Reach us

@@ -6,6 +6,24 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## 2026-09-22 — card and USDC only; the Pyre is retired
+
+- **Rokha is a software platform, not a cryptocurrency project.** It runs on no
+  blockchain and no smart contract. Every seat, carry and Studio order pays by
+  card or USDC; payouts are USDC. The `rokha` payment rail is gone — a
+  `{"rail":"rokha"}` order is refused, and the `/rokha-ticket` and
+  `/rokha-verify` doors no longer exist.
+- **$ROKHA is a utility token that bridges the promotion network to web3.** Two
+  utilities remain: the cashtag qualifies a Tailwind post on its own, and
+  holding 1,000,000 in your login wallet earns the wind-spirit badge. Nothing is
+  paid out in it.
+- **Retired:** the Pyre, burns, locks, the Wind Ladder and its rungs, the house
+  buyback-burn, `GET /api/ladder/*`, and the `/burn` `/stake` `/ladder` bot
+  commands. Locks placed before this date keep their seed standing until they
+  unlock.
+- The token-listings track leaves the Flight Plan.
+
+
 ## 2026-09-19 (later) — the free week builds for real
 
 - **The free week now includes the building, not just the bench.** While the
