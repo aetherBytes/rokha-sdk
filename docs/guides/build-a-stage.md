@@ -83,6 +83,16 @@ the result — chart libraries fit (uPlot ~45 KB, Chart.js ~200 KB min) — or
 have your sandbox step bundle with `npx -y esbuild --bundle` before writing
 the file. Escape `</` inside embedded JSON.
 
+**An instruction (model) step has no filesystem**, so it cannot write that
+file — but it can ship the same artifact as a fenced block. Write the last
+step as: *"Reply with exactly two fenced blocks — first a ```json fence holding
+only the `rokha_app` object, then one ```html fence holding one self-contained
+document."* The stage takes the html fence as the page and the json fence as
+the native dashboard. The fence must be a whole document (or at least markup —
+`<!doctype html>`, `<html`, `<body`, `<div`…), never an inline snippet, and it
+renders in the same hard-sandboxed frame as a written artifact. Don't put the
+HTML inside the JSON, and don't leave the JSON bare after prose.
+
 ## Input — how a stage takes it
 
 - **Pre-run**: declare the rig's input contract (`rig_author`'s `input` /

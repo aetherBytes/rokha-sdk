@@ -6,6 +6,22 @@ face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
 
+## 2026-09-22 — the stage takes what the model writes
+
+- **A designed page from an instruction step now lands on the stage.** A rig
+  whose last step is a plain model instruction can reply with a ```html fence
+  holding a self-contained page plus a ```json fence holding the `rokha_app`
+  block, and the Studio's STAGE renders the page with the native dashboard —
+  no sandbox step, no file write needed. Before, a run shaped like that fell
+  back to raw output.
+- **The `rokha_app` block is found wherever it sits.** The reader tries every
+  fenced block (not just the first) and locates a bare `{"rokha_app": …}`
+  object after prose or after an HTML fence. A json fence still works exactly
+  as before.
+- **Rokha builds to that shape.** When she writes a rig's last step she now
+  asks for the two fences, and never asks a model step to write a file.
+- Guide: `docs/guides/build-a-stage.md` (Tier 3 — the instruction-step door).
+
 ## 2026-09-22 — card and USDC only; the Pyre is retired
 
 - **Rokha is a software platform, not a cryptocurrency project.** It runs on no
