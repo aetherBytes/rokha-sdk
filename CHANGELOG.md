@@ -5,6 +5,31 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 2026-09-23 — the developer site, rebuilt; and the white paper
+
+- **A new developer site.** The landing page is rebuilt in the same light
+  "flight manual" world as rokha.ai, so the docs and the product read as one
+  surface instead of two. Four doors at the top — Build, Agents, Promote,
+  White paper — and every reference grouped under the one it belongs to.
+- **The white paper is published.** `whitepaper.html` states how paid
+  promotion is scored: the engagement weights and which of them are X's
+  published numbers versus our own judgement, the damping, the per-post
+  ceiling, every anti-gaming guard and what it costs, the payout curve, and
+  the arithmetic that turns seeds into USDC. It also publishes the model's
+  known weaknesses and one real defect an audit caught. Linked from the
+  footer of rokha.ai.
+- **Two doors, not three plans.** Pages that still described Signal / Studio /
+  Operator now describe what is actually sold: a top-15 seat on The Wall
+  carries Studio access, and buying the Studio outright opens after the
+  current round of testing. The old subscriptions are retired and existing
+  ones are honoured.
+- **The X integration page is withdrawn.** Those features are being rebuilt
+  and will be documented again when they return. Linking an X account for
+  the Tailwind is unaffected and still documented on the leaderboard page.
+- **The Telegram page now matches the product.** The Attention Board is The
+  Wall, a seat is *taken* at +10% over the holder (minimum $25) rather than
+  "outbid", and the buy door points at rokha.ai/wall.
+
 
 ## 2026-09-22 — the stage takes what the model writes
 
