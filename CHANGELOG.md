@@ -5,6 +5,27 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 2026-09-24 — Rokha reads GMGN: token, wallet and market research on every surface
+
+- **Three research tools on Rokha's belt** — on the site, on X and on Telegram.
+  A token by contract address (live facts, security read, pool, top holders
+  with wallet tags, top traders, candles), a wallet by address (record, recent
+  trades, profits over any period, tokens it launched) and the market with no
+  address at all (trending per chain, search with copycats side by side, KOL
+  and smart-money trades). Ask in plain words — "is this CA safe", "can I copy
+  this wallet", "what is smart money buying" — and she connects the dots.
+- **Fourteen official GMGN harnesses and two rigs on the registry** — Token Due
+  Diligence and Wallet Dossier — to pull into your own builds. Each harness is
+  one real call to GMGN's API.
+- **Your key, your calls.** Everything runs on the caller's own GMGN API key:
+  create one at gmgn.ai/ai and save it once under Profile → API Keys with the
+  alias `key-gmgn` — exactly that name. Rokha never holds a trading key and
+  never places an order; GMGN's swap and order tools stay on your own machine.
+- **Proven is now bound to the bytes.** A listing's proven stamp records the
+  fingerprint of the skill it proved; if the upstream skill changes, the stamp
+  is cleared and the listing is re-checked, so "proven" always means the bytes
+  you are about to run.
+
 ## 2026-09-24 — the coin leaves the site: no token utility; USDC payouts are the one chain link
 
 - **Rokha has no token utility of any kind.** The platform is software — an AI
