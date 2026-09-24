@@ -233,7 +233,7 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
     what it refuses to count, and how a participant checks our arithmetic against their own posts.
   </p>
   <div class="stamp">
-    <span><b>As of</b> 2026-09-23</span>
+    <span><b>As of</b> 2026-09-24</span>
     <span><b>Status</b> draft — sections 1&ndash;6</span>
     <span><b>Live figures</b> read from production on the date above</span>
   </div>
@@ -278,8 +278,15 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
     <b>&ldquo;Trust us&rdquo; is not a receipt.</b> A promoter told they earned less than they expected has no way
     to check. So every score opens its own working: post by post, weight by weight, multiplier by
     multiplier, from the same code path that computes the payout. If our explanation and our payment
-    ever disagree, that is a bug we own &mdash; and <a href="#verification">section 5</a> is the audit that
-    tests exactly that across every participant.
+    ever disagree, that is a bug we own &mdash; and <a href="#verification">section 5</a> is how we
+    test exactly that across every participant.
+  </p>
+  <p>
+    One principle runs through every term below: <b>the score is built only from things that can be
+    counted, and counted again.</b> A reply, a repost, a like, a view &mdash; anyone can re-fetch them
+    from X and get the same number. Nothing in the score is an opinion: no model reads your post and
+    grades it, no heuristic sizes up your audience. Where we once used judgement calls, we removed
+    them (<a href="#limits">section 6</a> says what and why).
   </p>
   <div class="note">
     <p>
@@ -352,28 +359,28 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
   </p>
 
   <h3>2.5 Multipliers</h3>
-  <p>Two multipliers apply to the capped value, in this order:</p>
+  <p>One multiplier applies to the capped value:</p>
   <ul>
-    <li>
-      <b>Quality</b> &mdash; Rokha reads the post's text and returns one verdict: genuine <b>&times;1.5</b>,
-      neutral <b>&times;1.0</b>, low-effort <b>&times;0.15</b>, or copied <b>&times;0</b>. Neutral is the
-      default, including for any post not yet read: our queue depth must never cost somebody money.
-      &ldquo;Copied&rdquo; is stamped by a deterministic duplicate check, never by the model.
-    </li>
     <li>
       <b>Carry</b> &mdash; a post tagging a live Wall sponsor earns <b>&times;1.25</b>, rising &times;0.05
       per additional seat that sponsor holds, capped at &times;1.50. One boost per post; never the
-      author's own seat.
+      author's own seat. Whether a sponsor is live, and how many seats they hold, are facts on the
+      board &mdash; countable, like everything else here.
     </li>
   </ul>
+  <p>
+    A post stamped as <b>copied</b> earns <b>&times;0</b>. Copied is decided by a deterministic
+    duplicate check against posts already collected &mdash; the same text gives the same answer every
+    time &mdash; never by a model's opinion.
+  </p>
 
   <h3>2.6 Seeds</h3>
   <div class="formula">
-    <span class="hl">seeds(p)</span> = 100 &middot; min( v(p), 6.0 ) &middot; q(p) &middot; c(p)
-    <small>q = quality verdict &middot; c = carry multiplier</small>
+    <span class="hl">seeds(p)</span> = 100 &middot; min( v(p), 6.0 ) &middot; c(p)
+    <small>c = carry multiplier</small>
   </div>
   <p>
-    The maximum any single post can earn is therefore <code>100 &times; 6.0 &times; 1.5 &times; 1.5 = 1,350</code> seeds.
+    The maximum any single post can earn is therefore <code>100 &times; 6.0 &times; 1.5 = 900</code> seeds.
   </p>
 
   <h3>2.7 The account total</h3>
@@ -382,15 +389,9 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
     account-level terms:
   </p>
   <div class="formula">
-    <span class="hl">S</span> = max( &Sigma;<sub>d</sub> &Sigma;<sub>p &isin; best5(d)</sub> seeds(p) &middot; b<sub>profile</sub> , &nbsp;F ) &middot; m<sub>integrity</sub>
+    <span class="hl">S</span> = max( &Sigma;<sub>d</sub> &Sigma;<sub>p &isin; best5(d)</sub> seeds(p) , &nbsp;F ) &middot; m<sub>integrity</sub>
   </div>
   <ul>
-    <li>
-      <b>Profile bonus</b> <code>b_profile</code> &mdash; from an audit of the account's own audience:
-      <code>1 + 0.5 &times; (organic &minus; 50)/50</code>, floored at 50, so <b>&times;1.00 to &times;1.50</b>.
-      Bonus only: an unaudited account sits at &times;1.00 and is never paid less for what a heuristic
-      thinks of it.
-    </li>
     <li>
       <b>The era floor</b> <code>F</code> &mdash; the highest total the account reached this era. Scores
       never fall within a pay cycle.
@@ -410,7 +411,7 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
       <tr><td>Rule Zero</td><td>Under <b>2.0 engagement units</b> (views excluded) earns <b>0</b></td><td>A bought-views farm took rank 1 with 25.4% of a pot on impressions alone</td></tr>
       <tr><td>Per-post cap</td><td><code>v(p)</code> capped at <b>6.0</b></td><td>One viral post deciding a whole week</td></tr>
       <tr><td>Best-5 per day</td><td>Only the best five posts per UTC day count</td><td>A hundred bare tags a day out-earning real work</td></tr>
-      <tr><td>Quality verdict</td><td>Low-effort <b>&times;0.15</b>, copied <b>&times;0</b></td><td>Reply-farm filler; word-for-word plagiarism</td></tr>
+      <tr><td>Copied posts</td><td>A duplicate of an already-collected post earns <b>&times;0</b></td><td>Word-for-word plagiarism</td></tr>
       <tr><td>Self-carry excluded</td><td>A sponsor's own posts never earn their own carry</td><td>Buying a seat to buy a &times;1.25 on your own score</td></tr>
       <tr><td>Integrity</td><td>&minus;5% per deleted paid post, floor <b>&times;0.25</b></td><td>Taking the money, then deleting the post</td></tr>
     </tbody>
@@ -440,27 +441,13 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
       exists to prevent.
     </li>
   </ul>
-  <p>
-    After the 2026-09-23 correction described below, <b>no scored participant carries an integrity
-    penalty at all</b>. Every penalty that had been applied came from a misread, not a deletion.
-  </p>
   <div class="note warn">
     <p>
-      <b>A second defect, found the same way, and it was ours.</b> The sweep that decides whether a post
-      was deleted asked X and treated two different answers as &ldquo;gone&rdquo;: <code>Not Found Error</code>
-      and <code>Authorization Error</code>. Only the first means deleted. The second is X saying the post
-      exists and this token may not read it &mdash; what it returns when an author goes protected, is
-      suspended, or blocks the account we read with. None of those is a deletion.
-    </p>
-    <p>
-      It cost twice, because a retracted post leaves the score <i>and</i> prices this multiplier: an
-      author who became invisible lost their seeds and was then docked for losing them. We re-asked X
-      about all 556 retracted posts: <b>259 were really deleted and 297 were still up</b>. One account
-      had been driven to the &times;0.25 floor for 35 posts it had never taken down.
-    </p>
-    <p>
-      The 297 are restored, the sweep now records invisibility instead of retracting on it, and anything
-      X answers that we do not recognise is treated as invisible rather than deleted &mdash; the failure
+      <b>A post we cannot see is not a post that was deleted.</b> X answers differently for a deleted
+      post and for one that merely became unreadable &mdash; an author going protected or suspended, for
+      example &mdash; and an early version of the deletion sweep treated both as deleted. When our own
+      verification caught it, every affected post was restored, and the sweep was rewritten so that any
+      answer it does not positively recognise as a deletion counts as &ldquo;still up&rdquo;: the failure
       has to land on the side that costs nobody money.
     </p>
   </div>
@@ -529,45 +516,17 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
   <p>
     <b>A public door per participant.</b> <code>GET /api/pages/{handle}/seeds/explain</code> returns,
     without authentication: every post in the era with its raw metrics, its units, whether Rule Zero
-    applied, whether the cap bound, the quality verdict with Rokha's own one-line reason, every
-    multiplier by name and source, the day-by-day best-5 selection, and the final total. A score has to
-    be checkable by the person it was levelled at.
+    applied, whether the cap bound, every multiplier by name and source, the day-by-day best-5
+    selection, and the final total. A score has to be checkable by the person it was levelled at.
   </p>
-
-  <h3>The 2026-09-23 participant audit</h3>
-  <p>We recomputed every scored participant independently and compared the explanation against the ranked board.</p>
-  <div class="tw"><table>
-    <thead><tr><th>Check</th><th>Result</th></tr></thead>
-    <tbody>
-      <tr><td>Participants on the board</td><td class="num">56</td></tr>
-      <tr><td>Explanation reconciles with the board</td><td class="num"><b>56 of 56</b></td></tr>
-      <tr><td>Unexplained discrepancies</td><td class="num"><b>0</b></td></tr>
-      <tr><td>Posts collected this era</td><td class="num">3,569 across 53 authors</td></tr>
-      <tr><td>Integrity-penalised accounts</td><td class="num">0 (after the correction below)</td></tr>
-      <tr><td>Accounts at profile bonus &times;1.00</td><td class="num">23 of 56</td></tr>
-    </tbody>
-  </table></div>
   <p>
-    Every apparent gap resolved to a documented cause. Five accounts sit above their promotion total
-    because the board score also carries platform activity &mdash; raids, badges, login days, filed
-    reports &mdash; while the explanation covers the promotion term alone; one account scores 280
-    entirely from raid participation with no qualifying posts at all.
+    <b>We audit ourselves before we pay.</b> Before each payout we independently recompute every scored
+    participant and reconcile the explanation against the ranked board; a payout does not go out over an
+    unexplained discrepancy. When one of these audits catches a real defect &mdash; and they have &mdash;
+    we fix it, restore anyone affected, and say so publicly rather than quietly patching it. A paper
+    claiming verifiability should show what verification actually caught; those reports are published in
+    the project news as they happen.
   </p>
-  <div class="note">
-    <p>
-      <b>The audit found one real defect, and it is worth publishing.</b> Two different promoters held
-      colliding names: one page's handle was another page's X handle. The lookup behind the explanation
-      matched either column and broke the tie on link recency, so both URLs returned a single card
-      &mdash; one promoter's 17,369 seeds shown under the other's name, while the board itself paid each
-      correctly. The ranking was never wrong; the <i>explanation</i> was, for two accounts. An exact
-      page-handle match now outranks another page's X handle, and a regression test holds that
-      precedence.
-    </p>
-    <p>
-      We report it here rather than quietly fixing it because a paper claiming verifiability should show
-      what verification actually caught.
-    </p>
-  </div>
 
   <h2 id="limits">6. Limits and open problems</h2>
   <p>
@@ -582,32 +541,18 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
     no new reach &mdash; and a quote just above a repost. Both are arguable; neither should be cited as X's.
   </p>
   <p>
-    <b>The profile bonus is the weakest instrument in the system, and we know it.</b> It multiplies an
-    account's entire subtotal by &times;1.00&ndash;&times;1.50 from a heuristic audit of a 20-post sample,
-    using step thresholds. Two consequences we have measured and not yet fixed:
+    <b>What we removed, and why.</b> Earlier versions of this system carried two judgement terms: a
+    per-post quality verdict, where a model read the post and could scale it up or down, and a profile
+    bonus, where a heuristic audit of the account's audience could multiply its whole subtotal. Both
+    were built with honest intent &mdash; reward real writing, reward real audiences &mdash; and both
+    failed the standard the rest of this paper holds: <b>run it twice, get the same number.</b> A
+    model's read of a post is not recountable. An audit of a 20-post sample moves with the sample.
+    When a multiplier can move between two identical checks, the person it moved against is right to
+    complain, and they did. On 2026-09-24 we removed both. The score is now built entirely from counts:
+    engagement, views, sponsor seats on the board, deleted paid posts, and a deterministic duplicate
+    check. What judgement remains is the design of the weights themselves &mdash; stated above, argued
+    for, and fixed until changed publicly.
   </p>
-  <ul>
-    <li>
-      Of 63 accounts re-audited within 30 days, <b>13 moved by 15 points or more</b> and 10 crossed the
-      &times;1.00-bonus boundary in both directions. A participant's multiplier can move on sampling
-      noise between weeks.
-    </li>
-    <li>
-      One signal &mdash; a low variance in engagement across posts, written to catch purchased engagement
-      &mdash; fires on <b>18 of 94</b> linked accounts, and <b>all 18</b> simultaneously carry the audit's
-      strongest authenticity signal. A steady cadence of similar promotional posts is exactly what the
-      best-5-per-day rule rewards, and the audit was penalising it.
-    </li>
-  </ul>
-  <div class="note">
-    <p>
-      <b>Fixed on 2026-09-23.</b> The flag now requires the absence of conversation, so a genuine
-      like-wall still trips it while a steady cadence whose replies carry it does not. The 26 stored
-      scores were repaired by exactly reversible arithmetic &mdash; the penalty is a flat &minus;15 and
-      no other term reads the variance. We publish it because it is the part of the model we would most
-      expect a careful reader to attack, and they would have been right.
-    </p>
-  </div>
   <p>
     <b>A sampler is not a ledger.</b> Post collection runs against a third-party index that under-counts.
     We treat an absence in it as &ldquo;not seen yet&rdquo;, never as evidence a post does not exist &mdash; a
@@ -615,9 +560,9 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
     read.
   </p>
   <p>
-    <b>What we do not claim.</b> That seeds measure the worth of a post. That the system cannot be gamed.
-    That an audit score reflects a person's honesty &mdash; it is a heuristic over public numbers, which is
-    why it can only ever add to a score and never subtract.
+    <b>What we do not claim.</b> That seeds measure the worth of a post. That the system cannot be
+    gamed &mdash; only that gaming it costs more than it pays, and that every number in it can be
+    recounted by the person it was levelled at.
   </p>
 
   <h2 id="sources">Sources</h2>

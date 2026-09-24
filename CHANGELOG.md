@@ -5,6 +5,26 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 2026-09-24 — back to basics: the score is counts, and only counts
+
+- **Two judgement terms are removed from Tailwind scoring.** The per-post
+  quality verdict (a model reading the post and scaling it ×0.15–×1.5) and the
+  profile bonus (a heuristic account audit multiplying the whole subtotal up
+  to ×1.5) are gone. Both could move between two identical checks — a model's
+  read is not recountable, and a 20-post sample audit moves with the sample —
+  which failed the standard the rest of the system holds: run it twice, get
+  the same number. Every remaining term is a count anyone can re-fetch:
+  engagement, views, sponsor seats, deleted paid posts, and a deterministic
+  duplicate check (a copied post still earns nothing).
+- **The explain door slims accordingly.** `GET /api/pages/{handle}/seeds/explain`
+  no longer returns the profile-bonus or quality-verdict fields; the ladder is
+  base · carry (per post) · era floor · integrity · final.
+- **The white paper is revised** to the new model, and its verification
+  section now describes the standing pre-payout reconciliation rather than
+  reproducing one audit's working tables — those live with the audits.
+- **The standalone account audit is unchanged** as a tool; it simply no
+  longer prices anyone's payout.
+
 ## 2026-09-23 — the developer site, rebuilt; and the white paper
 
 - **A new developer site.** The landing page is rebuilt in the same light
