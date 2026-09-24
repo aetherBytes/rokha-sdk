@@ -441,9 +441,29 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
     </li>
   </ul>
   <p>
-    Across all 56 scored participants on 2026-09-23, <b>exactly one</b> carries an integrity penalty:
-    nine deleted paid posts, eight priced, <b>&times;0.60</b>.
+    After the 2026-09-23 correction described below, <b>no scored participant carries an integrity
+    penalty at all</b>. Every penalty that had been applied came from a misread, not a deletion.
   </p>
+  <div class="note warn">
+    <p>
+      <b>A second defect, found the same way, and it was ours.</b> The sweep that decides whether a post
+      was deleted asked X and treated two different answers as &ldquo;gone&rdquo;: <code>Not Found Error</code>
+      and <code>Authorization Error</code>. Only the first means deleted. The second is X saying the post
+      exists and this token may not read it &mdash; what it returns when an author goes protected, is
+      suspended, or blocks the account we read with. None of those is a deletion.
+    </p>
+    <p>
+      It cost twice, because a retracted post leaves the score <i>and</i> prices this multiplier: an
+      author who became invisible lost their seeds and was then docked for losing them. We re-asked X
+      about all 556 retracted posts: <b>259 were really deleted and 297 were still up</b>. One account
+      had been driven to the &times;0.25 floor for 35 posts it had never taken down.
+    </p>
+    <p>
+      The 297 are restored, the sweep now records invisibility instead of retracting on it, and anything
+      X answers that we do not recognise is treated as invisible rather than deleted &mdash; the failure
+      has to land on the side that costs nobody money.
+    </p>
+  </div>
 
   <h3>What the guards cost</h3>
   <p>
@@ -523,7 +543,7 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
       <tr><td>Explanation reconciles with the board</td><td class="num"><b>56 of 56</b></td></tr>
       <tr><td>Unexplained discrepancies</td><td class="num"><b>0</b></td></tr>
       <tr><td>Posts collected this era</td><td class="num">3,569 across 53 authors</td></tr>
-      <tr><td>Integrity-penalised accounts</td><td class="num">1 (&times;0.60)</td></tr>
+      <tr><td>Integrity-penalised accounts</td><td class="num">0 (after the correction below)</td></tr>
       <tr><td>Accounts at profile bonus &times;1.00</td><td class="num">23 of 56</td></tr>
     </tbody>
   </table></div>
@@ -576,13 +596,16 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-spa
       One signal &mdash; a low variance in engagement across posts, written to catch purchased engagement
       &mdash; fires on <b>18 of 94</b> linked accounts, and <b>all 18</b> simultaneously carry the audit's
       strongest authenticity signal. A steady cadence of similar promotional posts is exactly what the
-      best-5-per-day rule rewards, and the audit currently penalises it.
+      best-5-per-day rule rewards, and the audit was penalising it.
     </li>
   </ul>
-  <div class="note warn">
+  <div class="note">
     <p>
-      This is an open defect under active review, published here because it is the part of the model we
-      would most expect a careful reader to attack, and they would be right.
+      <b>Fixed on 2026-09-23.</b> The flag now requires the absence of conversation, so a genuine
+      like-wall still trips it while a steady cadence whose replies carry it does not. The 26 stored
+      scores were repaired by exactly reversible arithmetic &mdash; the penalty is a flat &minus;15 and
+      no other term reads the variance. We publish it because it is the part of the model we would most
+      expect a careful reader to attack, and they would have been right.
     </p>
   </div>
   <p>
