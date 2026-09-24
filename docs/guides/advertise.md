@@ -126,4 +126,4 @@ rokha.ai → **Profile → CAMPAIGNS**:
 Every placement is labelled sponsored wherever it appears. Rokha never promises
 rank, reach or results, and never quotes a price from memory — she reads the
 live board. Seats are paid by card or USDC; nothing on the board is priced or
-paid in $ROKHA.
+paid in any token.

@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rokha × Telegram — @RokhaAgentBot command reference</title>
-<meta name="description" content="@RokhaAgentBot — the one Rokha Telegram bot: chat with Rokha, raid X posts with live goals, the raid queue, the any-ticker buy bot, The Wall, and USDC payouts. Every command explained.">
+<meta name="description" content="@RokhaAgentBot — the one Rokha Telegram bot: chat with Rokha, raid X posts with live goals, the raid queue, The Wall, and USDC payouts. Every command explained.">
 <meta property="og:title" content="Rokha × Telegram — every @RokhaAgentBot command">
-<meta property="og:description" content="Talk to her, raid, queue, earn USDC, run a buy bot on any ticker, buy a board seat — the full command reference for the Rokha Telegram agent.">
+<meta property="og:description" content="Talk to her, raid, queue, earn USDC, buy a board seat — the full command reference for the Rokha Telegram agent.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aetherbytes.github.io/rokha-sdk/telegram-bot.html">
 <meta name="twitter:card" content="summary">
@@ -191,7 +191,6 @@
   <div class="cmdgroup">
     <div class="cmdrow"><code>DM anything</code><div class="d">The whole agent in a private chat. Unlinked runs on a free capped lane; <b>linked runs on your own plan</b> — your tier, your model, your memory shared with the site.</div></div>
     <div class="cmdrow"><code>/ask · /ro &lt;question&gt;</code><div class="d">Ask in a group; she answers threaded onto your question.<span class="opt">Also: just <code>reply</code> to any of her messages — that's a turn too. Replies to her boards and cards are deliberately NOT (a reaction to content never bills anyone).</span></div></div>
-    <div class="cmdrow"><code>ca</code><div class="d">The <b>$ROKHA contract address</b>, instantly, zero AI turns. Any phrasing works: <code>/ca</code>, "whats the rokha ca", "contract address", "mint".</div></div>
     <div class="cmdrow"><code>/catchup · /tldr</code><div class="d">What you missed since you last spoke — summarized to your DM so the room stays clean.</div></div>
     <div class="cmdrow"><code>/welcome · /mission · /pitch</code><div class="d">The forwardable intro · why this exists · the sales deck.</div></div>
   </div>
@@ -217,23 +216,13 @@
     <div class="cmdrow"><code>/earn · /qualify</code><div class="d">How units work and the three bars to get paid: a free Rokha account, your X connected, a Solana wallet login. Miss one and you still help the raid — the payout just skips you.</div></div>
     <div class="cmdrow"><code>/justify [@handle]</code><div class="d">Your leaderboard seat's arithmetic, post by post — the same numbers the payout uses. <code>/justify how</code> explains the whole weight system.</div></div>
     <div class="cmdrow"><code>/purse · /pot</code><div class="d">This week's pot and what each place pays. <code>/receipts</code> — past payouts: addresses and tx hashes, nothing else.</div></div>
-    <div class="cmdrow"><code>/buys · /tape</code><div class="d">The $ROKHA buy tape. Bare = the big ones; <code>/buys all</code> opens every size.</div></div>
     <div class="cmdrow"><code>/bounties · /payouts</code><div class="d">Open pots on live raids · what's been paid, every transaction on-chain.<span class="opt">Bounties attach on the raid card in USDC or SOL — raiders split the <b>full pot you name</b>; the house fee rides on top, never inside.</span></div></div>
     <div class="cmdrow"><code>/fees · /topup</code><div class="d">Every fee the house takes, one card · a USDC top-up credited in seconds.</div></div>
   </div>
 </div></section>
 
 <section><div class="wrap">
-  <div class="kicker"><span class="num">04</span><h2>The buy bot — any ticker</h2></div>
-  <p class="lede">Chain-read buy cards in your own group, for <b>any Solana token</b> — signer-verified against the chain's own balances, so sells and transfers never print as buys. A profit-network feature: a <b>Rokha plan</b> or a <b>live Wall seat</b> unlocks it.</p>
-  <div class="cmdgroup">
-    <div class="cmdrow"><code>/buybot &lt;mint&gt;<span class="badge adm">ADMIN</span><span class="badge gate">PLAN·SEAT</span></code><div class="d">Arm the bot on a ticker — paste the mint address. Up to 3 per room; cards land within about a minute of the chain, with the size, the buyer, the receipt and a one-tap Jupiter buy link. Whale banners over $1k.</div></div>
-    <div class="cmdrow"><code>/buybot<span class="badge adm">ADMIN</span></code><div class="d">The config card (DM'd): your ticker list with ✕ remove buttons and the 🔔 <b>alert floor</b> stepper — the USD size a buy must clear to be announced ($50 default, tune per room).</div></div>
-  </div>
-</div></section>
-
-<section><div class="wrap">
-  <div class="kicker"><span class="num">05</span><h2>Watches &amp; feeds</h2></div>
+  <div class="kicker"><span class="num">04</span><h2>Watches &amp; feeds</h2></div>
   <div class="cmdgroup">
     <div class="cmdrow"><code>/supportwatch on|off<span class="badge adm">ADMIN</span></code><div class="d">When an official Rokha account, a live board sponsor, or an active promoter posts about us on X, the room gets a <b>go-support call</b> and the post takes a ⭐ priority raid seat. Bare <code>/supportwatch</code> shows the state.</div></div>
     <div class="cmdrow"><code>/manage → 𝕏 Watch<span class="badge adm">ADMIN</span></code><div class="d">Track any @handle, #tag or $ticker for this room — fresh matching posts land with a rally call. Button-driven: add, remove, ⏻ pause. Billed to the configuring admin's account.</div></div>
@@ -242,7 +231,7 @@
 </div></section>
 
 <section><div class="wrap">
-  <div class="kicker"><span class="num">06</span><h2>Promotion &amp; The Wall</h2></div>
+  <div class="kicker"><span class="num">05</span><h2>Promotion &amp; The Wall</h2></div>
   <p class="lede">The Wall sells real placement — <b>$100 claims a seat</b>, and rank is bought: a position never moves until somebody <b>takes</b> that seat, at +10% over the holder ($25 minimum). Sponsored placement is always labelled; organic ranking is never for sale. A live seat unlocks this bot's elevated kit in <b>your own group</b>: the buy bot, the profit-network features, priority raid seats on your posts.</p>
   <div class="cmdgroup">
     <div class="cmdrow"><code>/wall · /adspace</code><div class="d">The Wall, how seats work, and the buy door: <a href="https://rokha.ai/wall" target="_blank" rel="noopener">rokha.ai/wall</a>. No account needed — paid is live.</div></div>
@@ -256,7 +245,7 @@
 </div></section>
 
 <section><div class="wrap">
-  <div class="kicker"><span class="num">07</span><h2>The Horde — the network of rooms</h2></div>
+  <div class="kicker"><span class="num">06</span><h2>The Horde — the network of rooms</h2></div>
   <div class="cmdgroup">
     <div class="cmdrow"><code>/horde</code><div class="d">The network: where this room ranks, how to join (add the bot as admin with <b>Delete messages</b>, run <code>/horde</code> — she verifies her own rights), and the network raid calls.</div></div>
     <div class="cmdrow"><code>/rally</code><div class="d">Every live network call, soonest-to-expire first — the raid that needs bodies now.</div></div>
@@ -265,7 +254,7 @@
 </div></section>
 
 <section id="link"><div class="wrap">
-  <div class="kicker"><span class="num">08</span><h2>Link your account — one tap</h2></div>
+  <div class="kicker"><span class="num">07</span><h2>Link your account — one tap</h2></div>
   <p class="lede">Telegram has no passwords to paste and Rokha never asks for one. Your logged-in session vouches for the Rokha side; Telegram vouches for the Telegram side.</p>
   <div class="steps">
     <div class="step"><span class="idx">1</span><div>
@@ -294,7 +283,7 @@
 </div></section>
 
 <section><div class="wrap">
-  <div class="kicker"><span class="num">09</span><h2>Admin &amp; operator</h2></div>
+  <div class="kicker"><span class="num">08</span><h2>Admin &amp; operator</h2></div>
   <div class="cmdgroup">
     <div class="cmdrow"><code>/manage<span class="badge adm">ADMIN</span></code><div class="d">The room's whole deck in one card: autopilot cadence, raid length, the 𝕏 watch, the room purse, the rig toolkit, the buy-bot count. All buttons, all answered in your DM.</div></div>
     <div class="cmdrow"><code>/autopilot<span class="badge adm">ADMIN</span><span class="badge gate">PLAN</span></code><div class="d">She hosts the room: sparks conversation when it goes quiet, offers raids sized to what your crew actually lands, congratulates winners. Billed to the enabling admin's plan; every cadence is tunable. <code>/automode</code> explains it.</div></div>
@@ -317,7 +306,7 @@
   <div class="cta">
     <div class="eyebrow" style="justify-content:center;display:flex">In your group in one tap</div>
     <h2 style="margin-top:14px">Put Rokha in the chat.</h2>
-    <p>Add the bot, rally a raid, arm the buy bot — and link your account so she answers you wherever you are.</p>
+    <p>Add the bot, rally a raid — and link your account so she answers you wherever you are.</p>
     <div class="herocta" style="justify-content:center">
       <a class="btn primary" href="https://t.me/RokhaAgentBot" target="_blank" rel="noopener">Open @RokhaAgentBot →</a>
       <a class="btn ghost" href="https://t.me/RokhaAgentBot?startgroup" target="_blank" rel="noopener">Add to your group →</a>

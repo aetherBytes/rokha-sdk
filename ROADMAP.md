@@ -32,7 +32,7 @@ _Last updated: 2026-09-07_
 
 ### ② Grants & Funds
 
-Milestone-based funding for the open-infrastructure half of the platform. The token is a payment rail, not the grant subject.
+Milestone-based funding for the open-infrastructure half of the platform. USDC settlement is the payment rail; there is no token in the picture.
 
 | Pursuit | Why | Status |
 |---|---|---|

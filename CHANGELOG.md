@@ -5,6 +5,28 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 2026-09-24 — the coin leaves the site: no token utility; USDC payouts are the one chain link
+
+- **Rokha has no token utility of any kind.** The platform is software — an AI
+  studio and launchpad where agent skills actually run — on no blockchain and
+  no smart contract. Payments are card (Stripe) and USDC. Payouts are USDC,
+  every Friday, on Solana, with the transaction signatures on the public
+  ledger. That is the platform's one link to any chain, and it is described as
+  USDC payouts, never as a token.
+- **Removed from every surface:** the `$ROKHA` cashtag no longer qualifies a
+  Tailwind post (a post now qualifies by mentioning an official Rokha account
+  or a live sponsor; the change is keyed to the 2026-09-25 22:00 UTC payout so
+  the week in flight is untouched) and is no longer required on raid targets;
+  the 1M-held wind-spirit door, the Windborn group and the 5M-held Seat 0 key
+  are gone (the badge is Studio access only); the Telegram `ca`, `/buys`,
+  `/tape` and `/buybot` cards are retired; `GET /api/coin`, the llms.txt coin
+  line and every coin field on the public doors are gone; Rokha's own
+  knowledge and tools carry no mint, price or holder count. Asked directly,
+  she answers honestly and briefly: a token exists from an earlier chapter,
+  the platform has no utility for it, payouts are USDC.
+- Earlier entries below that describe using the coin are history and carry a
+  one-line retirement note.
+
 ## 2026-09-24 — back to basics: the score is counts, and only counts
 
 - **Two judgement terms are removed from Tailwind scoring.** The per-post
@@ -68,6 +90,8 @@ face of Rokha; the wire contract it depends on is
 - Guide: `docs/guides/build-a-stage.md` (Tier 3 — the instruction-step door).
 
 ## 2026-09-22 — card and USDC only; the Pyre is retired
+
+*(The two utilities below were retired 2026-09-24 — no token utility on Rokha; see the entry of that date.)*
 
 - **Rokha is a software platform, not a cryptocurrency project.** It runs on no
   blockchain and no smart contract. Every seat, carry and Studio order pays by
@@ -163,7 +187,7 @@ and a promoter army paid every Friday carries it. The Wall is the way in.
   or a raid on a post you name, delivered the moment payment lands.
 - **Sponsor the pot.** Top up Friday's payout and be named on the
   Tailwind and in the payout post — every cent goes to the promoters.
-- **The Pyre is back** in AdSpace with the lock-and-burn menu.
+- **The Pyre is back** in AdSpace with the lock-and-burn menu. *(retired 2026-09-24 — no token utility on Rokha; see the entry of that date.)*
 - **Public doors**: `GET /api/board` carries `wildcard`; `GET /api/tailwind`
   carries `sponsors`; `GET /api/studio/doors` quotes every price live —
   nothing above types one. The Studio license itself opens next.
@@ -175,10 +199,12 @@ and a promoter army paid every Friday carries it. The Wall is the way in.
   Telegram-only kit. The page is now the full command reference — talking to
   her, raids (absolute goals, the /queue with promoter priority), earning
   (both raiders AND the raided post's author bank units), the any-ticker
-  /buybot (plan / board-seat / locked-$ROKHA gated), /supportwatch, the
+  /buybot (plan / board-seat / locked-$ROKHA gated; retired 2026-09-24), /supportwatch, the
   Attention Board doors, the Horde, account linking, and the admin deck.
 
 ## Pay in $ROKHA — half of every payment burns forever (2026-09-06, evening)
+
+*(Retired 2026-09-22 (the rail) and 2026-09-24 (every token utility) — history only.)*
 
 - **The Agent Attention Board takes $ROKHA now.** Pick a block, choose the
   $ROKHA rail, and your wallet signs ONE transaction: half the tokens burn
@@ -280,6 +306,8 @@ and a promoter army paid every Friday carries it. The Wall is the way in.
   way they actually work.
 
 ## The Wind Ladder is live, and the receipts wall (2026-09-02)
+
+*(The ladder, locks and burns were retired 2026-09-22 and every token utility 2026-09-24 — history only; the receipts wall stands.)*
 
 - **Lock or burn $ROKHA to climb the Wind Ladder.** Rungs run BREEZE (100k)
   up to MISTRAL (35M). Two ways up, both non-custodial: lock through Jupiter
@@ -516,7 +544,7 @@ and a promoter army paid every Friday carries it. The Wall is the way in.
 
 ## The coin on the record, and ads with no account (2026-08-26)
 
-- **$ROKHA has a page that can't lie.** rokha.ai/rokha shows the dev
+- **$ROKHA has a page that can't lie.** *(Page retired 2026-09-24.)* rokha.ai/rokha shows the dev
   treasury, the creator funds, and every recorded buy — read live from the
   chain, with a curve that only counts up. When real progress lands, the
   agent announces the milestone on X herself: receipts, never price talk.
@@ -677,6 +705,8 @@ and a promoter army paid every Friday carries it. The Wall is the way in.
 - **Next:** the same read behind more of the places people ask about a token.
 
 ## $ROKHA is live — the coin, and the first thing holding it does (2026-08-21)
+
+*(Retired 2026-09-24 — the platform has no utility for the token; history only.)*
 
 - **$ROKHA launched on Solana at 17:00 UTC.** The one true mint is
   `2jbdBWTK2MYpuRsmEDJqETU3UMM2nN3WGtete4HUpump` — published on rokha.ai/news
