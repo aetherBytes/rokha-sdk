@@ -1,0 +1,16 @@
+{
+  "name": "rokha",
+  "owner": { "name": "Rokha", "email": "contact@rokha.ai" },
+  "metadata": {
+    "description": "Rokha — search the registry of agent skills and MCP servers, then run them for real.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "rokha",
+      "description": "The Rokha MCP server plus the first-party skills: find a capability, run it, keep the trace.",
+      "version": "1.0.0",
+      "source": "./plugins/rokha"
+    }
+  ]
+}

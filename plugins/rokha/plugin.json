@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "rokha",
+  "version": "1.0.0",
+  "description": "Search the Rokha registry of agent skills and MCP servers, then run them for real — no install, a trace on every run.",
+  "author": { "name": "Rokha", "url": "https://rokha.ai" },
+  "homepage": "https://rokha.ai",
+  "repository": "https://github.com/aetherBytes/rokha-sdk",
+  "license": "MIT",
+  "keywords": ["mcp", "agent-skills", "registry", "runtime", "rokha"]
+}

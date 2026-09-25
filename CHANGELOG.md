@@ -5,6 +5,23 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## 2026-09-25 — Rokha as an Agent Plugin, and the MCP Registry manifest
+
+- **`plugins/rokha/` — an [Agent Plugins](https://agent-plugins.org) 1.0.0 package.**
+  One `plugin.json`, one `mcp.json` pointing at the public MCP door
+  (`https://rokha.ai/mcp/jsonrpc`, streamable HTTP, OAuth discovery for
+  anything that runs or writes), and a copy of the first-party `skills/`
+  (a plugin's files must resolve inside its root; `scripts/sync-plugin-skills.sh`
+  keeps the copy honest). The repo is now a plugin marketplace too
+  (`.github/plugin/marketplace.json`): `copilot plugin marketplace add
+  aetherBytes/rokha-sdk` then `copilot plugin install rokha`; Claude Code reads
+  the same file through `/plugin marketplace add`.
+- **`rokha-registry` skill** now states the registry size in the form the
+  count machine rewrites (`205k+`), so it stops going stale.
+- The MCP Registry manifest (`io.rokha/rokha`, on the product side) dropped its
+  hardcoded count and reads version 1.0.0, in step with every other public
+  version.
+
 ## 2026-09-24 — Rokha reads GMGN: token, wallet and market research on every surface
 
 - **Three research tools on Rokha's belt** — on the site, on X and on Telegram.
