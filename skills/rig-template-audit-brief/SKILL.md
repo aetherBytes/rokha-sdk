@@ -1,6 +1,6 @@
 ---
 name: rig-template-audit-brief
-description: A ready-made three-step Rokha Rig pattern — fetch → analyze → report. It takes ONE registry listing as its input: step 1 looks that listing up and fetches its real document, step 2 inspects the document for security and trust-boundary issues, step 3 writes a plain-language brief ending in an adopt / try-with-care / avoid verdict. Use when the user wants to vet a tool before adopting it, or wants a worked example of a fetch → analyze → report workflow. Instantiable by any agent over Rokha's public API, or one click in the Rokha editor.
+description: "A ready-made three-step Rokha Rig pattern — fetch → analyze → report. It takes ONE registry listing as its input: step 1 looks that listing up and fetches its real document, step 2 inspects the document for security and trust-boundary issues, step 3 writes a plain-language brief ending in an adopt / try-with-care / avoid verdict. Use when the user wants to vet a tool before adopting it, or wants a worked example of a fetch → analyze → report workflow. Instantiable by any agent over Rokha's public API, or one click in the Rokha editor."
 license: MIT
 compatibility: Works against any Rokha deployment (rokha.ai or self-hosted Erebus). Instantiation uses the public anon Working-Rig surface or the authenticated rigs API; running uses the run stream.
 metadata:
