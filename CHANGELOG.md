@@ -16,6 +16,8 @@ face of Rokha; the wire contract it depends on is
   (`.github/plugin/marketplace.json`): `copilot plugin marketplace add
   aetherBytes/rokha-sdk` then `copilot plugin install rokha`; Claude Code reads
   the same file through `/plugin marketplace add`.
+- **`gemini-extension.json`** at the repo root: `gemini extensions install github.com/aetherBytes/rokha-sdk`
+  gives Gemini CLI the same MCP door; the `gemini-cli-extension` topic on the repo puts it in the gallery.
 - **`rokha-registry` skill** now states the registry size in the form the
   count machine rewrites (`205k+`), so it stops going stale.
 - The MCP Registry manifest (`io.rokha/rokha`, on the product side) dropped its

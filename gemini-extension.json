@@ -1,0 +1,10 @@
+{
+  "name": "rokha",
+  "version": "1.0.0",
+  "description": "Search the Rokha registry of agent skills and MCP servers, then run them for real in an isolated sandbox or over remote MCP \u2014 no install, a trace on every run.",
+  "mcpServers": {
+    "rokha": {
+      "httpUrl": "https://rokha.ai/mcp/jsonrpc"
+    }
+  }
+}
