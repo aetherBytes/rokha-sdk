@@ -1,6 +1,6 @@
 {
   "name": "rokha",
-  "owner": { "name": "Rokha", "email": "contact@rokha.ai" },
+  "owner": { "name": "Rokha", "email": "admin@rokha.ai" },
   "metadata": {
     "description": "Rokha — search the registry of agent skills and MCP servers, then run them for real.",
     "version": "1.0.0"
