@@ -68,7 +68,7 @@ Being findable where agents — and the people who run them — look.
 | [AI Agents Directory](https://aiagentsdirectory.com/landscape) | Agent-landscape placement | `ON RADAR` |
 | [ClawSites AI Agent Directory](https://www.clawsites.com/ai-agent-directory) | Agent directory listing | `ON RADAR` |
 | [Smithery](https://smithery.ai/) | MCP server directory with one-command install | `ON RADAR` |
-| [Glama](https://glama.ai/mcp/servers) | MCP server directory + connector badge | `ON RADAR` |
+| [Glama](https://glama.ai/mcp/connectors/ai.rokha/rokha) | Listed as an MCP connector (`ai.rokha/rokha`), health-checked | `LANDED` |
 | [PulseMCP](https://www.pulsemcp.com/) | MCP server directory + weekly newsletter | `ON RADAR` |
 | [mcp.so](https://mcp.so/) | Community MCP server directory | `ON RADAR` |
 | Awesome lists (GitHub) | awesome-web3-ai, awesome-ai-agents, Solana awesome lists | `ON RADAR` |
