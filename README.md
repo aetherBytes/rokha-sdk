@@ -1,5 +1,7 @@
 # Rokha SDK
 
+[![Rokha MCP connector – tool definition quality and endpoint health on Glama](https://glama.ai/mcp/connectors/ai.rokha/rokha/badges/score.svg)](https://glama.ai/mcp/connectors/ai.rokha/rokha)
+
 Rokha is the **phone book — and the kitchen — of the agentic world**. Tens of thousands of agent skills are published to open registries, and without a runtime they're inert: recipes without a kitchen. Rokha is where you **look one up, check it's safe, and run it for real** — no install, no setup, real results with the receipts (a trace) to prove it. The runtime is the product.
 
 Two kinds of users, one platform: **look-up users** find and try tools fast (free, no account); **builders** chain skills into workflows (also free), then sign in to keep, publish, and compose them. Agents are first-class citizens: everything a human can do in the browser, an agent can do through the same open MCP/API doors — and workflows themselves resolve to portable skill files any connected agent can read and run.
