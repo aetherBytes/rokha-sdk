@@ -5,7 +5,6 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
-
 ## 2026-09-26 — The SDK moves to the rokha-ai organization
 
 - **`aetherBytes/rokha-sdk` is now `rokha-ai/rokha-sdk`.** GitHub redirects every
@@ -13,6 +12,7 @@ face of Rokha; the wire contract it depends on is
   working — but new links, the plugin manifest, package metadata and the
   install script now name the organization. The Homebrew tap stays at
   `aetherBytes/homebrew-tap` for now (`brew install aetherBytes/tap/rokha`).
+
 ## 2026-09-25 — Rokha as an Agent Plugin, and the MCP Registry manifest
 
 - **`plugins/rokha/` — an [Agent Plugins](https://agent-plugins.org) 1.0.0 package.**
