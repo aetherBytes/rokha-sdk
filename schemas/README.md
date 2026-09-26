@@ -42,7 +42,7 @@ Every PR that modifies `openapi.yaml`:
 1. Bumps `info.version` per the table above.
 2. Adds a line in [`CHANGELOG.md`](../CHANGELOG.md) (main repo) and in
    the SDK's `CHANGELOG.md` describing the change.
-3. Mirrors the file to the public SDK repo (`aetherBytes/rokha-sdk/schemas/openapi.yaml`)
+3. Mirrors the file to the public SDK repo (`rokha-ai/rokha-sdk/schemas/openapi.yaml`)
    in the same release. This is also encoded in CLAUDE.md's "Public
    Surface Contract" rule.
 

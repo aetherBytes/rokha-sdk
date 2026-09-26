@@ -3,7 +3,7 @@ info:
   title: Rokha Public API
   description: |
     The public, agent-friendly surface of Rokha. Single source of truth
-    for the contract between [rokha-sdk](https://github.com/aetherBytes/rokha-sdk)
+    for the contract between [rokha-sdk](https://github.com/rokha-ai/rokha-sdk)
     and the Erebus router.
 
     **Versioning rule (non-negotiable)**: every change to this file MUST bump
@@ -20,7 +20,7 @@ info:
   version: 1.0.0
   license:
     name: MIT
-    url: https://github.com/aetherBytes/rokha-sdk/blob/main/LICENSE
+    url: https://github.com/rokha-ai/rokha-sdk/blob/main/LICENSE
   contact:
     name: Rokha
     url: https://rokha.ai

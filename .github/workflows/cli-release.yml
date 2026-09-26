@@ -6,7 +6,7 @@ name: Release ro (rokha-cli)
 #
 # The brew formula and install.sh consume these assets. If this workflow
 # runs in a private repo, the release page is private — mirror to the
-# public SDK repo (aetherBytes/rokha-sdk) before shipping.
+# public SDK repo (rokha-ai/rokha-sdk) before shipping.
 
 on:
   push:
@@ -166,7 +166,7 @@ jobs:
             echo "brew install aetherBytes/tap/rokha"
             echo
             echo "# Linux"
-            echo "curl -fsSL https://raw.githubusercontent.com/aetherBytes/rokha-sdk/main/scripts/install.sh | sh"
+            echo "curl -fsSL https://raw.githubusercontent.com/rokha-ai/rokha-sdk/main/scripts/install.sh | sh"
             echo
             echo "# Any platform with Cargo"
             echo "cargo install rokha-cli"
@@ -249,7 +249,7 @@ jobs:
         if: steps.guard.outputs.go == 'true'
         run: |
           set -euo pipefail
-          base="https://github.com/aetherBytes/rokha-sdk/releases/download/cli-v${VERSION}"
+          base="https://github.com/rokha-ai/rokha-sdk/releases/download/cli-v${VERSION}"
           sha() { curl -fsSL "$base/ro-${VERSION}-$1.tar.gz.sha256" | awk '{print $1}'; }
           A_MAC=$(sha aarch64-apple-darwin);      X_MAC=$(sha x86_64-apple-darwin)
           A_LNX=$(sha aarch64-unknown-linux-gnu); X_LNX=$(sha x86_64-unknown-linux-gnu)

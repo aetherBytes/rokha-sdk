@@ -78,7 +78,7 @@ For a shell-native interface to the same doors:
 npx -y @rokha_ai/cli status        # zero-install
 npm i -g @rokha_ai/cli             # or: cargo install rokha-cli
 brew install aetherBytes/tap/rokha # or the binary installer:
-curl -fsSL https://raw.githubusercontent.com/aetherBytes/rokha-sdk/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/rokha-ai/rokha-sdk/main/scripts/install.sh | bash
 ro status
 ro mcp install                     # hook the MCP bridge into Claude Code / Claude Desktop
 ```

@@ -7,7 +7,7 @@ metadata:
   author: rokha
   version: "0.1.0"
   homepage: https://rokha.ai
-  source_repo: https://github.com/aetherBytes/rokha-sdk
+  source_repo: https://github.com/rokha-ai/rokha-sdk
 ---
 
 # Null Audit

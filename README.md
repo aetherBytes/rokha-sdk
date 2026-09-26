@@ -15,7 +15,7 @@ agent can do and the paste-to-your-agent version:
 
 **Found a bug, or have an idea?** See
 [docs/guides/feedback.md](docs/guides/feedback.md) — TL;DR:
-[open an issue](https://github.com/aetherBytes/rokha-sdk/issues/new) if you're a
+[open an issue](https://github.com/rokha-ai/rokha-sdk/issues/new) if you're a
 developer, or use the **🐞 Report a bug** link in the rokha.ai footer if you'd
 rather not have a GitHub account (we file it for you).
 
@@ -134,7 +134,7 @@ results = nb.search_listings(query="UI design")
 Rokha publishes [agentskills.io](https://agentskills.io)-compliant
 skills that any compatible agent can drop in — no Rokha harness
 required. The skills live alongside this SDK at
-[`skills/`](https://github.com/aetherBytes/rokha-sdk/tree/main/skills)
+[`skills/`](https://github.com/rokha-ai/rokha-sdk/tree/main/skills)
 and are served live at `GET /api/skills` on every Erebus instance.
 
 ### Browse available skills
@@ -144,7 +144,7 @@ and are served live at `GET /api/skills` on every Erebus instance.
 curl https://api.rokha.ai/api/skills | jq
 
 # Or the public GitHub mirror
-curl https://api.github.com/repos/aetherBytes/rokha-sdk/contents/skills | jq '.[].name'
+curl https://api.github.com/repos/rokha-ai/rokha-sdk/contents/skills | jq '.[].name'
 ```
 
 ### Install a skill
@@ -152,10 +152,10 @@ curl https://api.github.com/repos/aetherBytes/rokha-sdk/contents/skills | jq '.[
 For Claude Code (`~/.claude/skills/`):
 ```bash
 mkdir -p ~/.claude/skills/rokha-audit
-curl -fsSL https://raw.githubusercontent.com/aetherBytes/rokha-sdk/main/skills/rokha-audit/SKILL.md \
+curl -fsSL https://raw.githubusercontent.com/rokha-ai/rokha-sdk/main/skills/rokha-audit/SKILL.md \
   -o ~/.claude/skills/rokha-audit/SKILL.md
 # For skills with references/, scripts/, or assets/, sparse-checkout the folder:
-git clone --filter=blob:none --no-checkout https://github.com/aetherBytes/rokha-sdk.git /tmp/nb && \
+git clone --filter=blob:none --no-checkout https://github.com/rokha-ai/rokha-sdk.git /tmp/nb && \
   cd /tmp/nb && git sparse-checkout init --cone && git sparse-checkout set skills/rokha-audit && \
   git checkout main && cp -r skills/rokha-audit ~/.claude/skills/
 ```
@@ -168,7 +168,7 @@ Codex, or any other [agentskills.io-compatible client](https://agentskills.io)
 
 | Skill | What it does |
 |-------|--------------|
-| [`rokha-audit`](https://github.com/aetherBytes/rokha-sdk/tree/main/skills/rokha-audit) | Security & compliance audit for MCP tools. Three-stage flow: heuristic scan → optional sandboxed probe → harness persistence. |
+| [`rokha-audit`](https://github.com/rokha-ai/rokha-sdk/tree/main/skills/rokha-audit) | Security & compliance audit for MCP tools. Three-stage flow: heuristic scan → optional sandboxed probe → harness persistence. |
 
 ### The layering, briefly
 

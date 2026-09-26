@@ -2,16 +2,16 @@
 # Rokha CLI installer — fetches the matching `ro` binary from GitHub Releases.
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/aetherBytes/rokha-sdk/main/scripts/install.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/rokha-ai/rokha-sdk/main/scripts/install.sh | sh
 #
 # Env overrides:
 #   RO_VERSION    pin a specific version tag (default: latest)
-#   RO_REPO       owner/repo to install from (default: aetherBytes/rokha-sdk)
+#   RO_REPO       owner/repo to install from (default: rokha-ai/rokha-sdk)
 #   RO_INSTALL_DIR  install prefix (default: ~/.local/bin if writable, else /usr/local/bin)
 
 set -eu
 
-RO_REPO="${RO_REPO:-aetherBytes/rokha-sdk}"
+RO_REPO="${RO_REPO:-rokha-ai/rokha-sdk}"
 RO_VERSION="${RO_VERSION:-}"
 
 info()  { printf '\033[1;36m==>\033[0m %s\n' "$*" >&2; }

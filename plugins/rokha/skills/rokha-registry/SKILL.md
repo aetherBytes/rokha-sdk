@@ -8,7 +8,7 @@ metadata:
   version: "0.1.0"
   rokha_kind: agent-tool
   homepage: https://rokha.ai
-  source_repo: https://github.com/aetherBytes/rokha-sdk
+  source_repo: https://github.com/rokha-ai/rokha-sdk
 ---
 
 # Rokha Registry — find and install agent skills

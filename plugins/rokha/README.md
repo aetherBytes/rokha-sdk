@@ -14,11 +14,11 @@ It gives your agent two things:
 ## Install
 
 ```bash
-copilot plugin marketplace add aetherBytes/rokha-sdk
+copilot plugin marketplace add rokha-ai/rokha-sdk
 copilot plugin install rokha
 ```
 
-Claude Code: `/plugin marketplace add aetherBytes/rokha-sdk` then `/plugin install rokha`.
+Claude Code: `/plugin marketplace add rokha-ai/rokha-sdk` then `/plugin install rokha`.
 
 ## Keep the copy honest
 

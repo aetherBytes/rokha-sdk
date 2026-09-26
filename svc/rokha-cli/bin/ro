@@ -20,7 +20,7 @@ const bin = path.join(pkgRoot, 'vendor', process.platform === 'win32' ? 'ro.exe'
 if (!fs.existsSync(bin)) {
   console.error(`@rokha_ai/cli: binary not found at ${bin}`);
   console.error('Reinstall: npm install -g @rokha_ai/cli');
-  console.error('Or install via Homebrew / cargo / the curl installer (see https://github.com/aetherBytes/rokha-sdk).');
+  console.error('Or install via Homebrew / cargo / the curl installer (see https://github.com/rokha-ai/rokha-sdk).');
   process.exit(127);
 }
 

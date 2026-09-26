@@ -41,12 +41,12 @@ CORS-open, no auth.
 
 ```bash
 # Single SKILL.md
-curl -fsSL https://raw.githubusercontent.com/aetherBytes/rokha-sdk/main/skills/rokha-audit/SKILL.md \
+curl -fsSL https://raw.githubusercontent.com/rokha-ai/rokha-sdk/main/skills/rokha-audit/SKILL.md \
   -o ~/.claude/skills/rokha-audit/SKILL.md
 
 # Whole folder with bundled refs/scripts/assets — sparse-checkout
 git clone --filter=blob:none --no-checkout \
-  https://github.com/aetherBytes/rokha-sdk.git /tmp/rokha-sdk
+  https://github.com/rokha-ai/rokha-sdk.git /tmp/rokha-sdk
 cd /tmp/rokha-sdk
 git sparse-checkout init --cone
 git sparse-checkout set skills/rokha-audit
@@ -57,7 +57,7 @@ cp -r skills/rokha-audit ~/.claude/skills/
 ### 3. Clone the whole Rokha SDK repo (for contributors)
 
 ```bash
-git clone https://github.com/aetherBytes/rokha-sdk.git
+git clone https://github.com/rokha-ai/rokha-sdk.git
 ln -s "$PWD/rokha-sdk/skills/rokha-audit" ~/.claude/skills/rokha-audit
 ```
 

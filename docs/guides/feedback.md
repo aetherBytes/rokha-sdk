@@ -11,7 +11,7 @@ friction for you.
 | You are… | Use | Needs a GitHub account? |
 |----------|-----|-------------------------|
 | **Using rokha.ai** and something broke | The **🐞 Report a bug** link in the site footer | **No** |
-| **Building on the SDK / CLI / API** | [Open an issue on `rokha-sdk`](https://github.com/aetherBytes/rokha-sdk/issues/new) | Yes |
+| **Building on the SDK / CLI / API** | [Open an issue on `rokha-sdk`](https://github.com/rokha-ai/rokha-sdk/issues/new) | Yes |
 | Reporting something **sensitive** (a security issue, private data) | Email — see [Security](#security-issues-do-not-file-publicly) | No |
 
 ### 1. The in-app form (easiest — no account needed)
@@ -35,7 +35,7 @@ simply can't reply, but the report still lands.
 
 If you're integrating the SDK, the CLI, or the API, file it where the code is:
 
-**→ [github.com/aetherBytes/rokha-sdk/issues](https://github.com/aetherBytes/rokha-sdk/issues)**
+**→ [github.com/rokha-ai/rokha-sdk/issues](https://github.com/rokha-ai/rokha-sdk/issues)**
 
 This is the right door when you want a thread you can subscribe to, paste code
 into, and follow to a fix. We triage from there.
@@ -79,7 +79,7 @@ Page:
 - **A workflow ran and the result was wrong** → the in-app form, and mention the
   workflow and the input you gave it.
 - **The SDK, CLI, or an API response is wrong** → GitHub issues on
-  [`rokha-sdk`](https://github.com/aetherBytes/rokha-sdk/issues), with the
+  [`rokha-sdk`](https://github.com/rokha-ai/rokha-sdk/issues), with the
   request you sent and the response you got.
 - **A published skill or MCP server is broken/malicious** → tell us via either
   door and name the listing. We can delist.

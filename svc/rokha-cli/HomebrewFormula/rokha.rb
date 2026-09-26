@@ -23,22 +23,22 @@ class Rokha < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/aetherBytes/rokha-sdk/releases/download/cli-v#{version}/ro-#{version}-aarch64-apple-darwin.tar.gz"
+      url "https://github.com/rokha-ai/rokha-sdk/releases/download/cli-v#{version}/ro-#{version}-aarch64-apple-darwin.tar.gz"
       sha256 "REPLACE_WITH_SHA256_DARWIN_ARM64"
     end
     on_intel do
-      url "https://github.com/aetherBytes/rokha-sdk/releases/download/cli-v#{version}/ro-#{version}-x86_64-apple-darwin.tar.gz"
+      url "https://github.com/rokha-ai/rokha-sdk/releases/download/cli-v#{version}/ro-#{version}-x86_64-apple-darwin.tar.gz"
       sha256 "REPLACE_WITH_SHA256_DARWIN_X86_64"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/aetherBytes/rokha-sdk/releases/download/cli-v#{version}/ro-#{version}-aarch64-unknown-linux-gnu.tar.gz"
+      url "https://github.com/rokha-ai/rokha-sdk/releases/download/cli-v#{version}/ro-#{version}-aarch64-unknown-linux-gnu.tar.gz"
       sha256 "REPLACE_WITH_SHA256_LINUX_ARM64"
     end
     on_intel do
-      url "https://github.com/aetherBytes/rokha-sdk/releases/download/cli-v#{version}/ro-#{version}-x86_64-unknown-linux-gnu.tar.gz"
+      url "https://github.com/rokha-ai/rokha-sdk/releases/download/cli-v#{version}/ro-#{version}-x86_64-unknown-linux-gnu.tar.gz"
       sha256 "REPLACE_WITH_SHA256_LINUX_X86_64"
     end
   end

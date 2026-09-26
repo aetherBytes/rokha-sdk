@@ -12,7 +12,7 @@ const crypto = require('crypto');
 const os = require('os');
 const { spawnSync } = require('child_process');
 
-const REPO = process.env.RO_REPO || 'aetherBytes/rokha-sdk';
+const REPO = process.env.RO_REPO || 'rokha-ai/rokha-sdk';
 const pkgRoot = path.resolve(__dirname, '..');
 const pkg = require(path.join(pkgRoot, 'package.json'));
 const version = pkg.version;
@@ -67,7 +67,7 @@ async function main() {
   const target = targetTriple();
   if (!target) {
     log(`unsupported platform: ${process.platform}/${process.arch}`);
-    log('use cargo install rokha-cli, or see https://github.com/aetherBytes/rokha-sdk');
+    log('use cargo install rokha-cli, or see https://github.com/rokha-ai/rokha-sdk');
     process.exit(0); // soft-fail so npm install completes
   }
 
