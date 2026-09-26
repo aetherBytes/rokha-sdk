@@ -70,6 +70,7 @@ Being findable where agents — and the people who run them — look.
 | [The Grid](https://thegrid.id/discovery/productType/ai-agent) · Solana Compass · Superteam listings | Solana ecosystem discovery surfaces | `ON RADAR` |
 | Product Hunt — AI Agents | Launching the runtime: a registry where 196k agent skills actually execute | `ON RADAR` |
 | Show HN · Indie Hackers · BetaList | The builder-community story: runtime, traces, no simulation | `ON RADAR` |
+| [CoinGecko](https://www.coingecko.com/) | The utility coin we're experimenting with gets listed where web3 users look | `ON RADAR` |
 
 ---
 

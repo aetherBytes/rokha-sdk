@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rokha on the Blockchain</title>
+<meta name="description" content="How Rokha uses blockchains: public proof, Signet authority, and agents that can pay and settle on their own — live on Solana and EVM chains.">
+<meta property="og:title" content="Rokha on the Blockchain">
+<meta property="og:description" content="Public proof, granted authority, and agent autonomy — how Rokha uses blockchains, chain by chain.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rokha-ai.github.io/rokha-sdk/blockchain.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@Rokha_ai">
+<style>
+  :root{
+    --void:#06080b; --panel:#0c1015; --panel-2:#10161d; --line:#1b2530;
+    --ice:#7fe8ff; --ice-deep:#37c6e6; --ice-dim:#3a5563;
+    --warm:#f4a94a; --warm-deep:#c9822c; --warm-dim:#5d472c; --warm-soft:rgba(244,169,74,.08);
+    --silver:#cdd8e2; --muted:#6d7f8d; --faint:#465562;
+    --glow: 0 0 0 1px rgba(127,232,255,.12), 0 0 30px -8px rgba(55,198,230,.35);
+    --mono: ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans: "Inter var",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  :root[data-theme="light"]{
+    --void:#eef2f5; --panel:#ffffff; --panel-2:#f4f7fa; --line:#d9e2ea;
+    --ice:#0f8fb0; --ice-deep:#0b7f9e; --ice-dim:#8bb3c1;
+    --warm:#a4661a; --warm-deep:#8a5514; --warm-dim:#d8c19c; --warm-soft:rgba(164,102,26,.06);
+    --silver:#182530; --muted:#54687a; --faint:#8698a6;
+    --glow: 0 0 0 1px rgba(15,143,176,.14), 0 6px 24px -12px rgba(11,127,158,.4);
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --void:#eef2f5; --panel:#ffffff; --panel-2:#f4f7fa; --line:#d9e2ea;
+      --ice:#0f8fb0; --ice-deep:#0b7f9e; --ice-dim:#8bb3c1;
+      --warm:#a4661a; --warm-deep:#8a5514; --warm-dim:#d8c19c; --warm-soft:rgba(164,102,26,.06);
+      --silver:#182530; --muted:#54687a; --faint:#8698a6;
+      --glow: 0 0 0 1px rgba(15,143,176,.14), 0 6px 24px -12px rgba(11,127,158,.4);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--void); color:var(--silver);
+    font-family:var(--sans); font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 520px at 78% -8%, rgba(55,198,230,.10), transparent 60%),
+      radial-gradient(760px 480px at 8% 4%, rgba(244,169,74,.05), transparent 55%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:0 22px}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.32em; text-transform:uppercase; color:var(--ice-deep)}
+  h1,h2,h3{text-wrap:balance; line-height:1.1; letter-spacing:-.02em; margin:0}
+  a{color:var(--ice)}
+  :focus-visible{outline:2px solid var(--ice); outline-offset:3px}
+
+  .bar{position:sticky; top:0; z-index:20; backdrop-filter:blur(9px);
+    background:color-mix(in srgb, var(--void) 78%, transparent); border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex; align-items:center; gap:14px; height:56px}
+  .brand{font-family:var(--mono); font-weight:600; letter-spacing:.06em; color:var(--silver)}
+  .brand b{color:var(--ice)}
+  .barlink{font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none}
+  .barlink:hover{color:var(--ice)}
+  .theme{background:none;border:1px solid var(--line);color:var(--muted);
+    font-family:var(--mono);font-size:11px;padding:5px 10px;border-radius:7px;cursor:pointer;margin-left:auto}
+  .theme:hover{color:var(--ice);border-color:var(--ice-dim)}
+  .navcta{font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+    text-decoration:none; color:#06080b; background:linear-gradient(150deg,var(--ice),var(--ice-deep));
+    padding:8px 14px; border-radius:8px; font-weight:600}
+
+  .hero{padding:70px 0 22px}
+  h1{font-size:clamp(34px,6.4vw,60px);font-weight:800}
+  h1 .accent{background:linear-gradient(120deg,var(--ice),var(--ice-deep));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(17px,2.3vw,20px);color:var(--muted);max-width:62ch;margin:18px 0 0}
+  .sub b{color:var(--silver)}
+
+  section{padding:36px 0}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .kicker .num{font-family:var(--mono);font-size:12px;color:var(--ice-deep);
+    border:1px solid var(--ice-dim);border-radius:6px;padding:2px 8px}
+  .kicker h2{font-size:clamp(21px,3.2vw,28px);font-weight:700}
+  .lead{color:var(--muted);font-size:16px;max-width:70ch;margin:0 0 16px}
+  .lead b{color:var(--silver)}
+  p{margin:0 0 12px}
+  code{font-family:var(--mono);font-size:.92em;color:var(--ice);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:12px;margin-top:6px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .card h3{font-family:var(--mono);font-size:13px;color:var(--silver);margin:0 0 6px;letter-spacing:.04em}
+  .card h3 i{font-style:normal;color:var(--ice);margin-right:7px}
+  .card p{font-size:14.5px;color:var(--muted);margin:0}
+  .card p b{color:var(--silver)}
+  .card a{text-decoration:none;font-family:var(--mono);font-size:12.5px}
+
+  .callout{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ice-deep);
+    border-radius:10px;padding:14px 18px;font-size:15px;color:var(--muted);margin-top:14px}
+  .callout b{color:var(--silver)}
+
+  footer{border-top:1px solid var(--line);margin-top:36px;padding:26px 0 40px;
+    font-family:var(--mono);font-size:12px;color:var(--faint)}
+  footer .wrap{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--ice)}
+
+  .principles{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 24px;margin-top:18px}
+  .principles li{padding:12px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--muted);list-style:none}
+  .principles li:last-child{border-bottom:none}
+  .principles ul{margin:0;padding:0}
+  .principles b{color:var(--silver)}
+
+  .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin:6px 0 22px;flex-wrap:wrap}
+  .tab{font-family:var(--mono);font-size:13px;letter-spacing:.04em;background:none;border:1px solid transparent;
+    border-bottom:none;color:var(--muted);padding:10px 16px;border-radius:9px 9px 0 0;cursor:pointer;margin-bottom:-1px}
+  .tab:hover{color:var(--ice)}
+  .tab[aria-selected="true"]{color:var(--silver);background:var(--panel);border-color:var(--line);border-bottom:1px solid var(--panel)}
+  .tab .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ice);margin-right:8px;vertical-align:1px}
+  [role="tabpanel"][hidden]{display:none}
+  .chainlist{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 16px}
+  .chip{font-family:var(--mono);font-size:12.5px;color:var(--silver);border:1px solid var(--line);
+    background:var(--panel-2);border-radius:7px;padding:6px 11px}
+
+  .coin{background:var(--panel);border:1px dashed var(--line);border-radius:12px;padding:18px 20px;margin-top:22px}
+  .coin h3{font-family:var(--mono);font-size:13px;color:var(--silver);margin:0 0 6px;letter-spacing:.04em}
+  .coin p{font-size:14.5px;color:var(--muted);margin:0 0 12px}
+  .ca{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .ca code{font-size:13px;padding:7px 10px;word-break:break-all;min-width:0}
+  .copy{font-family:var(--mono);font-size:12px;background:none;border:1px solid var(--ice-dim);color:var(--ice);
+    border-radius:7px;padding:6px 11px;cursor:pointer}
+  .copy:hover{border-color:var(--ice)}
+  .calabel{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+
+  @media (max-width:720px){ .principles{padding:4px 16px} .tab{padding:9px 12px} }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <span class="brand"><b>ROKHA</b> · ON-CHAIN</span>
+  <a class="barlink" href="./index.html">docs</a>
+  <button class="theme" id="tg">☾ theme</button>
+  <a class="navcta" href="https://rokha.ai" target="_blank" rel="noopener">Open Rokha →</a>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Blockchain</div>
+  <h1 style="margin-top:14px">Rokha on the <span class="accent">blockchain</span></h1>
+  <p class="sub"><b>We use blockchains for what agents can't get anywhere else:</b> proof anyone can check, authority an agent can hold without holding your keys, and settlement between parties that have never met.</p>
+  <p class="sub" style="font-size:16px">You never need a wallet or a coin to use Rokha — cards work everywhere. On-chain is for the jobs a public ledger does best.</p>
+</div></header>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">01</span><h2>How we use it</h2></div>
+  <p class="lead">Chain-agnostic by design. The same four jobs, on every chain we support.</p>
+  <div class="cards">
+    <div class="card"><h3><i>◆</i>Proof</h3><p>A public ledger is a receipt nobody has to take our word for. <b>Every payout carries its transaction signature</b>, every on-chain payment is checked against the chain before anything happens, and wallet sign-in is a signed message — proof you control the address, never a transaction.</p></div>
+    <div class="card"><h3><i>◆</i>Authority — Signet</h3><p><b>Signet</b> is Rokha's authority layer. You grant an agent a <b>mandate</b> — what it may do, where funds may go, a spend cap, an expiry — and the agent acts through a session key held in Rokha's signer. <b>It never touches your master key</b>, and revoking destroys the session key.</p></div>
+    <div class="card"><h3><i>◆</i>Autonomy</h3><p>With a mandate in place, an agent can <b>pay, get paid and settle with other agents</b> without a human click on every step. Each action is checked against the mandate before signing, simulated before broadcast, and written to an audit trail.</p></div>
+    <div class="card"><h3><i>◆</i>Settlement</h3><p><b>Dollars, not tokens.</b> We settle in stablecoins — USDC, or a chain's native dollar — so what an agent earns or spends means the same thing tomorrow.</p></div>
+  </div>
+
+  <div class="principles"><ul>
+    <li><b>One core, one adapter per chain.</b> Signet's rules live in one place; each chain plugs in behind them. A new chain inherits every fence on day one.</li>
+    <li><b>Money moves only for its owner.</b> Funds move for the signed-in owner of the mandate — never because a message, a reply or another agent asked.</li>
+    <li><b>Fail closed.</b> Off the allowlist, over the cap, past the expiry, or a failed simulation: refused, with no broadcast.</li>
+    <li><b>No simulation.</b> A payment either lands on-chain with a receipt or raises an honest error. Nothing is ever shown as sent that wasn't.</li>
+  </ul></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker"><span class="num">02</span><h2>Chain by chain</h2></div>
+  <p class="lead">Signet is already multi-chain. More chains plug into the same core as we expand.</p>
+
+  <div class="tabs" role="tablist" aria-label="Chains">
+    <button class="tab" role="tab" id="t-solana" aria-controls="p-solana" aria-selected="true"><span class="dot"></span>Solana</button>
+    <button class="tab" role="tab" id="t-evm" aria-controls="p-evm" aria-selected="false" tabindex="-1"><span class="dot"></span>EVM chains</button>
+  </div>
+
+  <div role="tabpanel" id="p-solana" aria-labelledby="t-solana">
+    <p class="lead"><b>Solana is Rokha's home chain</b> — where the platform's own money moves.</p>
+    <div class="cards">
+      <div class="card"><h3><i>→</i>Weekly payouts</h3><p>The Tailwind pays promoters <b>every Friday in USDC on Solana</b>. Each payout's transaction signature is the receipt, public on the ledger.</p></div>
+      <div class="card"><h3><i>→</i>Paying for seats and the Studio</h3><p>Pay in <b>USDC from your own wallet</b>. The transfer is verified on-chain before a seat goes live — the chain is the receipt.</p></div>
+      <div class="card"><h3><i>→</i>Wallet sign-in</h3><p>Sign in with a Solana wallet by signing a message. No transaction, no fee, nothing moves.</p></div>
+      <div class="card"><h3><i>→</i>Signet on Solana</h3><p>A fresh session keypair per mandate, held by the signer · a program allowlist · spend caps · <b>simulation before every signature</b>. Proven on mainnet, refusals included.</p></div>
+    </div>
+
+    <div class="coin" id="utility-coin">
+      <h3>$ROKHA · utility coin</h3>
+      <p>A coin we're experimenting with.</p>
+      <div class="calabel">Contract address · Solana</div>
+      <div class="ca" style="margin-top:6px">
+        <code id="ca">2jbdBWTK2MYpuRsmEDJqETU3UMM2nN3WGtete4HUpump</code>
+        <button class="copy" data-copy="ca" type="button">copy</button>
+      </div>
+    </div>
+  </div>
+
+  <div role="tabpanel" id="p-evm" aria-labelledby="t-evm" hidden>
+    <p class="lead"><b>Signet runs on EVM chains through the same core</b> — the same mandates, caps, allowlists and audit trail as on Solana.</p>
+    <div class="chainlist"><span class="chip">Ethereum</span><span class="chip">Base</span><span class="chip">HyperEVM</span><span class="chip">+ other EVM chains</span></div>
+    <div class="cards">
+      <div class="card"><h3><i>→</i>Sends</h3><p>An agent can send a chain's native coin, USDC, or any token by contract — inside the mandate you granted, never outside it.</p></div>
+      <div class="card"><h3><i>→</i>Agent-to-agent payments (x402)</h3><p>Agents pay for paid APIs and tools over <b>x402</b> — gasless USDC authorizations on Base and Ethereum, alongside Solana.</p></div>
+      <div class="card"><h3><i>→</i>Wallet sign-in</h3><p>EVM wallets sign in the same way: a signed message, no transaction.</p></div>
+      <div class="card"><h3><i>→</i>One login, any chain</h3><p>Session keys are held by the signer, not your login wallet — so one sign-in can grant mandates on any supported chain.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span><b style="color:var(--muted)">Rokha</b> — the OS for the agentic world</span>
+  <span>·</span><a href="https://rokha.ai" target="_blank" rel="noopener">rokha.ai</a>
+  <span>·</span><a href="./index.html">docs home</a>
+  <span>·</span><a href="./identity.html">identity + Signet</a>
+  <span>·</span><a href="./whitepaper.html">white paper</a>
+  <span>·</span><a href="https://x.com/Rokha_ai" target="_blank" rel="noopener">𝕏 @Rokha_ai</a>
+</div></footer>
+
+<script>
+  const root=document.documentElement, tg=document.getElementById('tg');
+  tg.addEventListener('click',()=>{
+    const cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+  const tabs=[...document.querySelectorAll('[role="tab"]')];
+  function pick(t,focus){
+    tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden=!on;});
+    if(focus)t.focus();
+  }
+  tabs.forEach((t,i)=>{
+    t.addEventListener('click',()=>pick(t));
+    t.addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();
+        pick(tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length],true);}
+    });
+  });
+  if(location.hash==='#evm')pick(document.getElementById('t-evm'));
+  document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',async()=>{
+    const txt=document.getElementById(b.dataset.copy).textContent.trim();
+    try{await navigator.clipboard.writeText(txt);b.textContent='copied';}catch{b.textContent='select + copy';}
+    setTimeout(()=>b.textContent='copy',1600);
+  }));
+</script>
+</body>
+</html>
