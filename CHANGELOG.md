@@ -5,7 +5,7 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
-## Unreleased — run any published rig in one call (ships with the next deploy)
+## 2026-09-26 — Run any published rig in one call
 
 - **Run a rig, then read what it did.** `POST /api/rigs/run {"rig": "<slug>", "input": "…"}`
   starts a published rig and answers at once with a `run_id` and a `poll` block;
