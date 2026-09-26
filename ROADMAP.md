@@ -67,7 +67,10 @@ Being findable where agents — and the people who run them — look.
 | [AI Agents Listing](https://aiagentslisting.com/) | Platform + MCP server + agent, three records | `ON RADAR` |
 | [AI Agents Directory](https://aiagentsdirectory.com/landscape) | Agent-landscape placement | `ON RADAR` |
 | [ClawSites AI Agent Directory](https://www.clawsites.com/ai-agent-directory) | Agent directory listing | `ON RADAR` |
-| Glama · PulseMCP · Smithery · mcp.so | The MCP directories — one endpoint everywhere: `https://rokha.ai/mcp/jsonrpc` | `ON RADAR` |
+| [Smithery](https://smithery.ai/) | MCP server directory with one-command install | `ON RADAR` |
+| [Glama](https://glama.ai/mcp/servers) | MCP server directory + connector badge | `ON RADAR` |
+| [PulseMCP](https://www.pulsemcp.com/) | MCP server directory + weekly newsletter | `ON RADAR` |
+| [mcp.so](https://mcp.so/) | Community MCP server directory | `ON RADAR` |
 | Awesome lists (GitHub) | awesome-web3-ai, awesome-ai-agents, Solana awesome lists | `ON RADAR` |
 | [The Grid](https://thegrid.id/discovery/productType/ai-agent) · Solana Compass · Superteam listings | Solana ecosystem discovery surfaces | `ON RADAR` |
 | Product Hunt — AI Agents | Launching the runtime: a registry where 196k agent skills actually execute | `ON RADAR` |
