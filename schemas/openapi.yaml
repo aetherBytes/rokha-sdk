@@ -1987,6 +1987,93 @@ paths:
       responses:
         '200': { description: Created rig }
 
+  /api/rigs/run:
+    post:
+      tags: [rigs]
+      summary: Run a published rig in one call
+      description: >-
+        Starts a run of a published rig and answers at once with a run id and
+        a poll block. No account needed: an anonymous caller runs under an
+        `x-anon-session-id` (a UUID; one is minted and returned when absent —
+        send it back when polling). With `Authorization: Bearer <token>` the
+        run is billed to that account. Anonymous runs are capped per session
+        and per IP (429). The run finishes whether or not the caller stays.
+      operationId: runPublishedRig
+      parameters:
+        - { name: x-anon-session-id, in: header, required: false, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [rig]
+              properties:
+                rig: { type: string, description: "The published rig's registry slug" }
+                input: { type: string, maxLength: 8000, description: "What the run works on — the rig's {{input}}" }
+                provider_id: { type: string, default: rokha }
+      responses:
+        '202':
+          description: Run started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  status: { type: string, enum: [running] }
+                  run_id: { type: string, format: uuid }
+                  rig: { type: string }
+                  rig_id: { type: string, format: uuid }
+                  anon_session_id: { type: string, format: uuid, nullable: true }
+                  poll:
+                    type: object
+                    properties:
+                      method: { type: string }
+                      url: { type: string }
+                      headers: { type: object, additionalProperties: { type: string } }
+        '400': { description: Bad rig slug }
+        '401': { description: The Bearer token is expired or revoked }
+        '404': { description: No published rig by that slug }
+        '429': { description: Anonymous daily run cap reached }
+
+  /api/rigs/runs/{run_id}:
+    get:
+      tags: [rigs]
+      summary: A run's status, steps, output and traces
+      description: >-
+        Poll until `done` is true. Send the same `x-anon-session-id` the run
+        was started with (or the same Bearer token); a run is only readable
+        by the caller that started it.
+      operationId: getRigRun
+      parameters:
+        - { name: run_id, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: x-anon-session-id, in: header, required: false, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: The run as its traces tell it
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  run_id: { type: string, format: uuid }
+                  status: { type: string, description: "starting · running · success · partial · error" }
+                  done: { type: boolean }
+                  output: { description: "The last step's result, once done (a stage run carries a rokha_app block)" }
+                  steps:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        trace_id: { type: string }
+                        step: { type: string }
+                        status: { type: string }
+                        error: { nullable: true }
+                  traces: { type: array, items: { type: object, additionalProperties: true } }
+        '400': { description: Bad run id, or no caller identity sent }
+
   /api/rigs/{id}:
     get:
       tags: [rigs]

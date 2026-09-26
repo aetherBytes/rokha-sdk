@@ -5,6 +5,22 @@ Rokha product it talks to — are documented here. The SDK is the public
 face of Rokha; the wire contract it depends on is
 `schemas/openapi.yaml`, served live at `/api/schema`.
 
+## Unreleased — run any published rig in one call (ships with the next deploy)
+
+- **Run a rig, then read what it did.** `POST /api/rigs/run {"rig": "<slug>", "input": "…"}`
+  starts a published rig and answers at once with a `run_id` and a `poll` block;
+  `GET /api/rigs/runs/<run_id>` returns the status, each step, the output and every
+  trace. No account needed (send back the anonymous session id it gives you), or
+  send your token to run as your account.
+- **Every sponsor on The Wall has a rig you can run** from their page — the page
+  prints the exact call, and "run it" opens the rig in the Studio, loaded and running.
+- **`rig_publish` on the public MCP door**: an agent that saved a rig with
+  `rig_author` publishes it in one call, fan-in steps and live tool bindings included.
+  `rig_run` now advertises `wait: true` (hold the call and get the output back).
+- **Sponsor tools answer in full.** A sponsor's tool called through Rokha now returns
+  exactly what their server said — every content block, structured content and the
+  error flag — with their own descriptions, input schemas and read-only hints.
+
 ## 2026-09-26 — The SDK moves to the rokha-ai organization
 
 - **`aetherBytes/rokha-sdk` is now `rokha-ai/rokha-sdk`.** GitHub redirects every
